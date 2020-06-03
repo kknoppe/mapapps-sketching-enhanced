@@ -1,0 +1,54 @@
+{
+  "name": "tool-binding",
+  "version": "1.0.0",
+  "title": "Tools Binding",
+  "description": "Binding Tools to vue.",
+  "main": "",
+  "i18n": [],
+  "dependencies": {
+    "apprt-core": "~4.8.4",
+    "apprt-binding": "^4.8.4"
+  },
+  "productName": "map.apps",
+  "components": [
+    {
+      "name": "BindingToolsToViewModel",
+      "provides": "tool-binding.BindingToolsToViewModel",
+      "properties": {
+        "vueModelToolProps": [
+          "id",
+          "title",
+          "description",
+          "tooltip",
+          "priority",
+          "toolGroup",
+          "toolClass",
+          "iconClass",
+          "icon",
+          "visibility",
+          "enabled",
+          "active",
+          "togglable",
+          "processing",
+          "toolRole",
+          "type",
+          "selectionType",
+          "groups",
+          "mode",
+          "menu",
+          "items",
+          "clickHandler",
+          "activateHandler",
+          "deactivateHandler"
+        ]
+      },
+      "references": [
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "cardinality": "0..n"
+        }
+      ]
+    }
+  ]
+}
