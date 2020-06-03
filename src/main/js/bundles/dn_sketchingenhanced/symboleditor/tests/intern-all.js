@@ -13,42 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// Import all TestSuites for the ScaleChanger-Bundle
-/*
-import './ColorGradient';
-import './SymbolEditorFactory';
-import './SymbolEditorModel';*/
-import './SymbolEditorWidget'; /*
-import './UniqueValueWidget';
-import './SimpleEditorPolygon';
-import './SimpleEditorLine';
-import './SimpleEditorPoint';
-*/
-/*
-import './UniqueValueWidget';
-import './SimpleEditorPolygon';
-import './SimpleEditorLine';
-import './SimpleEditorPoint';
-*/
+
 // line editor tests
 import './symbol/line/LineStyle';
 // polygon editor tests
 import './symbol/polygon/FillStyle';
 // misc
 import './model/EsriTransformer';
-// label editor tests
-import './LabelEditor';
 
-import './LayerRegistry';
 import './model/LayerRegistyList';
-// line editor tests
-import './symbol/line/LineStyle';
+
 // polygon editor tests
 import './symbol/polygon/FillStyle';
 // misc
 import './model/EsriTransformer';
-// label editor tests
-import './LabelEditor';
 
-import './LayerRegistry';
-import './model/LayerRegistyList';

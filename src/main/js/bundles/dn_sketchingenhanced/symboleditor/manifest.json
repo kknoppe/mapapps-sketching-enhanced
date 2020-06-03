@@ -8,67 +8,17 @@
     "bundle"
   ],
   "dependencies": {
-    "apprt-vue": "^4.6.0",
-    "apprt-binding": "^4.6.0",
-    "apprt-vuetify": "^4.6.0",
-    "esri": "^4.6.0",
-    "custom_controls": "^4.0.2"
+    "apprt-vue": "^4.8.4",
+    "apprt-binding": "^4.8.4",
+    "apprt-vuetify": "^4.8.4",
+    "esri": "^4.8.4",
+    "custom_controls": "^1.0.0"
   },
   "CSS-Themes-Extension": [
     {
       "name": "*",
       "files": [
         "./styles/styles.css"
-      ]
-    }
-  ],
-  "components": [
-    {
-      "name": "SymbolEditorModel",
-      "provides": "symboleditor.SymbolEditorModel"
-    },
-    {
-      "name": "SymbolEditorWidgetFactory",
-      "provides": "sewf",
-      "immediate": true,
-      "references": [
-        {
-          "name": "_symbolEditorWidgetModel",
-          "providing": "symboleditor.SymbolEditorModel"
-        },
-        {
-          "name": "_layerRegistry",
-          "providing": "lr"
-        },
-        {
-          "name": "_logService",
-          "providing": "dsa.api.LogService"
-        }
-      ]
-    },
-    {
-      "name": "LayerRegistry",
-      "provides": [
-        "lr"
-      ],
-      "references": [
-        {
-          "name": "_mapWidgetModel",
-          "providing": "map-widget.MapWidgetModel"
-        },
-        {
-          "name": "_mapContentSources",
-          "providing": "MapContentSources",
-          "cardinality": "0..n"
-        },
-        {
-          "name": "_logService",
-          "providing": "dsa.api.LogService"
-        },
-        {
-          "name": "_eventService",
-          "providing": "ct.framework.api.EventService"
-        }
       ]
     }
   ]

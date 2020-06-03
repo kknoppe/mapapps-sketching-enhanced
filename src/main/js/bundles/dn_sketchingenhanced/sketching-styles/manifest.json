@@ -1,12 +1,12 @@
 {
   "name": "sketching-styles",
-  "version": "4.0.1",
+  "version": "1.0.0",
   "title": "Sketching Symbol Styles",
   "description": "This bundle provides sketching symbol styles.",
   "dependencies": {
-    "dataform": "^4.8.1",
-    "dataview": "^4.8.1",
-    "sketching-tools": "^4.0.0"
+    "dataform": "^4.8.4",
+    "dataview": "^4.8.4",
+    "sketching-tools": "^1.0.0"
   },
   "productName": "map.apps",
   "components": [

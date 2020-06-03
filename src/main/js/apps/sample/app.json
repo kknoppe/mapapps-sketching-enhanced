@@ -475,7 +475,7 @@
         },
         "themes": {
             "ThemeModel": {
-                "_selectedTheme": "winter"
+                "_selectedTheme": "everlasting"
             },
             "ThemeSelector": {
                 "componentEnabled": true

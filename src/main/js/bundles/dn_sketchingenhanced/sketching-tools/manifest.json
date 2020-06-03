@@ -1,11 +1,11 @@
 {
   "name": "sketching-tools",
-  "version": "4.0.2",
+  "version": "1.0.0",
   "title": "Sketching",
   "description": "This bundle provides sketching tools.",
   "dependencies": {
-    "toolrules": "^4.8.1",
-    "map-widget": "^4.8.1"
+    "toolrules": "^4.8.4",
+    "map-widget": "^4.8.4"
   },
   "CSS-Themes-Extension": [
     {

@@ -1,10 +1,10 @@
 {
   "name": "sketching-construction",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "title": "Sketching Construction",
   "dependencies": {
-    "sketching-tools": "^4.0.0",
-    "snapping-manager": "^4.0.0"
+    "sketching-tools": "^1.0.0",
+    "snapping-manager": "^1.0.0"
   },
   "productName": "map.apps",
   "components": [

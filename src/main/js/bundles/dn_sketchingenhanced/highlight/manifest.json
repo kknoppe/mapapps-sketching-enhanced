@@ -1,13 +1,13 @@
 {
   "name": "highlight",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "title": "Highlight Graphics",
   "description": "Highlight Graphics",
   "vendor": "con terra GmbH",
   "main": "",
   "i18n": [],
   "dependencies": {
-    "apprt-core": "^4.8.1"
+    "apprt-core": "^4.8.4"
   },
   "components": [
     {

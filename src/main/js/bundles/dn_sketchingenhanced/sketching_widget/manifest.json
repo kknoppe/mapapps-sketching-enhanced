@@ -2,16 +2,16 @@
   "name": "dn_sketchingenhanced",
   "version": "1.0.0",
   "dependencies": {
-    "esri": "^4.6.0",
-    "apprt-vue": "^4.6.0",
-    "apprt-vuetify": "^4.6.0",
-    "sketching-tools": "^4.0.0",
-    "sketching-command": "^4.0.0",
-    "sketching-construction": "^4.0.0",
-    "sketching-styles": "^4.0.0",
-    "tool-binding": "^4.0.0",
-    "snapping-manager": "^4.0.0",
-    "symboleditor": "1.0.0"
+    "esri": "^4.8.4",
+    "apprt-vue": "^4.8.4",
+    "apprt-vuetify": "^4.8.4",
+    "sketching-tools": "^1.0.0",
+    "sketching-command": "^1.0.0",
+    "sketching-construction": "^1.0.0",
+    "sketching-styles": "^1.0.0",
+    "tool-binding": "^1.0.0",
+    "snapping-manager": "^1.0.0",
+    "symboleditor": "^1.0.0"
   },
   "main": "",
   "CSS-Themes-Extension": [

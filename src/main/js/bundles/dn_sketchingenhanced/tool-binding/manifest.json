@@ -1,13 +1,13 @@
 {
   "name": "tool-binding",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "title": "Tools Binding",
   "description": "Binding Tools to vue.",
   "main": "",
   "i18n": [],
   "dependencies": {
-    "apprt-core": "~4.8.1",
-    "apprt-binding": "^4.8.1"
+    "apprt-core": "~4.8.4",
+    "apprt-binding": "^4.8.4"
   },
   "productName": "map.apps",
   "components": [

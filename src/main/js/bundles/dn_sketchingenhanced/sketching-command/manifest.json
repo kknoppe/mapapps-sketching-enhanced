@@ -1,13 +1,13 @@
 {
   "name": "sketching-command",
-  "version": "4.0.2",
+  "version": "1.0.0",
   "title": "Sketching Commands",
   "description": "This bundle provides sketching tools.",
   "dependencies": {
-    "sketching-tools": "^4.0.0",
-    "sketching-styles": "^4.0.0",
-    "highlight": "^4.0.0",
-    "snapping-manager": "^4.0.0"
+    "sketching-tools": "^1.0.0",
+    "sketching-styles": "^1.0.0",
+    "highlight": "^1.0.0",
+    "snapping-manager": "^1.0.0"
   },
   "productName": "map.apps",
   "components": [
