@@ -25,7 +25,7 @@
             lineStyle: String,
             height: {type: Number, default: 6},
             baseSize: {type: Number, default: 3},
-            color: {type: String, default: '#000000'},
+            color: {type: String, default: document.body.classList.contains('everlasting') ? 'white' : 'black'},
         },
         computed: {
             dot() {

@@ -17,5 +17,3 @@ import '.';
 import './SymbolEditorModel';
 import './SymbolEditorWidgetFactory';
 import './LayerRegistry';
-import './myDSA/SymbolEditorProfile';
-import './myDSA/LoadProfileHandler';

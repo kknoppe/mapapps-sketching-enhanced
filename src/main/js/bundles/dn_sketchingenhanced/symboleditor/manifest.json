@@ -70,46 +70,6 @@
           "providing": "ct.framework.api.EventService"
         }
       ]
-    },
-    {
-      "name": "SymbolEditorProfile",
-      "impl": "./myDSA/SymbolEditorProfile",
-      "provides": "ProfileComponents",
-      "references": [
-        {
-          "name": "_registry",
-          "providing": "lr"
-        },
-        {
-          "name": "_logService",
-          "providing": "dsa.api.LogService"
-        },
-        {
-          "name": "_loadProfileHandler",
-          "providing": "LoadProfileHandler"
-        },
-        {
-          "name": "_eventService",
-          "providing": "ct.framework.api.EventService"
-        }
-      ]
-    },
-    {
-      "name": "LoadProfileHandler",
-      "impl": "./myDSA/LoadProfileHandler",
-      "provides": [
-        "ct.framework.api.EventHandler",
-        "LoadProfileHandler"
-      ],
-      "references": [],
-      "properties": {
-        "Event-Topics": [
-          {
-            "topic": "dsa/myThemesItems/loadingProfileReady",
-            "method": "_handleEvent"
-          }
-        ]
-      }
     }
   ]
 }

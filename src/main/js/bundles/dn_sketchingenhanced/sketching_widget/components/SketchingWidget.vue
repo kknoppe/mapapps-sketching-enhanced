@@ -68,16 +68,6 @@
             </v-flex>
         </v-expand-transition>
 
-        <v-expand-transition>
-            <v-flex v-show="layerEditorOpen">
-                <layer-editor :repository="repository"
-                              :i18n="i18n.layerEditor"
-                              :bus="eventBus"
-                              :currentActiveTool="currentActiveTool"
-                              :settings="settings">
-                </layer-editor>
-            </v-flex>
-        </v-expand-transition>
 
         <sketching-footer :i18n="i18n"
                           :toolIds="footerToolIds"
@@ -103,7 +93,6 @@
     import TextSetting from '../model/TextSetting';
     import i18n from 'dojo/i18n!../nls/bundle';
     import SimpleTextEditor from './text/SimpleTextEditor.vue';
-    import LayerEditor from './LayerEditor.vue';
 
     export default {
         mixins: [Bindable],
@@ -113,7 +102,6 @@
             'sketching-footer': SketchingFooter,
             'simple-text-editor': SimpleTextEditor,
             'simple-editor': SimpleEditor,
-            'layer-editor': LayerEditor,
             'construction-panel': ConstructionPanel,
         },
         data() {
@@ -124,7 +112,6 @@
                 symbolSettings: new PolygonSetting(),
                 constructionOn: false,
                 constructionTool: null,
-                layerEditorOpen: false,
                 currentActiveTool: null,
                 eventBus: this,
             };
@@ -212,15 +199,6 @@
              * @param tempId: Id of the clicked button tool
              */
             onToolClickHandler(tempId) {
-                // if sketch layer editor is clicked open or close it depending on current state
-                if(tempId === 'sketchinglayeradd'){
-                    this.layerEditorOpen = !this.layerEditorOpen;
-                    this.constructionOn = false;
-                    this.symbolEditorOpen = false;
-                    this.layerEditorOpen ? this._setWindowHeight('auto') : this._setWindowHeight('');
-                    return;
-                }
-
                 // use Tool Id to find the associated tool
                 const tool = this._getTool(tempId);
 
@@ -277,8 +255,6 @@
                 if(this.symbolEditorOpen) {
                     this._setWindowHeight('auto');
                     this._setSettings(tool);
-                    // close layer editor when opening symbol editor
-                    this.layerEditorOpen = false;
                 } else {
                     this._setWindowHeight('');
                 }

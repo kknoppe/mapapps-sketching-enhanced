@@ -36,9 +36,7 @@
             "omnisearch",
             "locator-store",
             "toc",
-            "dn_sketchingenhanced",
-            "sketching_widget",
-            "console"
+            "dn_sketchingenhanced"
         ],
         "require": [
             "${app}.app"
@@ -477,7 +475,7 @@
         },
         "themes": {
             "ThemeModel": {
-                "_selectedTheme": "everlasting"
+                "_selectedTheme": "winter"
             },
             "ThemeSelector": {
                 "componentEnabled": true

@@ -23,7 +23,7 @@
         props: {
             fillStyle: String,
             height: {type: Number, default: 20},
-            color: {type: String, default: '#000000'},
+            color: {type: String, default: document.body.classList.contains('everlasting') ? 'white' : 'black'},
             i18n: {type: Object, default: () => ({})},
         },
 
@@ -102,6 +102,6 @@
 
                 return this.fillStyle;
             },
-        },
+        }
     };
 </script>

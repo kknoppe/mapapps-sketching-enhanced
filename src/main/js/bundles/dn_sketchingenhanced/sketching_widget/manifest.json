@@ -1,6 +1,6 @@
 {
-  "name": "sketching_widget",
-  "version": "4.0.2",
+  "name": "dn_sketchingenhanced",
+  "version": "1.0.0",
   "dependencies": {
     "esri": "^4.6.0",
     "apprt-vue": "^4.6.0",
@@ -18,8 +18,7 @@
     {
       "name": "*",
       "files": [
-        "./css/sketching_widget.css",
-        "./css/layer_editor.css"
+        "./css/sketching_widget.css"
       ]
     }
   ],
@@ -35,7 +34,7 @@
           "r": 50,
           "t": 45,
           "h": 136,
-          "w": 315
+          "w": 275
         },
         "minSize": {
           "w": 260

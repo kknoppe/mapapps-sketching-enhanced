@@ -70,10 +70,15 @@ function SketchingHandler() {
 
             const view = viewModel.view;
             this.drag && this.drag.remove();
-            this.drag = view.on(['click', 'drag'], evt => {
-                evt.stopPropagation();
-            });
+
             const type = tool.type || "polygon";
+
+            if(type !== 'selectReshape' && type !== 'reshape') {
+                this.drag = view.on(['click', 'drag'], evt => {
+                    evt.stopPropagation();
+                });
+            }
+
             const mode = tool.mode || "";
             const eventService = this._eventService;
 

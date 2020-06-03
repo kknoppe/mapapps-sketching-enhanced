@@ -17,6 +17,4 @@ import './SketchingWidgetFactory';
 import './SetFonts';
 import './DrawTextHelpLine';
 import './SketchingDeactivationHandler';
-import './SketchingLayerEditor';
-import './SketchingLayerEventHandler';
 

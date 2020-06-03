@@ -187,6 +187,7 @@
     height: auto;
     padding: 4px !important;
     padding-bottom: 0 !important;
+    background: transparent!important;
 }
 
 .ctAppRoot .sketchingSymbolEditor .btnGroupSingleSymbol .main-icon {
@@ -243,6 +244,7 @@
     left: -10px!important;
     box-sizing: inherit!important;
     margin: 0 10px 0 10px !important;
+    background: transparent!important;
 }
 
 .ctAppRoot .sketchingSymbolEditor .simpleSymbolEditor {
@@ -347,3 +349,47 @@
     top: 1.1em;
     font-size: medium!important;
 }
+
+/* ----------------------------
+    construction icons
+---------------------------- */
+
+.icon.icon-polyline-construction {
+    background-image: url("../assets/polyline-construction.png");
+    height: 21px;
+    width: 23px;
+}
+.v-list__tile--disabled .icon.icon-polyline-construction {
+    background-image: url("../assets/polyline-construction-disabled.png");
+    height: 21px;
+    width: 23px;
+}
+.icon.icon-polygon-construction {
+    background-image: url("../assets/polygon-construction.png");
+    height: 23px;
+    width: 23px;
+}
+.v-list__tile--disabled .icon.icon-polygon-construction {
+    background-image: url("../assets/polygon-construction-disabled.png");
+    height: 23px;
+    width: 23px;
+}
+
+
+
+.everlasting .vue-base .grey.lighten-2 {
+    background-color: transparent!important;
+}
+.winter .vue-base .grey.lighten-2 {
+    background-color: transparent!important;
+}
+.summer .vue-base .grey.lighten-2 {
+    background-color: transparent!important;
+}
+.autumn .vue-base .grey.lighten-2 {
+    background-color: transparent!important;
+}
+.spring .vue-base .grey.lighten-2 {
+    background-color: transparent!important;
+}
+
