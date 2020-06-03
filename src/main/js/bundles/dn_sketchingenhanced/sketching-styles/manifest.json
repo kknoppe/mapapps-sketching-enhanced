@@ -1,0 +1,337 @@
+{
+  "name": "sketching-styles",
+  "version": "4.0.1",
+  "title": "Sketching Symbol Styles",
+  "description": "This bundle provides sketching symbol styles.",
+  "dependencies": {
+    "dataform": "^4.8.1",
+    "dataview": "^4.8.1",
+    "sketching-tools": "^4.0.0"
+  },
+  "productName": "map.apps",
+  "layout-widgets": [
+    {
+      "widgetRole": "sketchingStyleProperties",
+      "window": {
+        "dockTool": "stylePropertiesTool",
+        "tools": [
+          "help-sketchingStyleProperties-tool"
+        ],
+        "minimizeOnClose": true,
+        "marginBox": {
+          "t": 75,
+          "l": 490,
+          "h": 275,
+          "w": 555
+        }
+      }
+    }
+  ],
+  "components": [
+    {
+      "name": "StyleContext",
+      "provides": [
+        "sketching.StyleContext"
+      ],
+      "propertiesConstructor": true
+    },
+    {
+      "name": "StyleContextChangeController",
+      "provides": "sketching.StyleContextController",
+      "references": [
+        {
+          "name": "_sketchingHandler",
+          "providing": "sketching.SketchingHandler"
+        },
+        {
+          "name": "_styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesBufferTab",
+      "provides": [
+        "sketching.StylePropertiesTab"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "title": "${ui.styleProperties.buffer.title}",
+        "childId": "buffer"
+      },
+      "references": [
+        {
+          "name": "dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesTextTab",
+      "provides": [
+        "sketching.StylePropertiesTab"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "title": "${ui.styleProperties.text.title}",
+        "childId": "text",
+        "fontNames": [
+          "Arial",
+          "serif",
+          "monospace",
+          "fantasy",
+          "system-ui"
+        ]
+      },
+      "references": [
+        {
+          "name": "dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesFillTab",
+      "provides": [
+        "sketching.StylePropertiesTab"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "title": "${ui.styleProperties.symbol.fill.title}",
+        "childId": "fill"
+      },
+      "references": [
+        {
+          "name": "dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesLineTab",
+      "provides": [
+        "sketching.StylePropertiesTab"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "title": "${ui.styleProperties.symbol.stroke.title}",
+        "childId": "line"
+      },
+      "references": [
+        {
+          "name": "dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesMarkerTab",
+      "provides": [
+        "sketching.StylePropertiesTab"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "title": "${ui.styleProperties.marker.title}",
+        "childId": "marker"
+      },
+      "references": [
+        {
+          "name": "dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesUI",
+      "provides": [
+        "dijit.Widget",
+        "ct.framework.api.EventHandler"
+      ],
+      "propertiesConstructor": true,
+      "properties": {
+        "widgetRole": "sketchingStyleProperties",
+        "childOrder": [
+          "line",
+          "fill",
+          "text",
+          "marker",
+          "buffer"
+        ],
+        "_showChildrenArgs": [
+          [
+            "line",
+            "fill",
+            "text",
+            "marker",
+            "buffer"
+          ],
+          "line"
+        ],
+        "Event-Topics": [
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawbuffertool",
+              "ct/tool/ACTIVATE/drawselectionbuffertool"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "buffer"
+              ],
+              "buffer"
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawcopytool",
+              "ct/tool/ACTIVATE/drawselectioncopytool"
+            ],
+            "method": "showChildren",
+            "params": [
+              []
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawpointtool",
+              "ct/tool/ACTIVATE/drawmultipointtool"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "line",
+                "marker"
+              ],
+              "marker"
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawlinetool",
+              "ct/tool/ACTIVATE/drawpolylinetool",
+              "ct/tool/ACTIVATE/drawfreehandpolylinetool"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "line"
+              ],
+              "line"
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawpolygontool",
+              "ct/tool/ACTIVATE/drawfreehandpolygontool",
+              "ct/tool/ACTIVATE/drawextenttool",
+              "ct/tool/ACTIVATE/drawcircletool",
+              "ct/tool/ACTIVATE/drawellipsetool",
+              "ct/tool/ACTIVATE/drawrectangletool",
+              "ct/tool/ACTIVATE/drawarrowtool",
+              "ct/tool/ACTIVATE/drawleftarrowtool",
+              "ct/tool/ACTIVATE/drawrightarrowtool",
+              "ct/tool/ACTIVATE/drawuparrowtool",
+              "ct/tool/ACTIVATE/drawdownarrowtool",
+              "ct/tool/ACTIVATE/drawtriangletool"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "line",
+                "fill"
+              ],
+              "fill"
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawtexttool"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "text"
+              ],
+              "text"
+            ]
+          },
+          {
+            "topic": [
+              "ct/tool/ACTIVATE/drawtransformtool",
+              "ct/tool/ACTIVATE/drawtransform1tool",
+              "ct/tool/ACTIVATE/drawreshapetool",
+              "ct/tool/ACTIVATE/drawreshape1tool",
+              "ct/tool/ACTIVATE/drawreshape2tool",
+              "ct/sketching/MODIFY_ACTIVATE"
+            ],
+            "method": "showChildren",
+            "params": [
+              [
+                "line",
+                "fill",
+                "text",
+                "marker",
+                "buffer"
+              ],
+              "line"
+            ]
+          },
+          {
+            "topic": [
+              "ct/sketching/DEACTIVATE",
+              "ct/sketching/MODIFY_DEACTIVATE"
+            ],
+            "method": "removeChildren"
+          }
+        ]
+      },
+      "references": [
+        {
+          "name": "managedChild",
+          "providing": "sketching.StylePropertiesTab",
+          "cardinality": "1..n"
+        }
+      ]
+    },
+    {
+      "name": "StylePropertiesTool",
+      "provides": [
+        "ct.tools.Tool",
+        "sketching.StylePropertiesTool"
+      ],
+      "impl": "ct/tools/Tool",
+      "propertiesConstructor": true,
+      "properties": {
+        "id": "stylePropertiesTool",
+        "title": "${ui.styleProperties.tool.title}",
+        "tooltip": "${ui.styleProperties.tool.tooltip}",
+        "iconClass": "icon-cog",
+        "toolRole": "toolset",
+        "togglable": true,
+        "rules": {
+          "noGroup": true
+        }
+      }
+    }
+  ]
+}

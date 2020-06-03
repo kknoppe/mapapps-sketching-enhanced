@@ -1,0 +1,178 @@
+{
+  "name": "snapping-manager",
+  "version": "4.0.0",
+  "title": "Snapping Manager",
+  "dependencies": {
+    "map-widget": "^4.8.1",
+    "selection-services": "^4.8.1",
+    "sketching-tools": "^4.0.0",
+    "highlight": "^4.0.0"
+  },
+  "productName": "map.apps",
+  "components": [
+    {
+      "name": "Config",
+      "impl": "./SnappingManager",
+      "immediate": true,
+      "provides": [
+        "snapping-manager.Config",
+        "snapping-manager.SnappingManager"
+      ],
+      "properties": {
+        "alwaysSnap": true,
+        "snapKeys": [
+          "alt"
+        ],
+        "tolerance": 15,
+        "snapPointSymbol": {
+          "color": [
+            102,
+            205,
+            0,
+            100
+          ],
+          "size": 15,
+          "type": "esriSMS",
+          "style": "esriSMSCross",
+          "outline": {
+            "color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "width": 1,
+            "type": " esriSLS",
+            "style": "esriSLSSolid"
+          }
+        },
+        "snapPointObjectSymbol": {
+          "color": [
+            102,
+            205,
+            0,
+            100
+          ],
+          "size": 12,
+          "type": "esriSMS",
+          "style": "esriSMSCircle",
+          "outline": {
+            "color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "width": 1,
+            "type": " esriSLS",
+            "style": "esriSLSSolid"
+          }
+        },
+        "snapPolygonObjectSymbol": {
+          "type": "esriSFS",
+          "color": [
+            102,
+            205,
+            0,
+            100
+          ],
+          "outline": {
+            "color": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "style": "esriSLSSolid",
+            "type": "esriSLS",
+            "width": 1.3
+          },
+          "size": 16,
+          "style": "esriSFSSolid",
+          "xoffset": 0,
+          "yoffset": 0
+        },
+        "snapPolylineObjectSymbol": {
+          "color": [
+            102,
+            205,
+            0,
+            255
+          ],
+          "style": "esriSLSSolid",
+          "type": "esriSLS",
+          "width": 2.5
+        }
+      },
+      "references": [
+        {
+          "name": "_snappingSourceModel",
+          "providing": "snapping-manager.SnappingModel",
+          "cardinality": "0..n"
+        },
+        {
+          "name": "_highlightHandler",
+          "providing": "highlight.HighlightHandler"
+        },
+        {
+          "name": "_sketchingHandler",
+          "providing": "sketching.SketchingHandler"
+        }
+      ]
+    },
+    {
+      "name": "SnappingGraphicLayerSourceModel",
+      "provides": [
+        "sketching.Action",
+        "snapping-manager.SnappingModel",
+        "snapping-manager.SnappingGraphicLayerSourceModel"
+      ],
+      "properties": {
+        "maxLength": 0
+      },
+      "references": [
+        {
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
+        },
+        {
+          "name": "_toggleTool",
+          "providing": "ct.tools.Tool",
+          "filter": "(toggleSnappingSource=true)",
+          "cardinality": "0..n"
+        }
+      ]
+    },
+    {
+      "name": "SnappingSourceModel",
+      "provides": [
+        "snapping-manager.SnappingModel",
+        "snapping-manager.SnappingSourceModel"
+      ],
+      "properties": {
+        "maxLength": 0,
+        "stores": []
+      },
+      "references": [
+        {
+          "name": "_bindingSearchSources",
+          "providing": "searchsource-binding.BindingSearchSources"
+        },
+        {
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
+        },
+        {
+          "name": "_toggleTool",
+          "providing": "ct.tools.Tool",
+          "filter": "(toggleSnappingSource=true)",
+          "cardinality": "0..n"
+        },
+        {
+          "name": "_logService",
+          "providing": "ct.framework.api.LogService"
+        }
+      ]
+    }
+  ]
+}

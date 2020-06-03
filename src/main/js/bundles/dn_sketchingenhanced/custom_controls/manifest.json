@@ -1,0 +1,19 @@
+{
+  "name": "custom_controls",
+  "version": "4.0.9",
+  "description": "",
+  "bundle": false,
+  "CSS-Themes-Extension": [
+    {
+      "name": "*",
+      "files": [
+        "./css/DropZone.css",
+        "./css/ExpansionPage.css",
+        "./css/OverflowTooltip.css",
+        "./css/QuickFilter.css",
+        "./css/SizeSlider.css",
+        "./form/VueColor/css/all.css"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+/*
+ * Copyright (C) 2020 con terra GmbH (info@conterra.de)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/*** SKIP-SONARQUBE-ANALYSIS ***/
+import declare from "dojo/_base/declare";
+
+module.exports = declare([], {
+    createInstance: function () {
+        const dataformjson = this.dataformjson; // Defined in subclass
+        const dataformService = this.dataformService;
+        const widget = dataformService.createDataForm(dataformjson);
+        widget.title = this.title;
+        widget.childId = this.childId;
+        // create binding
+        const styleContext = this.styleContext;
+        // use StatefulBinding
+        const binding = dataformService.createBinding("object", {data: styleContext});
+        widget.set("dataBinding", binding);
+        return widget;
+    }
+});

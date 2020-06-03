@@ -36,7 +36,9 @@
             "omnisearch",
             "locator-store",
             "toc",
-            "dn_sketchingenhanced"
+            "dn_sketchingenhanced",
+            "sketching_widget",
+            "console"
         ],
         "require": [
             "${app}.app"
@@ -561,7 +563,8 @@
                             "sharelinkTool",
                             "helloTool",
                             "IMPRINT_Imprint_CustomInfoTool",
-                            "IMPRINT_Imprint_CustomInfoTool_mobile"
+                            "IMPRINT_Imprint_CustomInfoTool_mobile",
+                            "sketchingWidgetToggleTool"
                         ],
                         "registerWidget": {
                             "widgetRole": "drawer_button"
