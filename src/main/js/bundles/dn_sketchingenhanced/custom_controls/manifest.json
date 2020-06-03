@@ -7,10 +7,6 @@
     {
       "name": "*",
       "files": [
-        "./css/DropZone.css",
-        "./css/ExpansionPage.css",
-        "./css/OverflowTooltip.css",
-        "./css/QuickFilter.css",
         "./css/SizeSlider.css",
         "./form/VueColor/css/all.css"
       ]

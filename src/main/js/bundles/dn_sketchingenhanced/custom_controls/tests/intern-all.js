@@ -14,8 +14,5 @@
  * limitations under the License.
  */
 import './ActionButton';
-import './ConfirmationDialog';
-import './DropZone';
-import './TransparencySlider';
 import './SizeSlider';
-import './OverflowTooltip';
+

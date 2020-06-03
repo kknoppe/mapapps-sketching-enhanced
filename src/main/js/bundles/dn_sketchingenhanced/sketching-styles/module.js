@@ -16,12 +16,6 @@
 import '.';
 import './StyleContext';
 import './StyleContextChangeController';
-import './StylePropertiesBufferTab';
-import './StylePropertiesUI';
-import './StylePropertiesTextTab';
-import './StylePropertiesFillTab';
-import './StylePropertiesLineTab';
-import './StylePropertiesMarkerTab';
 import 'ct/tools/Tool';
 import 'ct/tools/ToolContainer';
 import 'dataview/DataView';

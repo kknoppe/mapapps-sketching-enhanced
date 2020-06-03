@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 import '.';
-import './SymbolEditorModel';
-import './SymbolEditorWidgetFactory';
-import './LayerRegistry';
+

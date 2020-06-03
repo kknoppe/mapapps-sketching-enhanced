@@ -17,4 +17,3 @@ import './SketchingWidgetFactory';
 import './SimpleTextEditor';
 import './ConstructionCheckbox';
 import './DrawTextHelpLine';
-import './SketchingLayerEditor';
