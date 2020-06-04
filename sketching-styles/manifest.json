@@ -1,0 +1,35 @@
+{
+  "name": "sketching-styles",
+  "version": "1.0.0",
+  "title": "Sketching Symbol Styles",
+  "description": "This bundle provides sketching symbol styles.",
+  "dependencies": {
+    "dataform": "^4.8.4",
+    "dataview": "^4.8.4",
+    "sketching-tools": "^1.0.0"
+  },
+  "productName": "map.apps",
+  "components": [
+    {
+      "name": "StyleContext",
+      "provides": [
+        "sketching.StyleContext"
+      ],
+      "propertiesConstructor": true
+    },
+    {
+      "name": "StyleContextChangeController",
+      "provides": "sketching.StyleContextController",
+      "references": [
+        {
+          "name": "_sketchingHandler",
+          "providing": "sketching.SketchingHandler"
+        },
+        {
+          "name": "_styleContext",
+          "providing": "sketching.StyleContext"
+        }
+      ]
+    }
+  ]
+}
