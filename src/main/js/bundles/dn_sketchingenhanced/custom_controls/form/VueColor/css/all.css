@@ -91,7 +91,7 @@
 }
 
 .ctAppRoot .vc-sketch-color-wrap .vc-checkerboard {
-    background-size: auto;
+    background-size: contain;
 }
 
 .ctAppRoot .vc-sketch-field {

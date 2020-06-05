@@ -310,7 +310,7 @@
     font-weight: bold;
 }
 .halo-button .main-icon{
-    text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
+    text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
     position: relative!important;
     bottom: 5px!important;
 }
