@@ -7,6 +7,7 @@ module.exports = {
         activeConstructionAngle: 'Winkel',
         turnOnVisibility: 'Messungen einblenden',
         turnOffVisibility: 'Messungen ausblenden',
+        enableMeasurements: 'Messen aktivieren',
         disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
         enableKeepMeasurements: 'Messungen beibehalten aktivieren',
         textEditor: {

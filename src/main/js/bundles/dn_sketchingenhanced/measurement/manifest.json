@@ -9,6 +9,7 @@
     {
       "name": "*",
       "files": [
+        "css/measurement.css"
       ]
     }
   ],

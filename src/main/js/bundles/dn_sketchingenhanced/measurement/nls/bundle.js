@@ -8,6 +8,7 @@ module.exports = {
             activeConstructionAngle: 'Angle',
             turnOnVisibility: 'Show measurements',
             turnOffVisibility: 'Hide measurements',
+            enableMeasurements: 'Enable measurements',
             disableKeepMeasurements: 'disable keeping measurements',
             enableKeepMeasurements: 'enable keeping measurements',
             textEditor: {

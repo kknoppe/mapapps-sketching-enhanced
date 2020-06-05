@@ -34,7 +34,7 @@
         "marginBox": {
           "r": 50,
           "t": 45,
-          "h": 136,
+          "h": 184,
           "w": 275
         },
         "minSize": {
@@ -145,6 +145,10 @@
         {
           "name": "_drawFurtherGeometries",
           "providing": "sketching.DrawFurtherGeometries"
+        },
+        {
+          "name": "_measurementController",
+          "providing": "measurement.MeasurementController"
         }
       ]
     },

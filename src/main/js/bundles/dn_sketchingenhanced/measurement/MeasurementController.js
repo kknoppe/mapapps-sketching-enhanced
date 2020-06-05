@@ -18,7 +18,7 @@ export default class MeasurementController {
         this.radiusPath = null;
         this.multiMeasurement = false;
 
-        this.measurementBoolean = true;
+        this.measurementBoolean = false;
     }
 
     handler(evt) {
@@ -27,7 +27,7 @@ export default class MeasurementController {
         this._removeTemporaryMeasurements(evt);
 
 
-        if(evt.state === 'start' && !this.multiMeasurement && this.measurementBoolean) {
+        if(evt.state === 'start' && !this.multiMeasurement && this.measurementBoolean && (evt.tool && evt.tool !== 'reshape')) {
             this._removeAll(evt);
         }
 
@@ -35,10 +35,30 @@ export default class MeasurementController {
         // calculate area (and circumference for circles & ellipsis)
         if (evt.state === 'complete' && this.measurementBoolean) {
             this._oldVertex = null;
-            if(evt.tool !== 'polyline') {
-                this._calculatePolygonMeasurements(evt);
+            if(evt.tool === 'point') {
+                return;
+            } else if(evt.tool === 'reshape') {
+                if(evt.graphics[0].geometry.type === 'point')  {
+                    return;
+                }
+                const newEvent = evt;
+                evt.graphics.forEach(graphic => {
+                    newEvent.graphic = graphic;
+                    if (evt.graphics[0].geometry.type !== 'polyline') {
+                        this._calculatePolygonMeasurements(newEvent);
+                    } else {
+                        this._calculateTotalLineMeasurement(newEvent);
+                    }
+                });
+
             } else {
-                this._calculateTotalLineMeasurement(evt);
+
+                if (evt.tool !== 'polyline') {
+                    this._calculatePolygonMeasurements(evt);
+                } else {
+                    this._calculateTotalLineMeasurement(evt);
+                }
+
             }
         }
 
@@ -230,7 +250,7 @@ export default class MeasurementController {
      */
     _calculatePathLength(evt) {
         // add length labeling for polyline elements
-        if(evt.graphic.geometry.type === 'polyline') {
+        if(evt.graphic && evt.graphic.geometry.type === 'polyline') {
             this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0]);
         }
         // add temporary labeling for polygon elements

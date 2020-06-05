@@ -26,6 +26,9 @@ module.exports = {
         notAddNewSketchingLayer: 'Kein Tool ausgewählt',
         layerLimitReached: 'Maximale Layerzahl erreicht',
         profileLoaded: 'Aufzeichnung aktiv',
+        enableMeasurements: 'Messen aktivieren',
+        disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
+        enableKeepMeasurements: 'Messungen beibehalten aktivieren',
         textEditor: {
             bold: 'Fett',
             italic: 'Kursiv',
