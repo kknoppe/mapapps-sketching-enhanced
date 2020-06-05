@@ -11,7 +11,8 @@
     "sketching-styles": "^1.0.0",
     "tool-binding": "^1.0.0",
     "snapping-manager": "^1.0.0",
-    "symboleditor": "^1.0.0"
+    "symboleditor": "^1.0.0",
+    "measurement": "^1.0.0"
   },
   "main": "",
   "CSS-Themes-Extension": [
