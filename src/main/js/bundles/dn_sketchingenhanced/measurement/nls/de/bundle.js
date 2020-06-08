@@ -1,31 +1,12 @@
-/*
- * Copyright (C) 2020 con terra GmbH (info@conterra.de)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 module.exports = {
-    bundleName: 'Sketching',
+    bundleName: 'Measurement',
     bundleDescription: '',
     ui: {
-        windowTitle: 'Zeichnen',
+        windowTitle: 'Messen',
         activeConstructionLength: 'Länge',
         activeConstructionAngle: 'Winkel',
-        turnOnVisibility: 'Zeichnungen einblenden',
-        turnOffVisibility: 'Zeichnungen ausblenden',
-        addNewSketchingLayer: 'Neuen Layer anlegen',
-        notAddNewSketchingLayer: 'Kein Tool ausgewählt',
-        layerLimitReached: 'Maximale Layerzahl erreicht',
-        profileLoaded: 'Aufzeichnung aktiv',
+        turnOnVisibility: 'Messungen einblenden',
+        turnOffVisibility: 'Messungen ausblenden',
         enableMeasurements: 'Messen aktivieren',
         disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
         enableKeepMeasurements: 'Messungen beibehalten aktivieren',
@@ -100,7 +81,7 @@ module.exports = {
             },
         },
         layerEditor: {
-            header: 'Sketching-Layer-Übersicht',
+            header: 'myDSA-Profilübersicht',
             noProfiles: 'Es wurden noch keine Sketching-Layer angelegt.',
             noProfileTemplates: 'Es wurden noch keine Vorlagen angelegt.',
             allProfilesFiltered: 'Zu dem Filter sind keine Layer vorhanden.',
@@ -121,10 +102,6 @@ module.exports = {
             tooltip_sort: 'Liste sortieren',
             tooltip_selection_start: 'Mehrfachauswahl einschalten',
             tooltip_selection_stop: 'Mehrfachauswahl ausschalten',
-            tooltip_addToMyThemes: 'In Meine Themen laden',
-            tooltip_removeFromMyThemes: 'Aus Meine Themen entfernen',
-            tooltip_recordInLayer: 'In Layer aufzeichnen',
-            tooltip_pauseRecordingInLayer: 'Aufzeichnung beenden',
 
             // Profile properties
             createdAt: 'Erstellt am ${p1}, ${p2} Uhr', //NOSONAR
@@ -136,10 +113,10 @@ module.exports = {
             profileStore: 'Layerspeicher',
 
             // Edit page
-            editProfile_header: 'Neuen Layer anlegen',
+            editProfile_header: 'Neues Profil anlegen',
             editProfile_saveAs: 'Anlegen als',
             editProfile_optPersonal: 'Persönliche Vorlage',
-            editProfile_optTemplate: 'Layervorlage',
+            editProfile_optTemplate: 'Profilvorlage',
             editProfile_optional: 'optional',
             editProfile_setAsDefault: 'Als Standardprofil festlegen',
             copy_appendix: ' (Kopie)',
@@ -147,7 +124,7 @@ module.exports = {
             // Rules
             title_required: 'Name ist ein Pflichtfeld',
             title_maxlength: 'Maximal ${p1} Zeichen erlaubt', //NOSONAR
-            title_unique: 'Es gibt bereits einen Layer mit diesem Namen!',
+            title_unique: 'Es gibt bereits ein Profil mit diesem Namen!',
             description_maxlength: 'Maximal ${p1} Zeichen erlaubt', //NOSONAR
 
             // Delete dialog
@@ -159,8 +136,8 @@ module.exports = {
             deleteProfile_cancel: 'Abbrechen',
 
             // Set as default profile dialog
-            setAsDefaultProfile_header: 'Layer als Standard setzen?',
-            setAsDefaultProfile_text: 'Möchten Sie wirklich den Layer "${p1}" als Standard setzen?', //NOSONAR
+            setAsDefaultProfile_header: 'Profil als Standard setzen?',
+            setAsDefaultProfile_text: 'Möchten Sie wirklich das Profil "${p1}" als Standard setzen?', //NOSONAR
             setAsDefaultProfile_confirm: 'Ja',
             setAsDefaultProfile_cancel: 'Abbrechen',
 
@@ -169,22 +146,26 @@ module.exports = {
             sort_creationdate: 'Nach Erstellungsdatum',
 
             // Import page
-            importProfile_header: 'Layer importieren',
+            importProfile_header: 'Profil importieren',
             importProfile_cancel: 'Abbrechen',
             importProfile_invalidFile: 'Ungültige Datei!',
 
             // Download page
-            downloadProfile_header: 'Layer exportieren',
+            downloadProfile_header: 'Profil exportieren',
             downloadProfile_cancel: 'Abbrechen',
             downloadProfile_filename: 'Dateiname',
             downloadProfile_emptyFilename: 'Der Dateiname darf nicht leer sein!',
             downloadProfile_invalidFilename: 'Der Dateiname ist ungültig!',
-            downloadProfile_summary_single: 'Der folgende Layer wird exportiert:',
-            downloadProfile_summary: 'Die folgenden ${p1} Layer werden exportiert:', //NOSONAR
-        },
+            downloadProfile_summary_single: 'Das folgende Profil wird exportiert:',
+            downloadProfile_summary: 'Die folgenden ${p1} Profile werden exportiert:', //NOSONAR
+        }
     },
     tool: {
-        title: 'Zeichnen',
-        tooltip: 'Zeichenwerkzeuge',
+        title: 'Messen',
+        tooltip: 'Messwerkzeuge',
     },
+    totalLength: 'Gesamtlänge',
+    area: 'Fläche',
+    circumference: 'Umfang',
+    locale: 'de-de',
 };

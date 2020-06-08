@@ -32,6 +32,7 @@ export default class SketchingWidgetFactory {
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
         vm.footerToolIds = props.footerToolIds;
+        vm.measurementBoolean = this._measurementController.measurementBoolean;
 
         Object.assign(vm, {
             constructionModel: this._constructionModel,
@@ -43,6 +44,14 @@ export default class SketchingWidgetFactory {
         const allTools = tools.operator.concat(tools.draw).concat(tools.edit);
 
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
+
+        vm.$on('measurementStatusChanged', val => {
+           this._measurementController.measurementBoolean = val;
+        });
+
+        vm.$on('changeMultiMeasurementState', val => {
+           this._measurementController.multiMeasurement = val;
+        });
 
         vm.$on('settingsSelectionChanged', settings => {
             this._activateHelpLine(settings);

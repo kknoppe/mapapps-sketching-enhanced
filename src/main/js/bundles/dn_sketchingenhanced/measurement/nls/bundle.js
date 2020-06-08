@@ -1,32 +1,13 @@
-/*
- * Copyright (C) 2020 con terra GmbH (info@conterra.de)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 module.exports = {
     root: ({
         bundleName: 'Sketching',
         bundleDescription: '',
         ui: {
-            windowTitle: 'Sketching',
+            windowTitle: 'Measurement',
             activeConstructionLength: 'Length',
             activeConstructionAngle: 'Angle',
-            turnOnVisibility: 'Show drawings',
-            turnOffVisibility: 'Hide drawings',
-            addNewSketchingLayer: 'Create new layer',
-            notAddNewSketchingLayer: 'No Tool selected',
-            layerLimitReached: 'Layer limit reached',
-            profileLoaded: 'Currently recording',
+            turnOnVisibility: 'Show measurements',
+            turnOffVisibility: 'Hide measurements',
             enableMeasurements: 'Enable measurements',
             disableKeepMeasurements: 'disable keeping measurements',
             enableKeepMeasurements: 'enable keeping measurements',
@@ -100,7 +81,7 @@ module.exports = {
                 },
             },
             layerEditor: {
-                header: 'Sketching Layer',
+                header: 'myDSA Profiles',
                 noProfiles: 'No profiles defined yet.',
                 noProfileTemplates: 'No profile templates defined yet.',
                 allProfilesFiltered: 'All profiles have been filtered.',
@@ -110,21 +91,17 @@ module.exports = {
 
                 // Tooltips
                 tooltip_import: 'Import',
-                tooltip_addProfile: 'Create a new Layer',
-                tooltip_edit: 'Rename Layer',
+                tooltip_addProfile: 'Create a new Profile',
+                tooltip_edit: 'Rename Profile',
                 tooltip_edit_save: 'Save',
                 tooltip_edit_cancel: 'Cancel',
-                tooltip_delete: 'Delete Layer',
-                tooltip_copy: 'Copy Layer',
-                tooltip_setAsDefault: 'Set Layer as default',
-                tooltip_download: 'Export Layer',
+                tooltip_delete: 'Delete Profile',
+                tooltip_copy: 'Copy Profile',
+                tooltip_setAsDefault: 'Set Profile as default',
+                tooltip_download: 'Export Profile',
                 tooltip_sort: 'Sort list',
                 tooltip_selection_start: 'Start selection mode',
                 tooltip_selection_stop: 'Stop selection mode',
-                tooltip_addToMyThemes: 'Add to MyThemes',
-                tooltip_removeFromMyThemes: 'Remove from MyThemes',
-                tooltip_recordInLayer: 'Record into Layer',
-                tooltip_pauseRecordingInLayer: 'Stop Recording',
 
                 // Profile properties
                 createdAt: 'Created at ${p1} ${p2}', //NOSONAR
@@ -136,7 +113,7 @@ module.exports = {
                 profileStore: 'Capacity',
 
                 // Edit page
-                editProfile_header: 'Create a new Layer',
+                editProfile_header: 'Create a new Profile',
                 editProfile_saveAs: 'Save as',
                 editProfile_optPersonal: 'Personal Template',
                 editProfile_optTemplate: 'Template',
@@ -151,15 +128,15 @@ module.exports = {
                 description_maxlength: 'Max ${p1} characters allowed', //NOSONAR
 
                 // Delete dialog
-                deleteProfile_header: 'Delete Layer?',
+                deleteProfile_header: 'Delete Profile?',
                 deleteProfile_text: 'Do you really want to delete the profile "${p1}"? This process cannot be undone.', //NOSONAR
-                deleteProfile_multiheader: 'Delete Layers?',
+                deleteProfile_multiheader: 'Delete Profiles?',
                 deleteProfile_multitext: 'Do you really want to delete these ${p1} profiles? This process cannot be undone.', //NOSONAR
                 deleteProfile_confirm: 'Yes',
                 deleteProfile_cancel: 'Cancel',
 
                 // Set as default profile dialog
-                setAsDefaultProfile_header: 'Set Layer as default?',
+                setAsDefaultProfile_header: 'Set Profile as default?',
                 setAsDefaultProfile_text: 'Do you really want to set the profile "${p1}" as default?', //NOSONAR
                 setAsDefaultProfile_confirm: 'Yes',
                 setAsDefaultProfile_cancel: 'Cancel',
@@ -169,24 +146,28 @@ module.exports = {
                 sort_creationdate: 'By Date',
 
                 // Import page
-                importProfile_header: 'Import Layer',
+                importProfile_header: 'Import Profile',
                 importProfile_cancel: 'Cancel',
                 importProfile_invalidFile: 'Invalid file!',
 
                 // Download page
-                downloadProfile_header: 'Download Layer',
+                downloadProfile_header: 'Download Profile',
                 downloadProfile_cancel: 'Cancel',
                 downloadProfile_filename: 'File name',
                 downloadProfile_emptyFilename: 'File name is required!',
                 downloadProfile_invalidFilename: 'Invalid file name!',
                 downloadProfile_summary_single: 'The following profile will be exported:',
                 downloadProfile_summary: 'The following ${p1} profiles will be exported:', //NOSONAR
-            },
+            }
         },
         tool: {
-            title: 'Sketching',
-            tooltip: 'Sketching Tools',
+            title: 'Measurement',
+            tooltip: 'Measurement Tools',
         },
+        totalLength: 'Total length',
+        area: 'Area',
+        circumference: 'Circumference',
+        locale: 'en-en',
     }),
     'de': true,
 };
