@@ -23,6 +23,8 @@
         "sketching.Action"
       ],
       "properties": {
+          "decimalPlacesMeter": 1,
+          "decimalPlacesKiloMeter": 2,
           "sketch": {
               "textSymbol": {
                   "type": "esriTS",

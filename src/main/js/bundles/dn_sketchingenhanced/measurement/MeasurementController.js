@@ -11,6 +11,8 @@ export default class MeasurementController {
         this.geoEngine = geoEngine;
         this._oldVertex = null;
         const props = this._properties;
+        this.mDecimal = props.decimalPlacesMeter;
+        this.kmDecimal = props.decimalPlacesKiloMeter;
         this.textSettings = props.sketch.textSymbol;
         this.lineSettings = props.sketch.polylineSymbol;
 
@@ -174,9 +176,9 @@ export default class MeasurementController {
      * @private
      */
     _getLength(geometry) {
-        const length = Math.round(this.geoEngine.planarLength(geometry,'meters') *100) / 100;
+        const length = Math.round(this.geoEngine.planarLength(geometry,'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
         return length > 1000 ?
-            `${(Math.round(this.geoEngine.planarLength(geometry,'kilometers')*100)/100).toLocaleString(i18n.locale)} km` :
+            `${(Math.round(this.geoEngine.planarLength(geometry,'kilometers')*Math.pow(10, this.kmDecimal))/Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
             `${length.toLocaleString(i18n.locale)} m`;
     }
 
@@ -187,9 +189,9 @@ export default class MeasurementController {
      * @private
      */
     _getArea(geometry) {
-        const area = Math.round(this.geoEngine.planarArea(geometry, 'square-meters')*100)/100;
+        const area = Math.round(this.geoEngine.planarArea(geometry, 'square-meters')* Math.pow(10, this.mDecimal))/Math.pow(10, this.mDecimal);
         return area > 1000000 ?
-            `${Math.round(this.geoEngine.planarArea(geometry,'square-kilometers')*100/100).toLocaleString(i18n.locale)} km²` :
+            `${(Math.round(this.geoEngine.planarArea(geometry,'square-kilometers')*Math.pow(10, this.kmDecimal))/Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
             `${area.toLocaleString(i18n.locale)} m²`;
     }
 
