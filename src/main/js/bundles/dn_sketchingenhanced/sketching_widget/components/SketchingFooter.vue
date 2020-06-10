@@ -45,6 +45,11 @@
                 visible: true,
             };
         },
+        mounted() {
+            this.bus.$on('sketchingLayerVisibilityChanged', val => {
+                this.visible = val;
+            });
+        },
         props: {
             i18n: {
                 type: Object,

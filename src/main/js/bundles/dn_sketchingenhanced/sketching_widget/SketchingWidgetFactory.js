@@ -16,7 +16,7 @@
 import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
 import SketchingWidget from './components/SketchingWidget.vue';
-import {whenOnce} from 'esri/core/watchUtils';
+import {whenOnce, watch} from 'esri/core/watchUtils';
 
 export default class SketchingWidgetFactory {
 
@@ -59,6 +59,16 @@ export default class SketchingWidgetFactory {
                    this._mapWidgetModel.view.map.layers.items[index].visible = visible;
                });
            });
+        });
+
+        // watch on changes in sketching layer visibility from somewhere else (e.g. ToC)
+        whenOnce(this._mapWidgetModel, 'ready', () => {
+            whenOnce(this._mapWidgetModel.view, 'ready', () => {
+                const index = this._mapWidgetModel.view.map.layers.items.findIndex(item => item.id === this._sketchingHandler._properties.graphicLayerId);
+                watch(this._mapWidgetModel.view.map.layers.items[index], 'visible', val => {
+                    vm.$emit('sketchingLayerVisibilityChanged', val)
+                });
+            });
         });
 
         const that = this;
