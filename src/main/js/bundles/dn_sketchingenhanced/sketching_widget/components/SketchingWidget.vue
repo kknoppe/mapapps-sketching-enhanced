@@ -77,6 +77,8 @@
                           @toggleSketchingLayerVisibility="toggleVisibility"
                           @onToolClick="onToolClickHandler">
         </sketching-footer>
+
+        <measurement-footer :measurementBoolean.sync="enableMeasurement" :i18n="i18n" :bus="eventBus"></measurement-footer>
     </v-container>
 
 </template>
@@ -93,16 +95,19 @@
     import TextSetting from '../model/TextSetting';
     import i18n from 'dojo/i18n!../nls/bundle';
     import SimpleTextEditor from './text/SimpleTextEditor.vue';
+    import MeasurementFooter from '../../measurement/MeasurementFooter.vue';
 
     export default {
         mixins: [Bindable],
         components: {
+            MeasurementFooter,
             'tool-button': ToolButton,
             'menu-button': MenuButton,
             'sketching-footer': SketchingFooter,
             'simple-text-editor': SimpleTextEditor,
             'simple-editor': SimpleEditor,
             'construction-panel': ConstructionPanel,
+            'measurement-footer': MeasurementFooter,
         },
         data() {
             return {
@@ -155,6 +160,9 @@
             disabled: {
                 type: Array,
             },
+            measurementBoolean: {
+                type: Boolean,
+            },
         },
         computed: {
             firstTools() {
@@ -174,6 +182,14 @@
                 this.currentActiveTool = isToolActive ? this.tools.filter(item => item.active)[0] : null;
                 return isToolActive;
             },
+            enableMeasurement: {
+                get()  {
+                    return this.measurementBoolean;
+                },
+                set(value) {
+                    this.$emit('measurementStatusChanged', value);
+                }
+            }
         },
         watch: {
             openEditorFromReshapeTool(val) {

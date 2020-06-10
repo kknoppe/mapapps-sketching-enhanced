@@ -11,7 +11,8 @@
     "sketching-styles": "^1.0.0",
     "tool-binding": "^1.0.0",
     "snapping-manager": "^1.0.0",
-    "symboleditor": "^1.0.0"
+    "symboleditor": "^1.0.0",
+    "measurement": "^1.0.0"
   },
   "main": "",
   "CSS-Themes-Extension": [
@@ -33,7 +34,7 @@
         "marginBox": {
           "r": 50,
           "t": 45,
-          "h": 136,
+          "h": 184,
           "w": 275
         },
         "minSize": {
@@ -144,6 +145,10 @@
         {
           "name": "_drawFurtherGeometries",
           "providing": "sketching.DrawFurtherGeometries"
+        },
+        {
+          "name": "_measurementController",
+          "providing": "measurement.MeasurementController"
         }
       ]
     },
