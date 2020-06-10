@@ -34,6 +34,8 @@ export default class SketchingWidgetFactory {
         vm.footerToolIds = props.footerToolIds;
         vm.measurementBoolean = this._measurementController.measurementBoolean;
 
+        vm.measurement = props.measurement;
+
         Object.assign(vm, {
             constructionModel: this._constructionModel,
         });

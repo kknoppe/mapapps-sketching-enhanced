@@ -78,7 +78,7 @@
                           @onToolClick="onToolClickHandler">
         </sketching-footer>
 
-        <measurement-footer :measurementBoolean.sync="enableMeasurement" :i18n="i18n" :bus="eventBus"></measurement-footer>
+        <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :i18n="i18n" :bus="eventBus"></measurement-footer>
     </v-container>
 
 </template>
@@ -161,6 +161,9 @@
                 type: Array,
             },
             measurementBoolean: {
+                type: Boolean,
+            },
+            measurement: {
                 type: Boolean,
             },
         },
