@@ -21,6 +21,8 @@ export default class MeasurementController {
         this.multiMeasurement = false;
 
         this.measurementBoolean = false;
+
+        this.sketchGroup = 0;
     }
 
     handler(evt) {
@@ -34,27 +36,38 @@ export default class MeasurementController {
         }
 
 
+        if(evt.state === 'start' && this.measurementBoolean) {
+            // increase the group classification when start creating a new geometry or reshape an old one, so that the correlated measurements can be deleted on reshape
+            this.sketchGroup++;
+        }
+
         // calculate area (and circumference for circles & ellipsis)
         if (evt.state === 'complete' && this.measurementBoolean) {
             this._oldVertex = null;
+
             if(evt.tool === 'point') {
                 return;
-            } else if(evt.tool === 'reshape') {
+            } else if(evt.tool === 'reshape' || evt.tool === 'transform') {
+                // add all measurements after completion of a reshape operation
                 if(evt.graphics[0].geometry.type === 'point')  {
                     return;
                 }
                 const newEvent = evt;
                 evt.graphics.forEach(graphic => {
+                    graphic.group = this.sketchGroup;
                     newEvent.graphic = graphic;
                     if (evt.graphics[0].geometry.type !== 'polyline') {
                         this._calculatePolygonMeasurements(newEvent);
                     } else {
+                        this._addLineMeasurementsToPolylines(newEvent);
                         this._calculateTotalLineMeasurement(newEvent);
                     }
                 });
 
             } else {
-
+                if(evt.graphic) {
+                    evt.graphic.group = this.sketchGroup;
+                }
                 if (evt.tool !== 'polyline') {
                     this._calculatePolygonMeasurements(evt);
                 } else {
@@ -83,15 +96,37 @@ export default class MeasurementController {
         if(!this.measurementBoolean) {
             return;
         }
+
+        const type = evt.toolEventInfo.type;
+
         // calculate length of lines (elements of polylines & polygons)
-        if (evt.toolEventInfo.type === 'vertex-add' ) {
+        if (type === 'vertex-add' ) {
             // write length of lines
             this._calculatePathLength(evt);
         }
 
-        if (evt.toolEventInfo.type === 'cursor-update') {
+        if (type === 'cursor-update') {
             this._checkIfPositionHasChanged(evt);
         }
+
+        if (type === 'reshape-start' || type === 'move-start' || type === 'rotate-start' || type === 'scale-start') {
+            this._removeCorrelatedMeasurementTexts(evt);
+        }
+    }
+
+    /**
+     * remove all measurement texts that are correlated to the selected geometry
+     * @param evt
+     * @private
+     */
+    _removeCorrelatedMeasurementTexts(evt) {
+        const graphicGroup = evt.graphics[0].group;
+
+        const viewModel = evt.target;
+        const graphics = viewModel.layer.graphics.items;
+        const gs = graphics.filter(x => x.symbol && x.symbol.group === graphicGroup);
+
+        viewModel.layer.removeMany(gs);
     }
 
     /**
@@ -162,6 +197,7 @@ export default class MeasurementController {
             yoffset: yOffset,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
+            group: this.sketchGroup,
         });
 
 
@@ -307,6 +343,7 @@ export default class MeasurementController {
             color: this.lineSettings.color,
             width: this.lineSettings.width,
             style: this.lineSettings.style,
+            group: this.sketchGroup,
         };
         const lineGraphic = new Graphic({
             geometry: line,
@@ -342,6 +379,7 @@ export default class MeasurementController {
             font: this.textSettings.font,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
+            group: this.sketchGroup,
         });
         return new Graphic(pnt, textSymbol);
     }
@@ -381,6 +419,23 @@ export default class MeasurementController {
         }
     }
 
+    /**
+     * add line measurements to a polyline after reshaping
+     * @param evt
+     * @private
+     */
+    _addLineMeasurementsToPolylines(evt) {
+        const viewModel = evt.target;
+        const spatialReference = viewModel.view.spatialReference;
+
+        const paths = evt.graphic.geometry.paths[0];
+        for (let i = 1; i < paths.length; i++) {
+            const checkedPath = [paths[i-1], paths[i]];
+            const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, false);
+            viewModel.layer.add(graphic);
+        }
+    }
+
     _getHorizontalAlignmentForCircle() {
         return this.radiusPath[0][0]-this.radiusPath[1][0] < 0 ? 'left' : 'right';
     }
@@ -408,6 +463,7 @@ export default class MeasurementController {
             horizontalAlignment: textPosition,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
+            group: this.sketchGroup,
         });
         return new Graphic(pnt, textSymbol);
     }

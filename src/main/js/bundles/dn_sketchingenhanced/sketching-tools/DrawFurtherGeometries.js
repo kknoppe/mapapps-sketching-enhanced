@@ -49,6 +49,17 @@ export default class DrawFurtherGeometries {
 
         const listener = this._createMouseUpListener(viewModel);
 
+        action.on(['vertex-add'], event => {
+            if(event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawellipsetool') {
+                viewModel.emit('create', {
+                    state: 'start',
+                    type: 'update',
+                    tool: 'drawellipsetool',
+                });
+            }
+        });
+
+
         action.on(['draw-complete', 'cursor-update'], event => {
             this._drawCompleteActions(event,listener);
 
@@ -93,6 +104,18 @@ export default class DrawFurtherGeometries {
         this._changeCursor();
 
         const listener = this._createMouseUpListener(viewModel);
+
+
+        triangle.on(['vertex-add'], event => {
+            if(event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
+                viewModel.emit('create', {
+                    state: 'start',
+                    type: 'update',
+                    tool: 'drawtriangletool',
+                });
+            }
+        });
+
 
         triangle.on(['draw-complete', 'cursor-update'], event => {
             this._drawCompleteActions(event,listener);
