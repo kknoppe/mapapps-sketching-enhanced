@@ -125,7 +125,8 @@
                     const firstIndex = currentClass.indexOf('icon-');
                     const lastIndex = currentClass.indexOf(' ', firstIndex+1);
                     const oldClassName = currentClass.substr(firstIndex, lastIndex-firstIndex);
-                    icon.parentElement.children[0].children[0].children[0].children[0].className = currentClass.replace(oldClassName, newTool.iconClass);
+                    const newIconClassName = newTool.iconClass.indexOf('construction') !== -1 && document.body.classList.contains('everlasting') ? `${newTool.iconClass}-white` : newTool.iconClass;
+                    icon.parentElement.children[0].children[0].children[0].children[0].className = currentClass.replace(oldClassName, newIconClassName);
                 }
             },
         },

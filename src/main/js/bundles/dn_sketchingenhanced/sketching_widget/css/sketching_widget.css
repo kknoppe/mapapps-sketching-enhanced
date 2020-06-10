@@ -359,6 +359,11 @@
     height: 21px;
     width: 23px;
 }
+.icon.icon-polyline-construction-white {
+    background-image: url("../assets/polyline-construction_white.png");
+    height: 21px;
+    width: 23px;
+}
 .v-list__tile--disabled .icon.icon-polyline-construction {
     background-image: url("../assets/polyline-construction-disabled.png");
     height: 21px;
@@ -366,6 +371,11 @@
 }
 .icon.icon-polygon-construction {
     background-image: url("../assets/polygon-construction.png");
+    height: 23px;
+    width: 23px;
+}
+.icon.icon-polygon-construction-white {
+    background-image: url("../assets/polygon-construction_white.png");
     height: 23px;
     width: 23px;
 }
