@@ -542,7 +542,8 @@
                             "zoomOutTool",
                             "compassTool",
                             "restoreInitialViewTool",
-                            "viewmodeSwitcherTool"
+                            "viewmodeSwitcherTool",
+                            "sketchingWidgetToggleTool"
                         ],
                         "registerWidget": {
                             "widgetRole": "mapview_tools"
