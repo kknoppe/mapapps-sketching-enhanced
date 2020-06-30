@@ -22,10 +22,10 @@
     </div>
 </template>
 <script>
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     export default {
         components: {
-            'color-picker': VueColor.Sketch,
+            'color-picker': Sketch,
         },
         props: {
             color: Object,

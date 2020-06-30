@@ -110,7 +110,7 @@
 </template>
 
 <script>
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     import EditorButton from 'symboleditor/components/symbol/EditorButton.vue';
     import TextSizePicker from './TextSizePicker.vue';
     import TextStylePicker from './TextStylePicker.vue';
@@ -127,7 +127,7 @@
             TextBlurPicker,
             TextAnglePicker,
             EditorButton,
-            'color-picker': VueColor.Sketch,
+            'color-picker': Sketch,
         },
 
         props: {

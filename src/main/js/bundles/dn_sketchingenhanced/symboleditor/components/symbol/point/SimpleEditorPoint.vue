@@ -76,7 +76,7 @@
 </template>
 
 <script>
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     import PointShapePicker from './PointShapePicker.vue';
     import PointShape from './PointShape.vue';
     import EditorButton from '../EditorButton.vue';
@@ -84,7 +84,7 @@
 
     export default {
         components: {
-            'color-picker': VueColor.Sketch,
+            'color-picker': Sketch,
             'size-slider': SizeSlider,
             EditorButton,
             PointShape,

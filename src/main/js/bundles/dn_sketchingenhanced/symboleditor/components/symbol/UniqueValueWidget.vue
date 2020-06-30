@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     import SimpleEditor from './SimpleEditor.vue';
     import PreviewButton from './PreviewButton.vue';
     import SymbolCategory from '../../model/SymbolCategory';
@@ -41,7 +41,7 @@
     export default {
 
         components: {
-            ColorPicker: VueColor.Sketch,
+            ColorPicker: Sketch,
             SimpleEditor,
             PreviewButton,
         },

@@ -26,14 +26,14 @@
 </template>
 
 <script>
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
     import LineEditorButtons from './LineEditorButtons.vue';
     import LineEditor from './LineEditor.vue';
 
     export default {
         components: {
-            'color-picker': VueColor.Sketch,
+            'color-picker': Sketch,
             LineEditor,
             LineEditorButtons,
             LineStylePicker,

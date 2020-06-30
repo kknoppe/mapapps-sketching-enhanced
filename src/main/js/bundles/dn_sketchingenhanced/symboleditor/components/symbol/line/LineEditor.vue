@@ -36,13 +36,13 @@
 
 <script>
     import LineSetting from '../../../model/LineSetting';
-    import VueColor from 'custom_controls/form/VueColor/index';
+    import { Sketch } from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
     import SizeSlider from 'custom_controls/input/SizeSlider.vue';
 
     export default {
         components: {
-            'color-picker': VueColor.Sketch,
+            'color-picker': Sketch,
             'size-slider': SizeSlider,
             LineStylePicker,
         },
