@@ -18,4 +18,5 @@ import './SketchingToolHandler';
 import './SetFonts';
 import './DrawTextHelpLine';
 import './BindingToolsToViewModel';
+import './HighlightHandler';
 

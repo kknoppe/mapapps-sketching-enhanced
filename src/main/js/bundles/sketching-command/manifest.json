@@ -6,7 +6,6 @@
   "dependencies": {
     "sketching-tools": "^1.0.0",
     "sketching-styles": "^1.0.0",
-    "highlight": "^1.0.0",
     "snapping-manager": "^1.0.0"
   },
   "productName": "map.apps",

@@ -5,8 +5,7 @@
   "dependencies": {
     "map-widget": "^4.8.4",
     "selection-services": "^4.8.4",
-    "sketching-tools": "^1.0.0",
-    "highlight": "^1.0.0"
+    "sketching-tools": "^1.0.0"
   },
   "productName": "map.apps",
   "components": [
