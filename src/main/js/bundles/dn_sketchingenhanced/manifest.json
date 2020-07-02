@@ -183,16 +183,6 @@
             ]
         },
         {
-            "name": "SetFonts",
-            "provides": [
-                "sketching.setFonts"
-            ],
-            "immediate": true,
-            "properties": {
-                "url": "resource('fonts')"
-            }
-        },
-        {
             "name": "DrawTextHelpLine",
             "provides": [
                 "dn_sketchingenhanced.DrawTextHelpLine"
