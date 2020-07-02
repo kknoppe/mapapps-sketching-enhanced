@@ -20,7 +20,8 @@
         <v-list>
             <v-item active-class="active" v-for="(item, index) in styles" :key="index">
                 <v-list-tile @click="toggle" slot-scope="{ toggle }">
-                    <text-style-checkbox :class="item" :label="i18nStyles[index]" :active.sync="active[item]"></text-style-checkbox>
+                    <text-style-checkbox :class="item" :label="i18nStyles[index]"
+                                         :active.sync="active[item]"></text-style-checkbox>
                 </v-list-tile>
                 <v-divider></v-divider>
             </v-item>
@@ -31,6 +32,7 @@
 
 
     import TextStyleCheckbox from './TextStyleCheckbox.vue';
+
     export default {
         components: {
             TextStyleCheckbox,

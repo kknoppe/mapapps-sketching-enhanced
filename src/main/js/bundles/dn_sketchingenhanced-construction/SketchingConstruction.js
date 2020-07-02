@@ -266,7 +266,8 @@ export default class SketchingConstruction {
 
             // Here only 1 intersection is needed
             if (p1 && p2) {
-                const l11 = calcLength(p1, l1), l12 = calcLength(p1, l2), l21 = calcLength(p2, l1), l22 = calcLength(p2, l2);
+                const l11 = calcLength(p1, l1), l12 = calcLength(p1, l2), l21 = calcLength(p2, l1),
+                    l22 = calcLength(p2, l2);
                 Math.min(l11, l12) < Math.min(l21, l22) ? (p2 = undefined) : (p1 = undefined);
             }
         }

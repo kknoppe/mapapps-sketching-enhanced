@@ -26,31 +26,31 @@ registerSuite({
         assert.ok(new Vue(SimpleTextEditor));
     },
 
-    'Check textStyle preview with no styling selected': function() {
+    'Check textStyle preview with no styling selected': function () {
         const vm = new Vue(SimpleTextEditor);
         vm.settings = {};
-        vm.settings.textStyle =  {bold: false, italic: false, underlined: false};
+        vm.settings.textStyle = {bold: false, italic: false, underlined: false};
 
         expect(vm.textStyle).to.equal('');
     },
-    'Check textStyle preview with bold styling selected': function() {
+    'Check textStyle preview with bold styling selected': function () {
         const vm = new Vue(SimpleTextEditor);
         vm.settings = {};
-        vm.settings.textStyle =  {bold: true, italic: false, underlined: false};
+        vm.settings.textStyle = {bold: true, italic: false, underlined: false};
 
         expect(vm.textStyle).to.equal('B');
     },
-    'Check textStyle preview with italic styling selected': function() {
+    'Check textStyle preview with italic styling selected': function () {
         const vm = new Vue(SimpleTextEditor);
         vm.settings = {};
-        vm.settings.textStyle =  {bold: false, italic: true, underlined: false};
+        vm.settings.textStyle = {bold: false, italic: true, underlined: false};
 
         expect(vm.textStyle).to.equal('I');
     },
-    'Check textStyle preview with bold & italic styling selected': function() {
+    'Check textStyle preview with bold & italic styling selected': function () {
         const vm = new Vue(SimpleTextEditor);
         vm.settings = {};
-        vm.settings.textStyle =  {bold: true, italic: true, underlined: false};
+        vm.settings.textStyle = {bold: true, italic: true, underlined: false};
 
         expect(vm.textStyle).to.equal('B, I');
     },

@@ -17,14 +17,14 @@
 -->
 <template>
     <v-layout wrap row>
-        <v-checkbox v-model="active" :label="label" ></v-checkbox>
+        <v-checkbox v-model="active" :label="label"></v-checkbox>
         <v-text-field
-                v-model="currentProperty"
-                :suffix="suffix"
-                step="1"
-                type="number"
-                :rules="[rules.required]"
-                single-line>
+            v-model="currentProperty"
+            :suffix="suffix"
+            step="1"
+            type="number"
+            :rules="[rules.required]"
+            single-line>
         </v-text-field>
 
         <v-layout column class="upDownControlConstruction">
@@ -68,7 +68,7 @@
                 },
                 set(value) {
                     const use = (this.setting === 'angleModulus') ? Object.assign({}, this.constructionModel.use, {angleModulus: value}) :
-                                                                    Object.assign({}, this.constructionModel.use, {planarLength: value});
+                        Object.assign({}, this.constructionModel.use, {planarLength: value});
                     this.constructionModel.set('use', use);
                 },
             },
@@ -89,8 +89,8 @@
             _validateInput(input) {
                 // validate the input
                 // if input is not a number the previous value is used
-                const value = parseInt(input,10);
-                if(isNaN(value)) {
+                const value = parseInt(input, 10);
+                if (isNaN(value)) {
                     return this.constructionModel[this.setting];
                 }
                 return value;

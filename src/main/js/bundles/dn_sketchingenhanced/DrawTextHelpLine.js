@@ -24,21 +24,21 @@ export default class DrawTextHelpLine {
     createHelpLine(firstGraphic, viewModel, rotation) {
         const angle = this._getAngle(viewModel, rotation);
 
-        if(angle < 0 || angle > 360) {
+        if (angle < 0 || angle > 360) {
             return;
         }
 
-        if(angle === 0) {
+        if (angle === 0) {
             return;
         }
-        const [dx,dy] = this._calculateLine(viewModel, angle);
+        const [dx, dy] = this._calculateLine(viewModel, angle);
 
         const graphic = this.graphic = firstGraphic ? firstGraphic : this.graphic;
 
         require(['esri/geometry/Polyline'], function (Polyline) {
             // use the generated point to create a path
             const path = [[graphic.geometry.x, graphic.geometry.y],
-                [graphic.geometry.x+dx, graphic.geometry.y+dy]];
+                [graphic.geometry.x + dx, graphic.geometry.y + dy]];
             // set the style of the help line
             const polylineSymbol = {
                 type: 'simple-line',
@@ -72,9 +72,9 @@ export default class DrawTextHelpLine {
 
     _getAngle(viewModel, rotation) {
         let angle;
-        if(rotation || rotation === 0) {
+        if (rotation || rotation === 0) {
             angle = rotation;
-        } else if(viewModel.tool && viewModel.tool.toolId === 'drawreshape1tool') {
+        } else if (viewModel.tool && viewModel.tool.toolId === 'drawreshape1tool') {
             angle = (viewModel._orgSymbols && viewModel._orgSymbols.length > 0 && viewModel._orgSymbols[0].type === 'text') ?
                 viewModel._orgSymbols[0].angle : viewModel.textSymbol.angle;
         } else {
@@ -88,7 +88,7 @@ export default class DrawTextHelpLine {
         // choose the length of the help line to be 20% of the height of the current map extent
         // and calculate a second point to create the line by using the given angle
         const l = viewModel.view.extent.height * 0.2;
-        const radAngle = -angle * Math.PI/180.;
+        const radAngle = -angle * Math.PI / 180.;
         const dy = Math.sin(radAngle) * l;
         const dx = Math.cos(radAngle) * l;
 

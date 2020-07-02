@@ -40,8 +40,7 @@
         },
 
         data() {
-            return {
-            };
+            return {};
         },
 
         computed: {

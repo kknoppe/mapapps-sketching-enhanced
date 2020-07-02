@@ -16,20 +16,20 @@
 
 -->
 <template>
-<div class="footer">
-    <v-toolbar dense class="sketchingFooterToolbar">
-        <v-tooltip top>
-            <v-btn slot="activator" icon @click="toggleVisibility">
-                <v-icon>{{visible ? 'icon-visibility-visible' : 'icon-visibility-disabled'}}</v-icon>
-            </v-btn>
-            <span>{{visible ? i18n.turnOffVisibility : i18n.turnOnVisibility}}</span>
-        </v-tooltip>
-        <v-spacer></v-spacer>
-        <div v-for="(tool,index) in footerTools" :key="index">
+    <div class="footer">
+        <v-toolbar dense class="sketchingFooterToolbar">
+            <v-tooltip top>
+                <v-btn slot="activator" icon @click="toggleVisibility">
+                    <v-icon>{{visible ? 'icon-visibility-visible' : 'icon-visibility-disabled'}}</v-icon>
+                </v-btn>
+                <span>{{visible ? i18n.turnOffVisibility : i18n.turnOnVisibility}}</span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+            <div v-for="(tool,index) in footerTools" :key="index">
                 <tool-button :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"></tool-button>
-        </div>
-    </v-toolbar>
-</div>
+            </div>
+        </v-toolbar>
+    </div>
 </template>
 
 

@@ -22,7 +22,8 @@
     </div>
 </template>
 <script>
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
+
     export default {
         components: {
             'color-picker': Sketch,
@@ -34,8 +35,7 @@
         },
 
         data() {
-            return {
-            };
+            return {};
         },
         computed: {
             blurColor: {

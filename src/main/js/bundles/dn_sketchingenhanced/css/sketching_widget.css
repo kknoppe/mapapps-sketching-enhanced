@@ -14,40 +14,43 @@
  * limitations under the License.
  */
 .sketchingEnhancedWidget .ctWindowPadding .ctWindowContentPadding .dijitDialogPaneContent {
-    overflow: hidden!important;
+    overflow: hidden !important;
 }
 
 .SketchingToolsBar .v-toolbar__content {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
-.sketchingMenu{
+.sketchingMenu {
     padding: 0 0 8px;
 }
-.sketchingMenuTiles{
+
+.sketchingMenuTiles {
     height: 40px;
     padding: 0 8px;
 }
-.sketchingMenuToolTitles{
+
+.sketchingMenuToolTitles {
     font-size: x-small;
 }
-.sketchingMenuToolActions{
-    min-width: 35px!important;
+
+.sketchingMenuToolActions {
+    min-width: 35px !important;
 }
 
 .construction_panel {
-    padding: 0 24px 12px 24px!important;
-    margin-top: -4px!important;
+    padding: 0 24px 12px 24px !important;
+    margin-top: -4px !important;
 }
 
 .construction_panel_interior {
     border: thin solid black;
     border-radius: 4px;
-    padding: 10px 10px 0!important;
+    padding: 10px 10px 0 !important;
 }
 
 .construction_panel .layout .v-text-field {
-    max-width: 6em!important;
+    max-width: 6em !important;
 }
 
 .upDownControlConstruction {
@@ -60,19 +63,21 @@
 .arrowUpConstruction {
     position: relative;
     top: 1.4em;
-    font-size: medium!important;
+    font-size: medium !important;
 }
+
 .arrowDownConstruction {
     position: relative;
     top: 1.1em;
-    font-size: medium!important;
+    font-size: medium !important;
 }
 
-.sketchingFooterToolbar .sketchingToolButton{
-    min-width: inherit!important;
-    padding: 0!important;
-    top: 6px!important;
+.sketchingFooterToolbar .sketchingToolButton {
+    min-width: inherit !important;
+    padding: 0 !important;
+    top: 6px !important;
 }
+
 .sketchingFooterToolbar .v-toolbar__content {
     padding-right: 12px !important;
 }
@@ -88,7 +93,6 @@
 }
 
 
-
 .ctAppRoot .sketchingSymbolEditor .uniqeValueList {
     border-top: thin solid rgba(0, 0, 0, 0.12);
     border-bottom: thin solid rgba(0, 0, 0, 0.12);
@@ -100,7 +104,6 @@
     max-width: 100px;
     min-width: 80px;
 }
-
 
 
 .ctAppRoot .sketchingSymbolEditor .editor-layout .v-toolbar__content {
@@ -187,7 +190,7 @@
     height: auto;
     padding: 4px !important;
     padding-bottom: 0 !important;
-    background: transparent!important;
+    background: transparent !important;
 }
 
 .ctAppRoot .sketchingSymbolEditor .btnGroupSingleSymbol .main-icon {
@@ -220,12 +223,12 @@
 
 .ctAppRoot .sketchingSymbolEditor .editor-content {
     margin: 10px auto !important;
-    padding: 0 24px 0 24px!important;
+    padding: 0 24px 0 24px !important;
     display: block;
 }
 
 .ctAppRoot .sketchingSymbolEditor .editor-content .editor-content {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .ctAppRoot .sketchingSymbolEditor .fill-style-picker .v-list__tile,
@@ -240,16 +243,16 @@
 }
 
 
-.ctAppRoot .sketchingSymbolEditor .vc-sketch{
-    left: -10px!important;
-    box-sizing: inherit!important;
+.ctAppRoot .sketchingSymbolEditor .vc-sketch {
+    left: -10px !important;
+    box-sizing: inherit !important;
     margin: 0 10px 0 10px !important;
-    background: transparent!important;
+    background: transparent !important;
 }
 
 .ctAppRoot .sketchingSymbolEditor .simpleSymbolEditor {
     padding: 0;
-    padding-top: 12px!important;
+    padding-top: 12px !important;
 }
 
 
@@ -259,71 +262,80 @@
 
 /* Font Picker*/
 .font-picker .active {
-    background-color: rgb(204,204,204)!important;
+    background-color: rgb(204, 204, 204) !important;
 }
+
 .font-picker .v-list__tile {
-    height: 2.5em!important;
+    height: 2.5em !important;
 }
 
 /* Text Size Picker*/
 .text-size-picker {
-    height: 10em!important;
-    overflow-y: auto!important;
+    height: 10em !important;
+    overflow-y: auto !important;
 }
+
 .text-size-picker .v-list__tile {
-    height: 1.5em!important;
-    padding-left: 45%!important;
+    height: 1.5em !important;
+    padding-left: 45% !important;
 }
+
 .text-size-picker .active {
-    background-color: rgb(204,204,204)!important;
+    background-color: rgb(204, 204, 204) !important;
 }
 
 /* Text Style Picker*/
 .text-style-picker .v-list__tile {
-    height: 2.5em!important;
+    height: 2.5em !important;
 }
+
 .text-style-picker .bold .v-label {
-    font-weight: bold!important;
+    font-weight: bold !important;
 }
+
 .text-style-picker .italic .v-label {
-    font-style: italic!important;
+    font-style: italic !important;
 }
+
 .text-style-picker .underlined .v-label {
-    text-decoration: underline!important;
+    text-decoration: underline !important;
 }
 
 /* Text Blur Picker */
 .text-blur-picker .v-input--slider {
-    margin-top: 22px!important;
+    margin-top: 22px !important;
 }
 
-.font-button .main-icon{
-    position: relative!important;
-    bottom: 5px!important;
+.font-button .main-icon {
+    position: relative !important;
+    bottom: 5px !important;
 }
-.style-button .main-icon{
-    position: relative!important;
-    bottom: 5px!important;
+
+.style-button .main-icon {
+    position: relative !important;
+    bottom: 5px !important;
 }
-.style-button .main-icon .v-icon{
+
+.style-button .main-icon .v-icon {
     font-style: italic;
     font-weight: bold;
 }
-.halo-button .main-icon{
+
+.halo-button .main-icon {
     text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
-    position: relative!important;
-    bottom: 5px!important;
+    position: relative !important;
+    bottom: 5px !important;
 }
 
 .text-angle-picker .v-text-field {
-    position: relative!important;
-    left: 3em!important;
-    max-width: 4em!important;
+    position: relative !important;
+    left: 3em !important;
+    max-width: 4em !important;
 }
 
 .text-angle-picker .text-angle-label {
-    align-self: center!important;
-    padding-left: 2em!important;
+    align-self: center !important;
+    padding-left: 2em !important;
     font-size: 14px;
 }
 
@@ -333,21 +345,22 @@
     user-select: none;
     -moz-user-select: none;
 
-    max-width: fit-content!important;
-    position: relative!important;
-    left: 5em!important;
+    max-width: fit-content !important;
+    position: relative !important;
+    left: 5em !important;
 }
 
 
-.arrowUpTextAngle{
+.arrowUpTextAngle {
     position: relative;
     top: 1.4em;
-    font-size: medium!important;
+    font-size: medium !important;
 }
+
 .arrowDownTextAngle {
     position: relative;
     top: 1.1em;
-    font-size: medium!important;
+    font-size: medium !important;
 }
 
 /* ----------------------------
@@ -359,26 +372,31 @@
     height: 21px;
     width: 23px;
 }
+
 .icon.icon-polyline-construction-white {
     background-image: url("../assets/polyline-construction_white.png");
     height: 21px;
     width: 23px;
 }
+
 .v-list__tile--disabled .icon.icon-polyline-construction {
     background-image: url("../assets/polyline-construction-disabled.png");
     height: 21px;
     width: 23px;
 }
+
 .icon.icon-polygon-construction {
     background-image: url("../assets/polygon-construction.png");
     height: 23px;
     width: 23px;
 }
+
 .icon.icon-polygon-construction-white {
     background-image: url("../assets/polygon-construction_white.png");
     height: 23px;
     width: 23px;
 }
+
 .v-list__tile--disabled .icon.icon-polygon-construction {
     background-image: url("../assets/polygon-construction-disabled.png");
     height: 23px;
@@ -386,20 +404,23 @@
 }
 
 
-
 .everlasting .vue-base .grey.lighten-2 {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
+
 .winter .vue-base .grey.lighten-2 {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
+
 .summer .vue-base .grey.lighten-2 {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
+
 .autumn .vue-base .grey.lighten-2 {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
+
 .spring .vue-base .grey.lighten-2 {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
 

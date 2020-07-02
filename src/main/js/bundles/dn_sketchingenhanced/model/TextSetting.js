@@ -29,7 +29,7 @@ class TextSetting {
          *
          * @type {string}
          */
-        if(copy && typeof copy.font === 'string') {
+        if (copy && typeof copy.font === 'string') {
             this.font = copy.font;
         } else {
             this.font = (copy && copy.font && copy.font.family) ? copy.font.family : 'Arial';
@@ -38,7 +38,7 @@ class TextSetting {
          *
          * @type {ColorSetting}
          */
-        if(copy && copy.textColor) {
+        if (copy && copy.textColor) {
             this.textColor = copy.textColor;
         } else {
             this.textColor = copy ? copy.color : new ColorSetting();
@@ -47,7 +47,7 @@ class TextSetting {
          *
          * @type {string}
          */
-        if(copy && copy.font) {
+        if (copy && copy.font) {
             this.textStyle = {
                 bold: (copy.font.weight && copy.font.weight === 'bold'),
                 italic: (copy.font.style && copy.font.style === 'italic'),
@@ -64,7 +64,7 @@ class TextSetting {
          *
          * @type {number}
          */
-        if(copy && copy.textSize) {
+        if (copy && copy.textSize) {
             this.textSize = copy.textSize;
         } else {
             this.textSize = (copy && copy.font && copy.font.size) ? copy.font.size : 12;
@@ -73,7 +73,7 @@ class TextSetting {
          *
          * @type {ColorSetting}
          */
-        if(copy && copy.textBlurColor) {
+        if (copy && copy.textBlurColor) {
             this.textBlurColor = copy.textBlurColor;
         } else {
             this.textBlurColor = copy && copy.haloColor || new ColorSetting();
@@ -83,7 +83,7 @@ class TextSetting {
          *
          * @type {Number}
          */
-        if(copy && copy.textBlurRadius) {
+        if (copy && copy.textBlurRadius) {
             this.textBlurRadius = copy.textBlurRadius;
         } else {
             this.textBlurRadius = copy && copy.haloSize || 0;

@@ -20,28 +20,32 @@
         <v-toolbar dense pa-0 class="SketchingToolsBar">
             <v-layout row wrap>
 
-                    <v-flex grow pa-1>
-                        <v-layout row wrap>
-                            <v-btn-toggle v-model="toggle">
-                                <div v-for="(tool,index) in firstTools" :key="index">
-                                    <menu-button v-if="tool.menu" :tool="tool" :tools="tools" @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
-                                    <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id" :bus="eventBus"></tool-button>
-                                </div>
-                            </v-btn-toggle>
-                        </v-layout>
-                    </v-flex>
-
-                    <v-flex grow pa-1></v-flex>
-                    <v-flex shrink pa-1>
-                        <v-layout row wrap>
-                            <div v-for="(tool,index) in lastTools" :key="index">
-                                <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
-                                    <menu-button v-if="tool.menu" :tool="tool" :tools="tools" @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
-                                    <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id" :bus="eventBus"></tool-button>
-                                </v-btn-toggle>
+                <v-flex grow pa-1>
+                    <v-layout row wrap>
+                        <v-btn-toggle v-model="toggle">
+                            <div v-for="(tool,index) in firstTools" :key="index">
+                                <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                             @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                                <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                             :bus="eventBus"></tool-button>
                             </div>
-                        </v-layout>
-                    </v-flex>
+                        </v-btn-toggle>
+                    </v-layout>
+                </v-flex>
+
+                <v-flex grow pa-1></v-flex>
+                <v-flex shrink pa-1>
+                    <v-layout row wrap>
+                        <div v-for="(tool,index) in lastTools" :key="index">
+                            <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
+                                <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                             @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                                <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                             :bus="eventBus"></tool-button>
+                            </v-btn-toggle>
+                        </div>
+                    </v-layout>
+                </v-flex>
 
             </v-layout>
         </v-toolbar>
@@ -78,7 +82,8 @@
                           @onToolClick="onToolClickHandler">
         </sketching-footer>
 
-        <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :i18n="i18n" :bus="eventBus"></measurement-footer>
+        <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :i18n="i18n"
+                            :bus="eventBus"></measurement-footer>
     </v-container>
 
 </template>
@@ -178,7 +183,7 @@
                 return this.symbolSettings;
             },
             allShownIds() {
-                return this.firstToolGroupIds.concat(this.lastToolGroupIds,this.footerToolIds);
+                return this.firstToolGroupIds.concat(this.lastToolGroupIds, this.footerToolIds);
             },
             isToolActive() {
                 const isToolActive = this.tools.some(item => item.active);
@@ -186,7 +191,7 @@
                 return isToolActive;
             },
             enableMeasurement: {
-                get()  {
+                get() {
                     return this.measurementBoolean;
                 },
                 set(value) {
@@ -196,7 +201,7 @@
         },
         watch: {
             openEditorFromReshapeTool(val) {
-                if(val) {
+                if (val) {
                     this.symbolSettings = (this.currentSymbol.type === 'text') ? new TextSetting(this.currentSymbol) : this.symbolSettings;
                 }
                 this.symbolEditorOpen = val;
@@ -231,8 +236,8 @@
                 // of the same tool, or the other way around
                 const firstCondition = !(this.constructionOn && tool.mode !== 'construction' && tool.active);
                 const secondCondition = !(tool.mode === 'construction' && realTool.active);
-                if( firstCondition && secondCondition) {
-                    this.$emit('onToolClick',{id});
+                if (firstCondition && secondCondition) {
+                    this.$emit('onToolClick', {id});
                 }
                 // toggle the SymbolEditor and the Construction Panel
                 this._toggleSymbolEditor(tool);
@@ -257,13 +262,13 @@
              * @private
              */
             _toggleSymbolEditor(tool) {
-                if(tool.mode === 'secondary') {
+                if (tool.mode === 'secondary') {
                     return;
                 }
-                if(this.constructionOn && tool.mode !== 'construction' && tool.active) {
+                if (this.constructionOn && tool.mode !== 'construction' && tool.active) {
                     return;
                 }
-                if(tool.mode === 'construction' && this.constructionTool === tool.items[0]) {
+                if (tool.mode === 'construction' && this.constructionTool === tool.items[0]) {
                     this.symbolEditorOpen = false;
                     this.$emit('onToolClick', {id: tool.items[0]});
                     return;
@@ -271,7 +276,7 @@
 
                 this.symbolEditorOpen = !tool.active;
 
-                if(this.symbolEditorOpen) {
+                if (this.symbolEditorOpen) {
                     this._setWindowHeight('auto');
                     this._setSettings(tool);
                 } else {
@@ -285,17 +290,23 @@
              * @private
              */
             _toggleConstruction(tool) {
-                if(tool.mode === 'secondary') {
+                if (tool.mode === 'secondary') {
                     return;
                 }
-                if(tool.mode !== 'construction' || (tool.mode === 'construction' && this.constructionTool === tool.items[0])){
+                if (tool.mode !== 'construction' || (tool.mode === 'construction' && this.constructionTool === tool.items[0])) {
                     this.constructionOn = false;
                     this.constructionTool = null;
-                    this.constructionModel.set('use', Object.assign({}, this.constructionModel.use, {angleModulus: false, planarLength: false}));
+                    this.constructionModel.set('use', Object.assign({}, this.constructionModel.use, {
+                        angleModulus: false,
+                        planarLength: false
+                    }));
                     return;
                 }
 
-                this.constructionModel.set('use', Object.assign({}, this.constructionModel.use, {angleModulus: true, planarLength: false}));
+                this.constructionModel.set('use', Object.assign({}, this.constructionModel.use, {
+                    angleModulus: true,
+                    planarLength: false
+                }));
                 this.constructionOn = !tool.active;
                 this.constructionTool = this.constructionOn ? tool.items[0] : null;
             },
@@ -362,13 +373,13 @@
              * @private
              */
             _setToggle(tool) {
-                if(tool.mode === 'secondary') {
+                if (tool.mode === 'secondary') {
                     return;
                 }
                 // set toggle to highlight correct button
-                if(!this.allShownIds.includes(tool.id)) {
+                if (!this.allShownIds.includes(tool.id)) {
                     const toggle = this._searchToolsForToggle(tool);
-                    const noConstructionToolActivated = (!tool.active  && tool.mode !== 'construction' );
+                    const noConstructionToolActivated = (!tool.active && tool.mode !== 'construction');
                     const noConstructionButBefore = (tool.mode !== 'construction' && this.constructionTool);
                     const constructionNotBefore = (tool.mode === 'construction' && this.constructionTool !== tool.items[0]);
                     this.toggle = (noConstructionToolActivated || noConstructionButBefore || constructionNotBefore) ? toggle : null;
@@ -386,7 +397,7 @@
             _searchToolsForToggle(tool) {
                 let toggle = null;
                 this.tools.forEach(grouptool => {
-                    if(grouptool.menu) {
+                    if (grouptool.menu) {
                         toggle = grouptool.items.includes(tool.id) ? grouptool.id : toggle;
                     }
                 });
@@ -395,7 +406,7 @@
 
             _setWindowHeight(height) {
                 const widget = document.getElementsByClassName('sketchingEnhancedWidget')[0];
-                if(widget) {
+                if (widget) {
                     widget.style.height = height;
                     widget.getElementsByClassName('dijitDialogPaneContent')[0].style.height = height;
                 }

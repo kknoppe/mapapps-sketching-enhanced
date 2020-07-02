@@ -40,8 +40,7 @@
             'construction-checkbox': ConstructionCheckbox,
         },
         data() {
-            return {
-            };
+            return {};
         },
         props: {
             constructionModel: {
@@ -51,7 +50,6 @@
                 type: Object,
             },
         },
-        methods: {
-        },
+        methods: {},
     };
 </script>

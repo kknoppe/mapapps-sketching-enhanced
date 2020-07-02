@@ -31,7 +31,6 @@ module.exports = declare([Stateful], {
     },
 
 
-
     _getOption(prop, checkUse = true, invalidValue = undefined) {
         return (!checkUse || this.use[prop]) && this[prop] || invalidValue;
     }

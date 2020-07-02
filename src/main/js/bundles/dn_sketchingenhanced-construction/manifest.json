@@ -1,68 +1,68 @@
 {
-  "name": "dn_sketchingenhanced-construction",
-  "version": "1.0.0",
-  "title": "Sketching Construction",
-  "dependencies": {
-    "dn_sketchingenhanced-tools": "^1.0.0",
-    "dn_sketchingenhanced-snappingmanager": "^1.0.0"
-  },
-  "productName": "map.apps",
-  "components": [
-    {
-      "name": "Config",
-      "impl": "./SketchingConstructionModel",
-      "provides": [
-        "dn_sketchingenhanced.SketchingConstructionModel"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "angle": 45,
-        "angleModulus": 45,
-        "angleTypeRelative": true,
-        "planarLength": 10,
-        "commaPlace": 2,
-        "use": {
-          "snap": true,
-          "angle": false,
-          "angleModulus": false,
-          "planarLength": false
-        },
-        "tools": [
-          "drawpolylinetool",
-          "drawpolygontool"
-        ]
-      }
+    "name": "dn_sketchingenhanced-construction",
+    "version": "1.0.0",
+    "title": "Sketching Construction",
+    "dependencies": {
+        "dn_sketchingenhanced-tools": "^1.0.0",
+        "dn_sketchingenhanced-snappingmanager": "^1.0.0"
     },
-    {
-      "name": "SketchingConstruction",
-      "provides": [
-        "dn_sketchingenhanced-construction.SketchingConstruction",
-        "dn_sketchingenhanced.Action"
-      ],
-      "references": [
+    "productName": "map.apps",
+    "components": [
         {
-          "name": "_constructionModel",
-          "providing": "dn_sketchingenhanced.SketchingConstructionModel"
+            "name": "Config",
+            "impl": "./SketchingConstructionModel",
+            "provides": [
+                "dn_sketchingenhanced.SketchingConstructionModel"
+            ],
+            "propertiesConstructor": true,
+            "properties": {
+                "angle": 45,
+                "angleModulus": 45,
+                "angleTypeRelative": true,
+                "planarLength": 10,
+                "commaPlace": 2,
+                "use": {
+                    "snap": true,
+                    "angle": false,
+                    "angleModulus": false,
+                    "planarLength": false
+                },
+                "tools": [
+                    "drawpolylinetool",
+                    "drawpolygontool"
+                ]
+            }
         },
         {
-          "name": "_snappingManager",
-          "providing": "dn_sketchingenhanced-snappingmanager.SnappingManager",
-          "cardinality": "0..1"
-        }
-      ]
-    },
-    {
-      "name": "SketchingConstructionInfo",
-      "provides": [
-        "dn_sketchingenhanced-construction.SketchingConstructionInfo",
-        "dn_sketchingenhanced.Action"
-      ],
-      "references": [
+            "name": "SketchingConstruction",
+            "provides": [
+                "dn_sketchingenhanced-construction.SketchingConstruction",
+                "dn_sketchingenhanced.Action"
+            ],
+            "references": [
+                {
+                    "name": "_constructionModel",
+                    "providing": "dn_sketchingenhanced.SketchingConstructionModel"
+                },
+                {
+                    "name": "_snappingManager",
+                    "providing": "dn_sketchingenhanced-snappingmanager.SnappingManager",
+                    "cardinality": "0..1"
+                }
+            ]
+        },
         {
-          "name": "_constructionModel",
-          "providing": "dn_sketchingenhanced.SketchingConstructionModel"
+            "name": "SketchingConstructionInfo",
+            "provides": [
+                "dn_sketchingenhanced-construction.SketchingConstructionInfo",
+                "dn_sketchingenhanced.Action"
+            ],
+            "references": [
+                {
+                    "name": "_constructionModel",
+                    "providing": "dn_sketchingenhanced.SketchingConstructionModel"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

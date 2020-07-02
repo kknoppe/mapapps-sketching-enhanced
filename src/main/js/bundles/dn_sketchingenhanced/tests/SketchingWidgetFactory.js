@@ -26,7 +26,7 @@ registerSuite({
         assert.ok(new Vue(SketchingWidget));
     },
 
-    'find tool by id': function() {
+    'find tool by id': function () {
         const vm = new Vue(SketchingWidget);
         vm.tools = [
             {id: 'test1', a: 'b'},
@@ -35,7 +35,7 @@ registerSuite({
         expect(vm._getTool('test2')).to.equal(vm.tools[1]);
     },
 
-    'activate construction panel': function() {
+    'activate construction panel': function () {
         const vm = new Vue(SketchingWidget);
         vm.constructionTool = null;
         const tool = {
@@ -45,7 +45,8 @@ registerSuite({
         };
 
         vm.constructionModel = {
-            set: () => {},
+            set: () => {
+            },
         };
 
         vm._toggleConstruction(tool);
@@ -53,7 +54,7 @@ registerSuite({
         expect(vm.constructionTool).to.equal('polylinetool');
     },
 
-    'deactivate construction panel': function() {
+    'deactivate construction panel': function () {
         const vm = new Vue(SketchingWidget);
         vm.constructionTool = 'polylinetool';
         vm.constructionOn = true;
@@ -72,7 +73,7 @@ registerSuite({
         expect(vm.constructionTool).to.equal(null);
     },
 
-    'search tools to find group tool': function() {
+    'search tools to find group tool': function () {
         const vm = new Vue(SketchingWidget);
         vm.tools = [
             {id: 'test1', menu: false},
@@ -84,7 +85,7 @@ registerSuite({
         expect(vm._searchToolsForToggle(tool)).to.equal('test2');
     },
 
-    'set toolbar toggle for single button': function() {
+    'set toolbar toggle for single button': function () {
         const vm = new Vue(SketchingWidget);
         vm.toggle = null;
 
@@ -113,7 +114,7 @@ registerSuite({
 
         expect(vm.toggle).to.equal('drawtexttool');
     },
-    'set toolbar toggle for menu button': function() {
+    'set toolbar toggle for menu button': function () {
         const vm = new Vue(SketchingWidget);
         vm.toggle = null;
 
@@ -140,7 +141,7 @@ registerSuite({
             items: ['drawpolylinetool'],
         };
 
-        vm._searchToolsForToggle = function() {
+        vm._searchToolsForToggle = function () {
             return 'sketchinglinegroup';
         };
         vm._setToggle(tool);
@@ -162,21 +163,21 @@ registerSuite({
         expect(vm.toggle).to.equal(null);
     },
 
-    'activate SymbolEditor': function() {
-          const vm = new Vue(SketchingWidget);
-          vm.symbolEditorOpen = false;
-          const tool = {
-              mode: '',
-              active: false,
-          };
-          vm._setSettings = function() {
-              return null;
-          };
-          vm._toggleSymbolEditor(tool);
-          expect(vm.symbolEditorOpen).to.equal(true);
+    'activate SymbolEditor': function () {
+        const vm = new Vue(SketchingWidget);
+        vm.symbolEditorOpen = false;
+        const tool = {
+            mode: '',
+            active: false,
+        };
+        vm._setSettings = function () {
+            return null;
+        };
+        vm._toggleSymbolEditor(tool);
+        expect(vm.symbolEditorOpen).to.equal(true);
     },
 
-    'deactivate SymbolEditor when clicking construction tool twice': function() {
+    'deactivate SymbolEditor when clicking construction tool twice': function () {
         const vm = new Vue(SketchingWidget);
         vm.symbolEditorOpen = true;
         vm.constructionTool = 'drawpolylinetool';

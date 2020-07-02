@@ -17,14 +17,14 @@
 -->
 <template>
     <v-menu
-            v-model="menu"
-            :close-on-content-click="true"
-            offset-y
+        v-model="menu"
+        :close-on-content-click="true"
+        offset-y
     >
-        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus"> </tool-button>
+        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus"></tool-button>
         <v-card>
             <v-list class="sketchingMenu">
-                <div  v-for="item in listTools(tool)">
+                <div v-for="item in listTools(tool)">
                     <menu-tiles @onToolClick="onToolClickHandler"
                                 :tool="item"
                                 :bus="bus"
@@ -54,7 +54,7 @@
         },
         computed: {
             active() {
-                return  this.listTools(this.tool).some(item => item.active);
+                return this.listTools(this.tool).some(item => item.active);
             },
         },
         props: {
@@ -87,7 +87,7 @@
             listTools(tool) {
                 const list = [];
                 const items = tool.items;
-                if(items) {
+                if (items) {
                     items.forEach(id => {
                         const newTool = this._getTool(id);
                         newTool && list.push(newTool);
@@ -103,7 +103,7 @@
             onToolClickHandler(id) {
                 this._changeToolIcon(id);
                 // emit event
-                this.$emit('onToolClick',id);
+                this.$emit('onToolClick', id);
             },
 
             /**
@@ -113,18 +113,18 @@
              */
             _changeToolIcon(id) {
                 // do not change icon for toolbox
-                if(this.tool.id ==='sketchingtoolbox') {
+                if (this.tool.id === 'sketchingtoolbox') {
                     return;
                 }
 
                 // change Menu Image when selecting new tool
                 const icon = document.getElementById(this.tool.id);
-                if(icon) {
+                if (icon) {
                     const newTool = this._getTool(id);
                     const currentClass = icon.parentElement.children[0].children[0].children[0].children[0].className;
                     const firstIndex = currentClass.indexOf('icon-');
-                    const lastIndex = currentClass.indexOf(' ', firstIndex+1);
-                    const oldClassName = currentClass.substr(firstIndex, lastIndex-firstIndex);
+                    const lastIndex = currentClass.indexOf(' ', firstIndex + 1);
+                    const oldClassName = currentClass.substr(firstIndex, lastIndex - firstIndex);
                     const newIconClassName = newTool.iconClass.indexOf('construction') !== -1 && document.body.classList.contains('everlasting') ? `${newTool.iconClass}-white` : newTool.iconClass;
                     icon.parentElement.children[0].children[0].children[0].children[0].className = currentClass.replace(oldClassName, newIconClassName);
                 }

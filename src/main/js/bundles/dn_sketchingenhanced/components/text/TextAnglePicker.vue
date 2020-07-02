@@ -20,12 +20,12 @@
         <span class="text-angle-label">{{i18n.angle}}:</span>
 
         <v-text-field
-                v-model="rotation"
-                :suffix="suffix"
-                step="1"
-                type="number"
-                :rules="[rules.required, rules.tooSmall, rules.tooBig]"
-                single-line>
+            v-model="rotation"
+            :suffix="suffix"
+            step="1"
+            type="number"
+            :rules="[rules.required, rules.tooSmall, rules.tooBig]"
+            single-line>
         </v-text-field>
 
         <v-layout column class="text-angle-upDownControl">
@@ -73,8 +73,8 @@
         methods: {
             _validateInput(input) {
                 // validate the input
-                const value = parseInt(input,10);
-                if(isNaN(value)) {
+                const value = parseInt(input, 10);
+                if (isNaN(value)) {
                     return this.min;
                 } else if (value < this.min) {
                     return this.min;

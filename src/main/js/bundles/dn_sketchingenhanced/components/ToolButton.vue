@@ -25,7 +25,7 @@
                        :key="tool.id"
                        :value="tool.id"
                        :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)"
-                        @click="onToolClickHandler(tool.id)"
+                       @click="onToolClickHandler(tool.id)"
                 >
                     <v-icon>{{tool.iconClass}}</v-icon>
                 </v-btn>
@@ -34,7 +34,7 @@
                         style="height:12px">
                     arrow_drop_down
                 </v-icon>
-                </v-layout>
+            </v-layout>
         </template>
         <span>{{tool.title}}</span>
     </v-tooltip>
@@ -63,7 +63,7 @@
             },
         },
         mounted() {
-            if(this.bus) {
+            if (this.bus) {
                 this.bus.$on('startRecording', () => {
                     this.profileLoaded = true;
                 });
@@ -74,7 +74,7 @@
         },
         computed: {
             notActiveTool() {
-                if(this.tool.id !== 'sketchingtoolbox' && this.toolActive && this.tool.menu) {
+                if (this.tool.id !== 'sketchingtoolbox' && this.toolActive && this.tool.menu) {
                     this.$parent.$parent._changeToolIcon && this.$parent.$parent._changeToolIcon(this.bus.currentActiveTool.id);
                 }
                 return !(this.tool.id === 'sketchinglayeradd' || this.toolActive);
@@ -90,7 +90,7 @@
              * @param id
              */
             onToolClickHandler(id) {
-                this.$emit('onToolClick',id);
+                this.$emit('onToolClick', id);
             },
         },
     };

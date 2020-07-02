@@ -28,54 +28,54 @@ registerSuite({
 
     'Check line calculation for 90 angle': function () {
         const handler = createHandler();
-        const viewModel = {view: {extent: {height: 100 }}};
+        const viewModel = {view: {extent: {height: 100}}};
         const angle = 90;
-        const [dx,dy] = handler._calculateLine(viewModel,angle);
+        const [dx, dy] = handler._calculateLine(viewModel, angle);
         expect(-20).to.equal(dy);
-        const test = ((dx < 1e-14 && dx >0) || (dx >-1e-14 && dx <0));
+        const test = ((dx < 1e-14 && dx > 0) || (dx > -1e-14 && dx < 0));
         expect(test).to.be.true;
     },
     'Check line calculation for 180 angle': function () {
         const handler = createHandler();
-        const viewModel = {view: {extent: {height: 100 }}};
+        const viewModel = {view: {extent: {height: 100}}};
         const angle = 180;
-        const [dx,dy] = handler._calculateLine(viewModel,angle);
+        const [dx, dy] = handler._calculateLine(viewModel, angle);
 
-        const test = ((dy < 1e-14 && dy >0) || (dy >-1e-14 && dy <0));
+        const test = ((dy < 1e-14 && dy > 0) || (dy > -1e-14 && dy < 0));
         expect(test).to.be.true;
 
         expect(-20).to.equal(dx);
     },
     'Check line calculation for 270 angle': function () {
         const handler = createHandler();
-        const viewModel = {view: {extent: {height: 100 }}};
+        const viewModel = {view: {extent: {height: 100}}};
         const angle = 270;
-        const [dx,dy] = handler._calculateLine(viewModel,angle);
+        const [dx, dy] = handler._calculateLine(viewModel, angle);
 
-        const test = ((dx < 1e-14 && dx >0) || (dx >-1e-14 && dx <0));
+        const test = ((dx < 1e-14 && dx > 0) || (dx > -1e-14 && dx < 0));
         expect(test).to.be.true;
 
         expect(20).to.equal(dy);
     },
     'Check line calculation for 360 angle': function () {
         const handler = createHandler();
-        const viewModel = {view: {extent: {height: 100 }}};
+        const viewModel = {view: {extent: {height: 100}}};
         const angle = 360;
-        const [dx,dy] = handler._calculateLine(viewModel,angle);
+        const [dx, dy] = handler._calculateLine(viewModel, angle);
 
-        const test = ((dy < 1e-14 && dy >0) || (dy >-1e-14 && dy <0));
+        const test = ((dy < 1e-14 && dy > 0) || (dy > -1e-14 && dy < 0));
         expect(test).to.be.true;
 
         expect(20).to.equal(dx);
     },
     'Check line calculation for 45 angle': function () {
         const handler = createHandler();
-        const viewModel = {view: {extent: {height: 100 }}};
+        const viewModel = {view: {extent: {height: 100}}};
         const angle = 45;
-        const [dx,dy] = handler._calculateLine(viewModel,angle);
+        const [dx, dy] = handler._calculateLine(viewModel, angle);
 
-        expect(-20*Math.sin(Math.PI/4)).to.equal(dy);
-        expect(20*Math.cos(Math.PI/4)).to.equal(dx);
+        expect(-20 * Math.sin(Math.PI / 4)).to.equal(dy);
+        expect(20 * Math.cos(Math.PI / 4)).to.equal(dx);
     },
 
     'Get correct degree angle with given rotation': function () {
@@ -83,7 +83,7 @@ registerSuite({
         const viewModel = null;
         const rotation = 45;
 
-        const angle = handler._getAngle(viewModel,rotation);
+        const angle = handler._getAngle(viewModel, rotation);
         expect(angle).to.equal(45);
     },
     'Get correct degree angle with no given rotation, activated drawreshape1tool and no _orgSymbols': function () {

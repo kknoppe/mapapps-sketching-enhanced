@@ -26,10 +26,10 @@
 
                 <div class="font-button">
                     <editor-button
-                            :active="activeTab === 0"
-                            icon="A"
-                            type="text"
-                            :tooltip="i18n.textFontButton">
+                        :active="activeTab === 0"
+                        icon="A"
+                        type="text"
+                        :tooltip="i18n.textFontButton">
                         <span class="text-preview">{{ font }}</span>
                     </editor-button>
                 </div>
@@ -37,48 +37,48 @@
 
                 <!-- text color -->
                 <editor-button
-                        :active="activeTab === 1"
-                        icon="brush"
-                        :color="settings.textColor"
-                        :tooltip="i18n.textColorButton">
+                    :active="activeTab === 1"
+                    icon="brush"
+                    :color="settings.textColor"
+                    :tooltip="i18n.textColorButton">
                 </editor-button>
 
                 <!-- text style (bold, italic, underlined) -->
                 <div class="style-button">
                     <editor-button
-                            :active="activeTab === 2"
-                            icon="A"
-                            type="text"
-                            :tooltip="i18n.textStyleButton">
+                        :active="activeTab === 2"
+                        icon="A"
+                        type="text"
+                        :tooltip="i18n.textStyleButton">
                         <span class="text-preview">{{ textStyle }}</span>
                     </editor-button>
                 </div>
 
                 <!-- text size -->
                 <editor-button
-                        :active="activeTab === 3"
-                        icon="format_size"
-                        type="text"
-                        :tooltip="i18n.textSizeButton">
+                    :active="activeTab === 3"
+                    icon="format_size"
+                    type="text"
+                    :tooltip="i18n.textSizeButton">
                     <span class="text-preview">{{ settings.textSize }}</span>
                 </editor-button>
 
                 <!-- highlight shadow -->
                 <div class="halo-button">
                     <editor-button
-                            :active="activeTab === 4"
-                            icon="A"
-                            :color="settings.textBlurColor"
-                            :tooltip="i18n.textBlurButton">
+                        :active="activeTab === 4"
+                        icon="A"
+                        :color="settings.textBlurColor"
+                        :tooltip="i18n.textBlurButton">
                     </editor-button>
                 </div>
 
                 <!-- text angle -->
                 <editor-button
-                        :active="activeTab === 5"
-                        icon="icon-rotate-cw"
-                        type="text"
-                        :tooltip="i18n.textAngleButton">
+                    :active="activeTab === 5"
+                    icon="icon-rotate-cw"
+                    type="text"
+                    :tooltip="i18n.textAngleButton">
                     <span class="text-preview">{{ settings.angle }}</span>
                 </editor-button>
 
@@ -89,20 +89,21 @@
         <v-layout row wrap align-center justify-center class="editor-content">
 
             <font-picker :fonts="fonts" v-model="settings.font" class="mt-2 elevation-1"
-                            v-if="activeTab === 0"></font-picker>
+                         v-if="activeTab === 0"></font-picker>
 
             <color-picker v-model="textColor" v-if="activeTab === 1"></color-picker>
 
             <text-style-picker :styles="styles" :active.sync="settings.textStyle" class="mt-2 elevation-1"
-                              v-if="activeTab === 2" :i18n="i18n"></text-style-picker>
+                               v-if="activeTab === 2" :i18n="i18n"></text-style-picker>
 
             <text-size-picker :sizes="sizes" v-model="settings.textSize" class="mt-2 elevation-1"
-                                v-if="activeTab === 3"></text-size-picker>
+                              v-if="activeTab === 3"></text-size-picker>
 
-            <text-blur-picker :color.sync="blurColor" :radius.sync="blurRadius" v-if="activeTab === 4" :i18n="i18n"></text-blur-picker>
+            <text-blur-picker :color.sync="blurColor" :radius.sync="blurRadius" v-if="activeTab === 4"
+                              :i18n="i18n"></text-blur-picker>
 
             <text-angle-picker :angle.sync="settings.angle" :i18n="i18n" class="mt-2 elevation-1"
-                                v-if="activeTab === 5"></text-angle-picker>
+                               v-if="activeTab === 5"></text-angle-picker>
 
         </v-layout>
 
@@ -110,7 +111,7 @@
 </template>
 
 <script>
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
     import EditorButton from 'dn_sketchingenhanced-symboleditor/components/symbol/EditorButton.vue';
     import TextSizePicker from './TextSizePicker.vue';
     import TextStylePicker from './TextStylePicker.vue';
@@ -169,7 +170,7 @@
                 }
             },
             blurColor(color) {
-                if(color.rgba) {
+                if (color.rgba) {
                     this.settings.textBlurColor = color.rgba;
                 }
             },
@@ -181,15 +182,15 @@
             textStyle() {
                 const output = [];
                 this.styles.forEach(x => {
-                    if(this.settings.textStyle[x]) {
-                        output.push(x.substr(0,1).toUpperCase());
+                    if (this.settings.textStyle[x]) {
+                        output.push(x.substr(0, 1).toUpperCase());
                     }
                 });
                 return output.join(', ');
             },
             font() {
                 const index = (this.settings.font.indexOf(' ') !== -1) ? this.settings.font.indexOf(' ') : this.settings.font.length;
-                return this.settings.font.substr(0,index);
+                return this.settings.font.substr(0, index);
             },
         },
     };

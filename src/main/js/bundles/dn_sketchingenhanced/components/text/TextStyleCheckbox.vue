@@ -17,7 +17,7 @@
 -->
 <template>
     <v-layout align-center style="font-size: 14px">
-        <v-checkbox v-model="checkboxOn" :label="label" ></v-checkbox>
+        <v-checkbox v-model="checkboxOn" :label="label"></v-checkbox>
     </v-layout>
 </template>
 
@@ -32,8 +32,7 @@
         },
 
         data() {
-            return {
-            };
+            return {};
         },
         computed: {
             checkboxOn: {

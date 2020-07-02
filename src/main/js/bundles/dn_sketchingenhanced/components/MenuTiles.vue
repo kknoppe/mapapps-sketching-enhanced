@@ -17,11 +17,13 @@
 -->
 <template>
     <v-list-tile
-            @click="onToolClickHandler"
-            class="sketchingMenuTiles"
-            :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)">
-        <v-list-tile-action class="sketchingMenuToolActions" >
-            <v-icon> {{(tool.iconClass.indexOf('construction') !== -1 && everlasting) ? `${tool.iconClass}-white` : tool.iconClass}} </v-icon>
+        @click="onToolClickHandler"
+        class="sketchingMenuTiles"
+        :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)">
+        <v-list-tile-action class="sketchingMenuToolActions">
+            <v-icon> {{(tool.iconClass.indexOf('construction') !== -1 && everlasting) ? `${tool.iconClass}-white` :
+                tool.iconClass}}
+            </v-icon>
         </v-list-tile-action>
         <v-list-tile-title class="sketchingMenuToolTitles"> {{ tool.title }}</v-list-tile-title>
     </v-list-tile>
@@ -36,10 +38,10 @@
             return {
                 profileLoaded: false,
                 everlasting: document.body.classList.contains('everlasting'),
-        };
+            };
         },
         mounted() {
-            if(this.bus) {
+            if (this.bus) {
                 this.bus.$on('startRecording', () => {
                     this.profileLoaded = true;
                 });
