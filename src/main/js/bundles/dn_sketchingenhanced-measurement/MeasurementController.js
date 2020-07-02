@@ -46,12 +46,12 @@ export default class MeasurementController {
         this._removeTemporaryMeasurements(evt);
 
 
-        if(evt.state === 'start' && !this.multiMeasurement && this.measurementBoolean && (evt.tool && evt.tool !== 'reshape')) {
+        if (evt.state === 'start' && !this.multiMeasurement && this.measurementBoolean && (evt.tool && evt.tool !== 'reshape')) {
             this._removeAll(evt);
         }
 
 
-        if(evt.state === 'start' && this.measurementBoolean) {
+        if (evt.state === 'start' && this.measurementBoolean) {
             // increase the group classification when start creating a new geometry or reshape an old one, so that the correlated measurements can be deleted on reshape
             this.sketchGroup++;
         }
@@ -60,11 +60,11 @@ export default class MeasurementController {
         if (evt.state === 'complete' && this.measurementBoolean) {
             this._oldVertex = null;
 
-            if(evt.tool === 'point') {
+            if (evt.tool === 'point') {
                 return;
-            } else if(evt.tool === 'reshape' || evt.tool === 'transform') {
+            } else if (evt.tool === 'reshape' || evt.tool === 'transform') {
                 // add all measurements after completion of a reshape operation
-                if(evt.graphics[0].geometry.type === 'point')  {
+                if (evt.graphics[0].geometry.type === 'point') {
                     return;
                 }
                 const newEvent = evt;
@@ -80,7 +80,7 @@ export default class MeasurementController {
                 });
 
             } else {
-                if(evt.graphic) {
+                if (evt.graphic) {
                     evt.graphic.group = this.sketchGroup;
                 }
                 if (evt.tool !== 'polyline') {
@@ -92,7 +92,7 @@ export default class MeasurementController {
             }
         }
 
-        if(evt.state === 'active') {
+        if (evt.state === 'active') {
             this._stateActiveHandler(evt);
         }
 
@@ -108,14 +108,14 @@ export default class MeasurementController {
      * @private
      */
     _stateActiveHandler(evt) {
-        if(!this.measurementBoolean) {
+        if (!this.measurementBoolean) {
             return;
         }
 
         const type = evt.toolEventInfo.type;
 
         // calculate length of lines (elements of polylines & polygons)
-        if (type === 'vertex-add' ) {
+        if (type === 'vertex-add') {
             // write length of lines
             this._calculatePathLength(evt);
         }
@@ -151,7 +151,7 @@ export default class MeasurementController {
      */
     _checkIfPositionHasChanged(evt) {
         setTimeout(() => {
-            if(this.coordinates && this.coordinates === evt.toolEventInfo.coordinates) {
+            if (this.coordinates && this.coordinates === evt.toolEventInfo.coordinates) {
                 evt.tool === 'polyline' && this._calculateTotalLineMeasurement(evt, true);
                 evt.tool === 'polygon' && this._calculatePolygonMeasurements(evt, true);
             }
@@ -189,7 +189,7 @@ export default class MeasurementController {
     _calculateTotalLineMeasurement(evt, temporary) {
         const path = evt.graphic.geometry.paths[0];
 
-        if(path.length < 3 && !temporary) {
+        if (path.length < 3 && !temporary) {
             return;
         }
         const viewModel = evt.target;
@@ -197,7 +197,7 @@ export default class MeasurementController {
 
         const lengthString = this._getLength(evt.graphic.geometry);
 
-        const pnt = new Point(path[path.length-1],spatialReference);
+        const pnt = new Point(path[path.length - 1], spatialReference);
 
         // calculate text position due to last line element
         const textPosition = this._getTextPosition(path);
@@ -206,7 +206,7 @@ export default class MeasurementController {
         const textSymbol = new TextSymbol({
             text: temporary ? lengthString : `${i18n.totalLength}: ${lengthString}`,
             color: this.textSettings.color,
-            name: temporary ? 'temporary' :'',
+            name: temporary ? 'temporary' : '',
             font: this.textSettings.font,
             horizontalAlignment: textPosition,
             yoffset: yOffset,
@@ -217,7 +217,7 @@ export default class MeasurementController {
 
 
         const graphic = new Graphic(pnt, textSymbol);
-       viewModel.layer.add(graphic);
+        viewModel.layer.add(graphic);
     }
 
     /**
@@ -227,9 +227,9 @@ export default class MeasurementController {
      * @private
      */
     _getLength(geometry) {
-        const length = Math.round(this.geoEngine.planarLength(geometry,'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+        const length = Math.round(this.geoEngine.planarLength(geometry, 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
         return length > 1000 ?
-            `${(Math.round(this.geoEngine.planarLength(geometry,'kilometers')*Math.pow(10, this.kmDecimal))/Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
+            `${(Math.round(this.geoEngine.planarLength(geometry, 'kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
             `${length.toLocaleString(i18n.locale)} m`;
     }
 
@@ -240,9 +240,9 @@ export default class MeasurementController {
      * @private
      */
     _getArea(geometry) {
-        const area = Math.round(this.geoEngine.planarArea(geometry, 'square-meters')* Math.pow(10, this.mDecimal))/Math.pow(10, this.mDecimal);
+        const area = Math.round(this.geoEngine.planarArea(geometry, 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
         return area > 1000000 ?
-            `${(Math.round(this.geoEngine.planarArea(geometry,'square-kilometers')*Math.pow(10, this.kmDecimal))/Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
+            `${(Math.round(this.geoEngine.planarArea(geometry, 'square-kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
             `${area.toLocaleString(i18n.locale)} m²`;
     }
 
@@ -254,7 +254,7 @@ export default class MeasurementController {
      */
     _getTextPosition(path) {
         const m = this._calculateSlope(path);
-        const textPosition = (path[path.length-2][0]-path[path.length-1][0]) < 0 ? 'left' : 'right';
+        const textPosition = (path[path.length - 2][0] - path[path.length - 1][0]) < 0 ? 'left' : 'right';
         return (m > 2 || m < -2) ? 'center' : textPosition;
     }
 
@@ -266,7 +266,7 @@ export default class MeasurementController {
      */
     _getYOffset(path) {
         const m = this._calculateSlope(path);
-        const yOffset =  (path[path.length-2][1]-path[path.length-1][1]) < 0 ? 15 : -20;
+        const yOffset = (path[path.length - 2][1] - path[path.length - 1][1]) < 0 ? 15 : -20;
         return (m < 1 && m > -1) ? 0 : yOffset;
     }
 
@@ -277,8 +277,9 @@ export default class MeasurementController {
      * @private
      */
     _calculateSlope(path) {
-       return (path[path.length-2][1]-path[path.length-1][1])/ (path[path.length-2][0]-path[path.length-1][0]);
+        return (path[path.length - 2][1] - path[path.length - 1][1]) / (path[path.length - 2][0] - path[path.length - 1][0]);
     }
+
     /**
      * remove all temporary measurements
      * @param evt
@@ -303,15 +304,15 @@ export default class MeasurementController {
      */
     _calculatePathLength(evt) {
         // add length labeling for polyline elements
-        if(evt.graphic && evt.graphic.geometry.type === 'polyline') {
+        if (evt.graphic && evt.graphic.geometry.type === 'polyline') {
             this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0]);
         }
         // add temporary labeling for polygon elements
-        if(evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
+        if (evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
             this._addTextForPolylinePolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
         }
 
-        if(evt.graphic.geometry.type === 'polygon' && evt.tool === 'circle') {
+        if (evt.graphic.geometry.type === 'polygon' && evt.tool === 'circle') {
             this._addRadius(evt);
         }
     }
@@ -383,14 +384,14 @@ export default class MeasurementController {
         const lengthString = this._getLength(line);
         const pnt = line.extent.center;
         // calculate rotation angle for text
-        const degAngle = -180/Math.PI * Math.atan((checkedPath[1][1] - checkedPath[0][1])/(checkedPath[1][0]-checkedPath[0][0]));
+        const degAngle = -180 / Math.PI * Math.atan((checkedPath[1][1] - checkedPath[0][1]) / (checkedPath[1][0] - checkedPath[0][0]));
         const nameString = temporary ? 'temporary' : '';
 
         const textSymbol = new TextSymbol({
             angle: degAngle,
             text: lengthString,
             color: this.textSettings.color,
-            name: id ?  `measurement-${id}` : nameString,
+            name: id ? `measurement-${id}` : nameString,
             font: this.textSettings.font,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
@@ -405,7 +406,7 @@ export default class MeasurementController {
      * @param id: uid of the polygon
      * @private
      */
-    _removePolygonMeasurements(viewModel,id) {
+    _removePolygonMeasurements(viewModel, id) {
         // find all help lines and remove them from the graphics layer
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => x.symbol.name === `measurement-${id}`);
@@ -420,7 +421,7 @@ export default class MeasurementController {
      * @private
      */
     _addPolygonLineMeasurements(evt, spatialReference, temporary) {
-        if(evt.tool === 'circle' || evt.tool === 'ellipse') {
+        if (evt.tool === 'circle' || evt.tool === 'ellipse') {
             const horizontalAlignment = (evt.tool === 'circle' && this.radiusPath) ? this._getHorizontalAlignmentForCircle() : null;
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
             evt.target.layer.add(graphic);
@@ -445,15 +446,16 @@ export default class MeasurementController {
 
         const paths = evt.graphic.geometry.paths[0];
         for (let i = 1; i < paths.length; i++) {
-            const checkedPath = [paths[i-1], paths[i]];
+            const checkedPath = [paths[i - 1], paths[i]];
             const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, false);
             viewModel.layer.add(graphic);
         }
     }
 
     _getHorizontalAlignmentForCircle() {
-        return this.radiusPath[0][0]-this.radiusPath[1][0] < 0 ? 'left' : 'right';
+        return this.radiusPath[0][0] - this.radiusPath[1][0] < 0 ? 'left' : 'right';
     }
+
     /**
      * calculate circumference and area of circles and ellipsis
      * @param geometry

@@ -16,29 +16,29 @@
 
 -->
 <template>
-<div class="footer">
-    <v-toolbar dense class="measurementFooterToolbar">
-        <v-switch
-            v-model="enableMeasurement"
-            :label="i18n.enableMeasurements"
-            hide-details>
-        </v-switch>
-        <v-spacer></v-spacer>
+    <div class="footer">
+        <v-toolbar dense class="measurementFooterToolbar">
+            <v-switch
+                v-model="enableMeasurement"
+                :label="i18n.enableMeasurements"
+                hide-details>
+            </v-switch>
+            <v-spacer></v-spacer>
 
 
-        <v-btn-toggle>
-            <v-tooltip top v-if="measurementEnabled">
-                <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
-                    <v-icon>
-                       {{multiMeasurement ? iconKeep : iconRemove}}
-                    </v-icon>
-                </v-btn>
-                <span> {{multiMeasurement ? i18n.disableKeepMeasurements : i18n.enableKeepMeasurements}}</span>
-            </v-tooltip>
-        </v-btn-toggle>
+            <v-btn-toggle>
+                <v-tooltip top v-if="measurementEnabled">
+                    <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
+                        <v-icon>
+                            {{multiMeasurement ? iconKeep : iconRemove}}
+                        </v-icon>
+                    </v-btn>
+                    <span> {{multiMeasurement ? i18n.disableKeepMeasurements : i18n.enableKeepMeasurements}}</span>
+                </v-tooltip>
+            </v-btn-toggle>
 
-    </v-toolbar>
-</div>
+        </v-toolbar>
+    </div>
 </template>
 
 

@@ -95,7 +95,7 @@
     import TextSetting from '../model/TextSetting';
     import i18n from 'dojo/i18n!../nls/bundle';
     import SimpleTextEditor from './text/SimpleTextEditor.vue';
-    import MeasurementFooter from '../../measurement/MeasurementFooter.vue';
+    import MeasurementFooter from '../../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
 
     export default {
         mixins: [Bindable],

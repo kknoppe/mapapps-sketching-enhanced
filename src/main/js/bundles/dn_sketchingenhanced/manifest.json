@@ -13,7 +13,7 @@
         "sketching-styles": "^1.0.0",
         "snapping-manager": "^1.0.0",
         "symboleditor": "^1.0.0",
-        "measurement": "^1.0.0"
+        "dn_sketchingenhanced-measurement": "^1.0.0"
     },
     "main": "",
     "CSS-Themes-Extension": [
@@ -150,7 +150,7 @@
                 },
                 {
                     "name": "_measurementController",
-                    "providing": "measurement.MeasurementController"
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementController"
                 }
             ]
         },
