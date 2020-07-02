@@ -1,5 +1,5 @@
 {
-  "name": "sketching-tools",
+  "name": "dn_sketchingenhanced-tools",
   "version": "1.0.0",
   "title": "Sketching",
   "description": "This bundle provides sketching tools.",
@@ -169,13 +169,13 @@
     {
       "name": "DrawTextController",
       "provides": [
-        "sketching.DrawTextController",
+        "dn_sketchingenhanced.DrawTextController",
         "dn_sketchingenhanced.Action"
       ],
       "references": [
         {
           "name": "_drawTextHelpLine",
-          "providing": "sketching.drawTextHelpLine"
+          "providing": "dn_sketchingenhanced.DrawTextHelpLine"
         }
       ]
     },

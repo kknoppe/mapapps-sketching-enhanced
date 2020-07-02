@@ -1,4 +1,4 @@
-# sketching-tools
+# dn_sketchingenhanced-tools
 
 Dieses Bundle fügt Werkzeuge hinzu, mit denen Punkte, Linien, Polygone und Text erstellt, gelöscht und bearbeitet werden können. Hierzu wird die ArcGIS-API-Klasse
 [SketchViewModel](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html) verwendet, und die folgenden Bundles implementiert:
@@ -49,7 +49,7 @@ oder einige der folgenden Werkzeuge:
 Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, wie folgende Beispiel gezeigten Eigenschaften und ihre Default-Werte:
 
 ```json
-"sketching-tools": {
+"dn_sketchingenhanced-tools": {
     "Config": {
         "graphicLayerId": "ct-resultcenter",
         "graphicLayerTitle": "Sketching-Grafiken",

@@ -7,7 +7,7 @@
         "apprt-binding": "^4.8.4",
         "apprt-vue": "^4.8.4",
         "apprt-vuetify": "^4.8.4",
-        "sketching-tools": "^1.0.0",
+        "dn_sketchingenhanced-tools": "^1.0.0",
         "dn_sketchingenhanced-command": "^1.0.0",
         "dn_sketchingenhanced-construction": "^1.0.0",
         "dn_sketchingenhanced-styles": "^1.0.0",

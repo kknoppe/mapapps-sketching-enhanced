@@ -7,7 +7,7 @@ Dieses Bundle erstellt Layout-Widgets, mit denen die Sketching-, Konstruktion- u
 Add the dn_sketchingenhanced bundle to your app.
 
 * [tool-binding](#bundle=tool-binding@)
-* [sketching-tools](#bundle=sketching-tools@)
+* [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 * [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
 * [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)

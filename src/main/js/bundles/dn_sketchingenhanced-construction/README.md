@@ -2,7 +2,7 @@
 
 Dieses Bundle enthält die Konstruktion-Anwendung für Sketching. Hierzu werden die Funktionen durch Laden der folgenden Bundles implementiert:
 
-* [sketching-tools](#bundle=sketching-tools@)
+* [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 * [snapping-manager](#bundle=snapping-manager@)
 
 

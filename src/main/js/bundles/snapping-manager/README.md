@@ -1,7 +1,7 @@
 # snapping-manager
 
 Dieses Bundle implementiert die Snapping-Funktion für Sketching:
-* [sketching-tools](#bundle=sketching-tools@)
+* [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 
 ## Usage
 

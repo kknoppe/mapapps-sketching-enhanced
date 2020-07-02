@@ -6,7 +6,7 @@ Zum Anderen dient die Komponente "PopupViewerMeasurement" zur Bereitstellung der
 Für das Mess-Widget werden die Funktionen durch Laden der folgenden Bundles implementiert:
 
 * [tool-binding](#bundle=tool-binding@)
-* [sketching-tools](#bundle=sketching-tools@)
+* [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 * [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
 * [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
