@@ -231,7 +231,7 @@
         },
         {
           "name": "_highlightHandler",
-          "providing": "highlight.HighlightHandler",
+          "providing": "dn_sketchingenhanced.HighlightHandler",
           "cardinality": "0..1"
         },
         {

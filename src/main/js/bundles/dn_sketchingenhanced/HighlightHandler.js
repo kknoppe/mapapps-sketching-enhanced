@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*** SKIP-SONARQUBE-ANALYSIS ***/
-/*
- * Copyright (C) con terra GmbH
- */
-
-import d_lang from "dojo/_base/lang"
 import GraphicsLayer from "esri/layers/GraphicsLayer"
 import Graphic from "esri/Graphic";
 import {fromJSON} from "esri/symbols/support/jsonUtils";

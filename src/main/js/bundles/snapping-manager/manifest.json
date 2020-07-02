@@ -112,7 +112,7 @@
         },
         {
           "name": "_highlightHandler",
-          "providing": "highlight.HighlightHandler"
+          "providing": "dn_sketchingenhanced.HighlightHandler"
         },
         {
           "name": "_sketchingHandler",
