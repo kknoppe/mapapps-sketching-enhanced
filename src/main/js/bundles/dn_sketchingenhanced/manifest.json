@@ -37,23 +37,23 @@
             "widgetRole": "sketchingEnhancedWidget",
             "window": {
                 "title": "${ui.windowTitle}",
-                "dockable": true,
                 "dockTool": "sketchingEnhancedWidgetToggleTool",
+                "dockable": true,
                 "minimizeOnClose": true,
+                "closable": true,
+                "collapsable": true,
+                "draggable": true,
                 "marginBox": {
-                    "r": 50,
-                    "t": 45,
+                    "l": 25,
+                    "t": 120,
                     "w": 275
                 },
                 "minSize": {
                     "w": 260
                 },
-                "collapsable": true,
                 "tools": [
                     "windowCollapseTool"
                 ],
-                "closable": true,
-                "draggable": true,
                 "windowClass": "noPadding sketching noCollapseHandles",
                 "windowName": "sketching"
             }
