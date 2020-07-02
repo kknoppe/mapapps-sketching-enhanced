@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-styles",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "title": "Sketching Symbol Styles",
     "description": "This bundle provides sketching symbol styles.",
     "dependencies": {

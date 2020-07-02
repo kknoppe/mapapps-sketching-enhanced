@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-snappingmanager",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "title": "Snapping Manager",
     "dependencies": {
         "map-widget": "^4.8.4",

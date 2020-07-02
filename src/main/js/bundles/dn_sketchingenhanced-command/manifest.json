@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-command",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "title": "Sketching Commands",
     "description": "This bundle provides sketching tools.",
     "dependencies": {

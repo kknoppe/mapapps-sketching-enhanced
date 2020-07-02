@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-construction",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "title": "Sketching Construction",
     "dependencies": {
         "dn_sketchingenhanced-tools": "^1.0.0",
