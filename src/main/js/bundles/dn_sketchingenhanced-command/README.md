@@ -38,7 +38,7 @@ oder einige folgende Werkzeugen im Werkzeugsatz hinzufügen:
 Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, wie folgende Beispiel gezeigten Eigenschaften und ihre Default-Werte:
 
 ```json
-"sketching-command": {
+"dn_sketchingenhanced-command": {
   "SketchingSelection": {
     "geometryTypes": [
       "point",

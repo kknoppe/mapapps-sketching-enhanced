@@ -397,9 +397,9 @@ export default function () {
                 // if sketching object was selected -> save symbol for copying
                 const geoEngine = geometryEngine;
                 viewModel.layer.graphics.items.forEach(graphic => {
-                    if(graphic.geometry && graphic.geometry.contains && graphic.geometry.contains(evt.graphic.geometry)) {
+                    if (graphic.geometry && graphic.geometry.contains && graphic.geometry.contains(evt.graphic.geometry)) {
                         this._sketchingCommand.selectedSymbol = graphic.symbol;
-                    } else if(graphic.geometry && graphic.geometry !== evt.graphic.geometry && geoEngine.intersect(graphic.geometry, evt.graphic.geometry)) {
+                    } else if (graphic.geometry && graphic.geometry !== evt.graphic.geometry && geoEngine.intersect(graphic.geometry, evt.graphic.geometry)) {
                         this._sketchingCommand.selectedSymbol = graphic.symbol;
                     }
                 });
