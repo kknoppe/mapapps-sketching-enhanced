@@ -1,14 +1,19 @@
 {
     "name": "dn_sketchingenhanced-command",
     "version": "1.0.0-SNAPSHOT",
-    "title": "Sketching Commands",
-    "description": "This bundle provides sketching tools.",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
     "dependencies": {
         "dn_sketchingenhanced-tools": "^1.0.0",
         "dn_sketchingenhanced-styles": "^1.0.0",
         "dn_sketchingenhanced-snappingmanager": "^1.0.0"
     },
-    "productName": "map.apps",
     "components": [
         {
             "name": "SketchingCommand",

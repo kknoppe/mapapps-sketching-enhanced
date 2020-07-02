@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Styles",
+    bundleDescription: "Sketching Enhanced Styles",
     ui: {
         options: {
             angle: "Winkel",

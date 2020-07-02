@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Measurement",
+    bundleDescription: "Sketching Enhanced Measurement",
     root: ({
         bundleName: 'Sketching',
         bundleDescription: '',

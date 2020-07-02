@@ -15,8 +15,8 @@
  */
 module.exports = {
     root: ({
-        bundleName: 'Sketching',
-        bundleDescription: '',
+        bundleName: 'Sketching Enhanced',
+        bundleDescription: 'Sketching Enhanced',
         ui: {
             windowTitle: 'Sketching',
             activeConstructionLength: 'Length',

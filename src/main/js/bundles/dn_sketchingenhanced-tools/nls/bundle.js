@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Tools",
+    bundleDescription: "Sketching Enhanced Tools",
     root: {
         layerTitle: 'Sketching Graphics',
         tools: {

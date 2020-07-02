@@ -1,14 +1,19 @@
 {
     "name": "dn_sketchingenhanced-styles",
     "version": "1.0.0-SNAPSHOT",
-    "title": "Sketching Symbol Styles",
-    "description": "This bundle provides sketching symbol styles.",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
     "dependencies": {
         "dataform": "^4.8.4",
         "dataview": "^4.8.4",
         "dn_sketchingenhanced-tools": "^1.0.0"
     },
-    "productName": "map.apps",
     "components": [
         {
             "name": "StyleContext",

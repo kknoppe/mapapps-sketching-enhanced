@@ -17,8 +17,8 @@ const submit = 'Apply Settings';
 const discard = 'Discard Settings';
 module.exports = {
     root: ({
-        bundleName: 'Symbol editor',
-        bundleDescription: 'Bundle to edit feature layer and graphic layer style',
+        bundleName: "Sketching Enhanced Symboleditor",
+        bundleDescription: "Sketching Enhanced Symboleditor",
         windowTitle: 'Symbol style customization',
         tool: {
             title: 'Symbol style editor',

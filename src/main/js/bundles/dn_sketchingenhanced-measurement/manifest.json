@@ -1,10 +1,18 @@
 {
     "name": "dn_sketchingenhanced-measurement",
     "version": "1.0.0-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
+    "main": "",
     "dependencies": {
         "esri": "^4.6.0"
     },
-    "main": "",
     "CSS-Themes-Extension": [
         {
             "name": "*",
@@ -12,8 +20,6 @@
                 "css/measurement.css"
             ]
         }
-    ],
-    "layout-widgets": [
     ],
     "components": [
         {

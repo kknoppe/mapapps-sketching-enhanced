@@ -4,6 +4,8 @@
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
     "i18n": [
         "bundle"
     ],

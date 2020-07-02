@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Snapping Manager",
+    bundleDescription: "Sketching Enhanced Snapping Manager",
     root: {
         ui: {
             reachedMaxCount: "Only %maxCount% objects were used for snapping.",

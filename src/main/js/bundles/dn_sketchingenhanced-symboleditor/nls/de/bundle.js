@@ -17,8 +17,8 @@ const mainTitle = 'Symbolisierung anpassen';
 const submit = 'Änderungen übernehmen';
 const discard = 'Änderungen verwerfen';
 module.exports = {
-    bundleName: 'Symbol Editor',
-    bundleDescription: 'Das Bundle erm\u00f6glicht es das Symbol eines Feature Layer oder Graphik Layer zu editieren',
+    bundleName: "Sketching Enhanced Symboleditor",
+    bundleDescription: "Sketching Enhanced Symboleditor",
     windowTitle: mainTitle,
     tool: {
         title: mainTitle,

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Command",
+    bundleDescription: "Sketching Enhanced Command",
     root: {
         tools: {
             drawremovetool: "Delete selected Objects",

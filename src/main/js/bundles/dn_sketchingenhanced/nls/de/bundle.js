@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
-    bundleName: 'Sketching',
-    bundleDescription: '',
+    bundleName: 'Sketching Enhanced',
+    bundleDescription: 'Sketching Enhanced',
     ui: {
         windowTitle: 'Zeichnen',
         activeConstructionLength: 'Länge',

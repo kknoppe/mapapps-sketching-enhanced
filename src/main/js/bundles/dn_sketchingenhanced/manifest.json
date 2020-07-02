@@ -1,6 +1,15 @@
 {
     "name": "dn_sketchingenhanced",
     "version": "1.0.0-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
+    "main": "",
+    "i18n": [
+        "bundle"
+    ],
     "dependencies": {
         "esri": "^4.8.4",
         "apprt-core": "^4.8.4",
@@ -15,7 +24,6 @@
         "dn_sketchingenhanced-symboleditor": "^1.0.0",
         "dn_sketchingenhanced-measurement": "^1.0.0"
     },
-    "main": "",
     "CSS-Themes-Extension": [
         {
             "name": "*",

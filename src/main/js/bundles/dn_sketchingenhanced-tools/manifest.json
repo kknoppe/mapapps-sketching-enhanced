@@ -1,8 +1,14 @@
 {
     "name": "dn_sketchingenhanced-tools",
     "version": "1.0.0-SNAPSHOT",
-    "title": "Sketching",
-    "description": "This bundle provides sketching tools.",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-sketching-enhanced",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
     "dependencies": {
         "toolrules": "^4.8.4",
         "map-widget": "^4.8.4"
@@ -15,7 +21,6 @@
             ]
         }
     ],
-    "productName": "map.apps",
     "components": [
         {
             "name": "Config",

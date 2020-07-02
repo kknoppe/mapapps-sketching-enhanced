@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
-    bundleName: 'Measurement',
-    bundleDescription: '',
+    bundleName: "Sketching Enhanced Measurement",
+    bundleDescription: "Sketching Enhanced Measurement",
     ui: {
         windowTitle: 'Messen',
         activeConstructionLength: 'Länge',

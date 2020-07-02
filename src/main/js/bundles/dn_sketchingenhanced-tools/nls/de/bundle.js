@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 module.exports = {
+    bundleName: "Sketching Enhanced Tools",
+    bundleDescription: "Sketching Enhanced Tools",
     layerTitle: 'Zeichnungen in der Karte',
     tools: {
         drawpointtool: 'Punkt',
