@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*** SKIP-SONARQUBE-ANALYSIS ***/
-/*
- * Copyright (C) con terra GmbH
- */
 import Binding from 'apprt-binding/Binding';
 import {declare} from 'apprt-core/Mutable';
 import ct_array from 'ct/array';

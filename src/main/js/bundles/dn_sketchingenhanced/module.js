@@ -17,4 +17,5 @@ import './SketchingEnhancedWidgetFactory';
 import './SketchingToolHandler';
 import './SetFonts';
 import './DrawTextHelpLine';
+import './BindingToolsToViewModel';
 

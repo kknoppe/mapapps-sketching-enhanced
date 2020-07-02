@@ -124,7 +124,7 @@
                 },
                 {
                     "name": "_bindingToolsToViewModel",
-                    "providing": "tool-binding.BindingToolsToViewModel"
+                    "providing": "dn_sketchingenhanced.BindingToolsToViewModel"
                 },
                 {
                     "name": "_styleContextChangeController",
@@ -207,6 +207,45 @@
                 {
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"
+                }
+            ]
+        },
+        {
+            "name": "BindingToolsToViewModel",
+            "provides": "dn_sketchingenhanced.BindingToolsToViewModel",
+            "properties": {
+                "vueModelToolProps": [
+                    "id",
+                    "title",
+                    "description",
+                    "tooltip",
+                    "priority",
+                    "toolGroup",
+                    "toolClass",
+                    "iconClass",
+                    "icon",
+                    "visibility",
+                    "enabled",
+                    "active",
+                    "togglable",
+                    "processing",
+                    "toolRole",
+                    "type",
+                    "selectionType",
+                    "groups",
+                    "mode",
+                    "menu",
+                    "items",
+                    "clickHandler",
+                    "activateHandler",
+                    "deactivateHandler"
+                ]
+            },
+            "references": [
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "cardinality": "0..n"
                 }
             ]
         }
