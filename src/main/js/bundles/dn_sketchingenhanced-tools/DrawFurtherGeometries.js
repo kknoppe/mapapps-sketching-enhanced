@@ -50,7 +50,7 @@ export default class DrawFurtherGeometries {
         const listener = this._createMouseUpListener(viewModel);
 
         action.on(['vertex-add'], event => {
-            if(event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawellipsetool') {
+            if (event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawellipsetool') {
                 viewModel.emit('create', {
                     state: 'start',
                     type: 'update',
@@ -61,10 +61,10 @@ export default class DrawFurtherGeometries {
 
 
         action.on(['draw-complete', 'cursor-update'], event => {
-            this._drawCompleteActions(event,listener);
+            this._drawCompleteActions(event, listener);
 
             const viewModelOperator = viewModel && viewModel.tool && viewModel.tool.id === 'drawellipsetool';
-            if(event.vertices && event.vertices.length > 1 && viewModelOperator && !this.checkIfTooFast) {
+            if (event.vertices && event.vertices.length > 1 && viewModelOperator && !this.checkIfTooFast) {
                 // remove former help ellipsis
                 that._removeHelpGraphics(viewModel);
 
@@ -75,7 +75,7 @@ export default class DrawFurtherGeometries {
                 this._drawEventHandler(event, props, 'ellipse', viewModel, ring);
 
             } else {
-                if(viewModel.tool && viewModel.tool.id === 'drawellipsetool') {
+                if (viewModel.tool && viewModel.tool.id === 'drawellipsetool') {
                     event.type === 'draw-complete' && viewModel.emit('update', {
                         state: 'cancel',
                         type: 'update',
@@ -107,7 +107,7 @@ export default class DrawFurtherGeometries {
 
 
         triangle.on(['vertex-add'], event => {
-            if(event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
+            if (event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
                 viewModel.emit('create', {
                     state: 'start',
                     type: 'update',
@@ -118,10 +118,10 @@ export default class DrawFurtherGeometries {
 
 
         triangle.on(['draw-complete', 'cursor-update'], event => {
-            this._drawCompleteActions(event,listener);
+            this._drawCompleteActions(event, listener);
 
             const viewModelOperator = viewModel && viewModel.tool && viewModel.tool.id === 'drawtriangletool';
-            if(event.vertices && event.vertices.length > 1 && viewModelOperator && !this.checkIfTooFast) {
+            if (event.vertices && event.vertices.length > 1 && viewModelOperator && !this.checkIfTooFast) {
 
                 // remove former help ellipsis
                 that._removeHelpGraphics(viewModel);
@@ -132,7 +132,7 @@ export default class DrawFurtherGeometries {
 
                 this._drawEventHandler(event, props, 'triangle', viewModel, ring);
             } else {
-                if(viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
+                if (viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
                     event.type === 'draw-complete' && viewModel.emit('update', {
                         state: 'cancel',
                         type: 'update',
@@ -152,7 +152,7 @@ export default class DrawFurtherGeometries {
         let verticesCount = 0;
 
         viewModel.on(['create'], evt => {
-            if(evt.target.tool && evt.target.tool.id === 'drawarrowtool') {
+            if (evt.target.tool && evt.target.tool.id === 'drawarrowtool') {
 
                 if (evt.toolEventInfo && evt.toolEventInfo.type === 'vertex-add') {
                     verticesCount++;
@@ -191,7 +191,7 @@ export default class DrawFurtherGeometries {
      * @param minWidth
      * @private
      */
-    _createSLS (styleContext, minWidth) {
+    _createSLS(styleContext, minWidth) {
         return new SimpleLineSymbol({
             cap: styleContext.get('strokeCap'),
             color: styleContext.getColor('stroke'),
@@ -235,13 +235,13 @@ export default class DrawFurtherGeometries {
      * @private
      */
     _createTriangleRing(vs) {
-        const ring = [[vs[1][0],vs[1][1]]];
+        const ring = [[vs[1][0], vs[1][1]]];
         const lx = vs[0][0] + vs[0][0] - vs[1][0];
         const ly = vs[1][1];
-        ring.push([lx,ly]);
+        ring.push([lx, ly]);
         const ux = vs[0][0];
         const uy = vs[0][1] + vs[0][1] - vs[1][1];
-        ring.push([ux,uy]);
+        ring.push([ux, uy]);
         return ring;
     }
 
@@ -251,7 +251,7 @@ export default class DrawFurtherGeometries {
      * @private
      */
     _removeHelpGraphics(viewModel) {
-        if(viewModel.layer.graphics && viewModel.layer.graphics.length > 0) {
+        if (viewModel.layer.graphics && viewModel.layer.graphics.length > 0) {
             const gs = viewModel.layer.graphics.filter(x => x.temporary);
             viewModel.layer.removeMany(gs);
         }
@@ -306,7 +306,7 @@ export default class DrawFurtherGeometries {
      * @private
      */
     _calculateGraphicOperator(evt) {
-       return evt.graphic && evt.graphic.geometry && evt.graphic.geometry.paths && evt.graphic.geometry.paths[0].length === 3;
+        return evt.graphic && evt.graphic.geometry && evt.graphic.geometry.paths && evt.graphic.geometry.paths[0].length === 3;
     }
 
     /**
@@ -322,6 +322,7 @@ export default class DrawFurtherGeometries {
         evt.graphic.symbol = g.symbol;
         viewModel.complete(evt.graphic);
     }
+
     /**
      * use given path of the drawn line to create the arrow
      * @param geom: geometry of sketched line
@@ -406,7 +407,7 @@ export default class DrawFurtherGeometries {
         const polygonSymbol = this._createPolygonSymbol(props);
 
         // create a graphic representing the ellipse that is being drawn and add it to the current sketching layer
-        const temporary  = event.type === 'cursor-update';
+        const temporary = event.type === 'cursor-update';
         const graphic = this._createAndAddGraphic(viewModel, ring, polygonSymbol, temporary);
 
         // emit update event, so that the tool is activated again
@@ -423,13 +424,13 @@ export default class DrawFurtherGeometries {
 
     _changeCursor() {
         // change mouse cursor when tool is activated
-        if(!document.getElementsByClassName('esri-view-surface')[0].classList.contains('sketching-cursor')) {
+        if (!document.getElementsByClassName('esri-view-surface')[0].classList.contains('sketching-cursor')) {
             document.getElementsByClassName('esri-view-surface')[0].classList.add('sketching-cursor');
         }
     }
 
     _drawCompleteActions(event, listener) {
-        if(event.type === 'draw-complete') {
+        if (event.type === 'draw-complete') {
             this.checkIfTooFast = false;
             listener.remove();
         }
@@ -440,7 +441,7 @@ export default class DrawFurtherGeometries {
             this.checkIfTooFast = true;
             setTimeout(() => {
                 this.checkIfTooFast = false;
-            },1000);
+            }, 1000);
         });
 
     }

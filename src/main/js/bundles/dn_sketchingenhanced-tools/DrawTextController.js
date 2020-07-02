@@ -44,7 +44,7 @@ export default class DrawTextController extends Connect {
         const firstGraphic = graphics.length && graphics[0];
         if (firstGraphic) {
             // draw help line if state is textbox is static
-            if(state !== 'active' && tool && tool.id === 'drawtexttool') {
+            if (state !== 'active' && tool && tool.id === 'drawtexttool') {
                 this._drawTextHelpLine.createHelpLine(firstGraphic, viewModel);
             } else {
                 this._drawTextHelpLine.removeHelpLine(viewModel);

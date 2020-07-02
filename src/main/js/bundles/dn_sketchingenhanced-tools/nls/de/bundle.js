@@ -48,7 +48,7 @@ module.exports = {
         drawselectioncopytool: 'Objekt auswählen und Geometrie kopieren',
         drawselectioncreateuniontool: 'Objekt auswählen und Vereinigung erstellen',
         drawselectioncreatedifferencetool: 'Objekt auswählen und Differenzierung erstellen',
-        drawselectioncreateintersecttool:'Objekt auswählen und mit den ausgewählten Objekte Schnittmenge erstellen',
+        drawselectioncreateintersecttool: 'Objekt auswählen und mit den ausgewählten Objekte Schnittmenge erstellen',
         sketchinglinegroup: 'Linienwerkzeuge',
         sketchingpolygongroup: 'Polygonwerkzeuge',
         sketchinglayeradd: 'Layer Menü',

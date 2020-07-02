@@ -73,7 +73,7 @@ function SketchingHandler() {
 
             const type = tool.type || "polygon";
 
-            if(type !== 'selectReshape' && type !== 'reshape') {
+            if (type !== 'selectReshape' && type !== 'reshape') {
                 this.drag = view.on(['click', 'drag'], evt => {
                     evt.stopPropagation();
                 });
@@ -134,7 +134,7 @@ function SketchingHandler() {
         deactivateTool(tool) {
             const viewModel = this._getSketchViewModel();
             this.drag && this.drag.remove();
-            if(tool && (tool.id === 'drawellipsetool' || tool.id === 'drawtriangletool')) {
+            if (tool && (tool.id === 'drawellipsetool' || tool.id === 'drawtriangletool')) {
                 document.getElementsByClassName('esri-view-surface')[0].classList.remove('sketching-cursor');
                 viewModel.tool = null;
             }
@@ -259,7 +259,7 @@ function SketchingHandler() {
                 viewModel._getSelectedGraphics = function () {
                     return this._selectedGraphics;
                 };
-                viewModel.reset || (viewModel.reset = function() {
+                viewModel.reset || (viewModel.reset = function () {
                     this.tool = null;
                     this.cancel();
                 });
@@ -301,13 +301,13 @@ function SketchingHandler() {
             //toggle tool
             const type = evt.type;
             let state;
-            if(evt.target && evt.target.tool && evt.target.tool.toolId === 'drawtexttool') {
+            if (evt.target && evt.target.tool && evt.target.tool.toolId === 'drawtexttool') {
                 // for the drawtexttool the behavior of activating the tool must be different to the other tools
                 // after the first click, the tool should not be reactivated but only after canceling or finishing a text
                 //otherwise the tool would be closed before one could enter a text
-                state = evt.state ? evt.target.state: 'complete';
+                state = evt.state ? evt.target.state : 'complete';
                 state = type && type === 'remove' ? 'complete' : state;
-            } else{
+            } else {
                 // for all other tools it remains the same
                 state = evt.state;
             }
@@ -318,16 +318,19 @@ function SketchingHandler() {
                 if (tool && tool.togglable && tool.active) {
                     // if drawreshape1tool is selected throw event, so that text editor in sketching_widget is closed after deselecting text
                     (viewModel.tool.toolId === 'drawreshape1tool') && viewModel.emit('openSketchingEditor', {openSketchingEditor: false});
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         viewModel.activeTool || this.activateTool(tool);
                     }, 5);
                 } else {
                     viewModel.updateOnGraphicClick = this._updateOnGraphicClick;
                 }
-            } else if(type === 'update' && state === 'start' && tool.toolId === 'drawreshape1tool') {
+            } else if (type === 'update' && state === 'start' && tool.toolId === 'drawreshape1tool') {
                 const symbol = viewModel._orgSymbols[0];
                 // throw an event if reshape tool is used to edit sketching text so that the text editor can be opened
-                (symbol && symbol.type === 'text') && viewModel.emit('openSketchingEditor', {openSketchingEditor: true, symbol});
+                (symbol && symbol.type === 'text') && viewModel.emit('openSketchingEditor', {
+                    openSketchingEditor: true,
+                    symbol
+                });
                 // TODO: for other types of symols, events could be emitted, so that symbol editor can be reopened for reshape tool
             }
         }

@@ -28,49 +28,48 @@ const SketchingParameterResolver = declare({
     encodeURLParameter: function () {
         const layers = this._mapWidgetModel.map.allLayers.items;
         let graphicLayers = [];
-        layers.forEach( (layer) => {
-           if(layer.type === "graphics" && layer.graphics && layer.graphics.length && layer.visible){
-               const graphics = layer.graphics.items;
-               let gs = [];
-               graphics.forEach( (graphic) => {
-                   gs.push(graphic.toJSON());
-               });
+        layers.forEach((layer) => {
+            if (layer.type === "graphics" && layer.graphics && layer.graphics.length && layer.visible) {
+                const graphics = layer.graphics.items;
+                let gs = [];
+                graphics.forEach((graphic) => {
+                    gs.push(graphic.toJSON());
+                });
 
-               graphicLayers.push(
-                   {
-                       id:layer.id,
-                       title:layer.title,
-                       listMode:layer.listMode,
-                       graphics:gs
-                   }
-
-               )
-           }
+                graphicLayers.push(
+                    {
+                        id: layer.id,
+                        title: layer.title,
+                        listMode: layer.listMode,
+                        graphics: gs
+                    }
+                )
+            }
         });
-        if(graphicLayers.length){
-            return {graphics:graphicLayers};
+        if (graphicLayers.length) {
+            return {graphics: graphicLayers};
         }
         return null;
     },
 
     decodeURLParameter: function (params) {
-        if(params && params.graphics){
+        if (params && params.graphics) {
             let mapWidgetModel = this._mapWidgetModel;
-            params.graphics.forEach( (graphic) => {
+            params.graphics.forEach((graphic) => {
                 let graphics = [];
-                graphic.graphics.forEach( (g) => {
-                   graphics.push(new Graphic({
+                graphic.graphics.forEach((g) => {
+                    graphics.push(new Graphic({
                         geometry: jsonUtils.fromJSON(g.geometry),
                         symbol: fromJSON(g.symbol),
-                        attributes:g.attributes || {}
+                        attributes: g.attributes || {}
                     }));
 
                 });
                 let layer = new GraphicsLayer({
                     id: graphic.id,
-                    title:graphic.title,
-                    graphics:graphics,
-                     listMode: graphic.listMode
+                    title: graphic.title,
+                    graphics: graphics,
+                    listMode: graphic.listMode
                 });
                 mapWidgetModel.map.layers.add(layer);
             });
