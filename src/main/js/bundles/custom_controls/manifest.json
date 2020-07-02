@@ -8,7 +8,7 @@
       "name": "*",
       "files": [
         "./css/SizeSlider.css",
-        "./form/VueColor/css/all.css"
+        "./css/VueColor.css"
       ]
     }
   ]
