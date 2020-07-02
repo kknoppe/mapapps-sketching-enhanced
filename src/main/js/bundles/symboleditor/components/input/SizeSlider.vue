@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import i18n from 'dojo/i18n!../nls/bundle';
+    import i18n from 'dojo/i18n!../../nls/bundle';
 
     export default {
         props: {

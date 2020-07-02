@@ -105,6 +105,29 @@ module.exports = {
                 noResultsError: 'No results found for your query!',
                 'FIELD_NOT_IN_LAYER': 'The field does not exist in this layer!',
             },
+            control: {
+                transparencySlider: {
+                    transparency: 'Transparency',
+                },
+            },
+            form: {
+                dropzone: {
+                    placeholder: 'Drag and drop a file here or click',
+                    err_invalid_file: 'Invalid file',
+                },
+            },
+            input: {
+                quickfilter: {
+                    label: 'Insert search term',
+                },
+                sizeslider: {
+                    errorSmall: 'too small',
+                    errorBig: 'too big',
+                    errorNumbers: 'only integer',
+                    lineWeightSliderLabel: 'Line weight',
+                    pointRadiusSliderLabel: 'Point radius',
+                },
+            },
         },
     }),
     'de': true,

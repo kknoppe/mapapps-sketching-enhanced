@@ -29,7 +29,7 @@
     </v-card-actions>
 </template>
 <script>
-    import ActionButton from 'custom_controls/ActionButton.vue';
+    import ActionButton from './ActionButton.vue';
 
     export default {
         components: {

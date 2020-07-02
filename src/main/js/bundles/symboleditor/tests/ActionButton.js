@@ -18,7 +18,7 @@ import expect from 'intern/chai!expect';
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
 import Vuetify from 'vuetify';
-import ActionButton from '../ActionButton.vue';
+import ActionButton from '../components/ActionButton.vue';
 
 Vue.use(Vuetify);
 

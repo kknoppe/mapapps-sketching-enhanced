@@ -12,14 +12,14 @@
         "apprt-vue": "^4.8.4",
         "apprt-binding": "^4.8.4",
         "apprt-vuetify": "^4.8.4",
-        "esri": "^4.8.4",
-        "custom_controls": "^1.0.0"
+        "esri": "^4.8.4"
     },
     "CSS-Themes-Extension": [
         {
             "name": "*",
             "files": [
-                "./styles/styles.css"
+                "./styles/styles.css",
+                "./styles/SizeSlider.css"
             ]
         }
     ]

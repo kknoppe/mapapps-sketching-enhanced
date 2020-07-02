@@ -105,6 +105,28 @@ module.exports = {
         errors: {
             noResultsError: 'Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!',
             'FIELD_NOT_IN_LAYER': 'Das Feld existiert nicht in diesem Layer!',
+        },control: {
+            transparencySlider: {
+                transparency: 'Transparenz',
+            },
+        },
+        form: {
+            dropzone: {
+                placeholder: 'Legen Sie hier Dateien ab, um sie hochzuladen',
+                err_invalid_file: 'Ungültige Datei!',
+            },
+        },
+        input: {
+            quickfilter: {
+                label: 'Suchbegriff eingeben',
+            },
+            sizeslider: {
+                errorSmall: 'zu klein',
+                errorBig: 'zu groß',
+                errorNumbers: 'nur ganze Zahlen',
+                lineWeightSliderLabel: 'Linienstärke',
+                pointRadiusSliderLabel: 'Punktgröße',
+            },
         },
     },
 };

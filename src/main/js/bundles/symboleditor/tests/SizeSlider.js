@@ -18,7 +18,7 @@ import assert from 'intern/chai!assert';
 import expect from 'intern/chai!expect';
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
-import SizeSlider from '../input/SizeSlider.vue';
+import SizeSlider from '../components/input/SizeSlider.vue';
 
 
 registerSuite({

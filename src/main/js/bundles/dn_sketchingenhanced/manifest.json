@@ -21,7 +21,8 @@
         {
             "name": "*",
             "files": [
-                "./css/sketching_widget.css"
+                "./css/sketching_widget.css",
+                "./css/VueColor.css"
             ]
         }
     ],

@@ -80,7 +80,7 @@
     import PointShapePicker from './PointShapePicker.vue';
     import PointShape from './PointShape.vue';
     import EditorButton from '../EditorButton.vue';
-    import SizeSlider from 'custom_controls/input/SizeSlider.vue';
+    import SizeSlider from 'symboleditor/components/input/SizeSlider.vue';
 
     export default {
         components: {
