@@ -47,8 +47,6 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 }
 ```
 
-```
-
 | Property              | Type    | Possible Values               | Default                  | Description                                                |
 |-----------------------|---------|-------------------------------|--------------------------|------------------------------------------------------------|
 | measurement           | Boolean | ```true``` &#124; ```false``` |                          | Messmodus aktivieren                                       |
