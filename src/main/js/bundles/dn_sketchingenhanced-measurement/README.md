@@ -1,4 +1,4 @@
-# measurement_widget
+# dn_sketchingenhanced-measurement
 
 Dieses Bundle umfasst alle verfügbaren Messfunktionen. Zum einen wird ein Layout-Widget erstellt, mit dem die Messwerkzeuge leicht verwendet werden können.
 Zum Anderen dient die Komponente "PopupViewerMeasurement" zur Bereitstellung der Messfunktionen im Schnittviewer des Rissarchivs.
