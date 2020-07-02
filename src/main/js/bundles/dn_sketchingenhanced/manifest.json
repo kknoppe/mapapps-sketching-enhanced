@@ -61,7 +61,8 @@
     ],
     "components": [
         {
-            "name": "SketchingEnhancedWidgetFactory",
+            "name": "Config",
+            "impl": "SketchingEnhancedWidgetFactory",
             "provides": [
                 "dijit.Widget",
                 "dn_sketchingenhanced.Widget"
@@ -70,7 +71,7 @@
             "properties": {
                 "widgetRole": "sketchingEnhancedWidget",
                 "defaultTool": "drawpointtool",
-                "measurement": true,
+                "measurement": false,
                 "firstToolGroupIds": [
                     "drawpointtool",
                     "sketchinglinegroup",
