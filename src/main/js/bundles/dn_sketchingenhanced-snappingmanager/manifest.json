@@ -10,8 +10,8 @@
         "bundle"
     ],
     "dependencies": {
-        "map-widget": "^4.8.4",
-        "selection-services": "^4.8.4",
+        "map-widget": "^4.4.0",
+        "selection-services": "^4.4.0",
         "dn_sketchingenhanced-tools": "^1.0.0"
     },
     "components": [

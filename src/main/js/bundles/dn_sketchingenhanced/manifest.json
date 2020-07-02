@@ -11,11 +11,11 @@
         "bundle"
     ],
     "dependencies": {
-        "esri": "^4.8.4",
-        "apprt-core": "^4.8.4",
-        "apprt-binding": "^4.8.4",
-        "apprt-vue": "^4.8.4",
-        "apprt-vuetify": "^4.8.4",
+        "esri": "^4.7.2",
+        "apprt-core": "^4.4.0",
+        "apprt-binding": "^4.4.0",
+        "apprt-vue": "^4.4.0",
+        "apprt-vuetify": "^4.4.0",
         "dn_sketchingenhanced-tools": "^1.0.0",
         "dn_sketchingenhanced-command": "^1.0.0",
         "dn_sketchingenhanced-construction": "^1.0.0",

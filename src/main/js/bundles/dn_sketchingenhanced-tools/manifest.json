@@ -10,8 +10,8 @@
         "bundle"
     ],
     "dependencies": {
-        "toolrules": "^4.8.4",
-        "map-widget": "^4.8.4"
+        "toolrules": "^4.4.0",
+        "map-widget": "^4.4.0"
     },
     "CSS-Themes-Extension": [
         {

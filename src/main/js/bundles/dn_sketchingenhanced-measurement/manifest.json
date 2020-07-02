@@ -11,7 +11,7 @@
     ],
     "main": "",
     "dependencies": {
-        "esri": "^4.6.0"
+        "esri": "^4.7.2"
     },
     "CSS-Themes-Extension": [
         {
