@@ -4,7 +4,8 @@ Dieses Bundle erstellt Layout-Widgets, mit denen die Sketching-, Konstruktion- u
 
 ## Usage
 
-Add the dn_sketchingenhanced bundle to your app.
+1. Install the vue-color bundle: https://github.com/conterra/mapapps-vue-color
+2. Add the dn_sketchingenhanced bundle to your app.
 
 * [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 * [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
