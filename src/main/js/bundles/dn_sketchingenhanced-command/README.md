@@ -1,4 +1,4 @@
-# sketching-command
+# dn_sketchingenhanced-command
 
 Dieses Bundle fügt Werkzeuge hinzu, mit denen Sketching-Zeichnungen ausgewählt und bearbeitet werden können. Hierzu werden die Funktionen durch Laden der folgenden Bundles implementiert:
 

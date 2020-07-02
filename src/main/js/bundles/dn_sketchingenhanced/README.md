@@ -8,7 +8,7 @@ Add the dn_sketchingenhanced bundle to your app.
 
 * [tool-binding](#bundle=tool-binding@)
 * [sketching-tools](#bundle=sketching-tools@)
-* [sketching-command](#bundle=sketching-command@)
+* [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
 * [sketching-styles](#bundle=sketching-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
 * [snapping-manager](#bundle=snapping-manager@)
