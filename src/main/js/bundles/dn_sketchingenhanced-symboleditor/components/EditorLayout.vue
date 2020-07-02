@@ -38,9 +38,9 @@
                 <!-- Footer -->
                 <v-divider class="mt-2"></v-divider>
                 <submit-discard
-                        @submit="$emit('submit')"
-                        @discard="$emit('discard')"
-                        v-bind="actionProps"
+                    @submit="$emit('submit')"
+                    @discard="$emit('discard')"
+                    v-bind="actionProps"
                 ></submit-discard>
             </v-card>
         </v-expand-transition>

@@ -15,17 +15,18 @@
  */
 /* adjust position and size of slider and text-field */
 .sizeSliderLayout {
-    width: 85%!important;
-    position:relative;
+    width: 85% !important;
+    position: relative;
     left: -1em;
 }
+
 .sliderNumberText {
-    width: 4.5em!important;
+    width: 4.5em !important;
 }
 
 .sliderNumberText:after {
     content: '';
-    width: 4.5em!important;
+    width: 4.5em !important;
 }
 
 /* move text field to the right to avoid overlapping slider */
@@ -52,17 +53,19 @@ input::-webkit-inner-spin-button {
     user-select: none;
     -moz-user-select: none;
 }
+
 .arrowDown {
     position: relative;
     top: 1.1em;
     left: 1.8em;
-    font-size: medium!important;
-    cursor: default!important;
+    font-size: medium !important;
+    cursor: default !important;
 }
+
 .arrowUp {
     position: relative;
     top: 1.4em;
     left: 1.8em;
-    font-size: medium!important;
-    cursor: default!important;
+    font-size: medium !important;
+    cursor: default !important;
 }

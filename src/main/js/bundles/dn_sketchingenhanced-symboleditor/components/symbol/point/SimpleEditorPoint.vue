@@ -25,18 +25,18 @@
                 <!-- color -->
                 <div class="fill_color">
                     <editor-button
-                            :active="activeTab === 0"
-                            icon="format_color_fill"
-                            :color="settings.color"
-                            :tooltip="i18n.colorPickerPointTooltip"
+                        :active="activeTab === 0"
+                        icon="format_color_fill"
+                        :color="settings.color"
+                        :tooltip="i18n.colorPickerPointTooltip"
                     ></editor-button>
                 </div>
 
                 <!-- shape -->
                 <editor-button
-                        :active="activeTab === 1"
-                        icon="format_color_fill"
-                        :tooltip="i18n.PointSymbolSelectorTooltip">
+                    :active="activeTab === 1"
+                    icon="format_color_fill"
+                    :tooltip="i18n.PointSymbolSelectorTooltip">
                     <template slot="icon">
                         <point-shape :shape="settings.shape"></point-shape>
                     </template>
@@ -46,10 +46,10 @@
 
                 <!-- size -->
                 <editor-button
-                        :active="activeTab === 2"
-                        icon="fullscreen"
-                        type="text"
-                        :tooltip="i18n.pointRadiusSliderLabel">
+                    :active="activeTab === 2"
+                    icon="fullscreen"
+                    type="text"
+                    :tooltip="i18n.pointRadiusSliderLabel">
                     <span class="text-preview">{{ settings.radius }}</span>
                 </editor-button>
             </v-btn-toggle>
@@ -76,11 +76,11 @@
 </template>
 
 <script>
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
     import PointShapePicker from './PointShapePicker.vue';
     import PointShape from './PointShape.vue';
     import EditorButton from '../EditorButton.vue';
-    import SizeSlider from 'symboleditor/components/input/SizeSlider.vue';
+    import SizeSlider from 'dn_sketchingenhanced-symboleditor/components/input/SizeSlider.vue';
 
     export default {
         components: {

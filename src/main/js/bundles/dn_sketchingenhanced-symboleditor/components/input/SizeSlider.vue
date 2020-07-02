@@ -16,31 +16,31 @@
 
 -->
 <template>
-    <v-layout row class="sizeSliderLayout" >
+    <v-layout row class="sizeSliderLayout">
         <v-flex grow pa-1>
-        <v-slider
-                  :label="labeling"
-                  v-model="extent"
-                  :max=max
-                  :min="min"
-                  thumb-label="always"
-                  :thumb-size="24"
-                  :step="step"
-                  hide-details>
-        </v-slider>
+            <v-slider
+                :label="labeling"
+                v-model="extent"
+                :max=max
+                :min="min"
+                thumb-label="always"
+                :thumb-size="24"
+                :step="step"
+                hide-details>
+            </v-slider>
         </v-flex>
         <v-flex shrink pa-1>
             <v-layout row wrap class="textFieldSlider">
                 <!-- single line number text field with rules to validate the input -->
                 <v-text-field
-                        class="sliderNumberText"
-                        shrink
-                        :min="min"
-                        :max="max"
-                        v-model="extent"
-                        single-line
-                        :rules="[rules.small, rules.big, rules.wrong]"
-                        type="number">
+                    class="sliderNumberText"
+                    shrink
+                    :min="min"
+                    :max="max"
+                    v-model="extent"
+                    single-line
+                    :rules="[rules.small, rules.big, rules.wrong]"
+                    type="number">
                 </v-text-field>
                 <!-- Arrows to increase or decrease the v-model of the slider and the input of the textfield -->
                 <!-- manual add of these controls because MS EDGE does not support controls of v-text-field -->
@@ -93,8 +93,8 @@
                 // add a label to the slider if it is not already existing
                 // differ between point and line
                 let label = this.label;
-                if(!label) {
-                    if(this.type==='point') {
+                if (!label) {
+                    if (this.type === 'point') {
                         label = this.i18n.pointRadiusSliderLabel;
                     } else if (this.type === 'line') {
                         label = this.i18n.lineWeightSliderLabel;
@@ -112,36 +112,36 @@
                     // in the textfield
                     small: value => value >= this.min || this.i18n.errorSmall.toString(),
                     big: value => value <= this.max || this.i18n.errorBig.toString(),
-                    wrong: value => !isNaN(parseInt(value,10)) || this.i18n.errorNumbers.toString(),
+                    wrong: value => !isNaN(parseInt(value, 10)) || this.i18n.errorNumbers.toString(),
                 },
             };
         },
         methods: {
-          _validateInput(input) {
-              // validate the input -> values cannot be bigger than maximum or smaller than minimum
-              // if input is not a number the minimum is used
-              const value = parseInt(input,10);
-              if(isNaN(value)) {
-                  return this.min;
-              }
-              if(value > this.max) {
-                  this.extent = this.max;
-                  return this.max;
-              } else if (value < this.min) {
-                  this.extent = this.min;
-                  return this.min;
-              } else {
-                  return value;
-              }
-          },
-          increment() {
-              // increment the v-model if arrow up is clicked
-              this.extent++;
-          },
-          decrement() {
-              // decrement the v-model if arrow down is clicked
-              this.extent--;
-          },
+            _validateInput(input) {
+                // validate the input -> values cannot be bigger than maximum or smaller than minimum
+                // if input is not a number the minimum is used
+                const value = parseInt(input, 10);
+                if (isNaN(value)) {
+                    return this.min;
+                }
+                if (value > this.max) {
+                    this.extent = this.max;
+                    return this.max;
+                } else if (value < this.min) {
+                    this.extent = this.min;
+                    return this.min;
+                } else {
+                    return value;
+                }
+            },
+            increment() {
+                // increment the v-model if arrow up is clicked
+                this.extent++;
+            },
+            decrement() {
+                // decrement the v-model if arrow down is clicked
+                this.extent--;
+            },
         },
 
     };

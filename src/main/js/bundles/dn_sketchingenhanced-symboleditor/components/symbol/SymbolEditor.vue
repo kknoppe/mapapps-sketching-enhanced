@@ -17,11 +17,11 @@
 -->
 <template>
     <editor-layout
-            :label="i18n.title"
-            :active.sync="enabled"
-            :actionProps="{submittable, discardable: submittable, submitLabel: i18n.submit, discardLabel: i18n.discard}"
-            @submit="applySettings"
-            @discard="discardSettings">
+        :label="i18n.title"
+        :active.sync="enabled"
+        :actionProps="{submittable, discardable: submittable, submitLabel: i18n.submit, discardLabel: i18n.discard}"
+        @submit="applySettings"
+        @discard="discardSettings">
 
         <v-card elevation="1" color="transparent">
             <v-flex>
@@ -43,16 +43,16 @@
                     <v-flex>
                         <v-container pa-2>
                             <v-select
-                                    @change="changeCategory"
-                                    :items="mySettings.fields"
-                                    v-model="mySettings.fieldForSymbology"
-                                    :loading="loading"
-                                    :label="i18n.fieldLabel"
-                                    item-value="name"
-                                    item-text="alias"
-                                    :no-data-text="i18n.noFieldsForSymbology"
-                                    :menu-props="{'content-class': 'visualisationEditor-menu'}"
-                                    :error-messages="fieldError">
+                                @change="changeCategory"
+                                :items="mySettings.fields"
+                                v-model="mySettings.fieldForSymbology"
+                                :loading="loading"
+                                :label="i18n.fieldLabel"
+                                item-value="name"
+                                item-text="alias"
+                                :no-data-text="i18n.noFieldsForSymbology"
+                                :menu-props="{'content-class': 'visualisationEditor-menu'}"
+                                :error-messages="fieldError">
                                 <template v-slot:item="{ item, index }">
                                     <v-layout column class="px-3"
                                               :class="{'special-entry': item.name === 'server-categories'}">
@@ -63,11 +63,11 @@
                             </v-select>
 
                             <color-gradient-menu
-                                    :i18n="i18n"
-                                    v-model="selectedG"
-                                    :disabled="!mySettings.fieldForSymbology || loading"
-                                    :key="selectedG"
-                                    @input="_applyGradientToItems"></color-gradient-menu>
+                                :i18n="i18n"
+                                v-model="selectedG"
+                                :disabled="!mySettings.fieldForSymbology || loading"
+                                :key="selectedG"
+                                @input="_applyGradientToItems"></color-gradient-menu>
 
                         </v-container>
 
@@ -80,7 +80,7 @@
                                 </template>
 
                                 <template
-                                        v-if="mySettings.defaultSymbol && mySettings.defaultSymbol.defaultLabel">
+                                    v-if="mySettings.defaultSymbol && mySettings.defaultSymbol.defaultLabel">
                                     <v-divider></v-divider>
                                     <default-value :settings="mySettings.defaultSymbol"></default-value>
                                 </template>

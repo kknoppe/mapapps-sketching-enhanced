@@ -105,7 +105,7 @@ module.exports = {
         errors: {
             noResultsError: 'Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!',
             'FIELD_NOT_IN_LAYER': 'Das Feld existiert nicht in diesem Layer!',
-        },control: {
+        }, control: {
             transparencySlider: {
                 transparency: 'Transparenz',
             },

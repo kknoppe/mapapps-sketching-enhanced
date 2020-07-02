@@ -17,15 +17,15 @@
 -->
 <template>
     <v-select
-            :items="colorPathList"
-            v-model="selectedValue"
-            :label="i18n.colorGradientLineSelectorLabel"
-            class="colorGradientSelect"
-            item-value="value"
-            menu-props="auto"
-            hide-details
-            v-bind="$attrs"
-            clearable>
+        :items="colorPathList"
+        v-model="selectedValue"
+        :label="i18n.colorGradientLineSelectorLabel"
+        class="colorGradientSelect"
+        item-value="value"
+        menu-props="auto"
+        hide-details
+        v-bind="$attrs"
+        clearable>
         <template slot="selection" slot-scope="data">
             <div v-bind:class=data.item.cssClass></div>
         </template>

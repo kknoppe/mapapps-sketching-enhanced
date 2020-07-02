@@ -25,22 +25,22 @@
                 <!-- color -->
                 <div class="fill_color">
                     <editor-button
-                            :active="activeTab === 0"
-                            icon="format_color_fill"
-                            :color="settings.color"
-                            :tooltip="i18n.colorPickerFillTooltip"
+                        :active="activeTab === 0"
+                        icon="format_color_fill"
+                        :color="settings.color"
+                        :tooltip="i18n.colorPickerFillTooltip"
                     ></editor-button>
                 </div>
 
                 <!-- style -->
                 <editor-button
-                        :active="activeTab === 1"
-                        icon="texture"
-                        :tooltip="i18n.fillStyleSelectorTooltip">
+                    :active="activeTab === 1"
+                    icon="texture"
+                    :tooltip="i18n.fillStyleSelectorTooltip">
                     <fill-style
-                            style="line-height: 0.5em"
-                            v-bind="{i18n}"
-                            :fillStyle="settings.style"></fill-style>
+                        style="line-height: 0.5em"
+                        v-bind="{i18n}"
+                        :fillStyle="settings.style"></fill-style>
                 </editor-button>
             </v-btn-toggle>
 
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
     import FillStyle from './FillStyle.vue';
     import FillStylePicker from './FillStylePicker.vue';
     import LineEditorButtons from '../line/LineEditorButtons.vue';

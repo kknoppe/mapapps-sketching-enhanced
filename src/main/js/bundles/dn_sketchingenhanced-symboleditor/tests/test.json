@@ -1,0 +1,53 @@
+{
+    "id": 323,
+    "source": {
+        "mapLayerId": 323,
+        "type": "mapLayer"
+    },
+    "drawingInfo": {
+        "renderer": {
+            "type": "simple",
+            "symbol": {
+                "type": "esriSLS",
+                "color": [
+                    255,
+                    0,
+                    0,
+                    255
+                ],
+                "width": 3,
+                "style": "esriSLSShortDashDotDot"
+            }
+        },
+        "showLabels": false
+    }
+},
+
+{
+"id": 323,
+"source": {
+"type": "mapLayer",
+"mapLayerId": 323
+},
+"drawingInfo": {
+"transparency": -100,
+"scaleSymbols": false,
+"showLabels": false,
+"renderer": {
+"type": "simple",
+"symbol": {
+"type": "esriSLS",
+"style": "esriSLSDashDotDot",
+"color": [
+255,
+0,
+0,
+255
+],
+"width": 1.5
+},
+"label": "",
+"description": ""
+}
+}
+}

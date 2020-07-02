@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 import "dn_sketchingenhanced/tests/intern-all";
-import "measurement/tests/intern-all";
-import "symboleditor/tests/intern-all";
+import "dn_sketchingenhanced-measurement/tests/intern-all";
+import "dn_sketchingenhanced-symboleditor/tests/intern-all";

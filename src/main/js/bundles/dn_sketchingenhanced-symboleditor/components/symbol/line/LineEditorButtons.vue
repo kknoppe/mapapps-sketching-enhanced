@@ -20,16 +20,16 @@
                   class="grey lighten-2 elevation-3">
         <!-- color -->
         <editor-button
-                :active="active === 0"
-                icon="brush"
-                :color="settings.color"
-                :tooltip="i18n.colorPickerLineTooltip"></editor-button>
+            :active="active === 0"
+            icon="brush"
+            :color="settings.color"
+            :tooltip="i18n.colorPickerLineTooltip"></editor-button>
 
         <!-- style -->
         <editor-button
-                :active="active === 1"
-                icon="line_style"
-                :tooltip="i18n.lineStyleSelectorTooltip">
+            :active="active === 1"
+            icon="line_style"
+            :tooltip="i18n.lineStyleSelectorTooltip">
             <line-style style="line-height: 0"
                         :base-size="10"
                         :height="8"
@@ -38,10 +38,10 @@
 
         <!-- width -->
         <editor-button
-                :active="active === 2"
-                icon="line_weight"
-                type="text"
-                :tooltip="i18n.lineWeightSliderLabel">
+            :active="active === 2"
+            icon="line_weight"
+            type="text"
+            :tooltip="i18n.lineWeightSliderLabel">
             <span class="text-preview">{{ settings.width }}</span>
         </editor-button>
     </v-btn-toggle>

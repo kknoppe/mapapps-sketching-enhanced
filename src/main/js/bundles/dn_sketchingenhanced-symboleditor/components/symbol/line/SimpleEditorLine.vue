@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
     import LineEditorButtons from './LineEditorButtons.vue';
     import LineEditor from './LineEditor.vue';

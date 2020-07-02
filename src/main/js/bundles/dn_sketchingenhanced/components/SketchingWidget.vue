@@ -87,11 +87,11 @@
     import MenuButton from './MenuButton.vue';
     import ToolButton from './ToolButton.vue';
     import SketchingFooter from './SketchingFooter.vue';
-    import SimpleEditor from 'symboleditor/components/symbol/SimpleEditor.vue';
+    import SimpleEditor from 'dn_sketchingenhanced-symboleditor/components/symbol/SimpleEditor.vue';
     import ConstructionPanel from './construction/ConstructionPanel.vue';
-    import PointSetting from 'symboleditor/model/PointSetting';
-    import LineSetting from 'symboleditor/model/LineSetting';
-    import PolygonSetting from 'symboleditor/model/PolygonSetting';
+    import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
+    import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
+    import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
     import TextSetting from '../model/TextSetting';
     import i18n from 'dojo/i18n!../nls/bundle';
     import SimpleTextEditor from './text/SimpleTextEditor.vue';

@@ -111,7 +111,7 @@
 
 <script>
     import { Sketch } from 'dn_vuecolor';
-    import EditorButton from 'symboleditor/components/symbol/EditorButton.vue';
+    import EditorButton from 'dn_sketchingenhanced-symboleditor/components/symbol/EditorButton.vue';
     import TextSizePicker from './TextSizePicker.vue';
     import TextStylePicker from './TextStylePicker.vue';
     import FontPicker from './FontPicker.vue';

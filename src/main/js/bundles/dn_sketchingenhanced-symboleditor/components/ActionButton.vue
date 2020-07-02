@@ -17,10 +17,10 @@
 -->
 <template>
     <v-tooltip
-            :bottom="tooltip==='bottom'"
-            :top="tooltip==='top'"
-            :left="tooltip==='left'"
-            :right="tooltip==='right'">
+        :bottom="tooltip==='bottom'"
+        :top="tooltip==='top'"
+        :left="tooltip==='left'"
+        :right="tooltip==='right'">
         <v-btn :icon="round"
                :small="size === 'small'"
                @click.stop="$emit('click')"

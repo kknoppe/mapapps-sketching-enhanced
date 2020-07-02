@@ -36,9 +36,9 @@
 
 <script>
     import LineSetting from '../../../model/LineSetting';
-    import { Sketch } from 'dn_vuecolor';
+    import {Sketch} from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
-    import SizeSlider from 'symboleditor/components/input/SizeSlider.vue';
+    import SizeSlider from 'dn_sketchingenhanced-symboleditor/components/input/SizeSlider.vue';
 
     export default {
         components: {
