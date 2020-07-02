@@ -8,7 +8,6 @@ This bundle adds an extended sketching functionality the map.
 https://demos.conterra.de/mapapps/resources/apps/downloads_sketching_enhanced/index.html
 
 ## Installation Guide
-**Requirement: map.apps 4.8.4**
 
 [dn_sketchingenhanced Documentation](https://github.com/conterra/mapapps-sketching-enhanced/tree/master/src/main/js/bundles/dn_sketchingenhanced)
 
