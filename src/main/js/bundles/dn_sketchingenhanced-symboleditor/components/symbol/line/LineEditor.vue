@@ -36,13 +36,13 @@
 
 <script>
     import LineSetting from '../../../model/LineSetting';
-    import {Sketch} from 'dn_vuecolor';
+    import {Chrome} from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
     import SizeSlider from 'dn_sketchingenhanced-symboleditor/components/input/SizeSlider.vue';
 
     export default {
         components: {
-            'color-picker': Sketch,
+            'color-picker': Chrome,
             'size-slider': SizeSlider,
             LineStylePicker,
         },

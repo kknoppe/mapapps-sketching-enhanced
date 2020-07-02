@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import {Sketch} from 'dn_vuecolor';
+    import {Chrome} from 'dn_vuecolor';
     import FillStyle from './FillStyle.vue';
     import FillStylePicker from './FillStylePicker.vue';
     import LineEditorButtons from '../line/LineEditorButtons.vue';
@@ -70,7 +70,7 @@
     export default {
 
         components: {
-            'color-picker': Sketch,
+            'color-picker': Chrome,
             EditorButton,
             FillStyle,
             FillStylePicker,

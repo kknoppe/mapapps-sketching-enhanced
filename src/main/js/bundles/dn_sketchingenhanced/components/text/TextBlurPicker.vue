@@ -22,11 +22,11 @@
     </div>
 </template>
 <script>
-    import {Sketch} from 'dn_vuecolor';
+    import {Chrome} from 'dn_vuecolor';
 
     export default {
         components: {
-            'color-picker': Sketch,
+            'color-picker': Chrome,
         },
         props: {
             color: Object,

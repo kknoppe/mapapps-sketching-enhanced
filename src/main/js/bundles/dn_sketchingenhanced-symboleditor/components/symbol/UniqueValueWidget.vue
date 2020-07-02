@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import {Sketch} from 'dn_vuecolor';
+    import {Chrome} from 'dn_vuecolor';
     import SimpleEditor from './SimpleEditor.vue';
     import PreviewButton from './PreviewButton.vue';
     import SymbolCategory from '../../model/SymbolCategory';

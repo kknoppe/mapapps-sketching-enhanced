@@ -26,14 +26,14 @@
 </template>
 
 <script>
-    import {Sketch} from 'dn_vuecolor';
+    import {Chrome} from 'dn_vuecolor';
     import LineStylePicker from './LineStylePicker.vue';
     import LineEditorButtons from './LineEditorButtons.vue';
     import LineEditor from './LineEditor.vue';
 
     export default {
         components: {
-            'color-picker': Sketch,
+            'color-picker': Chrome,
             LineEditor,
             LineEditorButtons,
             LineStylePicker,

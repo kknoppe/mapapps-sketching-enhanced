@@ -20,8 +20,7 @@
         {
             "name": "*",
             "files": [
-                "./css/sketching_widget.css",
-                "./css/VueColor.css"
+                "./css/sketching_widget.css"
             ]
         }
     ],
