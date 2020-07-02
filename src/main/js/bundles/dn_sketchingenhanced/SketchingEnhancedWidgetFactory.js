@@ -59,7 +59,7 @@ export default class SketchingEnhancedWidgetFactory {
             this._activateHelpLine(settings);
             this._setSettings(settings);
             this._drawFurtherGeometries.styleContext = this._styleContextChangeController._styleContext;
-            // use sketching-styles bundle to adjust the selected styles
+            // use dn_sketchingenhanced-styles bundle to adjust the selected styles
             this._styleContextChangeController._informAboutStyleChange();
         });
 

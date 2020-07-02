@@ -8,7 +8,7 @@ Für das Mess-Widget werden die Funktionen durch Laden der folgenden Bundles imp
 * [tool-binding](#bundle=tool-binding@)
 * [sketching-tools](#bundle=sketching-tools@)
 * [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
-* [sketching-styles](#bundle=sketching-styles@)
+* [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
 * [snapping-manager](#bundle=snapping-manager@)
 

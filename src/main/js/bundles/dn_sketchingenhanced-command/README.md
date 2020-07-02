@@ -2,10 +2,8 @@
 
 Dieses Bundle fügt Werkzeuge hinzu, mit denen Sketching-Zeichnungen ausgewählt und bearbeitet werden können. Hierzu werden die Funktionen durch Laden der folgenden Bundles implementiert:
 
-* [keyboard](#bundle=keyboard@)
-* [highlight](#bundle=highlight@)
 * [sketching-tools](#bundle=sketching-tools@)
-* [sketching-styles](#bundle=sketching-styles@)
+* [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [snapping-manager](#bundle=snapping-manager@)
 
 

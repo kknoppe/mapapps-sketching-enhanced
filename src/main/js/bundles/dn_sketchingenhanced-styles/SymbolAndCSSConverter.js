@@ -191,12 +191,12 @@ _getStylesFromTS = function (textSymbol) {
     return styles;
 };
 
-const _adjustOutlineForCrossAndX = function(outline, markerStyle, color, size) {
+const _adjustOutlineForCrossAndX = function (outline, markerStyle, color, size) {
     let newOutline = outline;
-    if(markerStyle === 'cross' || markerStyle === 'x') {
+    if (markerStyle === 'cross' || markerStyle === 'x') {
         newOutline.cap = 'butt';
         newOutline.color = color;
-        newOutline.width = Math.round(size/3.);
+        newOutline.width = Math.round(size / 3.);
     }
     return newOutline;
 };
