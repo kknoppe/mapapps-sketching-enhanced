@@ -4,7 +4,7 @@ Dieses Bundle fügt Werkzeuge hinzu, mit denen Sketching-Zeichnungen ausgewählt
 
 * [dn_sketchingenhanced-tools](#bundle=dn_sketchingenhanced-tools@)
 * [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
-* [snapping-manager](#bundle=snapping-manager@)
+* [dn_sketchingenhanced-snappingmanager](#bundle=dn_sketchingenhanced-snappingmanager@)
 
 
 ## Usage

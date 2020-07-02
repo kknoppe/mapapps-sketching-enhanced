@@ -10,7 +10,7 @@ Für das Mess-Widget werden die Funktionen durch Laden der folgenden Bundles imp
 * [dn_sketchingenhanced-command](#bundle=dn_sketchingenhanced-command@)
 * [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
-* [snapping-manager](#bundle=snapping-manager@)
+* [dn_sketchingenhanced-snappingmanager](#bundle=dn_sketchingenhanced-snappingmanager@)
 
 Es werden die im Sketching implementierten Tools verwendet.
 Im Schnittviewer wird ein einfaches Polyline Tool verwendet, welches auf die Messfunktionen des ebenfalls in diesem Bundle implementierten "MeasurementControllers" zurückgreift.

@@ -121,8 +121,7 @@ export default declare({
                     if (maxLength && maxLength < (geometries.length + execution.result.total)) {
                         warning = false;
                         logService.warn(reachedMaxCount.replace("%maxCount%", maxLength));
-                    }
-                    else {
+                    } else {
                         execution.result.forEach((feature) => {
                             geometries.push(this._getGeometry(feature));
                         });

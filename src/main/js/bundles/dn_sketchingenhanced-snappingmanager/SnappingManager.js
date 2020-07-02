@@ -328,7 +328,9 @@ export default function () {
                             return this.__cursorScreenPoint;
                         }, set: function (e) {
                             this.__cursorScreenPoint = e;
-                            e && setTimeout(function(){that._onUpdateCursorHandler(activeAction.__cursorScreenPoint);},0);
+                            e && setTimeout(function () {
+                                that._onUpdateCursorHandler(activeAction.__cursorScreenPoint);
+                            }, 0);
                         }
                     });
                 }
