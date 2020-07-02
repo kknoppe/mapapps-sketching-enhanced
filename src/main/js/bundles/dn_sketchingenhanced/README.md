@@ -18,9 +18,9 @@ Add the dn_sketchingenhanced bundle to your app.
 
 Um die Funktionen dieses Bundles zu benutzen, können Sie das Werkzeug "SketchingWidgetToggleTool" im Werkzeugsatz hinzufügen. Die Werkzeug-ID ist:
 
-|Tool ID                         |Component                          |Description
-|--------------------------------|-----------------------------------|-----------------------
-|sketchingWidgetToggleTool       |sketchingWidgetToggleTool          |Zeichnen- und Editier-Werkzeuge.
+| Tool ID                           | Component                         | Description                      |
+|-----------------------------------|-----------------------------------|----------------------------------|
+| sketchingEnhancedWidgetToggleTool | SketchingEnhancedWidgetToggleTool | Zeichnen- und Editier-Werkzeuge. |
 
 ## Konfiguration
 
@@ -28,8 +28,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 
 ```json
 "sketching_widget": {
-    "SketchingWidgetFactory": {
-        "toggleTool": "sketchingWidgetToggleTool",
+    "SketchingEnhancedWidgetFactory": {
         "firstToolGroupIds": [
           "drawpointtool",
           "sketchinglinegroup",
@@ -53,7 +52,6 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 
 |Property               |Type     |Description               |Default
 |-----------------------|---------|--------------------------|-----------
-|toggleTool             |String   |sketchingWidgetToggleTool |Eine Werkzeug-Id zum Öffnen/Schließen des Widgets
 |firstToolGroupIds      |String   |wie im Beispiel           |Werkzeug-Ids, die im Widget links angezeigt werden
 |lastToolGroupIds       |Array    |wie im Beispiel           |Werkzeug-Ids, die im Widget rechts angezeigt werden
 |footerToolIds          |Array    |wie im Beispiel           |Werkzeug-Ids, die im Footer des Widget angezeigt werden

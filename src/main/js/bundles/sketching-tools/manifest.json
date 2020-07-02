@@ -21,7 +21,7 @@
       "name": "Config",
       "impl": "./SketchingHandler",
       "provides": [
-        "sketching.SketchingHandler"
+        "dn_sketchingenhanced.SketchingHandler"
       ],
       "propertiesConstructor": true,
       "properties": {
@@ -136,7 +136,7 @@
         },
         {
           "name": "_drawFurtherGeometries",
-          "providing": "sketching.DrawFurtherGeometries"
+          "providing": "dn_sketchingenhanced.DrawFurtherGeometries"
         }
       ]
     },
@@ -181,7 +181,7 @@
     },
     {
       "name": "DrawFurtherGeometries",
-      "provides": "sketching.DrawFurtherGeometries"
+      "provides": "dn_sketchingenhanced.DrawFurtherGeometries"
     },
     {
       "name": "SketchingDrawpointtool",
@@ -207,7 +207,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -235,7 +235,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -263,7 +263,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -292,7 +292,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -320,7 +320,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -352,7 +352,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -381,7 +381,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -409,7 +409,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -441,7 +441,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -469,7 +469,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -497,7 +497,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -525,7 +525,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -553,7 +553,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -581,7 +581,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -608,7 +608,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -635,7 +635,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -662,7 +662,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -690,7 +690,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -718,7 +718,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -746,7 +746,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -774,7 +774,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -807,7 +807,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -840,7 +840,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -879,7 +879,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -919,7 +919,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -958,7 +958,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -998,7 +998,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -1030,7 +1030,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },

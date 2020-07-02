@@ -72,7 +72,7 @@
       "references": [
         {
           "name": "_sketchingHandler",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "dependencies": {
         "esri": "^4.8.4",
         "apprt-vue": "^4.8.4",
@@ -25,11 +25,11 @@
     ],
     "layout-widgets": [
         {
-            "widgetRole": "sketchingWidget",
+            "widgetRole": "sketchingEnhancedWidget",
             "window": {
                 "title": "${ui.windowTitle}",
                 "dockable": true,
-                "dockTool": "sketchingWidgetToggleTool",
+                "dockTool": "sketchingEnhancedWidgetToggleTool",
                 "minimizeOnClose": true,
                 "marginBox": {
                     "r": 50,
@@ -52,14 +52,14 @@
     ],
     "components": [
         {
-            "name": "SketchingWidgetFactory",
+            "name": "SketchingEnhancedWidgetFactory",
             "provides": [
                 "dijit.Widget",
-                "sketching.Widget"
+                "dn_sketchingenhanced.Widget"
             ],
             "instanceFactory": true,
             "properties": {
-                "widgetRole": "sketchingWidget",
+                "widgetRole": "sketchingEnhancedWidget",
                 "defaultTool": "drawpointtool",
                 "measurement": true,
                 "firstToolGroupIds": [
@@ -119,32 +119,32 @@
             },
             "references": [
                 {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
                     "name": "_bindingToolsToViewModel",
                     "providing": "tool-binding.BindingToolsToViewModel"
                 },
                 {
                     "name": "_styleContextChangeController",
-                    "providing": "sketching.StyleContextController"
+                    "providing": "dn_sketchingenhanced.StyleContextChangeController"
                 },
                 {
                     "name": "_constructionModel",
-                    "providing": "sketching-construction.SketchingConstructionModel"
-                },
-                {
-                    "name": "_mapWidgetModel",
-                    "providing": "map-widget.MapWidgetModel"
+                    "providing": "dn_sketchingenhanced.SketchingConstructionModel"
                 },
                 {
                     "name": "_sketchingHandler",
-                    "providing": "sketching.SketchingHandler"
+                    "providing": "dn_sketchingenhanced.SketchingHandler"
                 },
                 {
                     "name": "_drawTextHelpLine",
-                    "providing": "sketching.drawTextHelpLine"
+                    "providing": "dn_sketchingenhanced.DrawTextHelpLine"
                 },
                 {
                     "name": "_drawFurtherGeometries",
-                    "providing": "sketching.DrawFurtherGeometries"
+                    "providing": "dn_sketchingenhanced.DrawFurtherGeometries"
                 },
                 {
                     "name": "_measurementController",
@@ -153,14 +153,14 @@
             ]
         },
         {
-            "name": "sketchingWidgetToggleTool",
+            "name": "SketchingEnhancedWidgetToggleTool",
             "impl": "ct/tools/Tool",
             "provides": [
                 "ct.tools.Tool"
             ],
             "propertiesConstructor": true,
             "properties": {
-                "id": "sketchingWidgetToggleTool",
+                "id": "sketchingEnhancedWidgetToggleTool",
                 "title": "${ui.windowTitle}",
                 "tooltip": "${tool.tooltip}",
                 "iconClass": "icon-pencil",
@@ -176,7 +176,7 @@
             "references": [
                 {
                     "name": "handlerScope",
-                    "providing": "sketching.SketchingDeactivationHandler"
+                    "providing": "dn_sketchingenhanced.SketchingToolHandler"
                 }
             ]
         },
@@ -193,16 +193,16 @@
         {
             "name": "DrawTextHelpLine",
             "provides": [
-                "sketching.drawTextHelpLine"
+                "dn_sketchingenhanced.DrawTextHelpLine"
             ]
         },
         {
-            "name": "SketchingDeactivationHandler",
-            "provides": "sketching.SketchingDeactivationHandler",
+            "name": "SketchingToolHandler",
+            "provides": "dn_sketchingenhanced.SketchingToolHandler",
             "references": [
                 {
                     "name": "_sketchingHandler",
-                    "providing": "sketching.SketchingHandler"
+                    "providing": "dn_sketchingenhanced.SketchingHandler"
                 },
                 {
                     "name": "_eventService",

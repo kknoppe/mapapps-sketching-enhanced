@@ -18,7 +18,7 @@ import VueDijit from 'apprt-vue/VueDijit';
 import SketchingWidget from './components/SketchingWidget.vue';
 import {whenOnce, watch} from 'esri/core/watchUtils';
 
-export default class SketchingWidgetFactory {
+export default class SketchingEnhancedWidgetFactory {
 
     createInstance() {
         const vm = new Vue(SketchingWidget);

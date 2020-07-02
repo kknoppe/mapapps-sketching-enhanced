@@ -8,11 +8,11 @@ Dieses Bundle fügt Werkzeuge hinzu, mit denen Punkte, Linien, Polygone und Text
 
 ## Usage
 
-Um die Funktionen dieses Bundles zu benutzen, können Sie das Werkzeug "sketchingWidgetToggleTool" im Werkzeugsatz hinzufügen,
+Um die Funktionen dieses Bundles zu benutzen, können Sie das Werkzeug "sketchingEnhancedWidgetToggleTool" im Werkzeugsatz hinzufügen,
 
 |Tool ID                         |Component                          |Description
 |--------------------------------|-----------------------------------|-----------------------
-|sketchingWidgetToggleTool             |sketchingWidgetToggleTool                |Zeichnen- und Editier-Werkzeuge.
+|sketchingEnhancedWidgetToggleTool             |sketchingEnhancedWidgetToggleTool                |Zeichnen- und Editier-Werkzeuge.
 
 oder einige der folgenden Werkzeuge:
 

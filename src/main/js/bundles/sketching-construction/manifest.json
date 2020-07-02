@@ -12,7 +12,7 @@
       "name": "Config",
       "impl": "./SketchingConstructionModel",
       "provides": [
-        "sketching-construction.SketchingConstructionModel"
+        "dn_sketchingenhanced.SketchingConstructionModel"
       ],
       "propertiesConstructor": true,
       "properties": {
@@ -42,7 +42,7 @@
       "references": [
         {
           "name": "_constructionModel",
-          "providing": "sketching-construction.SketchingConstructionModel"
+          "providing": "dn_sketchingenhanced.SketchingConstructionModel"
         },
         {
           "name": "_snappingManager",
@@ -60,7 +60,7 @@
       "references": [
         {
           "name": "_constructionModel",
-          "providing": "sketching-construction.SketchingConstructionModel"
+          "providing": "dn_sketchingenhanced.SketchingConstructionModel"
         }
       ]
     }

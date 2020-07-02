@@ -11,11 +11,11 @@ Dieses Bundle fügt Werkzeuge hinzu, mit denen Sketching-Zeichnungen ausgewählt
 
 ## Usage
 
-Um die Funktionen dieses Bundles zu benutzen, können Sie Werkzeug "sketchingWidgetToggleTool" im Werkzeugsatz hinzufügen. Die Werkzeug-ID ist:
+Um die Funktionen dieses Bundles zu benutzen, können Sie Werkzeug "sketchingEnhancedWidgetToggleTool" im Werkzeugsatz hinzufügen. Die Werkzeug-ID ist:
 
 |Tool ID                         |Component                          |Description
 |--------------------------------|-----------------------------------|-----------------------
-|sketchingWidgetToggleTool             |sketchingWidgetToggleTool                |Zeichnen- und Editier-Werkzeuge.
+|sketchingEnhancedWidgetToggleTool             |sketchingEnhancedWidgetToggleTool                |Zeichnen- und Editier-Werkzeuge.
 
 oder einige folgende Werkzeugen im Werkzeugsatz hinzufügen:
 

@@ -19,11 +19,11 @@
     },
     {
       "name": "StyleContextChangeController",
-      "provides": "sketching.StyleContextController",
+      "provides": "dn_sketchingenhanced.StyleContextChangeController",
       "references": [
         {
           "name": "_sketchingHandler",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         },
         {
           "name": "_styleContext",

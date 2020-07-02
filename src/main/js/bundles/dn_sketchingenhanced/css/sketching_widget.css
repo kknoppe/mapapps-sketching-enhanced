@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.sketchingWidget .ctWindowPadding .ctWindowContentPadding .dijitDialogPaneContent {
+.sketchingEnhancedWidget .ctWindowPadding .ctWindowContentPadding .dijitDialogPaneContent {
     overflow: hidden!important;
 }
 

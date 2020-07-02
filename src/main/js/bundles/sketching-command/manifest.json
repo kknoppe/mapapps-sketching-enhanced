@@ -28,7 +28,7 @@
       "references": [
         {
           "name": "_sketchingHandler",
-          "providing": "sketching.SketchingHandler"
+          "providing": "dn_sketchingenhanced.SketchingHandler"
         }
       ]
     },
@@ -226,7 +226,7 @@
         },
         {
           "name": "_sketchingHandler",
-          "providing": "sketching.SketchingHandler",
+          "providing": "dn_sketchingenhanced.SketchingHandler",
           "cardinality": "0..1"
         },
         {

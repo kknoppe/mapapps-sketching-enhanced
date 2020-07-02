@@ -394,7 +394,7 @@
             },
 
             _setWindowHeight(height) {
-                const widget = document.getElementsByClassName('sketchingWidget')[0];
+                const widget = document.getElementsByClassName('sketchingEnhancedWidget')[0];
                 if(widget) {
                     widget.style.height = height;
                     widget.getElementsByClassName('dijitDialogPaneContent')[0].style.height = height;

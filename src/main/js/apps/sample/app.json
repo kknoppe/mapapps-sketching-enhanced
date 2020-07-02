@@ -563,7 +563,7 @@
                             "helloTool",
                             "IMPRINT_Imprint_CustomInfoTool",
                             "IMPRINT_Imprint_CustomInfoTool_mobile",
-                            "sketchingWidgetToggleTool"
+                            "sketchingEnhancedWidgetToggleTool"
                         ],
                         "registerWidget": {
                             "widgetRole": "drawer_button"

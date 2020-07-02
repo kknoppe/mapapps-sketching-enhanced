@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default class SketchingDeactivationHandler {
+export default class SketchingToolHandler {
 
     activate() {
         this.activeTool = null;
