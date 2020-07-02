@@ -1,6 +1,6 @@
 # measurement_widget
 
-Dieses Bundle umfasst alle verfügbaren Messfunktionen. Zum einen wird ein Layout-Widget erstellt, mit dem die Messwerkzeuge leicht verwendet werden können. 
+Dieses Bundle umfasst alle verfügbaren Messfunktionen. Zum einen wird ein Layout-Widget erstellt, mit dem die Messwerkzeuge leicht verwendet werden können.
 Zum Anderen dient die Komponente "PopupViewerMeasurement" zur Bereitstellung der Messfunktionen im Schnittviewer des Rissarchivs.
 
 Für das Mess-Widget werden die Funktionen durch Laden der folgenden Bundles implementiert:
@@ -9,13 +9,13 @@ Für das Mess-Widget werden die Funktionen durch Laden der folgenden Bundles imp
 * [sketching-tools](#bundle=sketching-tools@)
 * [sketching-command](#bundle=sketching-command@)
 * [sketching-styles](#bundle=sketching-styles@)
-* [sketching-construction](#bundle=sketching-construction@)
+* [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
 * [snapping-manager](#bundle=snapping-manager@)
 
 Es werden die im Sketching implementierten Tools verwendet.
 Im Schnittviewer wird ein einfaches Polyline Tool verwendet, welches auf die Messfunktionen des ebenfalls in diesem Bundle implementierten "MeasurementControllers" zurückgreift.
 Mithilfe von Esris GeometryEngine werden Längen und Fläche der eingezeichneten Objekte berechnet und
-anschließend als TextSymbole an die entsprechenden Objekte geschrieben. 
+anschließend als TextSymbole an die entsprechenden Objekte geschrieben.
 
 ## Verwendung
 

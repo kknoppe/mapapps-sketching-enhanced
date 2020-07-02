@@ -123,7 +123,7 @@
       "references": [
         {
           "name": "_action",
-          "providing": "sketching.Action",
+          "providing": "dn_sketchingenhanced.Action",
           "cardinality": "0..n"
         },
         {
@@ -143,7 +143,7 @@
     {
       "name": "SketchingToolRuleProcessor",
       "provides": [
-        "sketching.Action",
+        "dn_sketchingenhanced.Action",
         "toolrules.ToolRuleProcessor"
       ],
       "references": [
@@ -170,7 +170,7 @@
       "name": "DrawTextController",
       "provides": [
         "sketching.DrawTextController",
-        "sketching.Action"
+        "dn_sketchingenhanced.Action"
       ],
       "references": [
         {

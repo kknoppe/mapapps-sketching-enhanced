@@ -20,7 +20,7 @@
             "name": "MeasurementController",
             "provides": [
                 "dn_sketchingenhanced-measurement.MeasurementController",
-                "sketching.Action"
+                "dn_sketchingenhanced.Action"
             ],
             "properties": {
                 "decimalPlacesMeter": 1,

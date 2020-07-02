@@ -1,5 +1,5 @@
 {
-  "name": "sketching-construction",
+  "name": "dn_sketchingenhanced-construction",
   "version": "1.0.0",
   "title": "Sketching Construction",
   "dependencies": {
@@ -36,8 +36,8 @@
     {
       "name": "SketchingConstruction",
       "provides": [
-        "sketching-construction.SketchingConstruction",
-        "sketching.Action"
+        "dn_sketchingenhanced-construction.SketchingConstruction",
+        "dn_sketchingenhanced.Action"
       ],
       "references": [
         {
@@ -54,8 +54,8 @@
     {
       "name": "SketchingConstructionInfo",
       "provides": [
-        "sketching-construction.SketchingConstructionInfo",
-        "sketching.Action"
+        "dn_sketchingenhanced-construction.SketchingConstructionInfo",
+        "dn_sketchingenhanced.Action"
       ],
       "references": [
         {

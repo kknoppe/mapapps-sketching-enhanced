@@ -9,7 +9,7 @@
         "apprt-vuetify": "^4.8.4",
         "sketching-tools": "^1.0.0",
         "dn_sketchingenhanced-command": "^1.0.0",
-        "sketching-construction": "^1.0.0",
+        "dn_sketchingenhanced-construction": "^1.0.0",
         "sketching-styles": "^1.0.0",
         "snapping-manager": "^1.0.0",
         "dn_sketchingenhanced-symboleditor": "^1.0.0",

@@ -1,4 +1,4 @@
-# sketching-construction
+# dn_sketchingenhanced-construction
 
 Dieses Bundle enthält die Konstruktion-Anwendung für Sketching. Hierzu werden die Funktionen durch Laden der folgenden Bundles implementiert:
 
@@ -20,7 +20,7 @@ Um die Funktionen dieses Bundles zu benutzen, können Sie Werkzeug "SketchingTog
 Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, wie folgende Beispiel gezeigten Eigenschaften und ihre Default-Werte:
 
 ```json
-"sketching-construction": {
+"dn_sketchingenhanced-construction": {
   "Config": {
         "angleModulus": 45,
         "planarLength": 10,
