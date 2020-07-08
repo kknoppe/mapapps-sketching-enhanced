@@ -24,7 +24,11 @@
 
             <!-- Visibility Toggle Switch -->
             <v-flex shrink align-center>
-                <v-switch hide-details v-model="isActive"></v-switch>
+                <v-switch
+                    hide-details
+                    v-model="isActive"
+                    color="primary"
+                ></v-switch>
             </v-flex>
         </v-toolbar>
 

@@ -21,11 +21,10 @@
             <v-switch
                 v-model="enableMeasurement"
                 :label="i18n.enableMeasurements"
+                color="primary"
                 hide-details>
             </v-switch>
             <v-spacer></v-spacer>
-
-
             <v-btn-toggle>
                 <v-tooltip top v-if="measurementEnabled">
                     <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
