@@ -283,6 +283,7 @@ function SketchingHandler() {
                     let layer = this._sketchGraphicLayer = new GraphicsLayer({
                         id: layerId,
                         title: layerTitle,
+                        listMode: "hide",
                         spatialReference: this._mapWidgetModel.spatialReference
                     });
                     map.add(layer);

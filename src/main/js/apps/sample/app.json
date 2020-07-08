@@ -21,6 +21,7 @@
             "toolrules",
             "banner",
             "mapnavigation",
+            "toc",
             "dn_sketchingenhanced"
         ],
         "require": [
