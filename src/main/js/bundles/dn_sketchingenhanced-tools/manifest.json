@@ -1071,30 +1071,6 @@
             "references": []
         },
         {
-            "name": "SketchingLayerAdd",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "sketchinglayeradd",
-                "title": "${tools.sketchinglayeradd}",
-                "iconClass": "icon-layer",
-                "toolRole": "toolset",
-                "togglable": false,
-                "activateHandler": "",
-                "deactivateHandler": "",
-                "type": "menu",
-                "menu": false,
-                "mode": "",
-                "groups": [
-                    "sketching"
-                ]
-            },
-            "references": []
-        },
-        {
             "name": "SketchingLineGroup",
             "impl": "ct/tools/Tool",
             "provides": [

@@ -96,7 +96,6 @@ registerSuite({
             'drawtexttool',
         ];
         vm.lastToolGroupIds = [
-            'sketchinglayeradd',
             'sketchingtoolbox',
         ];
         vm.footerToolIds = [
@@ -125,7 +124,6 @@ registerSuite({
             'drawtexttool',
         ];
         vm.lastToolGroupIds = [
-            'sketchinglayeradd',
             'sketchingtoolbox',
         ];
         vm.footerToolIds = [

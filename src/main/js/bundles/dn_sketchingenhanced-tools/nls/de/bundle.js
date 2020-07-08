@@ -53,7 +53,6 @@ module.exports = {
         drawselectioncreateintersecttool: 'Objekt auswählen und mit den ausgewählten Objekte Schnittmenge erstellen',
         sketchinglinegroup: 'Linienwerkzeuge',
         sketchingpolygongroup: 'Polygonwerkzeuge',
-        sketchinglayeradd: 'Layer Menü',
         sketchingtoolbox: 'Weitere Werkzeuge',
         constructionpolylinetool: 'Linienkonstruktion',
         constructionpolygontool: 'Polygonkonstruktion'

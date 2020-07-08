@@ -36,7 +36,6 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
           "drawtexttool"
         ],
         "lastToolGroupIds": [
-          "sketchinglayeradd",
           "sketchingtoolbox"
         ],
         "footerToolIds": [

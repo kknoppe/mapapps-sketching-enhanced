@@ -54,7 +54,6 @@ module.exports = {
             drawselectioncreateintersecttool: 'select object and intersect selected objects',
             sketchinglinegroup: 'Line tools',
             sketchingpolygongroup: 'Polygon tools',
-            sketchinglayeradd: 'Layer Menu',
             sketchingtoolbox: 'Further tools',
             constructionpolylinetool: 'Line construction',
             constructionpolygontool: 'Polygon construction'
