@@ -118,7 +118,7 @@ export default declare({
     },
 
     _isGraphicsLayer(layer) {
-        return layer.type === "graphics" && layer.declaredClass === "esri.layers.GraphicsLayer" && layer.listMode === "show" && !layer.url;//layer.id.indexOf("-layer-") === -1;
+        return layer.type === "graphics" && layer.declaredClass === "esri.layers.GraphicsLayer" && !layer.url;//layer.id.indexOf("-layer-") === -1;
     },
 
     //events handlers
