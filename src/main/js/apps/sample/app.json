@@ -34,7 +34,7 @@
     "bundles": {
         "dn_sketchingenhanced": {
             "Config": {
-                "measurement": false,
+                "measurement": true,
                 "firstToolGroupIds": [
                     "drawpointtool",
                     "sketchinglinegroup",
