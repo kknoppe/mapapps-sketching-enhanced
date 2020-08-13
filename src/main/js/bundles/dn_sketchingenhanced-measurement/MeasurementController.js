@@ -25,6 +25,8 @@ export default class MeasurementController {
     activate() {
         this.geoEngine = geoEngine;
         this._oldVertex = null;
+        this._vertexArray = [];
+        this._undoRedoGraphics = [];
         const props = this._properties;
         this.mDecimal = props.decimalPlacesMeter;
         this.kmDecimal = props.decimalPlacesKiloMeter;
@@ -41,6 +43,11 @@ export default class MeasurementController {
     }
 
     handler(evt) {
+
+        if(evt.state === 'cancel' && evt.type === 'create' && evt.graphic) {
+            this._removeMeasurementsOnCancel(evt);
+            return;
+        }
 
         this.coordinates = this._getCoordinates(evt);
         this._removeTemporaryMeasurements(evt);
@@ -59,6 +66,8 @@ export default class MeasurementController {
         // calculate area (and circumference for circles & ellipsis)
         if (evt.state === 'complete' && this.measurementBoolean) {
             this._oldVertex = null;
+            this._vertexArray = [];
+            this._undoRedoGraphics = [];
 
             if (evt.tool === 'point') {
                 return;
@@ -83,10 +92,10 @@ export default class MeasurementController {
                 if (evt.graphic) {
                     evt.graphic.group = this.sketchGroup;
                 }
-                if (evt.tool !== 'polyline') {
+                if (evt.tool && evt.tool !== 'polyline') {
                     this._calculatePolygonMeasurements(evt);
                 } else {
-                    this._calculateTotalLineMeasurement(evt);
+                    evt.tool && this._calculateTotalLineMeasurement(evt);
                 }
 
             }
@@ -96,6 +105,31 @@ export default class MeasurementController {
             this._stateActiveHandler(evt);
         }
 
+        if(this.measurementBoolean) {
+            this._undoRedoHandler(evt);
+        }
+
+
+
+    }
+
+    _undoRedoHandler(evt) {
+        if (evt.type === 'undo') {
+            const viewModel = evt.target;
+            const lastGraphic = viewModel.layer.graphics.items.slice(-1);
+            viewModel.layer.removeMany(lastGraphic);
+            this._undoRedoGraphics.push(lastGraphic);
+            const index = this._vertexArray.findIndex(x => x === this._oldVertex);
+            this._oldVertex = this._vertexArray[index - 1];
+        }
+
+        if (evt.type === 'redo') {
+            const viewModel = evt.target;
+            const graphic = this._undoRedoGraphics.pop();
+            viewModel.layer.add(graphic[0]);
+            const index = this._vertexArray.findIndex(x => x === this._oldVertex);
+            this._oldVertex = this._vertexArray[index + 1];
+        }
     }
 
     _getCoordinates(evt) {
@@ -141,6 +175,13 @@ export default class MeasurementController {
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => x.symbol && x.symbol.group === graphicGroup);
 
+        viewModel.layer.removeMany(gs);
+    }
+
+    _removeMeasurementsOnCancel(evt) {
+        const id = evt.graphic.uid;
+        const viewModel = evt.target;
+        const gs = viewModel.layer.graphics.filter(graphic => graphic.symbol.name === `measurement-${id}`);
         viewModel.layer.removeMany(gs);
     }
 
@@ -305,7 +346,7 @@ export default class MeasurementController {
     _calculatePathLength(evt) {
         // add length labeling for polyline elements
         if (evt.graphic && evt.graphic.geometry.type === 'polyline') {
-            this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0]);
+            this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0], evt.graphic.uid);
         }
         // add temporary labeling for polygon elements
         if (evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
@@ -329,6 +370,7 @@ export default class MeasurementController {
         const viewModel = evt.target;
         const spatialReference = viewModel.view.spatialReference;
         const newVertex = evt.toolEventInfo.added;
+        this._vertexArray.push(newVertex);
 
         // set up array with current line
         const checkedPath = this._oldVertex ? [this._oldVertex, newVertex] : [firstPoint, newVertex];
@@ -426,12 +468,14 @@ export default class MeasurementController {
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
             evt.target.layer.add(graphic);
         } else {
-            const rings = evt.graphic.geometry.rings[0];
-            for (let i = 1; i < rings.length; i++) {
-                const checkedPath = [rings[i - 1], rings[i]];
-                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
-                evt.target.layer.add(graphic);
-            }
+            //const rings = evt.graphic.geometry.rings[0];
+            evt.graphic.geometry.rings.forEach(rings => {
+                for (let i = 1; i < rings.length; i++) {
+                    const checkedPath = [rings[i - 1], rings[i]];
+                    const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
+                    evt.target.layer.add(graphic);
+                }
+            });
         }
     }
 
