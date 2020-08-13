@@ -161,6 +161,20 @@ export default class MeasurementController {
         if (type === 'reshape-start' || type === 'move-start' || type === 'rotate-start' || type === 'scale-start') {
             this._removeCorrelatedMeasurementTexts(evt);
         }
+
+        if (type === 'vertex-remove') {
+            this._removeCorrelatedMeasurementTexts(evt);
+            evt.graphics[0].group = this.sketchGroup;
+            evt.graphic = evt.graphics[0];
+            if (evt.graphics[0].geometry.type !== 'polyline') {
+                this._calculatePolygonMeasurements(evt);
+            } else {
+                this._addLineMeasurementsToPolylines(evt);
+                this._calculateTotalLineMeasurement(evt);
+            }
+
+        }
+
     }
 
     /**
@@ -349,11 +363,11 @@ export default class MeasurementController {
             this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0], evt.graphic.uid);
         }
         // add temporary labeling for polygon elements
-        if (evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
+        if (evt.graphic && evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
             this._addTextForPolylinePolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
         }
 
-        if (evt.graphic.geometry.type === 'polygon' && evt.tool === 'circle') {
+        if (evt.graphic && evt.graphic.geometry.type === 'polygon' && evt.tool === 'circle') {
             this._addRadius(evt);
         }
     }
