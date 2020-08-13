@@ -70,7 +70,7 @@ export default class MeasurementController {
             this._undoRedoGraphics = [];
 
             if (evt.tool === 'point') {
-                return;
+                this._addPointCoordinatesTextToPoint(evt);
             } else if (evt.tool === 'reshape' || evt.tool === 'transform') {
                 // add all measurements after completion of a reshape operation
                 if (evt.graphics[0].geometry.type === 'point') {
@@ -132,8 +132,27 @@ export default class MeasurementController {
         }
     }
 
+    /**
+     * gets and returns the coordinates of the drawn object
+     * @param evt
+     * @private
+     */
     _getCoordinates(evt) {
-        return (evt && evt.toolEventInfo) ? evt.toolEventInfo.coordinates : null;
+        if (evt && evt.tool === 'point') {
+            if (evt.graphic){
+                // get the coordinates from the graphic
+                return {
+                    x: evt.graphic.geometry.extent.center.x,
+                    y: evt.graphic.geometry.extent.center.y
+                }
+            } else {
+                return evt;
+            }
+        } else if (evt && evt.toolEventInfo){
+            return evt.toolEventInfo.coordinates;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -207,10 +226,10 @@ export default class MeasurementController {
     _checkIfPositionHasChanged(evt) {
         setTimeout(() => {
             if (this.coordinates && this.coordinates === evt.toolEventInfo.coordinates) {
-                evt.tool === 'polyline' && this._calculateTotalLineMeasurement(evt, true);
-                evt.tool === 'polygon' && this._calculatePolygonMeasurements(evt, true);
-            }
-        }, 2000);
+            evt.tool === 'polyline' && this._calculateTotalLineMeasurement(evt, true);
+            evt.tool === 'polygon' && this._calculatePolygonMeasurements(evt, true);
+        }
+    }, 2000);
     }
 
     /**
@@ -225,6 +244,7 @@ export default class MeasurementController {
 
         // calculate area of polygon
         if (evt.tool !== 'circle' && evt.tool !== 'ellipse') {
+            if (!evt.graphic) return;
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, temporary);
             viewModel.layer.add(graphic);
         }
@@ -484,12 +504,92 @@ export default class MeasurementController {
         } else {
             //const rings = evt.graphic.geometry.rings[0];
             evt.graphic.geometry.rings.forEach(rings => {
-                for (let i = 1; i < rings.length; i++) {
-                    const checkedPath = [rings[i - 1], rings[i]];
-                    const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
-                    evt.target.layer.add(graphic);
-                }
+	                for (let i = 1; i < rings.length; i++) {
+	                const checkedPath = [rings[i - 1], rings[i]];
+	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
+	                evt.target.layer.add(graphic);
+	            }
+	        });
+        }
+    }
+
+    /**
+     * add point coordinates to Point Object
+     * @param evt
+     * @private
+     */
+    _addPointCoordinatesTextToPoint(evt) {
+        const id = evt.graphic.uid.toString();
+        const viewModel = evt.target;
+        const coordinates = this.coordinates;
+        const point = evt.graphic.geometry.extent.center;
+        const coordString = this._getPointString(evt).then(coordString => {
+            const textSymbol = new TextSymbol({
+                text: coordString,
+                color: this.textSettings.color,
+                name: id ? `measurement-${id}` : coordString,
+                font: this.textSettings.font,
+                haloColor: this.textSettings.haloColor,
+                haloSize: this.textSettings.haloSize,
+                group: this.sketchGroup,
+                horizontalAlignment: "left",
+                xoffset: 10,
+                yoffset: -20
             });
+            const graphic = new Graphic(point, textSymbol);
+            viewModel.layer.add(graphic);
+        });
+    }
+
+    /**
+     * converts the point graphic into a readable string (asyncronous)
+     * @return corrdinate string
+     * @param evt
+     * @private
+     */
+    _getPointString(evt){
+        return new Promise((resolve,reject) => {
+            if(evt){
+                const srs = evt.graphic.geometry.spatialReference.wkid;
+                const targetSrs = this._properties.pointSRS || srs;
+                const places = this._properties.pointCoordPlaces || (this.srsIsPlanar(targetSrs) ? 0 : 5);
+                const unitSymbolX = this._properties.pointCoordUnitSymbolX;
+                const unitSymbolY = this._properties.pointCoordUnitSymbolY;
+                const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
+                Promise.all([transformedPoint]).then(transformedPoint => {
+                    const x = transformedPoint[0].x.toFixed(places);
+                const y = transformedPoint[0].y.toFixed(places);
+                resolve(x+unitSymbolX +" / "+y+unitSymbolY)
+            });
+            }else{
+                resolve("");
+            }
+        });
+    }
+
+    /**
+     * transform the point into a the desired srs
+     * @return corrdinate string
+     * @param geometry, targetSrs
+     * @private
+     */
+    _transformGeom(geom, targetSrs){
+        const coordinateTransformer = this._coordinateTransformer;
+        if (coordinateTransformer) {
+            return coordinateTransformer.transform(geom, targetSrs);
+        }
+    }
+
+    srsIsPlanar(srs){
+        const planar = this._properties.srs.planar;
+        const geodetic = this._properties.srs.geodetic;
+        if(planar.indexOf(srs)!=-1){
+            return true;
+        }
+        if(geodetic.indexOf(srs)!=-1){
+            return false;
+        }else{
+            console.error("Could not determine if EPSG:"+srs+" is planar or geodetic. Missing entry in configuration.");
         }
     }
 
