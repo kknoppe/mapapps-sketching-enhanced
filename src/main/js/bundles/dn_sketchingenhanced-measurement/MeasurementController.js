@@ -72,7 +72,7 @@ export default class MeasurementController {
             this._vertexArray = [];
             this._undoRedoGraphics = [];
 
-            if (evt.tool === 'point') {
+            if (evt.tool === 'point' && evt.activeTool && evt.activeTool === "drawpointtool") {
                 this._addPointCoordinatesTextToPoint(evt);
             } else if (evt.tool === 'reshape' || evt.tool === 'transform') {
                 // add all measurements after completion of a reshape operation

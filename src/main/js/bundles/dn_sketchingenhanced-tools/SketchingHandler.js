@@ -68,6 +68,8 @@ function SketchingHandler() {
             const viewModel = this._getSketchViewModel();
             viewModel.tool = tool;
 
+            this.activeTool = tool.toolId;
+
             const view = viewModel.view;
             this.drag && this.drag.remove();
 
@@ -132,6 +134,9 @@ function SketchingHandler() {
         },
 
         deactivateTool(tool) {
+            if (tool.toolId === this.activeTool){
+                this.activeTool = null;
+            }
             const viewModel = this._getSketchViewModel();
             this.drag && this.drag.remove();
             if (tool && (tool.id === 'drawellipsetool' || tool.id === 'drawtriangletool')) {
@@ -294,6 +299,10 @@ function SketchingHandler() {
         },
 
         _onSketchUpdateHandler(evt) {
+            if (this.activeTool){
+                evt.activeTool = this.activeTool;
+            }
+
             //extral actions
             this._actions.forEach(action => {
                 action.handler(evt);
