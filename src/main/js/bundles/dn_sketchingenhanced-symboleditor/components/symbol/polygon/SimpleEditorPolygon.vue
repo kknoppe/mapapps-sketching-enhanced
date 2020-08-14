@@ -106,7 +106,7 @@
              * Data variables are only here registered as support for the GUI workflow
              */
             return {
-                activeTab: 0,
+                activeTab: null,
                 color: this.settings.color,
             };
         },
