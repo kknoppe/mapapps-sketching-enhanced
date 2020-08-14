@@ -120,18 +120,22 @@ export default class MeasurementController {
         if (evt.type === 'undo') {
             const viewModel = evt.target;
             const lastGraphic = viewModel.layer.graphics.items.slice(-1);
-            viewModel.layer.removeMany(lastGraphic);
-            this._undoRedoGraphics.push(lastGraphic);
-            const index = this._vertexArray.findIndex(x => x === this._oldVertex);
-            this._oldVertex = this._vertexArray[index - 1];
+            if(lastGraphic && lastGraphic.length) {
+                viewModel.layer.removeMany(lastGraphic);
+                this._undoRedoGraphics.push(lastGraphic);
+                const index = this._vertexArray.findIndex(x => x === this._oldVertex);
+                this._oldVertex = this._vertexArray[index - 1];
+            }
         }
 
         if (evt.type === 'redo') {
             const viewModel = evt.target;
             const graphic = this._undoRedoGraphics.pop();
-            viewModel.layer.add(graphic[0]);
-            const index = this._vertexArray.findIndex(x => x === this._oldVertex);
-            this._oldVertex = this._vertexArray[index + 1];
+            if(graphic && graphic.length) {
+                viewModel.layer.add(graphic[0]);
+                const index = this._vertexArray.findIndex(x => x === this._oldVertex);
+                this._oldVertex = this._vertexArray[index + 1];
+            }
         }
     }
 
