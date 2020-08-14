@@ -158,6 +158,10 @@
                 {
                     "name": "_measurementController",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementController"
+                },
+                {
+                    "name": "_measurementModel",
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
                 }
             ]
         },

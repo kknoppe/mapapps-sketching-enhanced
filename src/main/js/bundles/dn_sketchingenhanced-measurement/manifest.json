@@ -23,7 +23,8 @@
     ],
     "components": [
         {
-            "name": "MeasurementController",
+            "name": "Config",
+            "impl": "./MeasurementController",
             "provides": [
                 "dn_sketchingenhanced-measurement.MeasurementController",
                 "dn_sketchingenhanced.Action"
@@ -31,6 +32,8 @@
             "properties": {
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
+                "showLineMeasurementsAtPolylines": true,
+                "showLineMeasurementsAtPolygons": false,
                 "pointSRS": "4326",
                 "pointCoordPlaces": "3",
                 "pointCoordUnitSymbolX": "°E",
@@ -105,8 +108,16 @@
                 {
                     "name": "_sketchingHandler",
                     "providing": "dn_sketchingenhanced.SketchingHandler"
+                },
+                {
+                    "name": "_model",
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
                 }
             ]
+        },
+        {
+            "name": "MeasurementModel",
+            "provides": "dn_sketchingenhanced-measurement.MeasurementModel"
         }
     ]
 }

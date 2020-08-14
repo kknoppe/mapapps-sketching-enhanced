@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import Binding from 'apprt-binding/Binding';
 import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
 import SketchingWidget from './components/SketchingWidget.vue';
@@ -24,6 +25,14 @@ export default class SketchingEnhancedWidgetFactory {
         const vm = new Vue(SketchingWidget);
 
         const widget = VueDijit(vm);
+
+        const measurementBinding = Binding.for(vm, this._measurementModel);
+
+        measurementBinding
+            .syncAll('showLineMeasurementsAtPolylines')
+            .syncAll('showLineMeasurementsAtPolygons')
+            .syncToLeftNow()
+            .enable();
 
 
         const props = this._properties;

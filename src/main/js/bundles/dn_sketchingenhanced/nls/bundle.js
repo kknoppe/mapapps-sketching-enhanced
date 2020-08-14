@@ -99,6 +99,10 @@ module.exports = {
                     invalidPattern: 'value must be number-number',
                 },
             },
+            measurement: {
+                showLineMeasurementsAtPolylines: 'Show length of line elements',
+                showLineMeasurementsAtPolygons: 'Show edge length of polygons',
+            },
             layerEditor: {
                 header: 'Sketching Layer',
                 noProfiles: 'No profiles defined yet.',

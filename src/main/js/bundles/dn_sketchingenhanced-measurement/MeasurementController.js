@@ -33,6 +33,9 @@ export default class MeasurementController {
         this.textSettings = props.sketch.textSymbol;
         this.lineSettings = props.sketch.polylineSymbol;
 
+        this._model.showLineMeasurementsAtPolylines = props.showLineMeasurementsAtPolylines;
+        this._model.showLineMeasurementsAtPolygons = props.showLineMeasurementsAtPolygons;
+
         this.coordinates = null;
         this.radiusPath = null;
         this.multiMeasurement = false;
@@ -83,7 +86,7 @@ export default class MeasurementController {
                     if (evt.graphics[0].geometry.type !== 'polyline') {
                         this._calculatePolygonMeasurements(newEvent);
                     } else {
-                        this._addLineMeasurementsToPolylines(newEvent);
+                        this._model.showLineMeasurementsAtPolylines && this._addLineMeasurementsToPolylines(newEvent);
                         this._calculateTotalLineMeasurement(newEvent);
                     }
                 });
@@ -380,11 +383,11 @@ export default class MeasurementController {
     _calculatePathLength(evt) {
         // add length labeling for polyline elements
         if (evt.graphic && evt.graphic.geometry.type === 'polyline') {
-            this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0], evt.graphic.uid);
+            this._model.showLineMeasurementsAtPolylines && this._addTextForPolylinePolygon(evt, evt.graphic.geometry.paths[0][0], evt.graphic.uid);
         }
         // add temporary labeling for polygon elements
         if (evt.graphic && evt.graphic.geometry.type === 'polygon' && evt.tool === 'polygon') {
-            this._addTextForPolylinePolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
+            this._model.showLineMeasurementsAtPolygons && this._addTextForPolylinePolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
         }
 
         if (evt.graphic && evt.graphic.geometry.type === 'polygon' && evt.tool === 'circle') {
@@ -502,8 +505,7 @@ export default class MeasurementController {
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
             evt.target.layer.add(graphic);
         } else {
-            //const rings = evt.graphic.geometry.rings[0];
-            evt.graphic.geometry.rings.forEach(rings => {
+            this._model.showLineMeasurementsAtPolygons && evt.graphic.geometry.rings.forEach(rings => {
 	                for (let i = 1; i < rings.length; i++) {
 	                const checkedPath = [rings[i - 1], rings[i]];
 	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);

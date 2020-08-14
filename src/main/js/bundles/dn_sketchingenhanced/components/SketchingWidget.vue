@@ -82,8 +82,20 @@
                           @onToolClick="onToolClickHandler">
         </sketching-footer>
 
+
+        <v-expand-transition>
+            <v-flex v-show="measurementEnabled">
+                <v-card class="pa-2">
+                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary" :label="i18n.measurement.showLineMeasurementsAtPolylines" v-model="showLineMeasurementsAtPolylines" hide-details></v-checkbox>
+                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary" :label="i18n.measurement.showLineMeasurementsAtPolygons" v-model="showLineMeasurementsAtPolygons" hide-details></v-checkbox>
+                </v-card>
+            </v-flex>
+        </v-expand-transition>
+
         <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :i18n="i18n"
                             :bus="eventBus"></measurement-footer>
+
+
     </v-container>
 
 </template>
@@ -124,6 +136,9 @@
                 constructionTool: null,
                 currentActiveTool: null,
                 eventBus: this,
+                measurementEnabled: this.measurementBoolean,
+                showLineMeasurementsAtPolylines: false,
+                showLineMeasurementsAtPolygons: false,
             };
         },
         props: {
@@ -195,6 +210,7 @@
                     return this.measurementBoolean;
                 },
                 set(value) {
+                    this.measurementEnabled = value;
                     this.$emit('measurementStatusChanged', value);
                 }
             }

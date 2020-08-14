@@ -51,6 +51,35 @@
                 ]
             }
         },
+        "dn_sketchingenhanced-measurement": {
+            "Config": {
+                "decimalPlacesMeter": 1,
+                "decimalPlacesKiloMeter": 2,
+                "showLineMeasurementsAtPolylines": true,
+                "showLineMeasurementsAtPolygons": false,
+                "pointSRS": "4326",
+                "pointCoordPlaces": "3",
+                "pointCoordUnitSymbolX": "°E",
+                "pointCoordUnitSymbolY": "°N",
+                "srs":{
+                    "geodetic": [
+                        4326,
+                        3857,
+                        4258
+                    ],
+                    "planar": [
+                        2398,
+                        2399,
+                        25832,
+                        25833,
+                        31466,
+                        31467,
+                        31468,
+                        31469
+                    ]
+                }
+            }
+        },
         "dn_sketchingenhanced-tools": {
             "Config": {
                 "graphicLayerId": "sketchingGraphicLayer",
