@@ -55,6 +55,12 @@
         },
         "dn_sketchingenhanced-measurement": {
             "Config": {
+                "disabledMeasurementTools": [
+                    "drawarrowtool",
+                    "drawfreehandpolygontool",
+                    "drawfreehandpolylinetool",
+                    "constructionpolylinetool"
+                ],
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
                 "showLineMeasurementsAtPolylines": true,

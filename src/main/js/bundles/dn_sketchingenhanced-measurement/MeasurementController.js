@@ -50,7 +50,8 @@ export default class MeasurementController {
 
         this.sketchGroup = 0;
 
-        this._model.watch("measurementBoolean",(newVal)=>{
+        this._model.watch("measurementBoolean",(evt)=>{
+            this._toggleMeasurementDisabledTools(evt.value);
             if (this.activeToolType){
                 this.setActiveToolType(this.activeToolType);
             }
@@ -874,6 +875,15 @@ export default class MeasurementController {
         // set up array with current line
         const checkedPath = this._oldVertex ? [this._oldVertex, newVertex] : [firstPoint, newVertex];
         return this._getLengthNumeric(new Polyline(checkedPath, spatialReference))
+    }
+
+    _toggleMeasurementDisabledTools(enabled){
+        const measurementDisabledTools = this._properties.disabledMeasurementTools;
+        const tools = this._tools;
+        measurementDisabledTools && measurementDisabledTools.forEach(id => {
+            const tool = tools.filter((x) => x.id === id)[0].tool;
+            tool.set("enabled",!enabled);
+        });
     }
 
 }

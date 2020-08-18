@@ -30,6 +30,9 @@
                 "dn_sketchingenhanced.Action"
             ],
             "properties": {
+                "disabledMeasurementTools": [
+                    "drawarrowtool"
+                ],
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
                 "showLineMeasurementsAtPolylines": true,
@@ -112,6 +115,11 @@
                 {
                     "name": "_model",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
+                },
+                {
+                    "name": "_tools",
+                    "providing": "ct.tools.Tool",
+                    "cardinality": "0..n"
                 }
             ]
         },
