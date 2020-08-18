@@ -10,6 +10,22 @@ class MeasurementModel extends Mutable {
 properties(MeasurementModel, {
     showLineMeasurementsAtPolylines: false,
     showLineMeasurementsAtPolygons: false,
+
+    currentLength: 0,
+    aggregateLength: 0,
+    totalLength: 0,
+    area: 0,
+    currentArea: 0,
+    perimeter: 0,
+    coordinates: null,
+
+    measurementBoolean: false,
+
+    pointEnabled: false,
+    polylineEnabled: false,
+    polygonEnabled: false,
+    areaEnabled: false
+
 });
 
 

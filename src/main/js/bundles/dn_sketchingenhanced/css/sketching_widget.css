@@ -434,3 +434,8 @@
 .ctAppRoot .sketchingEnhancedWidget .measurementCheckboxes .v-input__control .v-label{
     font-size: small;
 }
+
+.ctAppRoot .sketchingEnhancedWidget .measurementText p{
+    font-size: small;
+    margin-bottom: 3px!important;
+}

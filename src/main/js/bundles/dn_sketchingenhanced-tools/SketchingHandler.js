@@ -70,6 +70,11 @@ function SketchingHandler() {
 
             this.activeTool = tool.toolId;
 
+            //extral actions
+            this._actions.forEach(action => {
+                action.setActiveToolType && action.setActiveToolType(tool.toolId);
+            }, this);
+
             const view = viewModel.view;
             this.drag && this.drag.remove();
 

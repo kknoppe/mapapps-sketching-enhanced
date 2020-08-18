@@ -31,9 +31,19 @@ export default class SketchingEnhancedWidgetFactory {
         measurementBinding
             .syncAll('showLineMeasurementsAtPolylines')
             .syncAll('showLineMeasurementsAtPolygons')
+            .syncAll('currentLength')
+            .syncAll('aggregateLength')
+            .syncAll('totalLength')
+            .syncAll('area')
+            .syncAll('currentArea')
+            .syncAll('perimeter')
+            .syncAll('coordinates')
+            .syncAll('pointEnabled')
+            .syncAll('polylineEnabled')
+            .syncAll('polygonEnabled')
+            .syncAll('areaEnabled')
             .syncToLeftNow()
             .enable();
-
 
         const props = this._properties;
         const tools = props.tools;
@@ -41,7 +51,7 @@ export default class SketchingEnhancedWidgetFactory {
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
         vm.footerToolIds = props.footerToolIds;
-        vm.measurementBoolean = this._measurementController.measurementBoolean;
+        vm.measurementBoolean = this._measurementModel.measurementBoolean = this._measurementController.measurementBoolean;
 
         vm.measurement = props.measurement;
 
@@ -57,7 +67,7 @@ export default class SketchingEnhancedWidgetFactory {
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
 
         vm.$on('measurementStatusChanged', val => {
-            this._measurementController.measurementBoolean = val;
+            this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = val;
         });
 
         vm.$on('changeMultiMeasurementState', val => {

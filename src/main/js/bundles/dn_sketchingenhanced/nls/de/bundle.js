@@ -102,6 +102,13 @@ module.exports = {
         measurement: {
             showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
             showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
+            coordinates: 'Koordinaten: ',
+            totalLength: 'Gesamtlänge: ',
+            currentLength: 'Aktuelle Teilstrecke: ',
+            currentTotalLength: 'Aktuelle Gesamtlänge: ',
+            totalArea: 'Gesamtfläche: ',
+            currentArea: 'Aktuelle Fläche: ',
+            perimeter: 'Umfang: '
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',

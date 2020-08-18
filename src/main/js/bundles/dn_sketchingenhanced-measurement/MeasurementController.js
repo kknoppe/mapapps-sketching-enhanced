@@ -24,6 +24,7 @@ export default class MeasurementController {
 
     activate() {
         this.geoEngine = geoEngine;
+        this.activeToolType = null;
         this._oldVertex = null;
         this._vertexArray = [];
         this._undoRedoGraphics = [];
@@ -36,6 +37,11 @@ export default class MeasurementController {
         this._model.showLineMeasurementsAtPolylines = props.showLineMeasurementsAtPolylines;
         this._model.showLineMeasurementsAtPolygons = props.showLineMeasurementsAtPolygons;
 
+        this._model.pointEnabled = false;
+        this._model.polylineEnabled = false;
+        this._model.polygonEnabled = false;
+        this._model.areaEnabled = false;
+
         this.coordinates = null;
         this.radiusPath = null;
         this.multiMeasurement = false;
@@ -43,11 +49,24 @@ export default class MeasurementController {
         this.measurementBoolean = false;
 
         this.sketchGroup = 0;
+
+        this._model.watch("measurementBoolean",(newVal)=>{
+            if (this.activeToolType){
+                this.setActiveToolType(this.activeToolType);
+            }
+        });
+
+        this.resetMeasurementResults();
     }
 
     handler(evt) {
+        if (evt.activeTool){
+            this.setActiveToolType(evt.activeTool)
+            this._showMeasurementsAfterDrawing(evt);
+        }
 
         if(evt.state === 'cancel' && evt.type === 'create' && evt.graphic) {
+            this.resetMeasurementResults();
             this._removeMeasurementsOnCancel(evt);
             return;
         }
@@ -71,6 +90,7 @@ export default class MeasurementController {
             this._oldVertex = null;
             this._vertexArray = [];
             this._undoRedoGraphics = [];
+
 
             if (evt.tool === 'point' && evt.activeTool && evt.activeTool === "drawpointtool") {
                 this._addPointCoordinatesTextToPoint(evt);
@@ -114,6 +134,47 @@ export default class MeasurementController {
 
 
 
+    }
+
+    setActiveToolType(toolId){
+        const activeTool = this.activeToolType =  toolId;
+        if (!this.measurementBoolean){
+            return
+        }
+        switch(activeTool) {
+            case "drawpointtool":
+                this._model.pointEnabled = true;
+                this._model.polylineEnabled = false;
+                this._model.polygonEnabled = false;
+                this._model.areaEnabled = false;
+                break;
+            case "drawpolylinetool":
+                this._model.pointEnabled = false;
+                this._model.polylineEnabled = true;
+                this._model.polygonEnabled = false;
+                this._model.areaEnabled = false;
+                break;
+            case "drawpolygontool":
+                this._model.pointEnabled = false;
+                this._model.polylineEnabled = false;
+                this._model.polygonEnabled = true;
+                this._model.areaEnabled = false;
+                break;
+            case "drawrectangletool":
+            case "drawtriangletool":
+            case "drawcircletool":
+            case "drawellipsetool":
+                this._model.pointEnabled = false;
+                this._model.polylineEnabled = false;
+                this._model.polygonEnabled = false;
+                this._model.areaEnabled = true;
+                break;
+            default:
+                this._model.pointEnabled = false;
+                this._model.polylineEnabled = false;
+                this._model.polygonEnabled = false;
+                this._model.areaEnabled = false;
+        }
     }
 
     _undoRedoHandler(evt) {
@@ -314,6 +375,26 @@ export default class MeasurementController {
             `${(Math.round(this.geoEngine.planarLength(geometry, 'kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
             `${length.toLocaleString(i18n.locale)} m`;
     }
+    /**
+     * get Length of given geometry
+     * @param length {number}
+     * @returns {string}
+     * @private
+     */
+    _getLengthString(length){
+        return length > 1000 ? `${((length / 1000) * Math.pow(10, this.kmDecimal) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
+            `${length.toLocaleString(i18n.locale)} m`
+    }
+
+    /**
+     * get Length of given geometry in meters
+     * @param geometry
+     * @returns {number}
+     * @private
+     */
+    _getLengthNumeric(geometry) {
+        return Math.round(this.geoEngine.planarLength(geometry, 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+    }
 
     /**
      * get Area of given geometry
@@ -326,6 +407,28 @@ export default class MeasurementController {
         return area > 1000000 ?
             `${(Math.round(this.geoEngine.planarArea(geometry, 'square-kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
             `${area.toLocaleString(i18n.locale)} m²`;
+    }
+
+    /**
+     * get Area of given geometry
+     * @param area {number}
+     * @returns {string}
+     * @private
+     */
+    _getAreaString(area){
+        return area > 1000000 ?
+            `${(Math.round((area / 1000000) * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
+            `${area.toLocaleString(i18n.locale)} m²`;
+    }
+
+    /**
+     * get Area of given geometry in meters squared
+     * @param geometry
+     * @returns {number}
+     * @private
+     */
+    _getAreaNumeric(geometry) {
+        return Math.round(this.geoEngine.planarArea(geometry, 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
     }
 
     /**
@@ -398,7 +501,6 @@ export default class MeasurementController {
             this._addRadius(evt);
         }
     }
-
 
     /**
      * create and add text graphic to the measurement layer with information about line length
@@ -510,7 +612,7 @@ export default class MeasurementController {
             evt.target.layer.add(graphic);
         } else {
             this._model.showLineMeasurementsAtPolygons && evt.graphic.geometry.rings.forEach(rings => {
-	                for (let i = 1; i < rings.length; i++) {
+                for (let i = 1; i < rings.length; i++) {
 	                const checkedPath = [rings[i - 1], rings[i]];
 	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
 	                evt.target.layer.add(graphic);
@@ -542,6 +644,7 @@ export default class MeasurementController {
                 xoffset: 10,
                 yoffset: -20
             });
+            this._model.coordinates = coordString;
             const graphic = new Graphic(point, textSymbol);
             viewModel.layer.add(graphic);
         });
@@ -647,6 +750,130 @@ export default class MeasurementController {
             group: this.sketchGroup,
         });
         return new Graphic(pnt, textSymbol);
+    }
+
+    /**
+     * acts on draw events to begin recording measurements
+     * @param evt
+     * @private
+     */
+    _showMeasurementsAfterDrawing(evt){
+        if (evt.type === "create" && evt.state === "active"){
+            switch( evt.toolEventInfo.type){
+                case("cursor-update"):
+                    this._showActiveResultsInTab(evt);
+                    break;
+                case("vertex-add"):
+                    this._showCompleteResultsInTab(evt);
+                    break
+            }
+
+        }
+    }
+
+    /**
+     * resets all measurements on the data model
+     * @param none
+     * @public
+     */
+    resetMeasurementResults(){
+        this.measurements = {
+            totalLength: 0,
+            segmentLength: 0,
+            currentArea: 0,
+            area: 0
+        }
+        this._model.pointEnabled = false;
+        this._model.polylineEnabled = false;
+        this._model.polygonEnabled = false;
+        this._model.coordinates = null;
+        this._model.currentLength = 0;
+        this._model.aggregateLength = 0
+        this._model.totalLength = 0;
+        this._model.area = 0;
+        this._model.currentArea = 0;
+        this._model.perimeter = 0;
+    }
+
+    /**
+     * switch method that sets data model measurement properties with mouse cursor movement
+     * @param evt from mouse cursor movement
+     * @private
+     */
+    _showActiveResultsInTab(evt){
+        const activeTool = this.activeTool || evt.activeTool;
+        let lastSegment, currentArea;
+        switch(activeTool){
+            case("drawpolylinetool"):
+                lastSegment = this.measurements.segmentLength = this._getLastSegmentLength(evt);
+                this._model.currentLength = this._getLengthString(lastSegment);
+                this._model.aggregateLength = this._getLengthString(lastSegment + this.measurements.totalLength);
+                break;
+            case("drawpolygontool"):
+                currentArea = this.measurements.currentArea = this._getAreaNumeric(evt.graphic.geometry);
+                lastSegment = this.measurements.segmentLength = this._getLastSegmentLength(evt);
+                this._model.currentLength = this._getLengthString(lastSegment);
+                this._model.currentArea = this._getAreaString(currentArea);
+                break;
+            case("drawrectangletool"):
+            case("drawcircletool"):
+            case("drawtriangletool"):
+            case("drawellipsetool"):
+                currentArea = this.measurements.currentArea = this._getAreaNumeric(evt.graphic.geometry);
+                this._model.currentArea = this._getAreaString(currentArea);
+                break;
+            case(null):
+                break;
+        }
+    }
+
+    /**
+     * switch method that sets data model measurement properties with mouse cursor movement
+     * @param evt after shape drawn (click)
+     * @private
+     */
+    _showCompleteResultsInTab(evt){
+        const activeTool = this.activeTool || evt.activeTool;
+        this.measurements.totalLength = this.measurements.totalLength + this.measurements.segmentLength;
+        const currentArea = this.measurements.currentArea;
+        switch(activeTool){
+            case("drawpolylinetool"):
+                this._model.currentLength = this._getLengthString(0);
+                this._model.totalLength = this._getLengthString(this.measurements.totalLength);
+                break;
+            case("drawpolygontool"):
+                this._model.currentLength = this._getLengthString(0);
+                this._model.perimeter = this._getLengthString(this.measurements.totalLength);
+                this._model.currentArea = this._model.area = this._getAreaString(currentArea);
+                break;
+            case("drawrectangletool"):
+            case("drawcircletool"):
+            case("drawtriangletool"):
+            case("drawellipsetool"):
+                this._model.currentArea = this._model.area = this._getAreaString(currentArea);
+                break;
+            case(null):
+                break;
+        }
+    }
+
+    /**
+     * calculates the length of the previous draw vector in meters
+     * @param evt
+     * @returns returns a number representing the previous laid vector in meters
+     * @private
+     */
+    _getLastSegmentLength(evt){
+        // this is to get the length of the set new segment
+        let firstPoint = evt.graphic.geometry.paths ? evt.graphic.geometry.paths[0][0] : evt.graphic.geometry.rings[0][0];
+        let id = evt.graphic.uid;
+        const viewModel = evt.target;
+        const spatialReference = viewModel.view.spatialReference;
+        const newVertex = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
+        this._vertexArray.push(newVertex);
+        // set up array with current line
+        const checkedPath = this._oldVertex ? [this._oldVertex, newVertex] : [firstPoint, newVertex];
+        return this._getLengthNumeric(new Polyline(checkedPath, spatialReference))
     }
 
 }
