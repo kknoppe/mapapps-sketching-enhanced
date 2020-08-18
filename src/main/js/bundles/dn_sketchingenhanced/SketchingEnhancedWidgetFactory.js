@@ -48,6 +48,7 @@ export default class SketchingEnhancedWidgetFactory {
         const props = this._properties;
         const tools = props.tools;
         vm.toolIds = tools;
+        vm.showKeepMeasurements = props.showKeepMeasurements;
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
         vm.footerToolIds = props.footerToolIds;
@@ -58,6 +59,10 @@ export default class SketchingEnhancedWidgetFactory {
         Object.assign(vm, {
             constructionModel: this._constructionModel,
         });
+
+        if (props.multipleMeasurementsEnabled){
+            this._measurementController.multiMeasurement = props.multipleMeasurementsEnabled;
+        }
 
         // loading symbol settings from sketching Handler properties
         vm.initialSymbolSettings = this._sketchingHandler._properties.sketch;

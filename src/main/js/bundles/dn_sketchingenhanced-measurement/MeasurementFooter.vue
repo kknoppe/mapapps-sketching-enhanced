@@ -25,7 +25,7 @@
                 hide-details>
             </v-switch>
             <v-spacer></v-spacer>
-            <v-btn-toggle>
+            <v-btn-toggle v-show="showKeepMeasurements">
                 <v-tooltip top v-if="measurementEnabled">
                     <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
                         <v-icon>
@@ -61,6 +61,9 @@
                 type: Object,
             },
             measurementBoolean: {
+                type: Boolean,
+            },
+            showKeepMeasurements: {
                 type: Boolean,
             },
         },

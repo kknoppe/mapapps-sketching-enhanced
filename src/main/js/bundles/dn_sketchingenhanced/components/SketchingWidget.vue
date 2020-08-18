@@ -112,7 +112,7 @@
             </v-flex>
         </v-expand-transition>
 
-        <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :i18n="i18n"
+        <measurement-footer v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
                             :bus="eventBus"></measurement-footer>
 
     </v-container>
@@ -160,6 +160,8 @@
                 measurementEnabled: this.measurementBoolean,
                 showLineMeasurementsAtPolylines: false,
                 showLineMeasurementsAtPolygons: false,
+
+                showKeepMeasurements: true,
 
                 coordinates: null,
                 currentLength: null,

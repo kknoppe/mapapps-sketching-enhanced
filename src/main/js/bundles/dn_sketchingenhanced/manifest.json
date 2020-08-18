@@ -71,6 +71,8 @@
             "properties": {
                 "widgetRole": "sketchingEnhancedWidget",
                 "defaultTool": "drawpointtool",
+                "showKeepMeasurements": false,
+                "multipleMeasurementsEnabled": true,
                 "measurement": false,
                 "firstToolGroupIds": [
                     "drawpointtool",
