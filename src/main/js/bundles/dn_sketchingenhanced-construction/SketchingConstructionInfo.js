@@ -19,7 +19,7 @@
  */
 
 import Polyline from "esri/geometry/Polyline";
-import geometryEngine from "esri/geometry/geometryEngine";
+import {planarArea, planarLength} from "esri/geometry/geometryEngine";
 import {declare} from "apprt-core/Mutable";
 
 const pi = Math.PI;
@@ -61,8 +61,8 @@ export default declare({
 
     _getConstructionInfo(viewModel, graphic) {
         const geo = graphic.geometry;
-        const area = geo.type !== "polygon" ? "" : this._toFixed(geometryEngine.planarArea(geo)) + "qm";
-        const lengthTotal = this._toFixed(geometryEngine.planarLength(geo)) + "m";
+        const area = geo.type !== "polygon" ? "" : this._toFixed(planarArea(geo)) + "qm";
+        const lengthTotal = this._toFixed(planarLength(geo)) + "m";
         let length = "";
         let angle = "";
         let angleRelative = "";
@@ -86,7 +86,7 @@ export default declare({
 
             angle = this._toFixed(a) + "°";
             angleRelative = this._toFixed(aRelative) + "°";
-            length = this._toFixed(geometryEngine.planarLength(polyline)) + "m";
+            length = this._toFixed(planarLength(polyline)) + "m";
         }
         return this._createConstructionInfo(angle, angleRelative, length, lengthTotal, area);
     },
