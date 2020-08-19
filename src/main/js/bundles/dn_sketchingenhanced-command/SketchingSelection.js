@@ -20,7 +20,7 @@
 
 import d_lang from "dojo/_base/lang";
 import {fromJSON} from "esri/symbols/support/jsonUtils";
-import geometryEngine from "esri/geometry/geometryEngine";
+import * as geometryEngine from "esri/geometry/geometryEngine";
 import {createScreenPoint} from "esri/core/screenUtils";
 
 export default function () {
@@ -207,7 +207,7 @@ export default function () {
 
         _checkShouldSnappingByPoint(point, geometry) {
             const geo = geometry.object.geometry;
-            return geo.type === "polygon" && geometryEngine.disjoint(geo, point);
+            return geo.type === "polygon" && disjoint(geo, point);
         },
 
         _checkShouldSnappingByOperator(point, geometry, operator) {

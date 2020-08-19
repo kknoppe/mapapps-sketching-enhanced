@@ -21,7 +21,7 @@
 import d_lang from "dojo/_base/lang";
 import d_aspect from "dojo/aspect"
 import Handles from "esri/core/Handles";
-import geometryEngine from "esri/geometry/geometryEngine";
+import {nearestVertex, nearestCoordinate, planarLength, planarArea} from "esri/geometry/geometryEngine";
 import Point from "esri/geometry/Point";
 import {fromJSON} from "esri/symbols/support/jsonUtils";
 import ct_async from "ct/async";
@@ -126,11 +126,11 @@ export default function () {
                 }
 
                 //point, polyline, polygon
-                let nearestResult = geometryEngine.nearestVertex(geometry, point);
+                let nearestResult = nearestVertex(geometry, point);
 
                 //polyline, polygon
                 if (type !== "point" && (nearestResult.isEmpty || nearestResult.distance > searchRadius)) {
-                    nearestResult = geometryEngine.nearestCoordinate(geometry, point);
+                    nearestResult = nearestCoordinate(geometry, point);
                 }
 
                 //point, polyline, polygon
@@ -141,8 +141,8 @@ export default function () {
                 //polyline, polygon
                 if (nearestResult.distance === nearestPointResult.distance) {
                     if (type === "polyline") {
-                        const l1 = geometryEngine.planarLength(geometry.object.geometry);
-                        const l2 = geometryEngine.planarLength(nearestPointResult.objectGeometry.object.geometry);
+                        const l1 = planarLength(geometry.object.geometry);
+                        const l2 = planarLength(nearestPointResult.objectGeometry.object.geometry);
                         if (l1 >= l2) {
                             return false;
                         }
@@ -150,8 +150,8 @@ export default function () {
                         const c1 = geometry.object.geometry.contains(point);
                         const c2 = nearestPointResult.objectGeometry.object.geometry.contains(point);
                         if (c1 && c2) {
-                            const a1 = geometryEngine.planarArea(geometry.object.geometry);
-                            const a2 = geometryEngine.planarArea(nearestPointResult.objectGeometry.object.geometry);
+                            const a1 = planarArea(geometry.object.geometry);
+                            const a2 = planarArea(nearestPointResult.objectGeometry.object.geometry);
                             if (a1 >= a2) {
                                 return false;
                             }
