@@ -1,0 +1,77 @@
+<template>
+    <v-navigation-drawer
+        stateless
+        :value="true"
+    >
+        <v-list>
+            <div v-for="tool in firstTools">
+                <v-list-tile v-if="!tool.menu" @click="$emit('onToolClick', tool.id)">
+                    <v-list-tile-action>
+                        <v-icon>{{tool.iconClass}}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>{{tool.title}}</v-list-tile-title>
+                </v-list-tile>
+                <v-list-group v-if="tool.menu"
+                              no-action>
+                    <template v-slot:activator>
+                        <v-list-tile>
+                            <v-list-tile-action>
+                                <v-icon>{{tool.iconClass}}</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-title>{{tool.title}}</v-list-tile-title>
+                        </v-list-tile>
+                    </template>
+                    <v-list-tile v-for="subTool in listTools(tool)" @click="$emit('onToolClick', subTool.id)">
+                        <v-list-tile-action>
+                            <v-icon>{{subTool.iconClass}}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title >{{subTool.title}}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list-group>
+            </div>
+        </v-list>
+    </v-navigation-drawer>
+</template>
+
+
+<script>
+
+
+    export default {
+        data() {
+            return {
+            }
+        },
+        props: {
+            tools: Array,
+            firstToolGroupIds: Array,
+        },
+        computed: {
+            firstTools() {
+                return this._getOverviewTools(this.firstToolGroupIds);
+            },
+        },
+        methods: {
+            _getTool(toolId) {
+                return this.tools.find(x => x.id === toolId);
+            },
+            _getOverviewTools(toolIds) {
+                const tools = [];
+                toolIds.forEach(id => tools.push(this._getTool(id)));
+                return tools;
+            },
+            listTools(tool) {
+                const list = [];
+                const items = tool.items;
+                if (items) {
+                    items.forEach(id => {
+                        const newTool = this._getTool(id);
+                        newTool && list.push(newTool);
+                    });
+                }
+                return list;
+            },
+        },
+
+    }
+</script>

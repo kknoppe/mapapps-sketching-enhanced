@@ -28,7 +28,6 @@
         {
             "name": "*",
             "files": [
-                "./css/sketching_widget.css"
             ]
         }
     ],
@@ -45,11 +44,8 @@
                 "draggable": true,
                 "marginBox": {
                     "l": 25,
-                    "t": 120,
-                    "w": 275
-                },
-                "minSize": {
-                    "w": 260
+                    "t": 100,
+                    "w": 800
                 },
                 "tools": [
                     "windowCollapseTool"
