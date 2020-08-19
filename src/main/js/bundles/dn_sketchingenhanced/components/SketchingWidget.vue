@@ -89,26 +89,7 @@
                     <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary" :label="i18n.measurement.showLineMeasurementsAtPolylines" v-model="showLineMeasurementsAtPolylines" hide-details></v-checkbox>
                     <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary" :label="i18n.measurement.showLineMeasurementsAtPolygons" v-model="showLineMeasurementsAtPolygons" hide-details></v-checkbox>
                 </v-card>
-                <v-card class="pa-2">
-                    <v-layout class="pa-0 ma-0 measurementText" column v-show="pointEnabled">
-                        <p>{{i18n.measurement.coordinates}} {{ coordinates }}</p>
-                    </v-layout>
-                    <v-layout class="pa-0 ma-0 measurementText" column v-show="polylineEnabled">
-                        <p>{{i18n.measurement.totalLength}} {{ totalLength }}</p>
-                        <p>{{i18n.measurement.currentLength}} {{ currentLength }}</p>
-                        <p>{{i18n.measurement.currentTotalLength}} {{ aggregateLength }}</p>
-                    </v-layout>
-                    <v-layout class="pa-0 ma-0 measurementText" column v-show="polygonEnabled">
-                        <p>{{i18n.measurement.currentLength}} {{ currentLength }}</p>
-                        <p>{{i18n.measurement.totalArea}} {{ area }}</p>
-                        <p>{{i18n.measurement.currentArea}} {{ currentArea }}</p>
-                        <p>{{i18n.measurement.perimeter}} {{ perimeter }}</p>
-                    </v-layout>
-                    <v-layout class="pa-0 ma-0 measurementText" column v-show="areaEnabled">
-                        <p>{{i18n.measurement.currentArea}} {{ currentArea }}</p>
-                        <p>{{i18n.measurement.totalArea}} {{ area }}</p>
-                    </v-layout>
-                </v-card>
+                <measurement-widget :measurements="measurements" :i18n="i18n"></measurement-widget>
             </v-flex>
         </v-expand-transition>
 
@@ -122,7 +103,7 @@
     import Bindable from 'apprt-vue/mixins/Bindable';
     import MenuButton from './MenuButton.vue';
     import ToolButton from './ToolButton.vue';
-    // import MeasurementWidget from './MeasurementWidget.vue'
+    import MeasurementWidget from '../../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
     import SketchingFooter from './SketchingFooter.vue';
     import SimpleEditor from 'dn_sketchingenhanced-symboleditor/components/symbol/SimpleEditor.vue';
     import ConstructionPanel from './construction/ConstructionPanel.vue';
@@ -141,7 +122,7 @@
             'tool-button': ToolButton,
             'menu-button': MenuButton,
             'sketching-footer': SketchingFooter,
-            // 'measurement-widget': MeasurementWidget,
+            'measurement-widget': MeasurementWidget,
             'simple-text-editor': SimpleTextEditor,
             'simple-editor': SimpleEditor,
             'construction-panel': ConstructionPanel,
@@ -162,7 +143,6 @@
                 showLineMeasurementsAtPolygons: false,
 
                 showKeepMeasurements: true,
-
                 coordinates: null,
                 currentLength: null,
                 aggregateLength: null,
@@ -224,6 +204,23 @@
             }
         },
         computed: {
+            measurements(){
+              return {
+                  showKeepMeasurements: this.showKeepMeasurements,
+                  coordinates: this.coordinates,
+                  currentLength: this.currentLength,
+                  aggregateLength: this.aggregateLength,
+                  totalLength: this.totalLength,
+                  area: this.area,
+                  currentArea: this.currentArea,
+                  perimeter: this.perimeter,
+
+                  pointEnabled: this.pointEnabled,
+                  polylineEnabled: this.polylineEnabled,
+                  polygonEnabled: this.polygonEnabled,
+                  areaEnabled: this.areaEnabled
+              }
+            },
             firstTools() {
                 return this._getOverviewTools(this.firstToolGroupIds);
             },

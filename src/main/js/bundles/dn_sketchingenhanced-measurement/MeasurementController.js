@@ -150,12 +150,14 @@ export default class MeasurementController {
                 this._model.areaEnabled = false;
                 break;
             case "drawpolylinetool":
+            case "drawfreehandpolylinetool":
                 this._model.pointEnabled = false;
                 this._model.polylineEnabled = true;
                 this._model.polygonEnabled = false;
                 this._model.areaEnabled = false;
                 break;
             case "drawpolygontool":
+            case "drawfreehandpolygontool":
                 this._model.pointEnabled = false;
                 this._model.polylineEnabled = false;
                 this._model.polygonEnabled = true;
@@ -806,11 +808,13 @@ export default class MeasurementController {
         let lastSegment, currentArea;
         switch(activeTool){
             case("drawpolylinetool"):
+            case ("drawfreehandpolylinetool"):
                 lastSegment = this.measurements.segmentLength = this._getLastSegmentLength(evt);
                 this._model.currentLength = this._getLengthString(lastSegment);
                 this._model.aggregateLength = this._getLengthString(lastSegment + this.measurements.totalLength);
                 break;
             case("drawpolygontool"):
+            case("drawfreehandpolylgontool"):
                 currentArea = this.measurements.currentArea = this._getAreaNumeric(evt.graphic.geometry);
                 lastSegment = this.measurements.segmentLength = this._getLastSegmentLength(evt);
                 this._model.currentLength = this._getLengthString(lastSegment);
@@ -839,10 +843,12 @@ export default class MeasurementController {
         const currentArea = this.measurements.currentArea;
         switch(activeTool){
             case("drawpolylinetool"):
+            case("drawfreehandpolylinetool"):
                 this._model.currentLength = this._getLengthString(0);
                 this._model.totalLength = this._getLengthString(this.measurements.totalLength);
                 break;
             case("drawpolygontool"):
+            case("drawfreehandpolylgontool"):
                 this._model.currentLength = this._getLengthString(0);
                 this._model.perimeter = this._getLengthString(this.measurements.totalLength);
                 this._model.currentArea = this._model.area = this._getAreaString(currentArea);
