@@ -36,7 +36,7 @@ export default class DrawTextController extends Connect {
     }
 
     handler(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const state = evt.state;
         const type = evt.type;
         const tool = viewModel.tool;

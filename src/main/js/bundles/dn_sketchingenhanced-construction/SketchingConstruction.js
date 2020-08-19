@@ -53,7 +53,7 @@ export default class SketchingConstruction {
     handler(evt) {
         const type = evt.type;
         const state = evt.state;
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const tool = viewModel.tool;
         const tools = this._getOption("tools", false, []);
         const snappingManager = this._snappingManager;

@@ -302,18 +302,18 @@ function SketchingHandler() {
             //toggle tool
             const type = evt.type;
             let state;
-            if (evt.target && evt.target.tool && evt.target.tool.toolId === 'drawtexttool') {
+            const viewModel = this.sketchViewModel;
+            if (viewModel && viewModel.tool && viewModel.tool.toolId === 'drawtexttool') {
                 // for the drawtexttool the behavior of activating the tool must be different to the other tools
                 // after the first click, the tool should not be reactivated but only after canceling or finishing a text
                 //otherwise the tool would be closed before one could enter a text
-                state = evt.state ? evt.target.state : 'complete';
+                state = evt.state ? viewModel.state : 'complete';
                 state = type && type === 'remove' ? 'complete' : state;
             } else {
                 // for all other tools it remains the same
                 state = evt.state;
             }
 
-            const viewModel = evt.target;
             const tool = viewModel.tool;
             if (state === "complete" || (state === "cancel" && type !== "create")) {
                 if (tool && tool.togglable && tool.active) {

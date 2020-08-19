@@ -365,7 +365,7 @@ export default function () {
         handler(evt) {
             const type = this._sketchType = evt.type;
             const state = this._sketchState = evt.state;
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const graphics = evt.graphics || [evt.graphic];
             const firstGraphic = graphics.length && graphics[0];
             const snappingManager = this._snappingManager;

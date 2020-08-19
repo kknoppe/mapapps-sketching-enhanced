@@ -155,6 +155,11 @@
                 {
                     "name": "_ruleContextState",
                     "providing": "toolrules.ToolRuleContext"
+                },
+                {
+                    "name": "_sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler",
+                    "cardinality": "0..1"
                 }
             ]
         },
@@ -181,6 +186,11 @@
                 {
                     "name": "_drawTextHelpLine",
                     "providing": "dn_sketchingenhanced.DrawTextHelpLine"
+                },
+                {
+                    "name": "_sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler",
+                    "cardinality": "0..1"
                 }
             ]
         },

@@ -44,7 +44,7 @@ export default declare({
     },
 
     handler(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const tool = viewModel.tool;
         const tools = this._getOption("tools", false, []);
         if (tool && tool.id && tools.includes(tool.id) && evt.type === "create" && evt.state === "active") {

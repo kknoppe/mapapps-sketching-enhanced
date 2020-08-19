@@ -98,7 +98,7 @@ export default function () {
         handler(evt) {
             const type = evt.type;
             const state = evt.state;
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const context = this._ruleContextState;
             updateState(type, state, viewModel, context);
         },
