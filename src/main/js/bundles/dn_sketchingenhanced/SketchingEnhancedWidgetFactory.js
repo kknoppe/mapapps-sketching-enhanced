@@ -72,6 +72,14 @@ export default class SketchingEnhancedWidgetFactory {
 
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
 
+        vm.$on('length-unit-input', val => {
+            this._measurementController._setLengthUnits(val.toLowerCase());
+        });
+
+        vm.$on('area-unit-input', val => {
+            this._measurementController._setAreaUnits(val.toLowerCase());
+        });
+
         vm.$on('measurementStatusChanged', val => {
             this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = val;
         });

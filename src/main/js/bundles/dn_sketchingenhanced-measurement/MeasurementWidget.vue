@@ -17,6 +17,21 @@
 -->
 <template>
         <v-card class="pa-2">
+            <v-flex class="pa-2 unitSelectors">
+                <v-combobox
+                    v-show="measurements.polylineEnabled"
+                    v-show="measurements.polygonEnabled"
+                    v-model="selectedLengthItem"
+                    :items="measurements.units.length"
+                    label="Längeneinheit"
+                ></v-combobox>
+                <v-combobox
+                    v-show="measurements.polygonEnabled"
+                    v-model="selectedAreaItem"
+                    :items="measurements.units.area"
+                    label="Flächeneinheit"
+                ></v-combobox>
+            </v-flex>
             <v-layout class="pa-0 ma-0 measurementText" column v-show="measurements.pointEnabled">
                 <p>{{i18n.measurement.coordinates}} {{ measurements.coordinates }}</p>
             </v-layout>
@@ -44,6 +59,26 @@
             i18n: {type: Object, default: () => i18n.ui},
             measurements: {
                 type: Object
+            },
+            value: String
+            // unitAbbreviation: String
+        },
+        computed: {
+            selectedAreaItem: {
+                get() {
+                    return this.value
+                },
+                set(value) {
+                    this.$emit('area-unit-input', value);
+                },
+            },
+            selectedLengthItem: {
+                get() {
+                    return this.value
+                },
+                set(value) {
+                    this.$emit('length-unit-input', value);
+                },
             }
         }
     }
