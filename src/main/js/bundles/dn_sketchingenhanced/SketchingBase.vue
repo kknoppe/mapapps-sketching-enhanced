@@ -30,7 +30,13 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <!--<measurement v-if="item === 'Messung'"></measurement>-->
+                            <v-flex grow pa-1 v-if="item === 'Messung'">
+                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
+                                                    :bus="eventBus"></measurement-toggle>
+                                <v-flex v-show="measurementEnabled">
+                                    <measurement :measurements="measurements" :i18n="i18n"></measurement>
+                                </v-flex>
+                            </v-flex>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -41,7 +47,10 @@
 
 <script>
     import Bindable from 'apprt-vue/mixins/Bindable';
+    import i18n from 'dojo/i18n!./nls/bundle';
     import Illustration from './components/Illustration.vue';
+    import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
+    import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
     import Navigation from './components/Navigation.vue';
     import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
     import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
@@ -53,15 +62,37 @@
         components: {
             Navigation,
             Illustration,
+            'measurement': MeasurementWidget,
+            'measurement-toggle': MeasurementFooter
         },
         data() {
             return {
                 symbolSettings: new PolygonSetting(),
                 currentTool: null,
                 tab: 0,
+                eventBus: this,
+
+                measurementEnabled: this.measurementBoolean,
+                showLineMeasurementsAtPolylines: false,
+                showLineMeasurementsAtPolygons: false,
+                showKeepMeasurements: true,
+
+                coordinates: null,
+                currentLength: null,
+                aggregateLength: null,
+                totalLength: null,
+                area: null,
+                currentArea: null,
+                perimeter: null,
+
+                pointEnabled: false,
+                polylineEnabled: false,
+                polygonEnabled: false,
+                areaEnabled: false
             }
         },
         props: {
+            i18n: {type: Object, default: () => i18n.ui},
             tools: Array,
             firstToolGroupIds: Array,
             currentSymbol: {
@@ -71,11 +102,20 @@
             initialSymbolSettings: {
                 type: Object,
             },
+            measurementBoolean: {
+                type: Boolean,
+            }
         },
         computed: {
             tabs() {
-                if(this.currentTool && this.currentTool.id === 'drawpointtool') {
-                    return ['Darstellung', 'Messung'];
+                if(this.currentTool) {
+                    switch(this.currentTool.id){
+                        case 'drawpointtool':
+                        case 'drawpolylinetool':
+                        case 'drawpolygontool':
+                            return ['Darstellung', 'Messung'];
+                            break;
+                    }
                 }
             },
             settings: {
@@ -84,6 +124,32 @@
                 },
                 set(val) {
                     this.$emit('settingsSelectionChanged', val);
+                }
+            },
+            measurements(){
+                return {
+                    showKeepMeasurements: this.showKeepMeasurements,
+                    coordinates: this.coordinates,
+                    currentLength: this.currentLength,
+                    aggregateLength: this.aggregateLength,
+                    totalLength: this.totalLength,
+                    area: this.area,
+                    currentArea: this.currentArea,
+                    perimeter: this.perimeter,
+
+                    pointEnabled: this.pointEnabled,
+                    polylineEnabled: this.polylineEnabled,
+                    polygonEnabled: this.polygonEnabled,
+                    areaEnabled: this.areaEnabled
+                }
+            },
+            enableMeasurement: {
+                get() {
+                    return this.measurementBoolean;
+                },
+                set(value) {
+                    this.measurementEnabled = value;
+                    this.$emit('measurementStatusChanged', value);
                 }
             }
         },
