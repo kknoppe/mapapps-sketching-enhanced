@@ -110,12 +110,13 @@
             tabs() {
                 if(this.currentTool) {
                     switch(this.currentTool.id){
-                        case 'drawpointtool':
-                        case 'drawpolylinetool':
-                        case 'drawfreehandpolylinetool':
+                        case 'drawtexttool':
+                            return ['Darstellung'];
                         case 'drawpolygontool':
+                        case 'drawpolylinetool':
+                            return ['Darstellung', 'Messung', 'Konstruktion'];
+                        default:
                             return ['Darstellung', 'Messung'];
-                            break;
                     }
                 }
             },
