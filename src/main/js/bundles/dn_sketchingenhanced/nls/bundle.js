@@ -105,8 +105,8 @@ module.exports = {
                 coordinates: 'Coordinates: ',
                 totalLength: 'Gesamtlänge: ',
                 currentLength: 'Current Segment Length: ',
-                currentTotalLength: 'Current Total Length: ',
-                totalArea: 'Total Area: ',
+                aggregateLength: 'Current Total Length: ',
+                area: 'Total Area: ',
                 currentArea: 'Current Area: ',
                 perimeter: 'Perimeter: '
             },

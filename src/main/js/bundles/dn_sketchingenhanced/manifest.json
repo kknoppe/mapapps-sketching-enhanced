@@ -72,6 +72,10 @@
                 "showKeepMeasurements": false,
                 "multipleMeasurementsEnabled": true,
                 "measurement": false,
+                "measurementUnits": {
+                    "area": ["auto","Quadratmeter","Hektar","Quadratkilometer"],
+                    "length": ["auto","Meter","Kilometer"]
+                },
                 "firstToolGroupIds": [
                     "drawpointtool",
                     "sketchinglinegroup",

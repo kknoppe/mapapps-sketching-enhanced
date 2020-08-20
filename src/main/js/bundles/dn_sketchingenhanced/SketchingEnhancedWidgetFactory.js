@@ -49,6 +49,7 @@ export default class SketchingEnhancedWidgetFactory {
         const props = this._properties;
         const tools = props.tools;
         vm.toolIds = tools;
+        vm.units = props.measurementUnits;
         vm.showKeepMeasurements = props.showKeepMeasurements;
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;

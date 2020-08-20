@@ -1,63 +1,52 @@
-<!--
-
-    Copyright (C) 2020 con terra GmbH (info@conterra.de)
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
 <template>
         <v-card class="pa-2">
             <v-flex class="pa-2 unitSelectors">
                 <v-combobox
-                    v-show="measurements.polylineEnabled"
-                    v-show="measurements.polygonEnabled"
+                    v-show="measurements.polylineEnabled || measurements.polygonEnabled"
                     v-model="selectedLengthItem"
-                    :items="measurements.units.length"
+                    :items="units.length"
                     label="Längeneinheit"
                 ></v-combobox>
                 <v-combobox
                     v-show="measurements.polygonEnabled"
                     v-model="selectedAreaItem"
-                    :items="measurements.units.area"
+                    :items="units.area"
                     label="Flächeneinheit"
                 ></v-combobox>
             </v-flex>
-            <v-layout class="pa-0 ma-0 measurementText" column v-show="measurements.pointEnabled">
-                <p>{{i18n.measurement.coordinates}} {{ measurements.coordinates }}</p>
-            </v-layout>
-            <v-layout class="pa-0 ma-0 measurementText" column v-show="measurements.polylineEnabled">
-                <p>{{i18n.measurement.totalLength}} {{ measurements.totalLength }}</p>
-                <p>{{i18n.measurement.currentLength}} {{ measurements.currentLength }}</p>
-                <p>{{i18n.measurement.currentTotalLength}} {{ measurements.aggregateLength }}</p>
-            </v-layout>
-            <v-layout class="pa-0 ma-0 measurementText" column v-show="measurements.polygonEnabled">
-                <p>{{i18n.measurement.currentLength}} {{ measurements.currentLength }}</p>
-                <p>{{i18n.measurement.totalArea}} {{ measurements.area }}</p>
-                <p>{{i18n.measurement.currentArea}} {{ measurements.currentArea }}</p>
-                <p>{{i18n.measurement.perimeter}} {{ measurements.perimeter }}</p>
-            </v-layout>
-            <v-layout class="pa-0 ma-0 measurementText" column v-show="measurements.areaEnabled">
-                <p>{{i18n.measurement.currentArea}} {{ measurements.currentArea }}</p>
-                <p>{{i18n.measurement.totalArea}} {{ measurements.area }}</p>
+
+            <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
+                <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
+                    <p v-show="measurements[rule]">{{i18n.measurement[type.measure]}} {{ measurements[type.measure] }}</p>
+                    <v-btn icon color="white" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
+                        <v-icon class="icon-select-none">icon-select-none</v-icon>
+                    </v-btn>
+                </v-layout>
             </v-layout>
         </v-card>
 </template>
 
 <script>
     export default {
+        data(){
+            return {
+                types: [
+                    {measure:"coordinates",rules:["pointEnabled"]},
+                    {measure:"totalLength",rules:["polylineEnabled"]},
+                    {measure:"currentLength",rules:["polygonEnabled","polylineEnabled"]},
+                    {measure:"aggregateLength",rules:["polylineEnabled"]},
+                    {measure:"area",rules:["polygonEnabled","areaEnabled"]},
+                    {measure:"currentArea",rules:["polygonEnabled","areaEnabled"]},
+                    {measure:"perimeter",rules:["polygonEnabled"]}
+                ]
+            }
+        },
         props: {
             i18n: {type: Object, default: () => i18n.ui},
             measurements: {
+                type: Object
+            },
+            units: {
                 type: Object
             },
             value: String
@@ -79,6 +68,18 @@
                 set(value) {
                     this.$emit('length-unit-input', value);
                 },
+            }
+        },
+        methods: {
+            _copyTextToClipboard(text){
+                let el = document.createElement('textarea');
+                el.value = text;
+                el.setAttribute('readonly', '');
+                el.style = {display: 'none'};
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand("copy");
+                document.body.removeChild(el);
             }
         }
     }

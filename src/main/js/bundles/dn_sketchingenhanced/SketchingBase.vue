@@ -35,6 +35,7 @@
                                                     :bus="eventBus"></measurement-toggle>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
+                                                 :units="units"
                                                  :i18n="i18n"
                                                  @length-unit-input="_setLengthUnits"
                                                  @area-unit-input="_setAreaUnits"
@@ -92,7 +93,8 @@
                 pointEnabled: false,
                 polylineEnabled: false,
                 polygonEnabled: false,
-                areaEnabled: false
+                areaEnabled: false,
+                units: {}
             }
         },
         props: {
@@ -146,11 +148,7 @@
                     pointEnabled: this.pointEnabled,
                     polylineEnabled: this.polylineEnabled,
                     polygonEnabled: this.polygonEnabled,
-                    areaEnabled: this.areaEnabled,
-                    units: {
-                        area: ["auto","Quadratmeter","Hektar","Quadratkilometer"],
-                        length: ["auto","Meter","Kilometer"]
-                    }
+                    areaEnabled: this.areaEnabled
                 }
             },
             enableMeasurement: {

@@ -105,8 +105,8 @@ module.exports = {
             coordinates: 'Koordinaten: ',
             totalLength: 'Gesamtlänge: ',
             currentLength: 'Aktuelle Teilstrecke: ',
-            currentTotalLength: 'Aktuelle Gesamtlänge: ',
-            totalArea: 'Gesamtfläche: ',
+            aggregateLength: 'Aktuelle Gesamtlänge: ',
+            area: 'Gesamtfläche: ',
             currentArea: 'Aktuelle Fläche: ',
             perimeter: 'Umfang: '
         },
