@@ -16,10 +16,10 @@
 
 -->
 <template>
-    <v-item-group mandatory v-model="selectedItem" style="width: 100%" class="line-style-picker">
+    <v-item-group mandatory v-model="selectedItem" style="width: 150px" class="line-style-picker">
         <v-list>
             <v-item active-class="active" :value="item" v-for="(item, index) in styles" :key="index">
-                <v-list-tile @click="toggle" slot-scope="{ toggle }" class="px-4">
+                <v-list-tile @click="toggle" slot-scope="{ toggle }" class="px-1">
                     <v-layout align-center>
                         <line-style :lineStyle="item" :i18n="i18n"></line-style>
                     </v-layout>

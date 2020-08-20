@@ -1,8 +1,8 @@
 <template>
     <div>
-        <color-picker label="Füllfarbe" :color.sync="color"></color-picker>
-        <style-picker label="Symbol" :shape.sync="shape" type="point"></style-picker>
-        <size-picker label="Punktgröße" :size.sync="size" :maxPointSize="settings.maxPointSize" type="point"></size-picker>
+        <color-picker label="Linienfarbe" :color.sync="color"></color-picker>
+        <style-picker label="Linienstil" :shape.sync="shape" type="line"></style-picker>
+        <size-picker label="Linienstärke" :size.sync="size" type="line"></size-picker>
     </div>
 </template>
 
@@ -36,21 +36,21 @@
             },
             shape: {
                 get() {
-                    return this.settings.shape;
+                    return this.settings.style;
                 },
                 set(val) {
                     const settings = this.settings;
-                    settings.shape = val;
+                    settings.style = val;
                     this.$emit('update:settings', settings);
                 }
             },
             size: {
                 get() {
-                    return this.settings.radius;
+                    return this.settings.width;
                 },
                 set(val) {
                     const settings = this.settings;
-                    settings.radius = val;
+                    settings.width = val;
                     this.$emit('update:settings', settings);
                 }
             }

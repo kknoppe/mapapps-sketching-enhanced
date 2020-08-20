@@ -15,9 +15,9 @@
             <size-slider
                 label="_"
                 :size.sync="radius"
-                :max="maxPointSize"
+                :max="max"
                 :min="1"
-                type="point"
+                :type="type"
                 :step="1">
             </size-slider>
 
@@ -40,6 +40,7 @@
             };
         },
         props: {
+            type: String,
             label: String,
             size: Number,
             maxPointSize: Number,
@@ -52,6 +53,14 @@
                 set(val) {
                     this.$emit('update:size', val);
                 },
+            },
+            max() {
+               if(this.type === 'point') {
+                   return this.maxPointSize;
+               }
+               if(this.type === 'line') {
+                   return 10;
+               }
             }
         }
 
