@@ -24,7 +24,7 @@ import Draw from 'esri/views/draw/Draw';
 export default class DrawFurtherGeometries {
 
     activate() {
-        this.styleContext = {};
+        this.styleContext = null;
         this.checkIfTooFast = false;
     }
 
