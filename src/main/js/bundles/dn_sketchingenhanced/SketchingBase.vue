@@ -30,7 +30,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration v-if="item === 'Darstellung'" :settings="symbolSettings"></illustration>
-                            <!--<measurement v-if="item === 'Messung'"></measurement>-->
+                            <measurement v-if="item === 'Messung'" :measurements="measurements" :i18n="i18n"></measurement>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -41,7 +41,9 @@
 
 <script>
     import Bindable from 'apprt-vue/mixins/Bindable';
+    import i18n from 'dojo/i18n!./nls/bundle';
     import Illustration from './components/Illustration.vue';
+    import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
     import Navigation from './components/Navigation.vue';
     import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
 
@@ -50,24 +52,80 @@
         components: {
             Navigation,
             Illustration,
+            'measurement': MeasurementWidget,
         },
         data() {
             return {
                 symbolSettings: new PolygonSetting(),
                 currentTool: null,
                 tab: 0,
+
+                measurementEnabled: this.measurementBoolean,
+                showLineMeasurementsAtPolylines: false,
+                showLineMeasurementsAtPolygons: false,
+                showKeepMeasurements: true,
+
+                coordinates: null,
+                currentLength: null,
+                aggregateLength: null,
+                totalLength: null,
+                area: null,
+                currentArea: null,
+                perimeter: null,
+
+                pointEnabled: false,
+                polylineEnabled: false,
+                polygonEnabled: false,
+                areaEnabled: false
             }
         },
         props: {
+            i18n: {type: Object, default: () => i18n.ui},
             tools: Array,
             firstToolGroupIds: Array,
+            measurementBoolean: {
+                type: Boolean,
+            }
         },
         computed: {
             tabs() {
-                if(this.currentTool && this.currentTool.id === 'drawpointtool') {
-                    return ['Darstellung', 'Messung'];
+                if(this.currentTool) {
+                    switch(this.currentTool.id){
+                        case 'drawpointtool':
+                        case 'drawpolylinetool':
+                        case 'drawpolygontool':
+                            debugger
+                            return ['Darstellung', 'Messung'];
+                            break;
+                    }
                 }
 
+            },
+            measurements(){
+                return {
+                    showKeepMeasurements: this.showKeepMeasurements,
+                    coordinates: this.coordinates,
+                    currentLength: this.currentLength,
+                    aggregateLength: this.aggregateLength,
+                    totalLength: this.totalLength,
+                    area: this.area,
+                    currentArea: this.currentArea,
+                    perimeter: this.perimeter,
+
+                    pointEnabled: this.pointEnabled,
+                    polylineEnabled: this.polylineEnabled,
+                    polygonEnabled: this.polygonEnabled,
+                    areaEnabled: this.areaEnabled
+                }
+            },
+            enableMeasurement: {
+                get() {
+                    return this.measurementBoolean;
+                },
+                set(value) {
+                    this.measurementEnabled = value;
+                    this.$emit('measurementStatusChanged', value);
+                }
             }
         },
         methods: {
