@@ -1090,8 +1090,7 @@
                 "mode": "",
                 "items": [
                     "drawpolylinetool",
-                    "drawfreehandpolylinetool",
-                    "constructionpolylinetool"
+                    "drawfreehandpolylinetool"
                 ],
                 "groups": [
                     "sketching"
@@ -1119,7 +1118,6 @@
                 "items": [
                     "drawpolygontool",
                     "drawfreehandpolygontool",
-                    "constructionpolygontool",
                     "drawrectangletool",
                     "drawtriangletool",
                     "drawcircletool",

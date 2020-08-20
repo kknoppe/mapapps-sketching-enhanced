@@ -112,6 +112,7 @@
                     switch(this.currentTool.id){
                         case 'drawpointtool':
                         case 'drawpolylinetool':
+                        case 'drawfreehandpolylinetool':
                         case 'drawpolygontool':
                             return ['Darstellung', 'Messung'];
                             break;
