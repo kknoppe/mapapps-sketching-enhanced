@@ -28,6 +28,7 @@
         {
             "name": "*",
             "files": [
+                "./css/sketching_base.css"
             ]
         }
     ],
@@ -45,7 +46,8 @@
                 "marginBox": {
                     "l": 25,
                     "t": 100,
-                    "w": 800
+                    "w": 800,
+                    "h": 300
                 },
                 "tools": [
                     "windowCollapseTool"
