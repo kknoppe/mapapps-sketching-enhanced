@@ -81,7 +81,7 @@
                 "lastToolGroupIds": [
                     "sketchingtoolbox"
                 ],
-                "footerToolIds": [
+                "headerToolIds": [
                     "drawundotool",
                     "drawredotool",
                     "drawcanceltool"

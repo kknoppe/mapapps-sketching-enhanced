@@ -17,8 +17,7 @@
 -->
 <template>
     <v-container class="fullwidthAndHeight" pa-0>
-        <v-toolbar dense pa-0 class="SketchingToolsBar">
-        </v-toolbar>
+        <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
 
         <v-layout row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
@@ -53,6 +52,7 @@
 <script>
     import Bindable from 'apprt-vue/mixins/Bindable';
     import i18n from 'dojo/i18n!./nls/bundle';
+    import TopToolbar from './components/TopToolbar.vue';
     import Illustration from './components/Illustration.vue';
     import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
     import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
@@ -69,6 +69,7 @@
             Navigation,
             Illustration,
             ConstructionPanel,
+            TopToolbar,
             'measurement': MeasurementWidget,
             'measurement-toggle': MeasurementFooter
         },
@@ -102,6 +103,7 @@
             i18n: {type: Object, default: () => i18n.ui},
             tools: Array,
             firstToolGroupIds: Array,
+            headerToolIds: Array,
             currentSymbol: {
                 type: Object,
                 required: false,
@@ -140,6 +142,11 @@
                     this.$emit('settingsSelectionChanged', val);
                 }
             },
+            headerTools() {
+                const tools = [];
+                this.headerToolIds.forEach(id => tools.push(this._getTool(id)));
+                return tools;
+            },
             measurements(){
                 return {
                     showKeepMeasurements: this.showKeepMeasurements,
@@ -177,8 +184,11 @@
             },
             onToolClickHandler(id) {
                 // use Tool Id to find the associated tool
-                this.currentTool = this._getTool(id);
-                this._setSettings(this.currentTool);
+                const tool = this._getTool(id);
+                if(tool.mode !== 'secondary') {
+                    this.currentTool = tool;
+                    this._setSettings(tool);
+                }
                 this.$emit('onToolClick', {id});
             },
             _setSettings(tool) {
