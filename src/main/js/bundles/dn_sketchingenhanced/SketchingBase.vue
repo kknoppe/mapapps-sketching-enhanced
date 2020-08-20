@@ -37,6 +37,7 @@
                                     <measurement :measurements="measurements" :i18n="i18n"></measurement>
                                 </v-flex>
                             </v-flex>
+                            <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -52,6 +53,7 @@
     import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
     import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
     import Navigation from './components/Navigation.vue';
+    import ConstructionPanel from './components/construction/ConstructionPanel.vue';
     import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
     import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
     import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
@@ -62,6 +64,7 @@
         components: {
             Navigation,
             Illustration,
+            ConstructionPanel,
             'measurement': MeasurementWidget,
             'measurement-toggle': MeasurementFooter
         },
@@ -101,6 +104,11 @@
             },
             initialSymbolSettings: {
                 type: Object,
+            },
+            constructionModel: {
+                type: Object, default: () => {
+                    return {angleModulus: 45, planarLength: 10, use: {angleModulus: false, planarLength: false}};
+                },
             },
             measurementBoolean: {
                 type: Boolean,
