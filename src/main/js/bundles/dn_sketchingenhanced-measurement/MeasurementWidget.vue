@@ -18,7 +18,7 @@
             <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
                 <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
                     <p v-show="measurements[rule]">{{i18n.measurement[type.measure]}} {{ measurements[type.measure] }}</p>
-                    <v-btn icon color="white" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
+                    <v-btn icon color="" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
                         <v-icon class="icon-select-none">icon-select-none</v-icon>
                     </v-btn>
                 </v-layout>
