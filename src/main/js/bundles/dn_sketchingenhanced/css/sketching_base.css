@@ -1,6 +1,15 @@
+.sketchingMainContainer {
+    height:100%;
+}
+
 .sketchingToolsNavigation {
-    height: 208px!important;
+    /*height: 208px!important;*/
+    height: 90%!important;
     overflow: auto!important;
+}
+
+.sketchingTabs {
+    height: 90%!important;
 }
 
 .v-menu__content.theme--light.menuable__content__active {

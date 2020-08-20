@@ -729,7 +729,7 @@ export default class MeasurementController {
             if(evt){
                 const srs = evt.graphic.geometry.spatialReference.wkid;
                 const targetSrs = this._properties.pointSRS || srs;
-                const places = this._properties.pointCoordPlaces || (this.srsIsPlanar(targetSrs) ? 0 : 5);
+                const places = this._properties.pointCoordPlaces || (this._srsIsPlanar(targetSrs) ? 0 : 5);
                 const unitSymbolX = this._properties.pointCoordUnitSymbolX;
                 const unitSymbolY = this._properties.pointCoordUnitSymbolY;
                 const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
@@ -757,7 +757,13 @@ export default class MeasurementController {
         }
     }
 
-    srsIsPlanar(srs){
+    /**
+     * returns true if the spatial reference system is planar
+     * or false if it is geodesic
+     * @param srs - (WKID)
+     * @private
+     */
+    _srsIsPlanar(srs){
         const planar = this._properties.srs.planar;
         const geodetic = this._properties.srs.geodetic;
         if(planar.indexOf(srs)!=-1){

@@ -46,8 +46,8 @@
                 "marginBox": {
                     "l": 25,
                     "t": 100,
-                    "w": 800,
-                    "h": 300
+                    "w": 700,
+                    "h": 500
                 },
                 "tools": [
                     "windowCollapseTool"

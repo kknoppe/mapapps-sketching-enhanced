@@ -16,12 +16,12 @@
 
 -->
 <template>
-    <v-container class="fullwidthAndHeight" pa-0>
+    <v-container class="" pa-0>
         <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
 
-        <v-layout row>
+        <v-layout class="sketchingMainContainer" row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
-            <v-tabs v-model="tab" slider-color="primary">
+            <v-tabs class="flex grow sketchingTabs" v-model="tab" slider-color="primary">
                 <v-tab v-for="item in tabs">
                     {{item}}
                 </v-tab>
