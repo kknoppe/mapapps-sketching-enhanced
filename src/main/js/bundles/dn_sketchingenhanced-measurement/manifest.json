@@ -30,6 +30,17 @@
                 "dn_sketchingenhanced.Action"
             ],
             "properties": {
+                "measurementUnits": {
+                    "area": [],
+                    "length": []
+                },
+                "unitAbbreviationMapping": {
+                    "meters": "m",
+                    "kilometers": "km",
+                    "square-meters": "m²",
+                    "square-kilometers": "km²",
+                    "hectares": "ha"
+                },
                 "disabledMeasurementTools": [
                     "drawarrowtool"
                 ],

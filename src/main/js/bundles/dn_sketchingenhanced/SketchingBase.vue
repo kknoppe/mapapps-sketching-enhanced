@@ -34,7 +34,11 @@
                                 <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
                                 <v-flex v-show="measurementEnabled">
-                                    <measurement :measurements="measurements" :i18n="i18n"></measurement>
+                                    <measurement :measurements="measurements"
+                                                 :i18n="i18n"
+                                                 @length-unit-input="_setLengthUnits"
+                                                 @area-unit-input="_setAreaUnits"
+                                    ></measurement>
                                 </v-flex>
                             </v-flex>
                             <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
@@ -150,7 +154,11 @@
                     pointEnabled: this.pointEnabled,
                     polylineEnabled: this.polylineEnabled,
                     polygonEnabled: this.polygonEnabled,
-                    areaEnabled: this.areaEnabled
+                    areaEnabled: this.areaEnabled,
+                    units: {
+                        area: ["auto","Quadratmeter","Hektar","Quadratkilometer"],
+                        length: ["auto","Meter","Kilometer"]
+                    }
                 }
             },
             enableMeasurement: {
@@ -204,6 +212,12 @@
                     }
                 }
             },
+            _setLengthUnits(unit){
+                this.$emit('length-unit-input', unit);
+            },
+            _setAreaUnits(unit){
+                this.$emit('area-unit-input', unit);
+            }
         },
 
     }

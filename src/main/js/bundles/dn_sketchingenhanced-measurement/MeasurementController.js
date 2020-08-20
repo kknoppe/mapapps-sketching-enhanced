@@ -33,6 +33,8 @@ export default class MeasurementController {
         this.kmDecimal = props.decimalPlacesKiloMeter;
         this.textSettings = props.sketch.textSymbol;
         this.lineSettings = props.sketch.polylineSymbol;
+        this.areaUnit = 'auto'
+        this.lengthUnit = 'auto'
 
         this._model.showLineMeasurementsAtPolylines = props.showLineMeasurementsAtPolylines;
         this._model.showLineMeasurementsAtPolygons = props.showLineMeasurementsAtPolygons;
@@ -366,6 +368,46 @@ export default class MeasurementController {
         viewModel.layer.add(graphic);
     }
 
+    _setLengthUnits(unit){
+        switch(unit){
+            case "meter":
+            case "meters":
+                this.lengthUnit = 'meters'
+                break;
+            case "kilometer":
+            case "kilometers":
+                this.lengthUnit = 'kilometers'
+                break;
+            default:
+                this.lengthUnit = 'auto'
+                break;
+        }
+    }
+
+    _setAreaUnits(unit){
+        switch(unit){
+            case "square meters":
+            case "quadratmeter":
+                this.areaUnit = 'square-meters';
+                break;
+            case "square kilometers":
+            case "quadratkilometer":
+                this.areaUnit = 'square-kilometers';
+                break;
+            case "hectares":
+            case "hektar":
+                this.areaUnit = 'hectares'
+            default:
+                this.lengthUnit = 'auto'
+                break;
+        }
+    }
+
+    _getUnitAbbreviation(unit){
+        const mapping = this._properties.unitAbbreviationMapping;
+        return mapping[unit];
+    }
+
     /**
      * get Length of given geometry
      * @param geometry
@@ -373,10 +415,15 @@ export default class MeasurementController {
      * @private
      */
     _getLength(geometry) {
-        const length = Math.round(this.geoEngine.planarLength(geometry, 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
-        return length > 1000 ?
-            `${(Math.round(this.geoEngine.planarLength(geometry, 'kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
-            `${length.toLocaleString(i18n.locale)} m`;
+        let unit = this.lengthUnit;
+        if (unit !== 'auto'){
+            return `${this._getLengthNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
+        } else {
+            const meters = this._getLengthNumeric(geometry,'meters');
+            return meters > 1000 ?
+                `${this._getLengthNumeric(geometry,'kilometers').toLocaleString(i18n.locale)} km` :
+                `${meters.toLocaleString(i18n.locale)} m`;
+        }
     }
     /**
      * get Length of given geometry
@@ -385,8 +432,13 @@ export default class MeasurementController {
      * @private
      */
     _getLengthString(length){
-        return length > 1000 ? `${((length / 1000) * Math.pow(10, this.kmDecimal) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
-            `${length.toLocaleString(i18n.locale)} m`
+        let unit = this.lengthUnit;
+        if (unit !== 'auto'){
+            return `${length.toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
+        } else {
+            return length > 1000 ? `${((length / 1000) * Math.pow(10, this.kmDecimal) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km` :
+                `${length.toLocaleString(i18n.locale)} m`
+        }
     }
 
     /**
@@ -395,8 +447,9 @@ export default class MeasurementController {
      * @returns {number}
      * @private
      */
-    _getLengthNumeric(geometry) {
-        return Math.round(this.geoEngine.planarLength(geometry, 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+    _getLengthNumeric(geometry,unit) {
+        if (unit === 'auto') unit = null;
+        return Math.round(this.geoEngine.planarLength(geometry, unit || 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
     }
 
     /**
@@ -406,11 +459,17 @@ export default class MeasurementController {
      * @private
      */
     _getArea(geometry) {
-        const area = Math.round(this.geoEngine.planarArea(geometry, 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
-        return area > 1000000 ?
-            `${(Math.round(this.geoEngine.planarArea(geometry, 'square-kilometers') * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
-            `${area.toLocaleString(i18n.locale)} m²`;
+        let unit = this.areaUnit;
+        if (unit !== 'auto'){
+            return `${this._getAreaNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
+        } else {
+            const squareMeters = this._getAreaNumeric(geometry,'square-meters');
+            return squareMeters > 1000000 ?
+                `${this._getAreaNumeric(geometry,'square-kilometers').toLocaleString(i18n.locale)} km²` :
+                `${squareMeters.toLocaleString(i18n.locale)} m²`;
+        }
     }
+
 
     /**
      * get Area of given geometry
@@ -419,9 +478,14 @@ export default class MeasurementController {
      * @private
      */
     _getAreaString(area){
-        return area > 1000000 ?
-            `${(Math.round((area / 1000000) * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
-            `${area.toLocaleString(i18n.locale)} m²`;
+        let unit = this.areaUnit;
+        if (unit !== 'auto'){
+            return `${area.toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`;
+        } else {
+            return area > 1000000 ?
+                `${(Math.round((area / 1000000) * Math.pow(10, this.kmDecimal)) / Math.pow(10, this.kmDecimal)).toLocaleString(i18n.locale)} km²` :
+                `${area.toLocaleString(i18n.locale)} m²`;
+        }
     }
 
     /**
@@ -430,8 +494,9 @@ export default class MeasurementController {
      * @returns {number}
      * @private
      */
-    _getAreaNumeric(geometry) {
-        return Math.round(this.geoEngine.planarArea(geometry, 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+    _getAreaNumeric(geometry,unit) {
+        if (unit === 'auto') unit = null;
+        return Math.round(this.geoEngine.planarArea(geometry, unit || 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
     }
 
     /**
@@ -880,7 +945,8 @@ export default class MeasurementController {
         this._vertexArray.push(newVertex);
         // set up array with current line
         const checkedPath = this._oldVertex ? [this._oldVertex, newVertex] : [firstPoint, newVertex];
-        return this._getLengthNumeric(new Polyline(checkedPath, spatialReference))
+        const geometry = new Polyline(checkedPath, spatialReference);
+        return this._getLengthNumeric(geometry,this.lengthUnit)
     }
 
     _toggleMeasurementDisabledTools(enabled){
