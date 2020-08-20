@@ -13,3 +13,20 @@
 .fill-style-picker .v-list .v-list__tile {
     padding: 0;
 }
+
+.text-blur-picker .v-input.v-input--slider {
+    padding: 0 8px!important;
+}
+
+.text-blur-picker .vc-chrome {
+    width: 100%!important;
+}
+
+.text-angle-label {
+    align-self: center;
+    padding-left: 4px!important;
+    padding-right: 8px!important;
+}
+.text-angle-picker .v-input.v-text-field {
+    width: 3em;
+}

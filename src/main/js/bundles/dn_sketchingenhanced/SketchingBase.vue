@@ -29,7 +29,7 @@
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
-                            <illustration v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
+                            <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
                             <v-flex grow pa-1 v-if="item === 'Messung'">
                                 <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
