@@ -11,11 +11,13 @@
                 <v-btn icon
                        v-on="on">
                     <point-shape v-if="type === 'point'" :shape="shape"></point-shape>
-                    <line-style v-else-if="type === 'line'" :lineStyle="shape"></line-style>
+                    <line-style v-if="type === 'line'" :lineStyle="shape"></line-style>
+                    <fill-style v-if="type === 'polygon'" :fillStyle="shape"></fill-style>
                 </v-btn>
             </template>
             <point-shape-picker v-if="type ==='point'" v-model="pattern"></point-shape-picker>
             <line-style-picker v-if="type === 'line'" v-model="pattern"></line-style-picker>
+            <fill-style-picker v-if="type === 'polygon'" v-model="pattern"></fill-style-picker>
         </v-menu>
     </div>
 </template>
@@ -26,9 +28,13 @@
     import PointShapePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/point/PointShapePicker.vue';
     import LineStyle from '../../../dn_sketchingenhanced-symboleditor/components/symbol/line/LineStyle.vue'
     import LineStylePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/line/LineStylePicker.vue';
+    import FillStyle from '../../../dn_sketchingenhanced-symboleditor/components/symbol/polygon/FillStyle.vue';
+    import FillStylePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/polygon/FillStylePicker.vue';
 
     export default {
         components: {
+            FillStyle,
+            FillStylePicker,
             LineStylePicker,
             LineStyle,
             PointShapePicker,
