@@ -7,6 +7,10 @@
     background-color: inherit;
 }
 
+.sizeSliderLayout {
+    padding-top: 10px!important;
+}
+
 .line-style-picker .v-list .v-list__tile {
     padding: 0;
 }
@@ -29,4 +33,12 @@
 }
 .text-angle-picker .v-input.v-text-field {
     width: 3em;
+}
+
+.construction_panel_interior .v-input.v-input--selection-controls {
+    padding-right: 8px!important;
+}
+
+.construction_panel_interior .v-input.v-text-field {
+    width: 4em!important;
 }

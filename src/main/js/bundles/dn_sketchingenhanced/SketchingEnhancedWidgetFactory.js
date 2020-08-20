@@ -27,6 +27,11 @@ export default class SketchingEnhancedWidgetFactory {
 
         const widget = VueDijit(vm);
 
+        widget.onSketchingActivated = evt => {
+            const id = evt.getProperty('id');
+            vm.onToolClickHandler(id);
+        };
+
         const measurementBinding = Binding.for(vm, this._measurementModel);
 
         measurementBinding
@@ -53,7 +58,8 @@ export default class SketchingEnhancedWidgetFactory {
         vm.showKeepMeasurements = props.showKeepMeasurements;
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
-        vm.footerToolIds = props.footerToolIds;
+        //vm.footerToolIds = props.footerToolIds;
+        vm.headerToolIds = props.headerToolIds;
         vm.measurementBoolean = this._measurementModel.measurementBoolean = this._measurementController.measurementBoolean;
 
         vm.measurement = props.measurement;

@@ -63,10 +63,17 @@
             "impl": "SketchingEnhancedWidgetFactory",
             "provides": [
                 "dijit.Widget",
-                "dn_sketchingenhanced.Widget"
+                "dn_sketchingenhanced.Widget",
+                "ct.framework.api.EventHandler"
             ],
             "instanceFactory": true,
             "properties": {
+                "Event-Topics": [
+                    {
+                        "topic": "sketchingEnhanced/sketchingActivated",
+                        "method": "onSketchingActivated"
+                    }
+                ],
                 "widgetRole": "sketchingEnhancedWidget",
                 "defaultTool": "drawpointtool",
                 "showKeepMeasurements": false,
@@ -85,7 +92,7 @@
                 "lastToolGroupIds": [
                     "sketchingtoolbox"
                 ],
-                "footerToolIds": [
+                "headerToolIds": [
                     "drawundotool",
                     "drawredotool",
                     "drawcanceltool"

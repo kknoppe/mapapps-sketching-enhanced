@@ -17,8 +17,7 @@
 -->
 <template>
     <v-container class="fullwidthAndHeight" pa-0>
-        <v-toolbar dense pa-0 class="SketchingToolsBar">
-        </v-toolbar>
+        <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
 
         <v-layout row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
@@ -42,6 +41,7 @@
                                     ></measurement>
                                 </v-flex>
                             </v-flex>
+                            <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -53,10 +53,12 @@
 <script>
     import Bindable from 'apprt-vue/mixins/Bindable';
     import i18n from 'dojo/i18n!./nls/bundle';
+    import TopToolbar from './components/TopToolbar.vue';
     import Illustration from './components/Illustration.vue';
     import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
     import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
     import Navigation from './components/Navigation.vue';
+    import ConstructionPanel from './components/construction/ConstructionPanel.vue';
     import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
     import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
     import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
@@ -67,6 +69,8 @@
         components: {
             Navigation,
             Illustration,
+            ConstructionPanel,
+            TopToolbar,
             'measurement': MeasurementWidget,
             'measurement-toggle': MeasurementFooter
         },
@@ -76,6 +80,7 @@
                 currentTool: null,
                 tab: 0,
                 eventBus: this,
+                elements: [],
 
                 measurementEnabled: this.measurementBoolean,
                 showLineMeasurementsAtPolylines: false,
@@ -101,12 +106,18 @@
             i18n: {type: Object, default: () => i18n.ui},
             tools: Array,
             firstToolGroupIds: Array,
+            headerToolIds: Array,
             currentSymbol: {
                 type: Object,
                 required: false,
             },
             initialSymbolSettings: {
                 type: Object,
+            },
+            constructionModel: {
+                type: Object, default: () => {
+                    return {angleModulus: 45, planarLength: 10, use: {angleModulus: false, planarLength: false}};
+                },
             },
             measurementBoolean: {
                 type: Boolean,
@@ -133,6 +144,11 @@
                 set(val) {
                     this.$emit('settingsSelectionChanged', val);
                 }
+            },
+            headerTools() {
+                const tools = [];
+                this.headerToolIds.forEach(id => tools.push(this._getTool(id)));
+                return tools;
             },
             measurements(){
                 return {
@@ -167,9 +183,15 @@
             },
             onToolClickHandler(id) {
                 // use Tool Id to find the associated tool
-                this.currentTool = this._getTool(id);
-                this._setSettings(this.currentTool);
-                this.$emit('onToolClick', {id});
+                const tool = this._getTool(id);
+                if(tool.mode !== 'secondary') {
+                    this.currentTool = tool;
+                    this._setSettings(tool);
+                    this._setToggle(tool.id);
+                }
+                if(!tool.active) {
+                    this.$emit('onToolClick', {id});
+                }
             },
             _setSettings(tool) {
                 const type = tool.type;
@@ -207,7 +229,15 @@
             },
             _setAreaUnits(unit){
                 this.$emit('area-unit-input', unit);
-            }
+            },
+            _setToggle(id) {
+                const el = document.getElementById(id);
+                this.elements.forEach(e => e.style.backgroundColor = '');
+                if(el) {
+                    this.elements.push(el);
+                    el.style.backgroundColor = 'highlight';
+                }
+            },
         },
 
     }
