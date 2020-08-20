@@ -30,7 +30,13 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <measurement v-if="item === 'Messung'" :measurements="measurements" :i18n="i18n"></measurement>
+                            <v-flex grow pa-1 v-if="item === 'Messung'">
+                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
+                                                    :bus="eventBus"></measurement-toggle>
+                                <v-flex v-show="measurementEnabled">
+                                    <measurement :measurements="measurements" :i18n="i18n"></measurement>
+                                </v-flex>
+                            </v-flex>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -44,6 +50,7 @@
     import i18n from 'dojo/i18n!./nls/bundle';
     import Illustration from './components/Illustration.vue';
     import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
+    import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
     import Navigation from './components/Navigation.vue';
     import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
     import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
@@ -56,12 +63,14 @@
             Navigation,
             Illustration,
             'measurement': MeasurementWidget,
+            'measurement-toggle': MeasurementFooter
         },
         data() {
             return {
                 symbolSettings: new PolygonSetting(),
                 currentTool: null,
                 tab: 0,
+                eventBus: this,
 
                 measurementEnabled: this.measurementBoolean,
                 showLineMeasurementsAtPolylines: false,
@@ -104,7 +113,6 @@
                         case 'drawpointtool':
                         case 'drawpolylinetool':
                         case 'drawpolygontool':
-                            debugger
                             return ['Darstellung', 'Messung'];
                             break;
                     }
