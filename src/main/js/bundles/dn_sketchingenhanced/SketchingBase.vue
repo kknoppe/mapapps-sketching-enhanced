@@ -29,7 +29,7 @@
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
-                            <illustration v-if="item === 'Darstellung'" :settings="symbolSettings"></illustration>
+                            <illustration v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
                             <!--<measurement v-if="item === 'Messung'"></measurement>-->
                         </v-tab-item>
                     </template>
@@ -43,7 +43,10 @@
     import Bindable from 'apprt-vue/mixins/Bindable';
     import Illustration from './components/Illustration.vue';
     import Navigation from './components/Navigation.vue';
+    import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
+    import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
     import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
+    import TextSetting from './model/TextSetting';
 
     export default {
         mixins: [Bindable],
@@ -61,13 +64,27 @@
         props: {
             tools: Array,
             firstToolGroupIds: Array,
+            currentSymbol: {
+                type: Object,
+                required: false,
+            },
+            initialSymbolSettings: {
+                type: Object,
+            },
         },
         computed: {
             tabs() {
                 if(this.currentTool && this.currentTool.id === 'drawpointtool') {
                     return ['Darstellung', 'Messung'];
                 }
-
+            },
+            settings: {
+                get() {
+                    return this.symbolSettings;
+                },
+                set(val) {
+                    this.$emit('settingsSelectionChanged', val);
+                }
             }
         },
         methods: {
@@ -77,7 +94,39 @@
             onToolClickHandler(id) {
                 // use Tool Id to find the associated tool
                 this.currentTool = this._getTool(id);
+                this._setSettings(this.currentTool);
                 this.$emit('onToolClick', {id});
+            },
+            _setSettings(tool) {
+                const type = tool.type;
+                switch (type) {
+                    case 'point': {
+                        this.symbolSettings = new PointSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
+                        this.symbolSettings.maxPointSize = 100;
+                        break;
+                    }
+                    case 'polyline': {
+                        this.symbolSettings = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polylineSymbol : '');
+                        break;
+                    }
+                    case 'text': {
+                        this.symbolSettings = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.textSymbol : '');
+                        break;
+                    }
+                    case 'polygon':
+                    case 'rectangle':
+                    case 'circle':
+                    case 'triangle':
+                    case 'ellipse':
+                    case 'arrow': {
+                        // TODO: new tools with fill pattern must be added here
+                        this.symbolSettings = new PolygonSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polygonSymbol : '');
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
             },
         },
 
