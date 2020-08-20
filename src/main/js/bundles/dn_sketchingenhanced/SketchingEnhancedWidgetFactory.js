@@ -27,6 +27,11 @@ export default class SketchingEnhancedWidgetFactory {
 
         const widget = VueDijit(vm);
 
+        widget.onSketchingActivated = evt => {
+            const id = evt.getProperty('id');
+            vm.onToolClickHandler(id);
+        };
+
         const measurementBinding = Binding.for(vm, this._measurementModel);
 
         measurementBinding

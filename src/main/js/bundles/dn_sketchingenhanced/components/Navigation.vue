@@ -23,7 +23,7 @@
     >
         <v-list>
             <div v-for="tool in firstTools">
-                <v-list-tile v-if="!tool.menu" @click="$emit('onToolClick', tool.id)">
+                <v-list-tile v-if="!tool.menu" @click="$emit('onToolClick', tool.id)" :id="tool.id">
                     <v-list-tile-action>
                         <v-icon>{{tool.iconClass}}</v-icon>
                     </v-list-tile-action>
@@ -39,7 +39,7 @@
                             <v-list-tile-title>{{tool.title}}</v-list-tile-title>
                         </v-list-tile>
                     </template>
-                    <v-list-tile v-for="subTool in listTools(tool)" @click="$emit('onToolClick', subTool.id)">
+                    <v-list-tile v-for="subTool in listTools(tool)" @click="$emit('onToolClick', subTool.id)" :id="subTool.id">
                         <v-list-tile-action>
                             <v-icon>{{subTool.iconClass}}</v-icon>
                         </v-list-tile-action>

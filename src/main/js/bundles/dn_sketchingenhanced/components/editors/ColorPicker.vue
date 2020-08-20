@@ -57,7 +57,6 @@
                 },
                 set(val) {
                     this.$emit('update:color', val);
-                    console.log(val);
                 },
             },
             backgroundColor() {

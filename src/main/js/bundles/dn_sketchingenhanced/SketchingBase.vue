@@ -79,6 +79,7 @@
                 currentTool: null,
                 tab: 0,
                 eventBus: this,
+                elements: [],
 
                 measurementEnabled: this.measurementBoolean,
                 showLineMeasurementsAtPolylines: false,
@@ -188,8 +189,11 @@
                 if(tool.mode !== 'secondary') {
                     this.currentTool = tool;
                     this._setSettings(tool);
+                    this._setToggle(tool.id);
                 }
-                this.$emit('onToolClick', {id});
+                if(!tool.active) {
+                    this.$emit('onToolClick', {id});
+                }
             },
             _setSettings(tool) {
                 const type = tool.type;
@@ -227,7 +231,15 @@
             },
             _setAreaUnits(unit){
                 this.$emit('area-unit-input', unit);
-            }
+            },
+            _setToggle(id) {
+                const el = document.getElementById(id);
+                this.elements.forEach(e => e.style.backgroundColor = '');
+                if(el) {
+                    this.elements.push(el);
+                    el.style.backgroundColor = 'highlight';
+                }
+            },
         },
 
     }
