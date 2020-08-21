@@ -16,8 +16,9 @@
 
 -->
 <template>
-    <div>
+    <v-layout row class="illustrationEntry">
         <span> {{label}}</span>
+        <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
             :close-on-content-click="false"
@@ -39,7 +40,7 @@
             </size-slider>
 
         </v-menu>
-    </div>
+    </v-layout>
 </template>
 
 

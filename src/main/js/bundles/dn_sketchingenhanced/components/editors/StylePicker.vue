@@ -16,8 +16,9 @@
 
 -->
 <template>
-    <div>
+    <v-layout row class="illustrationEntry">
         <span> {{label}}</span>
+        <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
             :close-on-content-click="true"
@@ -36,7 +37,7 @@
             <line-style-picker v-if="type === 'line'" v-model="pattern"></line-style-picker>
             <fill-style-picker v-if="type === 'polygon'" v-model="pattern"></fill-style-picker>
         </v-menu>
-    </div>
+    </v-layout>
 </template>
 
 <script>

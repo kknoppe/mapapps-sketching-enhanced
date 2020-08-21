@@ -70,3 +70,12 @@
 .construction_panel_interior .v-input.v-text-field {
     width: 4em!important;
 }
+
+.everlasting .vue-base .accent--text {
+    color: highlight!important;
+}
+
+.illustrationEntry {
+    width: 155px;
+    align-items: center;
+}
