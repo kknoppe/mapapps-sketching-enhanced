@@ -13,22 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 .sketchingMainContainer {
-    height:100%;
+    height: calc(100% - 48px)!important;
+}
+.sketchingCenterContainer {
+    /*height:100%;*/
+    overflow-y:hidden;
 }
 
-.sketchingToolsNavigation {
+.navigationContainer {
     /*height: 208px!important;*/
-    height: 90%!important;
-    overflow: auto!important;
+    /*height: 90%!important;*/
+    overflow-y: auto!important;
+    height: 350px!important;
 }
 
-.sketchingTabs {
-    height: 90%!important;
+.tabsContainer {
+    overflow-y: auto!important;
+    height: 350px!important;;
+    /*height: 90%!important;*/
 }
 
 .measurementText div {
     align-items: center;
+}
+
+.navigationContainer {
+    overflow-y: scroll;
 }
 
 .v-menu__content.theme--light.menuable__content__active {

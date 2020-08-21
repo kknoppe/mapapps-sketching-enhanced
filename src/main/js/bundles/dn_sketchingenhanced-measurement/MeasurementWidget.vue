@@ -19,15 +19,15 @@
         <v-card class="pa-2">
             <v-card class="pa-2">
                 <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
-                            v-show="measurements.polylineEnabled || measurements.polygonEnabled"
+                            v-show="measurements.polylineEnabled"
                             :label="i18n.measurement.showLineMeasurementsAtPolylines"
-                            v-model="measurements.showLineMeasurementsAtPolylines"
+                            v-model="polylineMeasurementLineEnabled"
                             hide-details>
                 </v-checkbox>
                 <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
                             v-show="measurements.polygonEnabled"
                             :label="i18n.measurement.showLineMeasurementsAtPolygons"
-                            v-model="measurements.showLineMeasurementsAtPolygons"
+                            v-model="polygonMeasurementLineEnabled"
                             hide-details>
 
                 </v-checkbox>
@@ -82,6 +82,22 @@
             value: String
         },
         computed: {
+            polygonMeasurementLineEnabled: {
+                get() {
+                    return this.showLineMeasurementsAtPolygons;
+                },
+                set(val) {
+                    this.$emit('update:showLineMeasurementsAtPolygons', val)
+                }
+            },
+            polylineMeasurementLineEnabled: {
+                get() {
+                    return this.showLineMeasurementsAtPolylines;
+                },
+                set(val) {
+                    this.$emit('update:showLineMeasurementsAtPolylines', val)
+                }
+            },
             selectedAreaItem: {
                 get() {
                     return this.value

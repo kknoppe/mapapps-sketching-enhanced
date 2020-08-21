@@ -16,15 +16,11 @@
 
 -->
 <template>
-    <v-container class="" pa-0>
-        <v-card height="50">
-            <v-header absolute>
-                <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
-            </v-header>
-        </v-card>
-        <v-layout class="sketchingMainContainer" row>
-            <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
-            <v-tabs class="flex grow sketchingTabs" v-model="tab" slider-color="primary">
+    <v-container class="sketchingMainContainer" pa-0>
+        <top-toolbar height="50" absolute :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
+        <v-layout class="sketchingCenterContainer" row>
+            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
+            <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary">
                 <v-tab v-for="item in tabs">
                     {{item}}
                 </v-tab>
@@ -37,8 +33,8 @@
                                                     :bus="eventBus"></measurement-toggle>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
-                                                 :showLineMeasurementsAtPolylines="showLineMeasurementsAtPolylines"
-                                                 :showLineMeasurementsAtPolygons="showLineMeasurementsAtPolygons"
+                                                 :showLineMeasurementsAtPolylines.sync="showLineMeasurementsAtPolylines"
+                                                 :showLineMeasurementsAtPolygons.sync="showLineMeasurementsAtPolygons"
                                                  :units="units"
                                                  :i18n="i18n"
                                                  @length-unit-input="_setLengthUnits"
@@ -52,22 +48,20 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
-        <v-card height="50">
-            <v-footer absolute>
-                <v-flex shrink pa-1>
-                    <v-layout row wrap>
-                        <div v-for="(tool,index) in lastTools" :key="index">
-                            <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
-                                <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
-                                             @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
-                                <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
-                                             :bus="eventBus"></tool-button>
-                            </v-btn-toggle>
-                        </div>
-                    </v-layout>
-                </v-flex>
-            </v-footer>
-        </v-card>
+        <v-footer height="50" absolute>
+            <v-flex shrink pa-1>
+                <v-layout row wrap>
+                    <div v-for="(tool,index) in lastTools" :key="index">
+                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
+                            <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                         @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                            <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                         :bus="eventBus"></tool-button>
+                        </v-btn-toggle>
+                    </div>
+                </v-layout>
+            </v-flex>
+        </v-footer>
     </v-container>
 </template>
 
