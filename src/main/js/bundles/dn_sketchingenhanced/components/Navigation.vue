@@ -32,14 +32,14 @@
                 <v-list-group v-if="tool.menu"
                               no-action>
                     <template v-slot:activator>
-                        <v-list-tile>
+                        <v-list-tile :id="tool.id" @click="onGroupToolClick(tool)">
                             <v-list-tile-action>
                                 <v-icon>{{tool.iconClass}}</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-title>{{tool.title}}</v-list-tile-title>
                         </v-list-tile>
                     </template>
-                    <v-list-tile v-for="subTool in listTools(tool)" @click="$emit('onToolClick', subTool.id)" :id="subTool.id">
+                    <v-list-tile v-for="subTool in listTools(tool)" @click="subToolClickHandler(subTool, tool.id)" :id="subTool.id">
                         <v-list-tile-action>
                             <v-icon>{{subTool.iconClass}}</v-icon>
                         </v-list-tile-action>
@@ -63,6 +63,7 @@
         props: {
             tools: Array,
             firstToolGroupIds: Array,
+            bus: Object,
         },
         computed: {
             firstTools() {
@@ -89,7 +90,32 @@
                 }
                 return list;
             },
+            subToolClickHandler(tool, parentId) {
+                this.$emit('onToolClick', tool.id);
+                const parentIcon = document.getElementById(parentId);
+                if(parentIcon && parentIcon.children.length && parentIcon.children[0].children.length) {
+                    const classList = parentIcon.children[0].children[0].classList;
+                    const oldVal = classList[2];
+                    classList.replace(oldVal, tool.iconClass);
+                }
+            },
+            onGroupToolClick(clickedTool) {
+                this.tools.forEach(tool => {
+                    if(tool.menu) {
+                        const test = document.getElementById(tool.id);
+                        if (test && test.parentElement) {
+                            if(tool === clickedTool && test.parentElement.parentElement.style.backgroundColor === 'highlight') {
+                                test.parentElement.parentElement.style.backgroundColor = '';
+                            } else if (this.listTools(tool).some(item => item.active)) {
+                                test.parentElement.parentElement.style.backgroundColor = 'highlight';
+                                this.bus.elements.push(test.parentElement.parentElement);
+                            } else {
+                                test.parentElement.parentElement.style.backgroundColor = '';
+                            }
+                        }
+                    }
+                });
+            },
         },
-
     }
 </script>

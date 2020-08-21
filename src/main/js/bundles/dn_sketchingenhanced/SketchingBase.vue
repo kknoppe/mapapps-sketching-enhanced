@@ -19,7 +19,7 @@
     <v-container class="sketchingMainContainer" pa-0>
         <top-toolbar height="50" absolute :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
         <v-layout class="sketchingCenterContainer" row>
-            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
+            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary">
                 <v-tab v-for="item in tabs">
                     {{item}}
