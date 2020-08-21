@@ -49,6 +49,20 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
+        <v-toolbar>
+            <v-flex shrink pa-1>
+                <v-layout row wrap>
+                    <div v-for="(tool,index) in lastTools" :key="index">
+                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
+                            <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                         @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                            <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                         :bus="eventBus"></tool-button>
+                        </v-btn-toggle>
+                    </div>
+                </v-layout>
+            </v-flex>
+        </v-toolbar>
     </v-container>
 </template>
 
@@ -65,6 +79,8 @@
     import LineSetting from 'dn_sketchingenhanced-symboleditor/model/LineSetting';
     import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetting';
     import TextSetting from './model/TextSetting';
+    import MenuButton from './components/MenuButton.vue';
+    import ToolButton from './components/ToolButton.vue';
 
     export default {
         mixins: [Bindable],
@@ -74,10 +90,14 @@
             ConstructionPanel,
             TopToolbar,
             'measurement': MeasurementWidget,
-            'measurement-toggle': MeasurementFooter
+            'measurement-toggle': MeasurementFooter,
+            'tool-button': ToolButton,
+            'menu-button': MenuButton,
         },
         data() {
             return {
+                toggle: null,
+                notoggle: null,
                 symbolSettings: new PolygonSetting(),
                 currentTool: null,
                 tab: 0,
@@ -121,6 +141,9 @@
                     return {angleModulus: 45, planarLength: 10, use: {angleModulus: false, planarLength: false}};
                 },
             },
+            lastToolGroupIds: {
+                type: Array,
+            },
             measurement: {
                 type: Boolean,
             },
@@ -155,6 +178,9 @@
                 this.headerToolIds.forEach(id => tools.push(this._getTool(id)));
                 return tools;
             },
+            lastTools() {
+                return this._getOverviewTools(this.lastToolGroupIds);
+            },
             measurements(){
                 return {
                     showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
@@ -187,6 +213,17 @@
         methods: {
             _getTool(toolId) {
                 return this.tools.find(x => x.id === toolId);
+            },
+            /**
+             * creates an array with all tools of an input array where only the ids are listed
+             * @param toolIds: Array of Ids
+             * @returns Array
+             * @private
+             */
+            _getOverviewTools(toolIds) {
+                const tools = [];
+                toolIds.forEach(id => tools.push(this._getTool(id)));
+                return tools;
             },
             onToolClickHandler(id) {
                 // use Tool Id to find the associated tool
