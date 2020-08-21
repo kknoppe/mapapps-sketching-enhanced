@@ -33,8 +33,8 @@ export default class MeasurementController {
         this.kmDecimal = props.decimalPlacesKiloMeter;
         this.textSettings = props.sketch.textSymbol;
         this.lineSettings = props.sketch.polylineSymbol;
-        this.areaUnit = 'auto'
-        this.lengthUnit = 'auto'
+        this.areaUnit = 'auto';
+        this.lengthUnit = 'auto';
 
         this._model.showLineMeasurementsAtPolylines = props.showLineMeasurementsAtPolylines;
         this._model.showLineMeasurementsAtPolygons = props.showLineMeasurementsAtPolygons;

@@ -34,6 +34,8 @@
                                                     :bus="eventBus"></measurement-toggle>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
+                                                 :showLineMeasurementsAtPolylines="showLineMeasurementsAtPolylines"
+                                                 :showLineMeasurementsAtPolygons="showLineMeasurementsAtPolygons"
                                                  :units="units"
                                                  :i18n="i18n"
                                                  @length-unit-input="_setLengthUnits"
@@ -119,6 +121,9 @@
                     return {angleModulus: 45, planarLength: 10, use: {angleModulus: false, planarLength: false}};
                 },
             },
+            measurement: {
+                type: Boolean,
+            },
             measurementBoolean: {
                 type: Boolean,
             }
@@ -152,6 +157,8 @@
             },
             measurements(){
                 return {
+                    showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
+                    showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
                     showKeepMeasurements: this.showKeepMeasurements,
                     coordinates: this.coordinates,
                     currentLength: this.currentLength,

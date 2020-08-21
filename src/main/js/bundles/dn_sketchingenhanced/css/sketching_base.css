@@ -12,6 +12,10 @@
     height: 90%!important;
 }
 
+.measurementText div {
+    align-items: center;
+}
+
 .v-menu__content.theme--light.menuable__content__active {
     background-color: inherit;
 }

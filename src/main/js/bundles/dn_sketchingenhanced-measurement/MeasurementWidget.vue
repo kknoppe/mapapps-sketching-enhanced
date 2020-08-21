@@ -1,5 +1,20 @@
 <template>
         <v-card class="pa-2">
+            <v-card class="pa-2">
+                <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                            v-show="measurements.polylineEnabled || measurements.polygonEnabled"
+                            :label="i18n.measurement.showLineMeasurementsAtPolylines"
+                            v-model="measurements.showLineMeasurementsAtPolylines"
+                            hide-details>
+                </v-checkbox>
+                <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                            v-show="measurements.polygonEnabled"
+                            :label="i18n.measurement.showLineMeasurementsAtPolygons"
+                            v-model="measurements.showLineMeasurementsAtPolygons"
+                            hide-details>
+
+                </v-checkbox>
+            </v-card>
             <v-flex class="pa-2 unitSelectors">
                 <v-combobox
                     v-show="measurements.polylineEnabled || measurements.polygonEnabled"
@@ -14,7 +29,6 @@
                     label="Flächeneinheit"
                 ></v-combobox>
             </v-flex>
-
             <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
                 <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
                     <p v-show="measurements[rule]">{{i18n.measurement[type.measure]}} {{ measurements[type.measure] }}</p>
@@ -25,7 +39,6 @@
             </v-layout>
         </v-card>
 </template>
-
 <script>
     export default {
         data(){
@@ -50,7 +63,6 @@
                 type: Object
             },
             value: String
-            // unitAbbreviation: String
         },
         computed: {
             selectedAreaItem: {
@@ -72,7 +84,7 @@
         },
         methods: {
             _copyTextToClipboard(text){
-                let el = document.createElement('textarea');
+                const el = document.createElement('textarea');
                 el.value = text;
                 el.setAttribute('readonly', '');
                 el.style = {display: 'none'};

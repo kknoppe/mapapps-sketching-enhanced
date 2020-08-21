@@ -46,7 +46,7 @@
                 ],
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
-                "showLineMeasurementsAtPolylines": true,
+                "showLineMeasurementsAtPolylines": false,
                 "showLineMeasurementsAtPolygons": false,
                 "pointSRS": "4326",
                 "pointCoordPlaces": "3",
