@@ -17,8 +17,11 @@
 -->
 <template>
     <v-container class="" pa-0>
-        <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
-
+        <v-card height="50">
+            <v-header absolute>
+                <top-toolbar :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
+            </v-header>
+        </v-card>
         <v-layout class="sketchingMainContainer" row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"></navigation>
             <v-tabs class="flex grow sketchingTabs" v-model="tab" slider-color="primary">
@@ -49,20 +52,22 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
-        <v-toolbar>
-            <v-flex shrink pa-1>
-                <v-layout row wrap>
-                    <div v-for="(tool,index) in lastTools" :key="index">
-                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
-                            <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
-                                         @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
-                            <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
-                                         :bus="eventBus"></tool-button>
-                        </v-btn-toggle>
-                    </div>
-                </v-layout>
-            </v-flex>
-        </v-toolbar>
+        <v-card height="50">
+            <v-footer absolute>
+                <v-flex shrink pa-1>
+                    <v-layout row wrap>
+                        <div v-for="(tool,index) in lastTools" :key="index">
+                            <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
+                                <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                             @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                                <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                             :bus="eventBus"></tool-button>
+                            </v-btn-toggle>
+                        </div>
+                    </v-layout>
+                </v-flex>
+            </v-footer>
+        </v-card>
     </v-container>
 </template>
 
