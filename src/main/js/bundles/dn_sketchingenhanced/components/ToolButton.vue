@@ -18,7 +18,6 @@
 <template>
     <v-tooltip top>
         <template v-slot:activator="{on}">
-            <v-layout column wrap align-center justify-center class="ma-0">
                 <div v-on="on">
                     <v-btn flat
                            icon
@@ -31,12 +30,11 @@
                         <v-icon>{{tool.iconClass}}</v-icon>
                     </v-btn>
                 </div>
-                <v-icon class="iconMenuArrowDown"
+                <!--<v-icon class="iconMenuArrowDown"
                         :style="{visibility: toolActive ? 'visible' : 'hidden'}"
                         style="height:12px">
                     arrow_drop_down
-                </v-icon>
-            </v-layout>
+                </v-icon>-->
         </template>
         <span>{{tool.title}}</span>
     </v-tooltip>

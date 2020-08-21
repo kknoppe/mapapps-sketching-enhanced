@@ -16,8 +16,9 @@
 
 -->
 <template>
-    <div>
+    <v-layout row class="illustrationEntry">
         <span> {{label}}</span>
+        <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
             :close-on-content-click="true"
@@ -32,7 +33,7 @@
             </template>
             <font-picker :fonts="fonts" v-model="currentFont"></font-picker>
         </v-menu>
-    </div>
+    </v-layout>
 </template>
 
 <script>
