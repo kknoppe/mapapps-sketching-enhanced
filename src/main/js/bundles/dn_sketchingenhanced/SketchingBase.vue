@@ -17,10 +17,28 @@
 -->
 <template>
     <v-container class="sketchingMainContainer" pa-0>
-        <top-toolbar height="50" absolute :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
+        <v-toolbar dense pa-0 class="SketchingToolsBar">
+            <top-toolbar height="50" absolute :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
+            <v-flex shrink pa-1>
+                <v-layout row wrap>
+                    <div v-for="(tool,index) in lastTools" :key="index">
+                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
+                            <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
+                                         @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
+                            <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
+                                         :bus="eventBus"></tool-button>
+                        </v-btn-toggle>
+                    </div>
+                </v-layout>
+            </v-flex>
+        </v-toolbar>
+        <v-divider
+            class="mx-4"
+            horizontal
+        ></v-divider>
         <v-layout class="sketchingCenterContainer" row>
             <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus"></navigation>
-            <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary">
+            <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="item in tabs">
                     {{item}}
                 </v-tab>
@@ -29,8 +47,6 @@
                         <v-tab-item :key="index">
                             <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
                             <v-flex grow pa-1 v-if="item === 'Messung'">
-                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
-                                                    :bus="eventBus"></measurement-toggle>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
                                                  :showLineMeasurementsAtPolylines.sync="showLineMeasurementsAtPolylines"
@@ -48,19 +64,13 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
+        <v-divider
+            class="mx-4"
+            horizontal
+        ></v-divider>
         <v-footer height="50" absolute>
-            <v-flex shrink pa-1>
-                <v-layout row wrap>
-                    <div v-for="(tool,index) in lastTools" :key="index">
-                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
-                            <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
-                                         @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
-                            <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
-                                         :bus="eventBus"></tool-button>
-                        </v-btn-toggle>
-                    </div>
-                </v-layout>
-            </v-flex>
+            <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
+                                :bus="eventBus"></measurement-toggle>
         </v-footer>
     </v-container>
 </template>

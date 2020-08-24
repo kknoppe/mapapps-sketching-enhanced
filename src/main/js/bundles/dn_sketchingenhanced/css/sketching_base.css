@@ -20,23 +20,63 @@
 .sketchingCenterContainer {
     /*height:100%;*/
     overflow-y:hidden;
+    font-size: 14px;
 }
 
-.navigationContainer {
-    /*height: 208px!important;*/
-    /*height: 90%!important;*/
-    overflow-y: auto!important;
-    height: 350px!important;
+.sketchingMainContainer .v-card {
+    box-shadow: none!important;
 }
 
-.tabsContainer {
+.sketchingMainContainer .v-toolbar {
+    box-shadow: none!important;
+}
+
+.sketchingCenterContainer .navigationContainer {
     overflow-y: auto!important;
-    height: 350px!important;;
+    height: 360px!important;
+}
+
+.sketchingCenterContainer .navigationContainer .v-list{
+    padding: 0 0 0 0;
+}
+
+.sketchingCenterContainer .tabsContainer {
+    overflow-y: auto!important;
+    height: 360px!important;;
     /*height: 90%!important;*/
+}
+
+.unitSelectors .v-input__slot {
+    max-width:80%!important;
+}
+
+.measurementCheckboxes label {
+    font-size:14px!important;
 }
 
 .measurementText div {
     align-items: center;
+}
+
+.measurementText p {
+    margin-bottom: 0!important;
+}
+
+.measurementText i {
+    font-size: 1.2em!important;
+}
+
+.measurementText .measureRecord {
+    font-weight: 500;
+    font-size: 1.15em;
+}
+
+.measurementCheckboxes .v-input__control .v-input__slot {
+    width: 80%!important;
+}
+
+.tabsContainer .v-tabs__bar {
+    height:48px;
 }
 
 .navigationContainer {

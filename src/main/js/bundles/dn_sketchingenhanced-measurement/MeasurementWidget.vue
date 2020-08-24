@@ -16,45 +16,64 @@
 
 -->
 <template>
-        <v-card class="pa-2">
-            <v-card class="pa-2">
-                <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
-                            v-show="measurements.polylineEnabled"
-                            :label="i18n.measurement.showLineMeasurementsAtPolylines"
-                            v-model="polylineMeasurementLineEnabled"
-                            hide-details>
-                </v-checkbox>
-                <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
-                            v-show="measurements.polygonEnabled"
-                            :label="i18n.measurement.showLineMeasurementsAtPolygons"
-                            v-model="polygonMeasurementLineEnabled"
-                            hide-details>
+        <v-layout row class="pa-0">
+            <v-card class="leftContainer">
+                <v-card class="">
+                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                                v-show="measurements.polylineEnabled"
+                                :label="i18n.measurement.showLineMeasurementsAtPolylines"
+                                v-model="polylineMeasurementLineEnabled"
+                                hide-details>
+                    </v-checkbox>
+                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                                v-show="measurements.polygonEnabled"
+                                :label="i18n.measurement.showLineMeasurementsAtPolygons"
+                                v-model="polygonMeasurementLineEnabled"
+                                hide-details>
 
-                </v-checkbox>
+                    </v-checkbox>
+                </v-card>
+                <v-flex class="unitSelectors">
+                    <v-combobox
+                        v-show="measurements.polylineEnabled || measurements.polygonEnabled"
+                        v-model="selectedLengthItem"
+                        :items="units.length"
+                        label="Längeneinheit"
+                        outlined
+                        dense
+                    ></v-combobox>
+                    <v-combobox
+                        v-show="measurements.polygonEnabled"
+                        v-model="selectedAreaItem"
+                        :items="units.area"
+                        label="Flächeneinheit"
+                        outlined
+                        dense
+                    ></v-combobox>
+                </v-flex>
             </v-card>
-            <v-flex class="pa-2 unitSelectors">
-                <v-combobox
-                    v-show="measurements.polylineEnabled || measurements.polygonEnabled"
-                    v-model="selectedLengthItem"
-                    :items="units.length"
-                    label="Längeneinheit"
-                ></v-combobox>
-                <v-combobox
-                    v-show="measurements.polygonEnabled"
-                    v-model="selectedAreaItem"
-                    :items="units.area"
-                    label="Flächeneinheit"
-                ></v-combobox>
-            </v-flex>
-            <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
-                <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
-                    <p v-show="measurements[rule]">{{i18n.measurement[type.measure]}} {{ measurements[type.measure] }}</p>
-                    <v-btn icon color="" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
-                        <v-icon class="icon-select-none">icon-select-none</v-icon>
-                    </v-btn>
+            <v-divider
+                class="mx-4"
+                vertical
+            ></v-divider>
+            <v-card class="rightContainer">
+                <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
+                    <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
+                        <p v-show="measurements[rule]">
+                            <span class="measureLabel">
+                                &nbsp&nbsp{{i18n.measurement[type.measure]}}
+                            </span>
+                            <span class="measureRecord">
+                                {{measurements[type.measure]}}
+                            </span>
+                        </p>
+                        <v-btn icon color="" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
+                            <v-icon class="icon-select-none">icon-select-none</v-icon>
+                        </v-btn>
+                    </v-layout>
                 </v-layout>
-            </v-layout>
-        </v-card>
+            </v-card>
+        </v-layout>
 </template>
 <script>
     export default {
@@ -100,7 +119,7 @@
             },
             selectedAreaItem: {
                 get() {
-                    return this.value
+                    return this.value || 'auto'
                 },
                 set(value) {
                     this.$emit('area-unit-input', value);
@@ -108,7 +127,7 @@
             },
             selectedLengthItem: {
                 get() {
-                    return this.value
+                    return this.value || 'auto'
                 },
                 set(value) {
                     this.$emit('length-unit-input', value);

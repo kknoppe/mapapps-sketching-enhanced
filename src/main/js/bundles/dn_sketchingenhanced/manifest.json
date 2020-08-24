@@ -46,7 +46,7 @@
                 "marginBox": {
                     "l": 25,
                     "t": 100,
-                    "w": 700,
+                    "w": 750,
                     "h": 500
                 },
                 "tools": [
@@ -90,7 +90,7 @@
                     "drawtexttool"
                 ],
                 "lastToolGroupIds": [
-                    "sketchingtoolbox"
+//                    "sketchingtoolbox"
                 ],
                 "headerToolIds": [
                     "drawundotool",

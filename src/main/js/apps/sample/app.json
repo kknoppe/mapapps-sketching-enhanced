@@ -34,7 +34,7 @@
     "bundles": {
         "dn_sketchingenhanced": {
             "Config": {
-                "showKeepMeasurements": false,
+                "showKeepMeasurements": true,
                 "multipleMeasurementsEnabled": true,
                 "measurement": true,
                 "firstToolGroupIds": [
