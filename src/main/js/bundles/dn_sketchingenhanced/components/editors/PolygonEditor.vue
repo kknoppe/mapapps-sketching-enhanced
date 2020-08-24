@@ -22,9 +22,9 @@
             <color-picker label="Linienfarbe" :color.sync="outlineColor"></color-picker>
             <size-picker label="Linienstärke" :size.sync="size" type="line"></size-picker>
         </v-layout>
-        <v-layout column>
-            <style-picker label="Füllung" :shape.sync="shape" type="polygon"></style-picker>
-            <style-picker label="Linienstil" :shape.sync="lineStyle" type="line"></style-picker>
+        <v-layout column style="flex: 0 0 auto!important;">
+            <style-picker style="flex: inherit;" label="Füllung" :shape.sync="shape" type="polygon"></style-picker>
+            <style-picker style="flex: inherit;" label="Linienstil" :shape.sync="lineStyle" type="line"></style-picker>
         </v-layout>
     </v-layout>
 </template>

@@ -16,8 +16,9 @@
 
 -->
 <template>
-    <div>
+    <v-layout row class="illustrationEntry">
         <span> {{label}}</span>
+        <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
             :close-on-content-click="false"
@@ -32,7 +33,7 @@
             </template>
             <text-blur-picker :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n"></text-blur-picker>
         </v-menu>
-    </div>
+    </v-layout>
 </template>
 
 <script>

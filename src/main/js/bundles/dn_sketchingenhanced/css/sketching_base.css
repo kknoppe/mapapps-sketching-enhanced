@@ -135,3 +135,7 @@
 .everlasting .navigationContainer {
     background-color:#2f2f31!important;
 }
+
+.SketchingToolsBar .v-toolbar__content {
+    padding: 0 4px!important;
+}

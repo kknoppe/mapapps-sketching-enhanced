@@ -16,8 +16,9 @@
 
 -->
 <template>
-    <div>
+    <v-layout row class="illustrationEntry">
         <span> {{label}}</span>
+        <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
             :close-on-content-click="false"
@@ -32,7 +33,7 @@
             </template>
             <text-style-picker style="overflow: hidden" :styles="styles" :active.sync="currentTextStyle" :i18n="i18n"></text-style-picker>
         </v-menu>
-    </div>
+    </v-layout>
 </template>
 
 <script>
