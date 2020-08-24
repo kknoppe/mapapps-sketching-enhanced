@@ -16,9 +16,11 @@
 
 -->
 <template>
+    <div class="d-flex flex-row">
         <div v-for="(tool,index) in tools" :key="index">
             <tool-button :tool="tool" @onToolClick="$emit('onToolClick', $event)" :id="tool.id"></tool-button>
         </div>
+    </div>
 </template>
 
 <script>

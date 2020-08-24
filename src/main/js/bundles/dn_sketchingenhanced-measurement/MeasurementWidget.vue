@@ -53,7 +53,7 @@
                 </v-flex>
             </v-card>
             <v-divider
-                class="mx-4"
+                class="mx-1"
                 vertical
             ></v-divider>
             <v-card class="rightContainer">

@@ -33,7 +33,7 @@
             </v-flex>
         </v-toolbar>
         <v-divider
-            class="mx-4"
+            class="mx-1"
         ></v-divider>
         <v-layout class="sketchingCenterContainer" height="100%" row>
             <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus"></navigation>
@@ -72,7 +72,9 @@
             class="mx-4"
         ></v-divider>
         <v-footer height="50" absolute>
-
+            <v-toolbar>
+                <!--<bottom-toolbar></bottom-toolbar>-->
+            </v-toolbar>
         </v-footer>
     </v-container>
 </template>
