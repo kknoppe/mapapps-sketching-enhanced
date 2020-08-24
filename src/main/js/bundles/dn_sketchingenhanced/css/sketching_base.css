@@ -51,7 +51,7 @@
 }
 
 .measurementCheckboxes label {
-    font-size:14px!important;
+    font-size:12px!important;
 }
 
 .measurementText div {
@@ -71,8 +71,20 @@
     font-size: 1.15em;
 }
 
-.measurementCheckboxes .v-input__control .v-input__slot {
-    width: 80%!important;
+.measurementToolsTab {
+    height: calc(100% - 48px);
+}
+
+.tabsContainer .v-window {
+    height: calc(100% - 48px);
+}
+
+.tabsContainer .v-window .v-window__container {
+    height: 100%;
+}
+
+.tabsContainer .v-window .v-window__container .v-window-item {
+    height: 100%;
 }
 
 .tabsContainer .v-tabs__bar {

@@ -34,9 +34,8 @@
         </v-toolbar>
         <v-divider
             class="mx-4"
-            horizontal
         ></v-divider>
-        <v-layout class="sketchingCenterContainer" row>
+        <v-layout class="sketchingCenterContainer" height="100%" row>
             <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="item in tabs">
@@ -46,7 +45,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <v-flex grow pa-1 v-if="item === 'Messung'">
+                            <v-flex class="measurementToolsTab" pa-1 v-if="item === 'Messung'">
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
                                                  :showLineMeasurementsAtPolylines.sync="showLineMeasurementsAtPolylines"
@@ -57,6 +56,11 @@
                                                  @area-unit-input="_setAreaUnits"
                                     ></measurement>
                                 </v-flex>
+                                <v-divider
+                                    class="mx-4"
+                                ></v-divider>
+                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
+                                                    :bus="eventBus"></measurement-toggle>
                             </v-flex>
                             <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
                         </v-tab-item>
@@ -66,11 +70,9 @@
         </v-layout>
         <v-divider
             class="mx-4"
-            horizontal
         ></v-divider>
         <v-footer height="50" absolute>
-            <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
-                                :bus="eventBus"></measurement-toggle>
+
         </v-footer>
     </v-container>
 </template>

@@ -16,7 +16,7 @@
 
 -->
 <template>
-        <v-layout row class="pa-0">
+        <v-layout row class="pa-0" height="100%">
             <v-card class="leftContainer">
                 <v-card class="">
                     <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
