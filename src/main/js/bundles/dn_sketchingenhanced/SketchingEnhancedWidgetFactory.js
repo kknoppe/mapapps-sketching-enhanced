@@ -25,13 +25,6 @@ export default class SketchingEnhancedWidgetFactory {
     createInstance() {
         const vm = new Vue(SketchingWidget);
 
-        const widget = VueDijit(vm);
-
-        widget.onSketchingActivated = evt => {
-            const id = evt.getProperty('id');
-            vm.onToolClickHandler(id);
-        };
-
         const measurementBinding = Binding.for(vm, this._measurementModel);
 
         measurementBinding
@@ -128,6 +121,13 @@ export default class SketchingEnhancedWidgetFactory {
                 !val.openSketchingEditor && that._drawTextHelpLine.removeHelpLine(that._sketchingHandler.sketchViewModel);
             }
         });
+
+        const widget = VueDijit(vm);
+
+        widget.onSketchingActivated = evt => {
+            vm.onToolClickHandler('drawpolylinetool');
+            setTimeout(() => vm.onToolClickHandler('drawpointtool'),200);
+        };
 
         return widget;
     }

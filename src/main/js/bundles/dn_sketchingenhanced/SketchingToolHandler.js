@@ -21,7 +21,7 @@ export default class SketchingToolHandler {
 
     activateSketching() {
         // if sketching widget is reopened -> activate last active tool
-        this._eventService.postEvent('sketchingEnhanced/sketchingActivated', {id: 'drawpointtool'});
+        this._eventService.postEvent('sketchingEnhanced/sketchingActivated');
     }
 
     deactivateSketching() {
