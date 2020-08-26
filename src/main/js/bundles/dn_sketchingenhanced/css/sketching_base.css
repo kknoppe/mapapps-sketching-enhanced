@@ -125,6 +125,10 @@
     height:50px!important;
 }
 
+.sketchingFooterToolbar .v-btn {
+    box-shadow: none!important;
+}
+
 .v-menu__content.theme--light.menuable__content__active {
     background-color: inherit;
 }

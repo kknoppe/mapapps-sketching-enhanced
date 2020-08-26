@@ -47,7 +47,6 @@
         data() {
             return {
                 visible: true,
-                multiMeasurement: false,
                 measurementEnabled: this.measurementBoolean,
                 iconKeep: document.body.classList.contains('everlasting') ? 'icon-keep-measurements-white' : 'icon-keep-measurements',
                 iconRemove: document.body.classList.contains('everlasting') ? 'icon-remove-measurements-white' : 'icon-remove-measurements',
@@ -66,6 +65,9 @@
             showKeepMeasurements: {
                 type: Boolean,
             },
+            multiMeasurement: {
+                type: Boolean,
+            }
         },
         computed: {
             enableMeasurement: {
@@ -97,8 +99,7 @@
                 this.$emit('onToolClick', id);
             },
             toggleKeepMeasurements() {
-                this.multiMeasurement = !this.multiMeasurement;
-                this.bus.$emit('changeMultiMeasurementState', this.multiMeasurement);
+                this.$emit('update:multiMeasurement', !this.multiMeasurement);
             },
         },
 

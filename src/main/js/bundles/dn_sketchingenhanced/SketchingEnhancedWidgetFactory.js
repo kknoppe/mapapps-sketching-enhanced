@@ -48,6 +48,7 @@ export default class SketchingEnhancedWidgetFactory {
             .syncAll('polylineEnabled')
             .syncAll('polygonEnabled')
             .syncAll('areaEnabled')
+            .syncAll('multiMeasurement')
             .syncToLeftNow()
             .enable();
 
@@ -89,10 +90,6 @@ export default class SketchingEnhancedWidgetFactory {
 
         vm.$on('measurementStatusChanged', val => {
             this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = val;
-        });
-
-        vm.$on('changeMultiMeasurementState', val => {
-            this._measurementController.multiMeasurement = val;
         });
 
         vm.$on('settingsSelectionChanged', settings => {

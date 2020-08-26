@@ -27,8 +27,8 @@ module.exports = {
         layerLimitReached: 'Maximale Layerzahl erreicht',
         profileLoaded: 'Aufzeichnung aktiv',
         enableMeasurements: 'Messen aktivieren',
-        disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
-        enableKeepMeasurements: 'Messungen beibehalten aktivieren',
+        disableKeepMeasurements: 'Alte Messungen löschen',
+        enableKeepMeasurements: 'Messungen beibehalten',
         textEditor: {
             bold: 'Fett',
             italic: 'Kursiv',

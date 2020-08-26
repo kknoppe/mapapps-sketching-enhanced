@@ -35,6 +35,7 @@ properties(MeasurementModel, {
     coordinates: null,
 
     measurementBoolean: false,
+    multiMeasurement: true,
 
     pointEnabled: false,
     polylineEnabled: false,

@@ -59,10 +59,17 @@
                                 <v-divider
                                     class="mx-4"
                                 ></v-divider>
-                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :i18n="i18n"
+                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :multiMeasurement.sync="multiMeasurement" :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
                             </v-flex>
                             <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
+                            <settings-panel class="flex grow pa-2"
+                                            v-if="item === 'Einstellungen'"
+                                            @toggleSketchingLayerVisibility="$emit('toggleSketchingLayerVisibility', $event)"
+                                            :bus="eventBus"
+                                            :multiMeasurement.sync="multiMeasurement"
+                                            :i18n="i18n">
+                            </settings-panel>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -70,10 +77,10 @@
         </v-layout>
         <v-footer class="sketchingFooter" absolute>
             <v-toolbar class="sketchingFooterToolbar">
-                <sketching-footer :i18n="i18n"
-                                  :bus="eventBus"
-                                  @toggleSketchingLayerVisibility="toggleVisibility">
-                </sketching-footer>
+                <v-btn @click="showSettings">
+                    <v-icon>icon-cog</v-icon>
+                    <span class="pl-2">Einstellungen</span>
+                </v-btn>
             </v-toolbar>
         </v-footer>
     </v-container>
@@ -95,6 +102,7 @@
     import MenuButton from './components/MenuButton.vue';
     import ToolButton from './components/ToolButton.vue';
     import SketchingFooter from './components/SketchingFooter.vue'
+    import SettingsPanel from './components/SettingsPanel.vue';
 
     export default {
         mixins: [Bindable],
@@ -103,6 +111,7 @@
             Illustration,
             ConstructionPanel,
             TopToolbar,
+            SettingsPanel,
             'measurement': MeasurementWidget,
             'measurement-toggle': MeasurementFooter,
             'tool-button': ToolButton,
@@ -116,6 +125,7 @@
                 symbolSettings: new PolygonSetting(),
                 currentTool: null,
                 tab: 0,
+                settingsEnabled: false,
                 eventBus: this,
                 elements: [],
 
@@ -123,6 +133,7 @@
                 showLineMeasurementsAtPolylines: false,
                 showLineMeasurementsAtPolygons: false,
                 showKeepMeasurements: true,
+                multiMeasurement: true,
 
                 coordinates: null,
                 currentLength: null,
@@ -168,6 +179,10 @@
         },
         computed: {
             tabs() {
+                this.tab = 0;
+                if(this.settingsEnabled) {
+                    return ['Einstellungen'];
+                }
                 if(this.currentTool) {
                     switch(this.currentTool.id){
                         case 'drawtexttool':
@@ -241,6 +256,7 @@
                 return tools;
             },
             onToolClickHandler(id) {
+                this.settingsEnabled = false;
                 // use Tool Id to find the associated tool
                 const tool = this._getTool(id);
                 if(tool.mode !== 'secondary') {
@@ -297,14 +313,11 @@
                     el.style.backgroundColor = 'highlight';
                 }
             },
-            /**
-             * emits event if visibilty toggle button is clicked
-             * @param visible
-             * @private
-             */
-            toggleVisibility(visible) {
-                this.$emit('toggleSketchingLayerVisibility', visible);
-            },
+            showSettings() {
+                this.settingsEnabled = true;
+                this._setToggle(null);
+                this.currentTool && this.$emit('onToolClick', {id: this.currentTool.id})
+            }
         },
 
     }

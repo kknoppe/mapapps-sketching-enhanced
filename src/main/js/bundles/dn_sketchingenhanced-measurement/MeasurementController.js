@@ -46,7 +46,6 @@ export default class MeasurementController {
 
         this.coordinates = null;
         this.radiusPath = null;
-        this.multiMeasurement = false;
 
         this.measurementBoolean = false;
 
@@ -78,7 +77,7 @@ export default class MeasurementController {
         this._removeTemporaryMeasurements(evt);
 
 
-        if (evt.state === 'start' && !this.multiMeasurement && this.measurementBoolean && (evt.tool && evt.tool !== 'reshape')) {
+        if (evt.state === 'start' && !this._model.multiMeasurement && this.measurementBoolean && (evt.tool && evt.tool !== 'reshape')) {
             this._removeAll(evt);
         }
 
