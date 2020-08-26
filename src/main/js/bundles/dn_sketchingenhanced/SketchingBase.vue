@@ -22,12 +22,10 @@
             <v-flex shrink pa-1>
                 <v-layout row wrap>
                     <div v-for="(tool,index) in lastTools" :key="index">
-                        <v-btn-toggle v-model="tool.id ==='sketchingtoolbox' ? toggle : notoggle">
                             <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
                                          @onToolClick="onToolClickHandler" :bus="eventBus"></menu-button>
                             <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
                                          :bus="eventBus"></tool-button>
-                        </v-btn-toggle>
                     </div>
                 </v-layout>
             </v-flex>
@@ -190,6 +188,11 @@
                         case 'drawpolygontool':
                         case 'drawpolylinetool':
                             return ['Darstellung', 'Messung', 'Konstruktion'];
+                        case 'drawreshape1tool':
+                        case 'drawcopytool':
+                        case 'drawremovetool':
+                            this.tab = null;
+                            return [''];
                         default:
                             return ['Darstellung', 'Messung'];
                     }
