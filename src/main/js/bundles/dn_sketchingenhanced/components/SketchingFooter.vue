@@ -24,22 +24,15 @@
                 </v-btn>
                 <span>{{visible ? i18n.turnOffVisibility : i18n.turnOnVisibility}}</span>
             </v-tooltip>
-            <v-spacer></v-spacer>
-            <div v-for="(tool,index) in footerTools" :key="index">
-                <tool-button :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"></tool-button>
-            </div>
         </v-toolbar>
     </div>
 </template>
 
 
 <script>
-    import ToolButton from './ToolButton.vue';
 
     export default {
-        components: {
-            'tool-button': ToolButton,
-        },
+        components: {},
         data() {
             return {
                 visible: true,
@@ -67,23 +60,8 @@
                 type: Object,
             },
         },
-        computed: {
-            footerTools() {
-                const tools = [];
-                this.toolIds.forEach(id => tools.push(this._getTool(id)));
-                return tools;
-            },
-        },
+        computed: {},
         methods: {
-            /**
-             *  use toolId to find all tool information
-             * @param toolId
-             * @returns Object (tool)
-             * @private
-             */
-            _getTool(toolId) {
-                return this.tools.find(x => x.id === toolId);
-            },
 
             /**
              * toggle visibility icon and emit event to toggle visibility of sketching layer
@@ -91,15 +69,7 @@
             toggleVisibility() {
                 this.visible = !this.visible;
                 this.$emit('toggleSketchingLayerVisibility', this.visible);
-            },
-
-            /**
-             * ClickHandler transfers event to parent element
-             * @param id
-             */
-            onToolClickHandler(id) {
-                this.$emit('onToolClick', id);
-            },
+            }
         },
 
     };

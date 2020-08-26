@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+.sketchingEnhancedWidget .ctWindowPadding .ctWindowContentPadding>.dijitDialogPaneContent{
+    overflow:hidden!important;
+}
 .sketchingMainContainer {
     height: calc(100% - 48px)!important;
 }
 .sketchingCenterContainer {
-    /*height:100%;*/
+    height:100%;
     overflow-y:hidden;
     font-size: 14px;
 }
@@ -33,7 +35,9 @@
 
 .sketchingCenterContainer .navigationContainer {
     overflow-y: auto!important;
-    height: 360px!important;
+    top: 49px!important;
+    position: absolute;
+    height: calc(100% - 48px)!important;
 }
 
 .sketchingCenterContainer .navigationContainer .v-list{
@@ -42,8 +46,10 @@
 
 .sketchingCenterContainer .tabsContainer {
     overflow-y: auto!important;
-    height: 360px!important;;
-    /*height: 90%!important;*/
+    height: calc(100% - 44px)!important;
+    position: absolute;
+    left: 300px;
+
 }
 
 .rightContainer {
@@ -87,7 +93,11 @@
 }
 
 .measurementToolsTab {
-    height: calc(100% - 48px);
+    height: 100%;
+}
+
+.tabsContainer {
+    max-width: calc(100% - 300px)!important;
 }
 
 .tabsContainer .v-window {
@@ -108,6 +118,11 @@
 
 .navigationContainer {
     overflow-y: scroll;
+}
+
+.everlasting .vue-base .sketchingFooterToolbar .v-toolbar__content {
+    padding: 0 10px!important;
+    height:50px!important;
 }
 
 .v-menu__content.theme--light.menuable__content__active {

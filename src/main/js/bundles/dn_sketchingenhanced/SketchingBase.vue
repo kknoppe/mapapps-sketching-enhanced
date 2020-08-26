@@ -45,7 +45,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <v-flex class="measurementToolsTab" pa-1 v-if="item === 'Messung'">
+                            <v-flex class="measurementToolsTab" pa-2 v-if="item === 'Messung'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements="measurements"
                                                  :showLineMeasurementsAtPolylines.sync="showLineMeasurementsAtPolylines"
@@ -68,12 +68,12 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
-        <v-divider
-            class="mx-4"
-        ></v-divider>
-        <v-footer height="50" absolute>
-            <v-toolbar>
-                <!--<bottom-toolbar></bottom-toolbar>-->
+        <v-footer class="sketchingFooter" absolute>
+            <v-toolbar class="sketchingFooterToolbar">
+                <sketching-footer :i18n="i18n"
+                                  :bus="eventBus"
+                                  @toggleSketchingLayerVisibility="toggleVisibility">
+                </sketching-footer>
             </v-toolbar>
         </v-footer>
     </v-container>
@@ -94,6 +94,7 @@
     import TextSetting from './model/TextSetting';
     import MenuButton from './components/MenuButton.vue';
     import ToolButton from './components/ToolButton.vue';
+    import SketchingFooter from './components/SketchingFooter.vue'
 
     export default {
         mixins: [Bindable],
@@ -106,6 +107,7 @@
             'measurement-toggle': MeasurementFooter,
             'tool-button': ToolButton,
             'menu-button': MenuButton,
+            'sketching-footer' : SketchingFooter
         },
         data() {
             return {
@@ -294,6 +296,14 @@
                     this.elements.push(el);
                     el.style.backgroundColor = 'highlight';
                 }
+            },
+            /**
+             * emits event if visibilty toggle button is clicked
+             * @param visible
+             * @private
+             */
+            toggleVisibility(visible) {
+                this.$emit('toggleSketchingLayerVisibility', visible);
             },
         },
 
