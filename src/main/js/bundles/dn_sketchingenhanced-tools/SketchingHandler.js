@@ -310,7 +310,7 @@ function SketchingHandler() {
             return this._sketchGraphicLayer;
         },
 
-        _onSketchUpdateHandler(evt) {
+        async _onSketchUpdateHandler(evt) {
             if (this.activeTool){
                 evt.activeTool = this.activeTool;
             }
@@ -338,11 +338,10 @@ function SketchingHandler() {
             const tool = viewModel.tool;
             if (state === "complete" || (state === "cancel" && type !== "create")) {
                 if (tool && tool.togglable && tool.active) {
+                    (tool.id === 'drawpolygontool') && await this._sleep(500);
                     // if drawreshape1tool is selected throw event, so that text editor in sketching_widget is closed after deselecting text
                     (viewModel.tool.toolId === 'drawreshape1tool') && viewModel.emit('openSketchingEditor', {openSketchingEditor: false});
-                    setTimeout(() => {
-                        viewModel.activeTool || this.activateTool(tool);
-                    }, 5);
+                    viewModel.activeTool || this.activateTool(tool);
                 } else {
                     viewModel.updateOnGraphicClick = this._updateOnGraphicClick;
                 }
@@ -355,6 +354,10 @@ function SketchingHandler() {
                 });
                 // TODO: for other types of symols, events could be emitted, so that symbol editor can be reopened for reshape tool
             }
+        },
+
+        _sleep(milliseconds) {
+            return new Promise(resolve => setTimeout(resolve, milliseconds));
         }
     };
 }
