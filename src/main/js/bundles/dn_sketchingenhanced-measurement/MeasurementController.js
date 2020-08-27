@@ -59,7 +59,7 @@ export default class MeasurementController {
                 this.setActiveToolType(this.activeToolType);
             }
         });
-
+        this.resetPanelStates();
         this.resetMeasurementResults();
     }
 
@@ -75,6 +75,7 @@ export default class MeasurementController {
 
         if(evt.state === 'cancel' && evt.type === 'create' && evt.graphic) {
             this.resetMeasurementResults();
+            this.resetPanelStates();
             this._removeMeasurementsOnCancel(evt);
             return;
         }
@@ -89,6 +90,7 @@ export default class MeasurementController {
 
 
         if (evt.state === 'start' && this.measurementBoolean) {
+            this.resetMeasurementResults();
             // increase the group classification when start creating a new geometry or reshape an old one, so that the correlated measurements can be deleted on reshape
             this.sketchGroup++;
         }
@@ -862,9 +864,6 @@ export default class MeasurementController {
             currentArea: 0,
             area: 0
         }
-        this._model.pointEnabled = false;
-        this._model.polylineEnabled = false;
-        this._model.polygonEnabled = false;
         this._model.coordinates = null;
         this._model.currentLength = 0;
         this._model.aggregateLength = 0
@@ -872,6 +871,12 @@ export default class MeasurementController {
         this._model.area = 0;
         this._model.currentArea = 0;
         this._model.perimeter = 0;
+    }
+
+    resetPanelStates(){
+        this._model.pointEnabled = false;
+        this._model.polylineEnabled = false;
+        this._model.polygonEnabled = false;
     }
 
     /**
