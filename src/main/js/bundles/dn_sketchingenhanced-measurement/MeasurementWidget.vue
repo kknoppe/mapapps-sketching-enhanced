@@ -81,12 +81,12 @@
             return {
                 types: [
                     {measure:"coordinates",rules:["pointEnabled"]},
-                    {measure:"totalLength",rules:["polylineEnabled"]},
                     {measure:"currentLength",rules:["polygonEnabled","polylineEnabled"]},
                     {measure:"aggregateLength",rules:["polylineEnabled"]},
-                    {measure:"area",rules:["polygonEnabled","areaEnabled"]},
+                    {measure:"totalLength",rules:["polylineEnabled"]},
                     {measure:"currentArea",rules:["polygonEnabled","areaEnabled"]},
-                    {measure:"perimeter",rules:["polygonEnabled"]}
+                    {measure:"perimeter",rules:["polygonEnabled"]},
+                    {measure:"area",rules:["polygonEnabled","areaEnabled"]}
                 ]
             }
         },
