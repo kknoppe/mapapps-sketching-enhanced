@@ -304,12 +304,13 @@ export default class MeasurementController {
      * @private
      */
     _checkIfPositionHasChanged(evt) {
+        const lineMeasurementTimeout = this._properties.lineMeasurementTimeout;
         setTimeout(() => {
             if (this.coordinates && this.coordinates === evt.toolEventInfo.coordinates) {
             evt.tool === 'polyline' && this._calculateTotalLineMeasurement(evt, true);
             evt.tool === 'polygon' && this._calculatePolygonMeasurements(evt, true);
         }
-    }, 2000);
+    }, lineMeasurementTimeout);
     }
 
     /**
