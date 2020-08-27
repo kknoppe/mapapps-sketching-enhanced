@@ -81,6 +81,10 @@ export default class SketchingEnhancedWidgetFactory {
             this._measurementController._setAreaUnits(val.toLowerCase());
         });
 
+        vm.$on('coordinate-system-input', val => {
+           this._measurementController._setCoordinateSystem(val);
+        });
+
         vm.$on('measurementStatusChanged', val => {
             this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = val;
         });

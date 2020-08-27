@@ -50,6 +50,7 @@ export default class MeasurementController {
         this.measurementBoolean = false;
         this._measurementDisabledTools = props.disabledMeasurementTools;
 
+        this.srs = null;
 
         this.sketchGroup = 0;
 
@@ -403,11 +404,15 @@ export default class MeasurementController {
                 break;
             case "hectares":
             case "hektar":
-                this.areaUnit = 'hectares'
+                this.areaUnit = 'hectares';
             default:
-                this.lengthUnit = 'auto'
+                this.lengthUnit = 'auto';
                 break;
         }
+    }
+
+    _setCoordinateSystem(system) {
+        this.srs = system.systemWkid;
     }
 
     _getUnitAbbreviation(unit){
@@ -735,10 +740,10 @@ export default class MeasurementController {
         return new Promise((resolve,reject) => {
             if(evt){
                 const srs = evt.graphic.geometry.spatialReference.wkid;
-                const targetSrs = this._properties.pointSRS || srs;
+                const targetSrs = this.srs || srs;
                 const places = this._properties.pointCoordPlaces || (this._srsIsPlanar(targetSrs) ? 0 : 5);
-                const unitSymbolX = this._properties.pointCoordUnitSymbolX;
-                const unitSymbolY = this._properties.pointCoordUnitSymbolY;
+                const unitSymbolX = targetSrs.toString() === this._properties.pointSRS ? this._properties.pointCoordUnitSymbolX : '';
+                const unitSymbolY = targetSrs.toString() === this._properties.pointSRS ? this._properties.pointCoordUnitSymbolY : '';
                 const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
                 Promise.all([transformedPoint]).then(transformedPoint => {
                     const x = transformedPoint[0].x.toFixed(places);

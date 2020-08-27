@@ -52,6 +52,7 @@
                                                  :i18n="i18n"
                                                  @length-unit-input="_setLengthUnits"
                                                  @area-unit-input="_setAreaUnits"
+                                                 @coordinate-system-input="$emit('coordinate-system-input', $event)"
                                     ></measurement>
                                 </v-flex>
                                 <v-divider

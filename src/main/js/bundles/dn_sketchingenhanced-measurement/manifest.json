@@ -32,7 +32,29 @@
             "properties": {
                 "measurementUnits": {
                     "area": ["auto","Quadratmeter","Hektar","Quadratkilometer"],
-                    "length": ["auto","Meter","Kilometer"]
+                    "length": ["auto","Meter","Kilometer"],
+                    "point": [
+                        {
+                            "systemLabel": "WGS 84 (Dezimalgrad)",
+                            "systemWkid": 4326
+                        },
+                        {
+                            "systemLabel": "WGS 84 (Pseudo-Mercator)",
+                            "systemWkid": 3857
+                        },
+                        {
+                            "systemLabel": "DHDN3 Gaus-Krüger",
+                            "systemWkid": 31467
+                        },
+                        {
+                            "systemLabel": "UTM 32N",
+                            "systemWkid": 25832
+                        },
+                        {
+                            "systemLabel": "UTM 33N",
+                            "systemWkid": 25833
+                        }
+                    ]
                 },
                 "unitAbbreviationMapping": {
                     "meters": "m",

@@ -50,6 +50,14 @@
                         outlined
                         dense
                     ></v-combobox>
+                    <v-combobox
+                        v-show="measurements.pointEnabled"
+                        v-model="selectedPointItem"
+                        :items="coordinateSystems"
+                        label="Koordinatensystem"
+                        outlined
+                        dense
+                    ></v-combobox>
                 </v-flex>
             </v-card>
             <v-divider
@@ -88,6 +96,11 @@
                     {measure:"perimeter",rules:["polygonEnabled"]},
                     {measure:"area",rules:["polygonEnabled","areaEnabled"]}
                 ]
+            }
+        },
+        mounted() {
+            if(this.units && this.units.point && this.units.point.length) {
+                this.$emit('coordinate-system-input', this.units.point[0]);
             }
         },
         props: {
@@ -132,7 +145,23 @@
                 set(value) {
                     this.$emit('length-unit-input', value);
                 },
-            }
+            },
+            selectedPointItem: {
+                get() {
+                    return this.units.point[0].systemLabel;
+                },
+                set(value) {
+                    const system = this.units.point.filter(x => x.systemLabel === value);
+                    this.$emit('coordinate-system-input', system.length ? system[0] : null);
+                }
+            },
+            coordinateSystems() {
+                const array = [];
+                this.units.point.forEach(x => {
+                    array.push(x.systemLabel);
+                });
+                return array;
+            },
         },
         methods: {
             _copyTextToClipboard(text){
