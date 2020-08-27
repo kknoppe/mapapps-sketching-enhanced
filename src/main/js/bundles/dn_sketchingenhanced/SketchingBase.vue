@@ -184,6 +184,11 @@
                 if(this.currentTool) {
                     switch(this.currentTool.id){
                         case 'drawtexttool':
+                        case 'drawfreehandpolygontool':
+                        case 'drawfreehandpolylinetool':
+                        case 'drawarrowtool':
+                        case 'drawellipsetool':
+                        case 'drawcircletool':
                             return ['Darstellung'];
                         case 'drawpolygontool':
                         case 'drawpolylinetool':

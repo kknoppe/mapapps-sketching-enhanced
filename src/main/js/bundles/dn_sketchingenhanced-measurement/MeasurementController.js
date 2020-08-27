@@ -48,11 +48,13 @@ export default class MeasurementController {
         this.radiusPath = null;
 
         this.measurementBoolean = false;
+        this._measurementDisabledTools = props.disabledMeasurementTools;
+
 
         this.sketchGroup = 0;
 
         this._model.watch("measurementBoolean",(evt)=>{
-            this._toggleMeasurementDisabledTools(evt.value);
+            //this._toggleMeasurementDisabledTools(evt.value);
             if (this.activeToolType){
                 this.setActiveToolType(this.activeToolType);
             }
@@ -62,8 +64,12 @@ export default class MeasurementController {
     }
 
     handler(evt) {
+        if(evt.activeTool && this._measurementDisabledTools.includes(evt.activeTool) && this.measurementBoolean) {
+            return;
+        }
+
         if (evt.activeTool){
-            this.setActiveToolType(evt.activeTool)
+            this.setActiveToolType(evt.activeTool);
             this._showMeasurementsAfterDrawing(evt);
         }
 
