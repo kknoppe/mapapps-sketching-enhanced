@@ -75,7 +75,7 @@
                     }
                 ],
                 "widgetRole": "sketchingEnhancedWidget",
-                "defaultTool": "drawpointtool",
+                "activeToolOnStartup": "none",
                 "showKeepMeasurements": false,
                 "multipleMeasurementsEnabled": true,
                 "measurement": false,
