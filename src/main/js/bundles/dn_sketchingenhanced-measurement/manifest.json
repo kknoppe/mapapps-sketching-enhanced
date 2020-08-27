@@ -74,8 +74,8 @@
                         "type": "esriTS",
                         "color": {
                             "r": 255,
-                            "g": 0,
-                            "b": 0,
+                            "g": 255,
+                            "b": 255,
                             "a": 1
                         },
                         "backgroundColor": [
@@ -87,15 +87,15 @@
                         "horizontalAlignment": "left",
                         "font": {
                             "family": "Arial",
-                            "size": 16,
+                            "size": 13,
                             "style": "normal",
                             "weight": "bold",
                             "decoration": "none"
                         },
                         "haloColor": {
-                            "r": 255,
-                            "g": 255,
-                            "b": 255,
+                            "r": 0,
+                            "g": 0,
+                            "b": 0,
                             "a": 1
                         },
                         "haloSize": 2

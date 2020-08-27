@@ -36,7 +36,7 @@
                     arrow_drop_down
                 </v-icon>-->
         </template>
-        <span>{{tool.title}}</span>
+        <span>{{tooltipIfDisabled ? tooltipIfDisabled : tool.title}}</span>
     </v-tooltip>
 </template>
 
@@ -60,6 +60,9 @@
             bus: {
                 type: Object,
                 required: false,
+            },
+            tooltipIfDisabled: {
+                type: String,
             },
         },
         mounted() {
