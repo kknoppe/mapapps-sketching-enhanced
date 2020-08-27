@@ -931,7 +931,7 @@ export default class MeasurementController {
             case("drawpolygontool"):
             case("drawfreehandpolylgontool"):
                 this._model.currentLength = this._getLengthString(0);
-                this._model.perimeter = this._getLengthString(this.measurements.totalLength);
+                this._model.perimeter = this._getLength(evt.graphic.geometry);
                 this._model.currentArea = this._model.area = this._getAreaString(currentArea);
                 break;
             case("drawrectangletool"):
