@@ -201,6 +201,8 @@
                         default:
                             return ['Darstellung', 'Messung'];
                     }
+                } else {
+                    return [''];
                 }
             },
             settings: {
@@ -267,14 +269,18 @@
                 this.settingsEnabled = false;
                 // use Tool Id to find the associated tool
                 const tool = this._getTool(id);
+
                 if(tool.mode !== 'secondary') {
                     this.currentTool = tool;
                     this._setSettings(tool);
                     this._setToggle(tool.id);
                 }
-                if(!tool.active) {
-                    this.$emit('onToolClick', {id});
+
+                if(tool.active) {
+                   this.currentTool = null;
+                   this._setToggle(id, true);
                 }
+                this.$emit('onToolClick', {id});
             },
             _setSettings(tool) {
                 const type = tool.type;
@@ -313,10 +319,14 @@
             _setAreaUnits(unit){
                 this.$emit('area-unit-input', unit);
             },
-            _setToggle(id) {
+            _setToggle(id, unset) {
                 const el = document.getElementById(id);
                 this.elements.forEach(e => e.style.backgroundColor = '');
                 if(el) {
+                    if(unset) {
+                        el.style.backgroundColor = '';
+                        return;
+                    }
                     this.elements.push(el);
                     el.style.backgroundColor = 'highlight';
                 }
