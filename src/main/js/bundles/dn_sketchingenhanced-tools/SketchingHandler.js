@@ -49,8 +49,10 @@ function SketchingHandler() {
                 map.allLayers.on('change', evt => {
                     if(evt.added && evt.added.length) {
                         const layer = map.findLayerById(this._graphicLayerId);
-                        const index = map.layers.length - 1;
-                        map.reorder(layer, index);
+                        if(layer) {
+                            const index = map.layers.length - 1;
+                            map.reorder(layer, index);
+                        }
                     }
                 });
             });
