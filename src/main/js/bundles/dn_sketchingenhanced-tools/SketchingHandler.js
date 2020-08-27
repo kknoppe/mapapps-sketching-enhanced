@@ -23,6 +23,7 @@ import GraphicsLayer from "esri/layers/GraphicsLayer"
 import {fromJSON} from "esri/symbols/support/jsonUtils";
 import d_lang from "dojo/_base/lang"
 import aspect from "dojo/aspect"
+import {whenOnce} from 'esri/core/watchUtils';
 
 export default SketchingHandler;
 
@@ -41,6 +42,19 @@ function SketchingHandler() {
             this._defaultUpdateOptions = d_lang.clone(this._sketchProps.defaultUpdateOptions || {});
             this._updateOnGraphicClick = this._sketchProps.updateOnGraphicClick;
             this.drag = null;
+
+            // sketching layer always on top
+            whenOnce(this._mapWidgetModel, 'ready', () => {
+                const map = this._mapWidgetModel.map;
+                map.allLayers.on('change', evt => {
+                    if(evt.added && evt.added.length) {
+                        const layer = map.findLayerById(this._graphicLayerId);
+                        const index = map.layers.length - 1;
+                        map.reorder(layer, index);
+                    }
+                });
+            });
+
         },
 
         deactivate() {
