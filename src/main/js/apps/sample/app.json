@@ -61,7 +61,9 @@
                     "drawfreehandpolygontool",
                     "drawfreehandpolylinetool",
                     "drawcircletool",
-                    "drawellipsetool"
+                    "drawellipsetool",
+                    "drawtexttool",
+                    "drawreshape1tool"
                 ],
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
