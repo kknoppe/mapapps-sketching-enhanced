@@ -33,8 +33,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
                 "drawfreehandpolylinetool",
                 "drawcircletool",
                 "drawellipsetool",
-                "drawtexttool",
-                "drawreshape1tool"
+                "drawtexttool"
             ],
             "decimalPlacesMeter": 1,
             "decimalPlacesKiloMeter": 2,
