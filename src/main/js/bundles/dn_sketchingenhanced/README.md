@@ -85,10 +85,10 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 | Property              | Type    | Possible Values               | Default                  | Description                                                |
 |-----------------------|---------|-------------------------------|--------------------------|------------------------------------------------------------|
 | measurement           | Boolean | ```true``` &#124; ```false``` |                          | Messmodus aktivieren                                       |
-| firstToolGroupIds     | String  |                               | wie im Beispiel          | Werkzeug-Ids, die im Widget in der linken Hälfte angezeigt werden         |
+| firstToolGroupIds     | Array  |                               | wie im Beispiel          | Werkzeug-Ids, die im Widget in der linken Hälfte angezeigt werden         |
 | lastToolGroupIds      | Array   |                               | wie im Beispiel          | Werkzeug-Ids, die im Widget im Header rechts angezeigt werden        |
-| activeToolOnStartup   | Array   |                               | wie im Beispiel          | Werkzeug-Id des Tools, welches beim Öffnen des Widgets aktiviert wird        |
+| activeToolOnStartup   | String   |                               | wie im Beispiel          | Werkzeug-Id des Tools, welches beim Öffnen des Widgets aktiviert wird        |
 | headerToolIds         | Array   |                               | wie im Beispiel          | Werkzeug-Ids, die im Header des Widget angezeigt werden    |
-| measurementUnits      | Array   |                               | wie im Beispiel          | Einheiten für Fläche, Länge und die auszuwählenden Koordinatensysteme   |
-| showKeepMeasurements  | Array   | ```true``` &#124; ```false``` | wie im Beispiel          |  Button für Mehrfachmessungen anzeigen  |
-| multipleMeasurementsEnabled  | Array   | ```true``` &#124; ```false``` | wie im Beispiel   | Mehrfachmessungen initial aktivieren  |
+| measurementUnits      | Object   |                               | wie im Beispiel          | Einheiten für Fläche, Länge und die auszuwählenden Koordinatensysteme   |
+| showKeepMeasurements  | Boolean   | ```true``` &#124; ```false``` | wie im Beispiel          |  Button für Mehrfachmessungen anzeigen  |
+| multipleMeasurementsEnabled  | Boolean   | ```true``` &#124; ```false``` | wie im Beispiel   | Mehrfachmessungen initial aktivieren  |

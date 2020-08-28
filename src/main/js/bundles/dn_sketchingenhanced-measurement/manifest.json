@@ -70,7 +70,13 @@
                     "hectares": "ha"
                 },
                 "disabledMeasurementTools": [
-                    "drawarrowtool"
+                    "drawarrowtool",
+                    "drawfreehandpolygontool",
+                    "drawfreehandpolylinetool",
+                    "drawcircletool",
+                    "drawellipsetool",
+                    "drawtexttool",
+                    "drawreshape1tool"
                 ],
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
