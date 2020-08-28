@@ -39,6 +39,7 @@
                 "title": "${ui.windowTitle}",
                 "dockTool": "sketchingEnhancedWidgetToggleTool",
                 "dockable": true,
+                "minSize": {"w":600, "h": 400},
                 "minimizeOnClose": true,
                 "closable": true,
                 "collapsable": true,
@@ -46,8 +47,8 @@
                 "marginBox": {
                     "l": 25,
                     "t": 100,
-                    "w": 780,
-                    "h": 500
+                    "w": 650,
+                    "h": 450
                 },
                 "tools": [
                     "windowCollapseTool"

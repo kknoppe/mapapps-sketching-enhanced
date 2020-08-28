@@ -44,37 +44,36 @@
     padding: 0 0 0 0;
 }
 
+.sketchingToolsNavigation {
+    max-width:230px!important;
+}
+
+.tabsContainer {
+    max-width: calc(100% - 230px)!important;
+}
+
+.tabsContainer .v-window {
+    height: calc(100% - 48px);
+}
+
+.tabsContainer .v-window .v-window__container {
+    height: 100%;
+}
+
+.tabsContainer .v-window .v-window__container .v-window-item {
+    height: 100%;
+}
+
+.tabsContainer .v-tabs__bar {
+    height:48px;
+}
+
 .sketchingCenterContainer .tabsContainer {
     overflow-y: auto!important;
     height: calc(100% - 44px)!important;
     position: absolute;
-    left: 300px;
-
+    left: 230px;
 }
-
-.rightContainer {
-    min-width: 200px;
-    width: 60%;
-}
-
-.unitSelectors .v-input__slot {
-    max-width:80%!important;
-}
-
-.unitSelectors .srsSelect {
-    max-width: 13em;
-}
-.unitSelectors .srsSelect .v-select__selections {
-    max-width: 95%;
-}
-
-.unitSelectors .srsSelect .v-select__selections .v-select__selection.v-select__selection--comma {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 
 .measurementCheckboxes label {
     font-size:12px!important;
@@ -113,28 +112,47 @@
     height: 100%;
 }
 
-.tabsContainer {
-    max-width: calc(100% - 300px)!important;
+.rightContainer {
+    min-width: 200px;
+    width: 60%;
 }
 
-.tabsContainer .v-window {
-    height: calc(100% - 48px);
+.unitSelectors .v-input__slot {
+    max-width:80%!important;
 }
 
-.tabsContainer .v-window .v-window__container {
-    height: 100%;
+.unitSelectors .srsSelect {
+    max-width: 13em;
+}
+.unitSelectors .srsSelect .v-select__selections {
+    max-width: 95%;
 }
 
-.tabsContainer .v-window .v-window__container .v-window-item {
-    height: 100%;
-}
-
-.tabsContainer .v-tabs__bar {
-    height:48px;
+.unitSelectors .srsSelect .v-select__selections .v-select__selection.v-select__selection--comma {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .navigationContainer {
     overflow-y: scroll;
+}
+
+.navigationContainer .v-list__tile__action {
+    min-width: 40px!important;
+}
+
+.navigationContainer .v-list__tile {
+    padding: 0 10px!important;
+}
+
+.navigationContainer .v-list__group__items .v-list__tile{
+    padding-left: 36px!important;
+}
+
+.navigationContainer .v-list__tile__title {
+    font-size: 0.9em;
 }
 
 .everlasting .vue-base .sketchingFooterToolbar .v-toolbar__content {
