@@ -23,7 +23,7 @@ class MeasurementModel extends Mutable {
 }
 
 properties(MeasurementModel, {
-    showLineMeasurementsAtPolylines: false,
+    showLineMeasurementsAtPolylines: true,
     showLineMeasurementsAtPolygons: false,
 
     currentLength: 0,

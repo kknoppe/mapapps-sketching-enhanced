@@ -45,9 +45,7 @@
                             <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
                             <v-flex class="measurementToolsTab" pa-2 v-if="item === 'Messung'" grow>
                                 <v-flex v-show="measurementEnabled">
-                                    <measurement :measurements="measurements"
-                                                 :showLineMeasurementsAtPolylines.sync="showLineMeasurementsAtPolylines"
-                                                 :showLineMeasurementsAtPolygons.sync="showLineMeasurementsAtPolygons"
+                                    <measurement :measurements.sync="measurements"
                                                  :units="units"
                                                  :i18n="i18n"
                                                  @length-unit-input="_setLengthUnits"
@@ -222,23 +220,29 @@
             lastTools() {
                 return this._getOverviewTools(this.lastToolGroupIds);
             },
-            measurements(){
-                return {
-                    showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
-                    showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
-                    showKeepMeasurements: this.showKeepMeasurements,
-                    coordinates: this.coordinates,
-                    currentLength: this.currentLength,
-                    aggregateLength: this.aggregateLength,
-                    totalLength: this.totalLength,
-                    area: this.area,
-                    currentArea: this.currentArea,
-                    perimeter: this.perimeter,
+            measurements: {
+                get() {
+                    return {
+                        showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
+                        showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
+                        showKeepMeasurements: this.showKeepMeasurements,
+                        coordinates: this.coordinates,
+                        currentLength: this.currentLength,
+                        aggregateLength: this.aggregateLength,
+                        totalLength: this.totalLength,
+                        area: this.area,
+                        currentArea: this.currentArea,
+                        perimeter: this.perimeter,
 
-                    pointEnabled: this.pointEnabled,
-                    polylineEnabled: this.polylineEnabled,
-                    polygonEnabled: this.polygonEnabled,
-                    areaEnabled: this.areaEnabled
+                        pointEnabled: this.pointEnabled,
+                        polylineEnabled: this.polylineEnabled,
+                        polygonEnabled: this.polygonEnabled,
+                        areaEnabled: this.areaEnabled
+                    }
+                },
+                set(measurement) {
+                    this.showLineMeasurementsAtPolylines = measurement.showLineMeasurementsAtPolylines;
+                    this.showLineMeasurementsAtPolygons =  measurement.showLineMeasurementsAtPolygons;
                 }
             },
             enableMeasurement: {

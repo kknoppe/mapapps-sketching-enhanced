@@ -116,18 +116,22 @@
         computed: {
             polygonMeasurementLineEnabled: {
                 get() {
-                    return this.showLineMeasurementsAtPolygons;
+                    return this.measurements.showLineMeasurementsAtPolygons;
                 },
                 set(val) {
-                    this.$emit('update:showLineMeasurementsAtPolygons', val)
+                    const measurements = this.measurements;
+                    measurements.showLineMeasurementsAtPolygons = val;
+                    this.$emit('update:measurements', measurements);
                 }
             },
             polylineMeasurementLineEnabled: {
                 get() {
-                    return this.showLineMeasurementsAtPolylines;
+                    return this.measurements.showLineMeasurementsAtPolylines;
                 },
                 set(val) {
-                    this.$emit('update:showLineMeasurementsAtPolylines', val)
+                    const measurements = this.measurements;
+                    measurements.showLineMeasurementsAtPolylines = val;
+                    this.$emit('update:measurements', measurements);
                 }
             },
             selectedAreaItem: {
