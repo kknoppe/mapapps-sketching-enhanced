@@ -413,7 +413,7 @@ export default class MeasurementController {
     }
 
     _setCoordinateSystem(system) {
-        this.srs = system.systemWkid;
+        this.srs = system;
     }
 
     _getUnitAbbreviation(unit){
@@ -741,26 +741,50 @@ export default class MeasurementController {
         return new Promise((resolve,reject) => {
             if(evt){
                 const srs = evt.graphic.geometry.spatialReference.wkid;
-                const targetSrs = this.srs || srs;
+                const targetSrs = this.srs && this.srs.systemWkid ? this.srs.systemWkid : srs;
                 const places = this._properties.pointCoordPlaces || (this._srsIsPlanar(targetSrs) ? 0 : 5);
                 const unitSymbolX = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolX : '';
                 const unitSymbolY = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolY : '';
                 const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
                 Promise.all([transformedPoint]).then(transformedPoint => {
-                    const x = transformedPoint[0].x.toFixed(places);
-                const y = transformedPoint[0].y.toFixed(places);
-                resolve(x+unitSymbolX +" / "+y+unitSymbolY)
-            });
-            }else{
+                    let x = transformedPoint[0].x.toFixed(places);
+                    let y = transformedPoint[0].y.toFixed(places);
+                    if(this.srs && this.srs.transform && this.srs.transform === 'dms') {
+                        const newX = this._toDMS(x, unitSymbolX.length > 1 ? unitSymbolX[1] : unitSymbolX);
+                        const newY = this._toDMS(y, unitSymbolY.length > 1 ? unitSymbolY[1] : unitSymbolY);
+                        resolve(newX+ " / "+newY);
+                    }
+                    resolve(x+unitSymbolX +" / "+y+unitSymbolY);
+                });
+            } else{
                 resolve("");
             }
         });
     }
 
     /**
+     * converts decimal degrees to degree/minutes/seconds
+     * @param input: coordinate in decimal degree (wgs84)
+     * @param unitSymbol: (N,E,S,W)
+     * @returns {string}
+     * @private
+     */
+    _toDMS(input, unitSymbol) {
+        const coordinate = Math.abs(input);
+        const degree = Math.floor(coordinate);
+        const decimalMinutes = coordinate - degree;
+        const degreeMinutes = decimalMinutes * 60; // eslint-disable-line no-magic-numbers
+        const minutes = Math.floor(degreeMinutes);
+        const decimalSeconds = degreeMinutes - minutes;
+        const degreeSeconds = decimalSeconds * 60; // eslint-disable-line no-magic-numbers
+        const seconds = Math.floor(degreeSeconds);
+        return `${degree}° ${minutes}' ${seconds}'' ${unitSymbol}`;
+    }
+
+    /**
      * transform the point into a the desired srs
      * @return corrdinate string
-     * @param geometry, targetSrs
+     * @param geom, targetSrs
      * @private
      */
     _transformGeom(geom, targetSrs){

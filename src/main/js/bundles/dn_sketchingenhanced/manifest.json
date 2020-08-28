@@ -88,6 +88,11 @@
                             "systemWkid": 4326
                         },
                         {
+                            "systemLabel": "WGS 84 (lat/lon)",
+                            "systemWkid": 4326,
+                            "transform": "dms"
+                        },
+                        {
                             "systemLabel": "WGS 84 (Pseudo-Mercator)",
                             "systemWkid": 3857
                         },
