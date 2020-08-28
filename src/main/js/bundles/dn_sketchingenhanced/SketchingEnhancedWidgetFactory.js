@@ -86,7 +86,7 @@ export default class SketchingEnhancedWidgetFactory {
         });
 
         vm.$on('measurementStatusChanged', val => {
-            this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = val;
+            this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = vm.measurementBoolean = val;
         });
 
         vm.$on('settingsSelectionChanged', settings => {
