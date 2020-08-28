@@ -743,8 +743,8 @@ export default class MeasurementController {
                 const srs = evt.graphic.geometry.spatialReference.wkid;
                 const targetSrs = this.srs || srs;
                 const places = this._properties.pointCoordPlaces || (this._srsIsPlanar(targetSrs) ? 0 : 5);
-                const unitSymbolX = targetSrs.toString() === this._properties.pointSRS ? this._properties.pointCoordUnitSymbolX : '';
-                const unitSymbolY = targetSrs.toString() === this._properties.pointSRS ? this._properties.pointCoordUnitSymbolY : '';
+                const unitSymbolX = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolX : '';
+                const unitSymbolY = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolY : '';
                 const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
                 Promise.all([transformedPoint]).then(transformedPoint => {
                     const x = transformedPoint[0].x.toFixed(places);

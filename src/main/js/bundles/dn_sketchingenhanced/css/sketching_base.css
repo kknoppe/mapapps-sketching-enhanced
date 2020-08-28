@@ -61,6 +61,21 @@
     max-width:80%!important;
 }
 
+.unitSelectors .srsSelect {
+    max-width: 13em;
+}
+.unitSelectors .srsSelect .v-select__selections {
+    max-width: 95%;
+}
+
+.unitSelectors .srsSelect .v-select__selections .v-select__selection.v-select__selection--comma {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 .measurementCheckboxes label {
     font-size:12px!important;
 }
@@ -86,10 +101,12 @@
 .measurementText .measureRecord {
     font-weight: 500;
     font-size: 1.15em;
+    padding-left: 8px!important;
 }
 
 .measurementText .measureLabel {
     font-size: 0.9em;
+    align-self: center;
 }
 
 .measurementToolsTab {

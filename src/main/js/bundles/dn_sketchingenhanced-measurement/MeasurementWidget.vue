@@ -50,14 +50,15 @@
                         outlined
                         dense
                     ></v-combobox>
-                    <v-combobox
+                    <v-select
+                        class="srsSelect"
                         v-show="measurements.pointEnabled"
                         v-model="selectedPointItem"
                         :items="coordinateSystems"
                         label="Koordinatensystem"
                         outlined
                         dense
-                    ></v-combobox>
+                    ></v-select>
                 </v-flex>
             </v-card>
             <v-divider
