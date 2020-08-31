@@ -98,8 +98,7 @@
 }
 
 .measurementText .measureRecord {
-    font-weight: 500;
-    font-size: 1.15em;
+    font-weight: 900;
     padding-left: 8px!important;
 }
 
@@ -115,6 +114,11 @@
 .rightContainer {
     min-width: 200px;
     width: 60%;
+}
+
+.rightContainer .v-btn--icon {
+    width:0!important;
+    margin: 6px 8px 6px 14px!important;
 }
 
 .unitSelectors .v-input__slot {

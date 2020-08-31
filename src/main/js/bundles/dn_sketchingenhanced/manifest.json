@@ -39,7 +39,7 @@
                 "title": "${ui.windowTitle}",
                 "dockTool": "sketchingEnhancedWidgetToggleTool",
                 "dockable": true,
-                "minSize": {"w":600, "h": 400},
+                "minSize": {"w":620, "h": 400},
                 "minimizeOnClose": true,
                 "closable": true,
                 "collapsable": true,

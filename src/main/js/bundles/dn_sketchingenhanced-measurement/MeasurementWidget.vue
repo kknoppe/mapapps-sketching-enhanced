@@ -19,13 +19,13 @@
         <v-layout row class="pa-0" height="100%">
             <v-card class="leftContainer">
                 <v-card class="">
-                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                    <v-checkbox class="pa-1 ma-0 measurementCheckboxes" color="primary"
                                 v-show="measurements.polylineEnabled"
                                 :label="i18n.measurement.showLineMeasurementsAtPolylines"
                                 v-model="polylineMeasurementLineEnabled"
                                 hide-details>
                     </v-checkbox>
-                    <v-checkbox class="pa-0 ma-0 measurementCheckboxes" color="primary"
+                    <v-checkbox class="pa-1 ma-0 measurementCheckboxes" color="primary"
                                 v-show="measurements.polygonEnabled"
                                 :label="i18n.measurement.showLineMeasurementsAtPolygons"
                                 v-model="polygonMeasurementLineEnabled"

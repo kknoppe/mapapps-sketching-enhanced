@@ -43,7 +43,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-tab-item :key="index">
                             <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <v-flex class="measurementToolsTab" pa-2 v-if="item === 'Messung'" grow>
+                            <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'Messung'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements.sync="measurements"
                                                  :units="units"
