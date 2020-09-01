@@ -1,0 +1,228 @@
+/**
+ * Copyright (C) 2020 con terra GmbH (info@conterra.de)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.sketchingEnhancedWidget .ctWindowPadding .ctWindowContentPadding>.dijitDialogPaneContent{
+    overflow:hidden!important;
+}
+.sketchingMainContainer {
+    height: calc(100% - 48px)!important;
+}
+.sketchingCenterContainer {
+    height:100%;
+    overflow-y:hidden;
+    font-size: 14px;
+}
+
+.sketchingMainContainer .v-card {
+    box-shadow: none!important;
+}
+
+.sketchingMainContainer .v-toolbar {
+    box-shadow: none!important;
+}
+
+.sketchingCenterContainer .navigationContainer {
+    overflow-y: auto!important;
+    top: 49px!important;
+    position: absolute;
+    height: calc(100% - 92px)!important;
+}
+
+.sketchingCenterContainer .navigationContainer .v-list{
+    padding: 0 0 0 0;
+}
+
+.sketchingToolsNavigation {
+    max-width:230px!important;
+}
+
+.tabsContainer {
+    max-width: calc(100% - 230px)!important;
+}
+
+.tabsContainer .v-window {
+    height: calc(100% - 48px);
+}
+
+.tabsContainer .v-window .v-window__container {
+    height: 100%;
+}
+
+.tabsContainer .v-window .v-window__container .v-window-item {
+    height: 100%;
+}
+
+.tabsContainer .v-tabs__bar {
+    height:48px;
+}
+
+.sketchingCenterContainer .tabsContainer {
+    overflow-y: auto!important;
+    height: calc(100% - 44px)!important;
+    position: absolute;
+    left: 230px;
+}
+
+.measurementCheckboxes label {
+    font-size:12px!important;
+}
+
+.measurementText div {
+    align-items: center;
+}
+
+.measurementText p{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.measurementText p {
+    margin-bottom: 0!important;
+}
+
+.measurementText i {
+    font-size: 1.0em!important;
+}
+
+.measurementText .measureRecord {
+    font-weight: 900;
+    padding-left: 8px!important;
+}
+
+.measurementText .measureLabel {
+    font-size: 0.9em;
+    align-self: center;
+}
+
+.measurementToolsTab {
+    height: 100%;
+}
+
+.rightContainer {
+    min-width: 200px;
+    width: 60%;
+}
+
+.rightContainer .v-btn--icon {
+    width:0!important;
+    margin: 6px 8px 6px 14px!important;
+}
+
+.unitSelectors .v-input__slot {
+    max-width:80%!important;
+}
+
+.unitSelectors .srsSelect {
+    max-width: 13em;
+}
+.unitSelectors .srsSelect .v-select__selections {
+    max-width: 95%;
+}
+
+.unitSelectors .srsSelect .v-select__selections .v-select__selection.v-select__selection--comma {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navigationContainer {
+    overflow-y: scroll;
+}
+
+.navigationContainer .v-list__tile__action {
+    min-width: 40px!important;
+}
+
+.navigationContainer .v-list__tile {
+    padding: 0 10px!important;
+}
+
+.navigationContainer .v-list__group__items .v-list__tile{
+    padding-left: 36px!important;
+}
+
+.navigationContainer .v-list__tile__title {
+    font-size: 0.9em;
+}
+
+.everlasting .vue-base .sketchingFooterToolbar .v-toolbar__content {
+    padding: 0 10px!important;
+    height:50px!important;
+}
+
+.sketchingFooterToolbar .v-btn {
+    box-shadow: none!important;
+}
+
+.v-menu__content.theme--light.menuable__content__active {
+    background-color: inherit;
+}
+
+.sizeSliderLayout {
+    padding-top: 10px!important;
+}
+
+.line-style-picker .v-list .v-list__tile {
+    padding: 0;
+}
+.fill-style-picker .v-list .v-list__tile {
+    padding: 0;
+}
+
+.text-blur-picker .v-input.v-input--slider {
+    padding: 0 8px!important;
+}
+
+.text-blur-picker .vc-chrome {
+    width: 100%!important;
+}
+
+.text-angle-label {
+    align-self: center;
+    padding-left: 4px!important;
+    padding-right: 8px!important;
+}
+.text-angle-picker .v-input.v-text-field {
+    width: 3em;
+}
+
+.construction_panel_interior .v-input.v-input--selection-controls {
+    padding-right: 8px!important;
+}
+
+.construction_panel_interior .v-input.v-text-field {
+    width: 4em!important;
+}
+
+.everlasting .vue-base .accent--text {
+    color: highlight!important;
+}
+
+.illustrationEntry {
+    width: 155px;
+    align-items: center;
+}
+
+.everlasting .navigationContainer {
+    background-color:#2f2f31!important;
+}
+
+.SketchingToolsBar .v-toolbar__content {
+    padding: 0 4px!important;
+    display: flex;
+    justify-content: space-between;
+}

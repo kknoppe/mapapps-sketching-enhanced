@@ -17,11 +17,12 @@
 -->
 <template>
     <v-menu
+        :disabled="!tool.enabled"
         v-model="menu"
         :close-on-content-click="true"
         offset-y
     >
-        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus"></tool-button>
+        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus" :tooltipIfDisabled="!tool.enabled ? 'Es liegen keine Zeichnungen vor' : null"></tool-button>
         <v-card>
             <v-list class="sketchingMenu">
                 <div v-for="item in listTools(tool)">

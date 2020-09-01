@@ -28,7 +28,7 @@
         {
             "name": "*",
             "files": [
-                "./css/sketching_widget.css"
+                "./css/sketching_base.css"
             ]
         }
     ],
@@ -39,17 +39,16 @@
                 "title": "${ui.windowTitle}",
                 "dockTool": "sketchingEnhancedWidgetToggleTool",
                 "dockable": true,
+                "minSize": {"w":620, "h": 400},
                 "minimizeOnClose": true,
                 "closable": true,
                 "collapsable": true,
                 "draggable": true,
                 "marginBox": {
                     "l": 25,
-                    "t": 120,
-                    "w": 275
-                },
-                "minSize": {
-                    "w": 260
+                    "t": 100,
+                    "w": 650,
+                    "h": 450
                 },
                 "tools": [
                     "windowCollapseTool"
@@ -65,13 +64,54 @@
             "impl": "SketchingEnhancedWidgetFactory",
             "provides": [
                 "dijit.Widget",
-                "dn_sketchingenhanced.Widget"
+                "dn_sketchingenhanced.Widget",
+                "ct.framework.api.EventHandler"
             ],
             "instanceFactory": true,
             "properties": {
+                "Event-Topics": [
+                    {
+                        "topic": "sketchingEnhanced/sketchingActivated",
+                        "method": "onSketchingActivated"
+                    }
+                ],
                 "widgetRole": "sketchingEnhancedWidget",
-                "defaultTool": "drawpointtool",
+                "lineMeasurementTimeout": 100,
+                "activeToolOnStartup": "none",
+                "showKeepMeasurements": false,
+                "multipleMeasurementsEnabled": true,
                 "measurement": false,
+                "measurementUnits": {
+                    "area": ["auto","Quadratmeter","Hektar","Quadratkilometer"],
+                    "length": ["auto","Meter","Kilometer"],
+                    "point": [
+                        {
+                            "systemLabel": "WGS 84 (Dezimalgrad)",
+                            "systemWkid": 4326
+                        },
+                        {
+                            "systemLabel": "WGS 84 (lat/lon)",
+                            "systemWkid": 4326,
+                            "transform": "dms"
+                        },
+                        {
+                            "systemLabel": "WGS 84 (Pseudo-Mercator)",
+                            "systemWkid": 3857
+                        },
+                        {
+                            "systemLabel": "DHDN3 Gaus-Krüger",
+                            "systemWkid": 31467
+                        },
+                        {
+                            "systemLabel": "UTM 32N",
+                            "systemWkid": 25832
+                        },
+                        {
+                            "systemLabel": "UTM 33N",
+                            "systemWkid": 25833
+                        }
+                    ]
+                },
                 "firstToolGroupIds": [
                     "drawpointtool",
                     "sketchinglinegroup",
@@ -81,7 +121,7 @@
                 "lastToolGroupIds": [
                     "sketchingtoolbox"
                 ],
-                "footerToolIds": [
+                "headerToolIds": [
                     "drawundotool",
                     "drawredotool",
                     "drawcanceltool"
@@ -158,6 +198,10 @@
                 {
                     "name": "_measurementController",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementController"
+                },
+                {
+                    "name": "_measurementModel",
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
                 }
             ]
         },

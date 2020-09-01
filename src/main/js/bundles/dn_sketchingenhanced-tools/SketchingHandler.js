@@ -23,6 +23,7 @@ import GraphicsLayer from "esri/layers/GraphicsLayer"
 import {fromJSON} from "esri/symbols/support/jsonUtils";
 import d_lang from "dojo/_base/lang"
 import aspect from "dojo/aspect"
+import {whenOnce} from 'esri/core/watchUtils';
 
 export default SketchingHandler;
 
@@ -41,6 +42,21 @@ function SketchingHandler() {
             this._defaultUpdateOptions = d_lang.clone(this._sketchProps.defaultUpdateOptions || {});
             this._updateOnGraphicClick = this._sketchProps.updateOnGraphicClick;
             this.drag = null;
+
+            // sketching layer always on top
+            whenOnce(this._mapWidgetModel, 'ready', () => {
+                const map = this._mapWidgetModel.map;
+                map.allLayers.on('change', evt => {
+                    if(evt.added && evt.added.length) {
+                        const layer = map.findLayerById(this._graphicLayerId);
+                        if(layer) {
+                            const index = map.layers.length - 1;
+                            map.reorder(layer, index);
+                        }
+                    }
+                });
+            });
+
         },
 
         deactivate() {
@@ -68,16 +84,14 @@ function SketchingHandler() {
             const viewModel = this._getSketchViewModel();
             viewModel.tool = tool;
 
-            const view = viewModel.view;
-            this.drag && this.drag.remove();
+            this.activeTool = tool.toolId;
+
+            //extral actions
+            this._actions.forEach(action => {
+                action.setActiveToolType && action.setActiveToolType(tool.toolId);
+            }, this);
 
             const type = tool.type || "polygon";
-
-            if (type !== 'selectReshape' && type !== 'reshape') {
-                this.drag = view.on(['click', 'drag'], evt => {
-                    evt.stopPropagation();
-                });
-            }
 
             const mode = tool.mode || "";
             const eventService = this._eventService;
@@ -132,6 +146,9 @@ function SketchingHandler() {
         },
 
         deactivateTool(tool) {
+            if (tool.toolId === this.activeTool){
+                this.activeTool = null;
+            }
             const viewModel = this._getSketchViewModel();
             this.drag && this.drag.remove();
             if (tool && (tool.id === 'drawellipsetool' || tool.id === 'drawtriangletool')) {
@@ -293,7 +310,11 @@ function SketchingHandler() {
             return this._sketchGraphicLayer;
         },
 
-        _onSketchUpdateHandler(evt) {
+        async _onSketchUpdateHandler(evt) {
+            if (this.activeTool){
+                evt.activeTool = this.activeTool;
+            }
+
             //extral actions
             this._actions.forEach(action => {
                 action.handler(evt);
@@ -317,11 +338,10 @@ function SketchingHandler() {
             const tool = viewModel.tool;
             if (state === "complete" || (state === "cancel" && type !== "create")) {
                 if (tool && tool.togglable && tool.active) {
+                    (tool.id === 'drawpolygontool') && await this._sleep(500);
                     // if drawreshape1tool is selected throw event, so that text editor in sketching_widget is closed after deselecting text
                     (viewModel.tool.toolId === 'drawreshape1tool') && viewModel.emit('openSketchingEditor', {openSketchingEditor: false});
-                    setTimeout(() => {
-                        viewModel.activeTool || this.activateTool(tool);
-                    }, 5);
+                    viewModel.activeTool || this.activateTool(tool);
                 } else {
                     viewModel.updateOnGraphicClick = this._updateOnGraphicClick;
                 }
@@ -334,6 +354,10 @@ function SketchingHandler() {
                 });
                 // TODO: for other types of symols, events could be emitted, so that symbol editor can be reopened for reshape tool
             }
+        },
+
+        _sleep(milliseconds) {
+            return new Promise(resolve => setTimeout(resolve, milliseconds));
         }
     };
 }

@@ -20,9 +20,8 @@ export default class SketchingToolHandler {
     }
 
     activateSketching() {
-        this._eventService.postEvent('dsa/crack_archive/STOPDRAWING', {});
         // if sketching widget is reopened -> activate last active tool
-        this.activeTool && this._sketchingHandler.activateTool(this.activeTool);
+        this._eventService.postEvent('sketchingEnhanced/sketchingActivated');
     }
 
     deactivateSketching() {

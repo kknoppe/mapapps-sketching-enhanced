@@ -18,25 +18,25 @@
 <template>
     <v-tooltip top>
         <template v-slot:activator="{on}">
-            <v-layout column wrap align-center justify-center class="ma-0">
-                <v-btn flat
-                       v-on="on"
-                       class="sketchingToolButton"
-                       :key="tool.id"
-                       :value="tool.id"
-                       :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)"
-                       @click="onToolClickHandler(tool.id)"
-                >
-                    <v-icon>{{tool.iconClass}}</v-icon>
-                </v-btn>
-                <v-icon class="iconMenuArrowDown"
+                <div v-on="on">
+                    <v-btn flat
+                           icon
+                           class="sketchingToolButton"
+                           :key="tool.id"
+                           :value="tool.id"
+                           :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)"
+                           @click="onToolClickHandler(tool.id)"
+                    >
+                        <v-icon>{{tool.iconClass}}</v-icon>
+                    </v-btn>
+                </div>
+                <!--<v-icon class="iconMenuArrowDown"
                         :style="{visibility: toolActive ? 'visible' : 'hidden'}"
                         style="height:12px">
                     arrow_drop_down
-                </v-icon>
-            </v-layout>
+                </v-icon>-->
         </template>
-        <span>{{tool.title}}</span>
+        <span>{{tooltipIfDisabled ? tooltipIfDisabled : tool.title}}</span>
     </v-tooltip>
 </template>
 
@@ -60,6 +60,9 @@
             bus: {
                 type: Object,
                 required: false,
+            },
+            tooltipIfDisabled: {
+                type: String,
             },
         },
         mounted() {

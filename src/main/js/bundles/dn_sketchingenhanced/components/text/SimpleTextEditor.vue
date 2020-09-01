@@ -147,7 +147,7 @@
              * Data variables are only here registered as support for the GUI workflow
              */
             return {
-                activeTab: 1,
+                activeTab: null,
                 textColor: '',
                 blurColor: '',
                 blurRadius: null,
