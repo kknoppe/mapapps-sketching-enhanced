@@ -17,7 +17,7 @@ import TextSymbol from 'esri/symbols/TextSymbol';
 import Graphic from 'esri/Graphic';
 import Polyline from 'esri/geometry/Polyline';
 import Point from 'esri/geometry/Point';
-import geoEngine from 'esri/geometry/geometryEngine';
+import * as geoEngine from 'esri/geometry/geometryEngine';
 import i18n from 'dojo/i18n!./nls/bundle';
 
 export default class MeasurementController {
@@ -192,7 +192,7 @@ export default class MeasurementController {
 
     _undoRedoHandler(evt) {
         if (evt.type === 'undo') {
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const lastGraphic = viewModel.layer.graphics.items.slice(-1);
             if(lastGraphic && lastGraphic.length) {
                 viewModel.layer.removeMany(lastGraphic);
@@ -203,7 +203,7 @@ export default class MeasurementController {
         }
 
         if (evt.type === 'redo') {
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const graphic = this._undoRedoGraphics.pop();
             if(graphic && graphic.length) {
                 viewModel.layer.add(graphic[0]);
@@ -222,10 +222,7 @@ export default class MeasurementController {
         if (evt && evt.tool === 'point') {
             if (evt.graphic){
                 // get the coordinates from the graphic
-                return {
-                    x: evt.graphic.geometry.extent.center.x,
-                    y: evt.graphic.geometry.extent.center.y
-                }
+                return this._getCenterOfPoint(evt.graphic.geometry);
             } else {
                 return evt;
             }
@@ -294,8 +291,8 @@ export default class MeasurementController {
 
     _removeMeasurementsOnCancel(evt) {
         const id = evt.graphic.uid;
-        const viewModel = evt.target;
-        const gs = viewModel.layer.graphics.filter(graphic => graphic.symbol.name === `measurement-${id}`);
+        const viewModel = this._sketchingHandler.sketchViewModel;
+        const gs = viewModel.layer.graphics.items.filter(graphic => graphic.symbol.name === `measurement-${id}`);
         viewModel.layer.removeMany(gs);
     }
 
@@ -692,13 +689,13 @@ export default class MeasurementController {
         if (evt.tool === 'circle' || evt.tool === 'ellipse') {
             const horizontalAlignment = (evt.tool === 'circle' && this.radiusPath) ? this._getHorizontalAlignmentForCircle() : null;
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
-            evt.target.layer.add(graphic);
+            this._sketchingHandler.sketchViewModel.layer.add(graphic);
         } else {
             this._model.showLineMeasurementsAtPolygons && evt.graphic.geometry.rings.forEach(rings => {
                 for (let i = 1; i < rings.length; i++) {
 	                const checkedPath = [rings[i - 1], rings[i]];
 	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
-	                evt.target.layer.add(graphic);
+	                this._sketchingHandler.sketchViewModel.layer.add(graphic);
 	            }
 	        });
         }
@@ -711,7 +708,7 @@ export default class MeasurementController {
      */
     _addPointCoordinatesTextToPoint(evt) {
         const id = evt.graphic.uid.toString();
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const coordinates = this.coordinates;
         const point = evt.graphic.geometry.extent.center;
         const coordString = this._getPointString(evt).then(coordString => {
@@ -847,7 +844,7 @@ export default class MeasurementController {
         const circumString = this._getLength(geometry);
         const areaString = this._getArea(geometry);
 
-        const pnt = temporary ? new Point(this.coordinates, geometry.spatialReference) : geometry.extent.center;
+        const pnt = temporary ? new Point(this.coordinates, geometry.spatialReference) : this._getCenterOfPoint(geometry);
         let textPosition = (temporary && this._oldVertex && this.coordinates[0] - this._oldVertex[0] > 0) ? 'left' : 'right';
         textPosition = temporary ? textPosition : 'center';
         textPosition = horizontalAlignment ? horizontalAlignment : textPosition;
@@ -863,6 +860,17 @@ export default class MeasurementController {
             group: this.sketchGroup,
         });
         return new Graphic(pnt, textSymbol);
+    }
+
+    _getCenterOfPoint(g){
+        if (g.extent && g.extent.center){
+            return g.extent.center
+        } else {
+            return {
+                x: g.x,
+                y: g.y
+            }
+        }
     }
 
     /**
@@ -987,7 +995,7 @@ export default class MeasurementController {
         // this is to get the length of the set new segment
         let firstPoint = evt.graphic.geometry.paths ? evt.graphic.geometry.paths[0][0] : evt.graphic.geometry.rings[0][0];
         let id = evt.graphic.uid;
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
         const newVertex = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
         this._vertexArray.push(newVertex);

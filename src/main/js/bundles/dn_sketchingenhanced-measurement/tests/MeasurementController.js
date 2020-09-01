@@ -18,7 +18,7 @@ import assert from 'intern/chai!assert';
 import expect from 'intern/chai!expect';
 import module from 'module';
 import MeasurementController from '../MeasurementController';
-import geoEngine from 'esri/geometry/geometryEngine';
+import * as geoEngine from 'esri/geometry/geometryEngine';
 import Polyline from 'esri/geometry/Polyline';
 import Polygon from 'esri/geometry/Polygon';
 

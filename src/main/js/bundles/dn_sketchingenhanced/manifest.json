@@ -46,7 +46,7 @@
                 "draggable": true,
                 "marginBox": {
                     "l": 25,
-                    "t": 100,
+                    "t": 125,
                     "w": 650,
                     "h": 450
                 },
@@ -99,7 +99,7 @@
                             "systemWkid": 3857
                         },
                         {
-                            "systemLabel": "DHDN3 Gaus-Krüger",
+                            "systemLabel": "DHDN3 Gaus-KrÃ¼ger",
                             "systemWkid": 31467
                         },
                         {

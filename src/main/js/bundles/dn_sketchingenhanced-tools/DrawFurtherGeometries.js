@@ -18,7 +18,7 @@ import SimpleFillSymbol from 'esri/symbols/SimpleFillSymbol';
 import Point from 'esri/geometry/Point';
 import Polygon from 'esri/geometry/Polygon';
 import Graphic from 'esri/Graphic';
-import geoEngine from 'esri/geometry/geometryEngine';
+import * as geoEngine from 'esri/geometry/geometryEngine';
 import Draw from 'esri/views/draw/Draw';
 
 export default class DrawFurtherGeometries {
