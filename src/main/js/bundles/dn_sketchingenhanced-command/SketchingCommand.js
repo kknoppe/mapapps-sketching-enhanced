@@ -62,6 +62,7 @@ export default function () {
                     });
                 });
 
+                const tool = viewModel.tool;
                 viewModel.reset();
                 viewModel.layer.removeMany(gs);
 
@@ -72,6 +73,7 @@ export default function () {
                 //     });
                 // }));
                 //
+                viewModel.tool = tool;
                 viewModel.emit("remove", {
                     graphics: gs,
                     state: "complete",

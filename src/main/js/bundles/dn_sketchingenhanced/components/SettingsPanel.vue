@@ -16,23 +16,15 @@
 
 -->
 <template>
-    <div class="footer">
-        <v-toolbar dense class="sketchingFooterToolbar">
-            <v-tooltip top>
-                <v-btn slot="activator" icon @click="toggleVisibility">
-                    <v-icon>{{visible ? 'icon-visibility-visible' : 'icon-visibility-disabled'}}</v-icon>
-                </v-btn>
-                <span>{{visible ? i18n.turnOffVisibility : i18n.turnOnVisibility}}</span>
-            </v-tooltip>
-        </v-toolbar>
-    </div>
+    <v-layout column px-8>
+        <v-switch v-model="visible" :label="i18n.turnOnVisibility"></v-switch>
+        <v-switch v-model="multi" :label="i18n.enableKeepMeasurements"></v-switch>
+    </v-layout>
 </template>
-
 
 <script>
 
     export default {
-        components: {},
         data() {
             return {
                 visible: true,
@@ -47,30 +39,28 @@
             i18n: {
                 type: Object,
             },
-            tools: {
-                type: Array,
-            },
-            toolIds: {
-                type: Array,
-            },
-            isToolActive: {
-                type: Boolean,
-            },
             bus: {
                 type: Object,
             },
+            multiMeasurement: {
+                type: Boolean,
+            },
         },
-        computed: {},
-        methods: {
-
-            /**
-             * toggle visibility icon and emit event to toggle visibility of sketching layer
-             */
-            toggleVisibility() {
-                this.visible = !this.visible;
-                this.$emit('toggleSketchingLayerVisibility', this.visible);
+        computed: {
+            multi: {
+                get() {
+                    return this.multiMeasurement;
+                },
+                set(val) {
+                    this.$emit('update:multiMeasurement', val);
+                },
+            },
+        },
+        watch: {
+            visible(val) {
+                this.$emit('toggleSketchingLayerVisibility', val);
             }
         },
+    }
 
-    };
 </script>

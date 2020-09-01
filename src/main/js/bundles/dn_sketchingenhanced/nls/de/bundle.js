@@ -27,8 +27,8 @@ module.exports = {
         layerLimitReached: 'Maximale Layerzahl erreicht',
         profileLoaded: 'Aufzeichnung aktiv',
         enableMeasurements: 'Messen aktivieren',
-        disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
-        enableKeepMeasurements: 'Messungen beibehalten aktivieren',
+        disableKeepMeasurements: 'Alte Messungen löschen',
+        enableKeepMeasurements: 'Messungen beibehalten',
         textEditor: {
             bold: 'Fett',
             italic: 'Kursiv',
@@ -98,6 +98,17 @@ module.exports = {
                 string: 'Wert muss vom Typ string sein',
                 invalidPattern: 'Wert muss vom Typ number-number sein',
             },
+        },
+        measurement: {
+            showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
+            showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
+            coordinates: 'Koordinaten: ',
+            totalLength: 'Gesamtlänge: ',
+            currentLength: 'Aktuelle Teilstrecke: ',
+            aggregateLength: 'Aktuelle Gesamtlänge: ',
+            area: 'Gesamtfläche: ',
+            currentArea: 'Aktuelle Fläche: ',
+            perimeter: 'Umfang: '
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',

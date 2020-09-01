@@ -99,6 +99,17 @@ module.exports = {
                     invalidPattern: 'value must be number-number',
                 },
             },
+            measurement: {
+                showLineMeasurementsAtPolylines: 'Show length of line elements',
+                showLineMeasurementsAtPolygons: 'Show edge length of polygons',
+                coordinates: 'Coordinates: ',
+                totalLength: 'Gesamtlänge: ',
+                currentLength: 'Current Segment Length: ',
+                aggregateLength: 'Current Total Length: ',
+                area: 'Total Area: ',
+                currentArea: 'Current Area: ',
+                perimeter: 'Perimeter: '
+            },
             layerEditor: {
                 header: 'Sketching Layer',
                 noProfiles: 'No profiles defined yet.',

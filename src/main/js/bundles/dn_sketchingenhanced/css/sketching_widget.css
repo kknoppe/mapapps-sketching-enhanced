@@ -13,8 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+.sketchingEnhancedWidget.noPadding.sketching.noCollapseHandles.dijitVisible.dijitDialog {
+    height: auto!important;
+}
 .sketchingEnhancedWidget .ctWindowPadding .ctWindowContentPadding .dijitDialogPaneContent {
     overflow: hidden !important;
+    height: auto!important;
 }
 
 .SketchingToolsBar .v-toolbar__content {
@@ -424,3 +429,13 @@
     background-color: transparent !important;
 }
 
+
+
+.ctAppRoot .sketchingEnhancedWidget .measurementCheckboxes .v-input__control .v-label{
+    font-size: small;
+}
+
+.ctAppRoot .sketchingEnhancedWidget .measurementText p{
+    font-size: small;
+    margin-bottom: 3px!important;
+}

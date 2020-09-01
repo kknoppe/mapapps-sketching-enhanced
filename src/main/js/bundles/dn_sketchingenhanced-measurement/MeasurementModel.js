@@ -13,5 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import './MeasurementController';
-import './MeasurementModel';
+import {Mutable, properties} from 'apprt-core/Mutable';
+
+class MeasurementModel extends Mutable {
+
+    constructor() {
+        super();
+    }
+}
+
+properties(MeasurementModel, {
+    showLineMeasurementsAtPolylines: true,
+    showLineMeasurementsAtPolygons: false,
+
+    currentLength: 0,
+    aggregateLength: 0,
+    totalLength: 0,
+    area: 0,
+    currentArea: 0,
+    perimeter: 0,
+    coordinates: null,
+
+    measurementBoolean: false,
+    multiMeasurement: true,
+
+    pointEnabled: false,
+    polylineEnabled: false,
+    polygonEnabled: false,
+    areaEnabled: false
+
+});
+
+
+export default MeasurementModel;

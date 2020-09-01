@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import Binding from 'apprt-binding/Binding';
 import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
-import SketchingWidget from './components/SketchingWidget.vue';
+// import SketchingWidget from './components/SketchingWidget.vue';
+import SketchingWidget from './SketchingBase.vue';
 import {whenOnce, watch} from 'esri/core/watchUtils';
 
 export default class SketchingEnhancedWidgetFactory {
@@ -23,22 +25,47 @@ export default class SketchingEnhancedWidgetFactory {
     createInstance() {
         const vm = new Vue(SketchingWidget);
 
-        const widget = VueDijit(vm);
+        const measurementBinding = Binding.for(vm, this._measurementModel);
 
+        measurementBinding
+            .syncAll('showLineMeasurementsAtPolylines')
+            .syncAll('showLineMeasurementsAtPolygons')
+            .syncAll('currentLength')
+            .syncAll('aggregateLength')
+            .syncAll('totalLength')
+            .syncAll('area')
+            .syncAll('currentArea')
+            .syncAll('perimeter')
+            .syncAll('coordinates')
+            .syncAll('pointEnabled')
+            .syncAll('polylineEnabled')
+            .syncAll('polygonEnabled')
+            .syncAll('areaEnabled')
+            .syncAll('multiMeasurement')
+            .syncToLeftNow()
+            .enable();
 
         const props = this._properties;
         const tools = props.tools;
         vm.toolIds = tools;
+        vm.units = props.measurementUnits;
+        vm.showKeepMeasurements = props.showKeepMeasurements;
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
-        vm.footerToolIds = props.footerToolIds;
-        vm.measurementBoolean = this._measurementController.measurementBoolean;
+        //vm.footerToolIds = props.footerToolIds;
+        vm.headerToolIds = props.headerToolIds;
+        vm.measurementBoolean = this._measurementModel.measurementBoolean = this._measurementController.measurementBoolean;
+        this._measurementController.lineMeasurementTimeout = props.lineMeasurementTimeout;
 
         vm.measurement = props.measurement;
 
         Object.assign(vm, {
             constructionModel: this._constructionModel,
         });
+
+        if (props.multipleMeasurementsEnabled){
+            this._measurementController.multiMeasurement = props.multipleMeasurementsEnabled;
+        }
 
         // loading symbol settings from sketching Handler properties
         vm.initialSymbolSettings = this._sketchingHandler._properties.sketch;
@@ -47,12 +74,20 @@ export default class SketchingEnhancedWidgetFactory {
 
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
 
-        vm.$on('measurementStatusChanged', val => {
-            this._measurementController.measurementBoolean = val;
+        vm.$on('length-unit-input', val => {
+            this._measurementController._setLengthUnits(val.toLowerCase());
         });
 
-        vm.$on('changeMultiMeasurementState', val => {
-            this._measurementController.multiMeasurement = val;
+        vm.$on('area-unit-input', val => {
+            this._measurementController._setAreaUnits(val.toLowerCase());
+        });
+
+        vm.$on('coordinate-system-input', val => {
+           this._measurementController._setCoordinateSystem(val);
+        });
+
+        vm.$on('measurementStatusChanged', val => {
+            this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = vm.measurementBoolean = val;
         });
 
         vm.$on('settingsSelectionChanged', settings => {
@@ -92,7 +127,48 @@ export default class SketchingEnhancedWidgetFactory {
             }
         });
 
+        const widget = VueDijit(vm);
+
+        widget.onSketchingActivated = () => this._activateToolOnStartup(vm);
+
         return widget;
+    }
+
+    async _activateToolOnStartup(vm) {
+        whenOnce(this._mapWidgetModel, 'ready', () => {
+            whenOnce(this._mapWidgetModel.view, 'ready', async () => {
+                const id = this._properties.activeToolOnStartup;
+                if (!id || !id.length || id === 'none') {
+                    return;
+                }
+                if(id !== 'drawpolylinetool') {
+                    vm.onToolClickHandler('drawpolylinetool');
+                } else {
+                    vm.onToolClickHandler('drawpolygontool')
+                }
+
+                await Promise.resolve(new Promise(r => setTimeout(() => r(), 500)));
+                if (vm.firstToolGroupIds.includes(id)) {
+                    this.clickOnElement(id);
+                } else {
+                    vm.firstToolGroupIds.forEach(toolId => {
+                        const tool = vm._getTool(toolId);
+                        if (tool.items && tool.items.includes(id)) {
+                            this.clickOnElement(toolId, true);
+                            this.clickOnElement(id);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    clickOnElement(id, parent) {
+        const element = document.getElementById(id);
+        if(parent && (element.parentElement.parentElement.className.indexOf('active') !== -1)) {
+            return;
+        }
+        element && element.click();
     }
 
     _activateHelpLine(settings) {
