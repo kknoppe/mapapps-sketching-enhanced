@@ -76,6 +76,7 @@
                     }
                 ],
                 "widgetRole": "sketchingEnhancedWidget",
+                "lineMeasurementTimeout": 100,
                 "activeToolOnStartup": "none",
                 "showKeepMeasurements": false,
                 "multipleMeasurementsEnabled": true,

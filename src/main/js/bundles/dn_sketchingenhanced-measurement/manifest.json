@@ -30,7 +30,6 @@
                 "dn_sketchingenhanced.Action"
             ],
             "properties": {
-                "lineMeasurementTimeout": 100,
                 "measurementUnits": {
                     "area": ["auto","Quadratmeter","Hektar","Quadratkilometer"],
                     "length": ["auto","Meter","Kilometer"],

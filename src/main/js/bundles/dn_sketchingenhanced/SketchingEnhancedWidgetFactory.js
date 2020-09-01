@@ -55,6 +55,7 @@ export default class SketchingEnhancedWidgetFactory {
         //vm.footerToolIds = props.footerToolIds;
         vm.headerToolIds = props.headerToolIds;
         vm.measurementBoolean = this._measurementModel.measurementBoolean = this._measurementController.measurementBoolean;
+        this._measurementController.lineMeasurementTimeout = props.lineMeasurementTimeout;
 
         vm.measurement = props.measurement;
 

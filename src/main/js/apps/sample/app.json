@@ -35,6 +35,7 @@
         "dn_sketchingenhanced": {
             "Config": {
                 "activeToolOnStartup": "drawpointtool",
+                "lineMeasurementTimeout": 100,
                 "showKeepMeasurements": true,
                 "multipleMeasurementsEnabled": true,
                 "measurement": true,

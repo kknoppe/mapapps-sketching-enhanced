@@ -192,9 +192,9 @@
                         case 'drawpolygontool':
                         case 'drawpolylinetool':
                             return ['Darstellung', 'Messung', 'Konstruktion'];
-                        case 'drawreshape1tool':
                         case 'drawcopytool':
                         case 'drawremovetool':
+                        case 'drawreshape1tool':
                             this.tab = null;
                             return [''];
                         default:

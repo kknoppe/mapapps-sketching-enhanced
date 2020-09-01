@@ -32,6 +32,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
         "measurement": false,
         "showKeepMeasurements": false,
         "multipleMeasurementsEnabled": true,
+        "lineMeasurementTimeout": 100,
         "firstToolGroupIds": [
           "drawpointtool",
           "sketchinglinegroup",
@@ -92,3 +93,4 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 | measurementUnits      | Object   |                               | wie im Beispiel          | Einheiten für Fläche, Länge und die auszuwählenden Koordinatensysteme   |
 | showKeepMeasurements  | Boolean   | ```true``` &#124; ```false``` | wie im Beispiel          |  Button für Mehrfachmessungen anzeigen  |
 | multipleMeasurementsEnabled  | Boolean   | ```true``` &#124; ```false``` | wie im Beispiel   | Mehrfachmessungen initial aktivieren  |
+| lineMeasurementTimeout | Integer | 1..n milliseconds | wie im Beispiel | Verzögerung für die Anzeige von Linienmessungen |
