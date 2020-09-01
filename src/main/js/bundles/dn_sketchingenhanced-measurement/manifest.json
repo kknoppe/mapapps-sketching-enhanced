@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-measurement",
-    "version": "1.0.4",
+    "version": "1.0.4-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -48,7 +48,7 @@
                             "systemWkid": 3857
                         },
                         {
-                            "systemLabel": "DHDN3 Gaus-KrÃ¼ger",
+                            "systemLabel": "DHDN3 Gaus-Krüger",
                             "systemWkid": 31467
                         },
                         {
@@ -64,8 +64,8 @@
                 "unitAbbreviationMapping": {
                     "meters": "m",
                     "kilometers": "km",
-                    "square-meters": "mÂ²",
-                    "square-kilometers": "kmÂ²",
+                    "square-meters": "m²",
+                    "square-kilometers": "km²",
                     "hectares": "ha"
                 },
                 "disabledMeasurementTools": [
@@ -83,8 +83,8 @@
                 "pointSRS": "4326",
                 "systemsWithUnits": ["4326"],
                 "pointCoordPlaces": "3",
-                "pointCoordUnitSymbolX": "Â°E",
-                "pointCoordUnitSymbolY": "Â°N",
+                "pointCoordUnitSymbolX": "°E",
+                "pointCoordUnitSymbolY": "°N",
                 "srs":{
                     "geodetic": [
                         4326,

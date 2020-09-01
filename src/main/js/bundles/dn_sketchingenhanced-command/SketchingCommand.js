@@ -18,7 +18,7 @@
  * Copyright (C) con terra GmbH
  */
 
-import geometryEngine from "esri/geometry/geometryEngine";
+import {buffer, union, intersect, difference} from "esri/geometry/geometryEngine";
 
 export default function () {
     return {
@@ -102,7 +102,7 @@ export default function () {
                 const distance = viewModel.bufferDistance;
                 const unit = viewModel.bufferUnit;
                 const graphics = geometries.map((geometry) => {
-                    return sketchingHandler._addGraphic(geometryEngine.buffer(geometry, distance, unit));
+                    return sketchingHandler._addGraphic(buffer(geometry, distance, unit));
                 });
                 this._resetAndUpdate(graphics);
             }
@@ -110,17 +110,17 @@ export default function () {
 
         unionSelected() {
             const geometries = this._getSelectedGeometries();
-            geometries && this._resetAndAddAndUpdate(geometryEngine.union(geometries));
+            geometries && this._resetAndAddAndUpdate(union(geometries));
         },
 
         intersectSelected() {
             const geometries = this._getSelectedGeometries();
-            geometries && geometries.length > 1 && this._resetAndAddAndUpdate(geometryEngine.intersect(geometries[0], geometries[1]));
+            geometries && geometries.length > 1 && this._resetAndAddAndUpdate(intersect(geometries[0], geometries[1]));
         },
 
         differenceSelected() {
             const geometries = this._getSelectedGeometries();
-            geometries && geometries.length > 1 && this._resetAndAddAndUpdate(geometryEngine.difference(geometries[0], geometries[1]));
+            geometries && geometries.length > 1 && this._resetAndAddAndUpdate(difference(geometries[0], geometries[1]));
         },
 
         addGraphic(evt) {
@@ -136,7 +136,7 @@ export default function () {
             if (operator === "selectBuffer") {
                 const distance = viewModel.bufferDistance;
                 const unit = viewModel.bufferUnit;
-                return geometryEngine.buffer(geometry, distance, unit);
+                return buffer(geometry, distance, unit);
             } else if (operator === "selectCopy")
                 return geometry.clone();
             else if (operator === "selectPlus" || operator === "selectMinus" || operator === "selectIntersect") {
@@ -145,11 +145,11 @@ export default function () {
                     this.removeSelected();
                     switch (operator) {
                         case "selectPlus":
-                            return geometryEngine.union(geometries.concat([geometry]));
+                            return union(geometries.concat([geometry]));
                         case "selectMinus":
-                            return geometryEngine.difference(geometryEngine.union(geometries), geometry);
+                            return difference(union(geometries), geometry);
                         case "selectIntersect":
-                            return geometryEngine.intersect(geometryEngine.union(geometries), geometry);
+                            return intersect(union(geometries), geometry);
                         default:
                             return null;
                     }

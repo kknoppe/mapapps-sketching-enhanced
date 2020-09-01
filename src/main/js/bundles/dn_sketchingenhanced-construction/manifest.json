@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-construction",
-    "version": "1.0.4",
+    "version": "1.0.4-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -54,6 +54,11 @@
                     "name": "_snappingManager",
                     "providing": "dn_sketchingenhanced-snappingmanager.SnappingManager",
                     "cardinality": "0..1"
+                },
+                {
+                    "name": "_sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler",
+                    "cardinality": "0..1"
                 }
             ]
         },
@@ -67,6 +72,11 @@
                 {
                     "name": "_constructionModel",
                     "providing": "dn_sketchingenhanced.SketchingConstructionModel"
+                },
+                {
+                    "name": "_sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler",
+                    "cardinality": "0..1"
                 }
             ]
         }

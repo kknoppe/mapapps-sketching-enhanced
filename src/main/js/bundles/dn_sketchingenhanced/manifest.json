@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced",
-    "version": "1.0.4",
+    "version": "1.0.4-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -99,7 +99,7 @@
                             "systemWkid": 3857
                         },
                         {
-                            "systemLabel": "DHDN3 Gaus-KrÃ¼ger",
+                            "systemLabel": "DHDN3 Gaus-Krüger",
                             "systemWkid": 31467
                         },
                         {

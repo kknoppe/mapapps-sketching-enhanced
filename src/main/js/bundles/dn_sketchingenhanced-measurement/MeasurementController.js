@@ -285,7 +285,7 @@ export default class MeasurementController {
     _removeCorrelatedMeasurementTexts(evt) {
         const graphicGroup = evt.graphics[0].group;
 
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => x.symbol && x.symbol.group === graphicGroup);
 
@@ -323,7 +323,7 @@ export default class MeasurementController {
      * @private
      */
     _calculatePolygonMeasurements(evt, temporary) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
 
         // calculate area of polygon
@@ -351,7 +351,7 @@ export default class MeasurementController {
         if (path.length < 3 && !temporary) {
             return;
         }
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
 
         const lengthString = this._getLength(evt.graphic.geometry);
@@ -554,14 +554,14 @@ export default class MeasurementController {
      * @private
      */
     _removeTemporaryMeasurements(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => x.symbol && x.symbol.name === 'temporary');
         viewModel.layer.removeMany(gs);
     }
 
     _removeAll(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         viewModel.layer.removeAll();
     }
 
@@ -593,7 +593,7 @@ export default class MeasurementController {
      * @private
      */
     _addTextForPolylinePolygon(evt, firstPoint, id) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
         const newVertex = evt.toolEventInfo.added;
         this._vertexArray.push(newVertex);
@@ -615,7 +615,7 @@ export default class MeasurementController {
      * @private
      */
     _addRadius(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
 
         const center = evt.graphic.geometry.extent.center;
@@ -821,7 +821,7 @@ export default class MeasurementController {
      * @private
      */
     _addLineMeasurementsToPolylines(evt) {
-        const viewModel = evt.target;
+        const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
 
         const paths = evt.graphic.geometry.paths[0];

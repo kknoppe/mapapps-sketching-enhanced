@@ -17,7 +17,7 @@
 /*
  * Copyright (C) con terra GmbH
  */
-import geometryEngine from "esri/geometry/geometryEngine";
+import {disjoint} from "esri/geometry/geometryEngine";
 
 const RULE_KEY_ACTIVE = "drawActive";
 const RULE_KEY_CANUNDO = "drawCanUndo";
@@ -61,7 +61,7 @@ function isTouched(graphics) {
     if (graphics.length > 1) {
         const geometry = graphics.getItemAt(0).geometry;
         touched = graphics.every((graphic, idx) => {
-            return idx === 0 || !geometryEngine.disjoint(geometry, graphic.geometry);
+            return idx === 0 || !disjoint(geometry, graphic.geometry);
         });
     }
     return touched;
@@ -98,7 +98,7 @@ export default function () {
         handler(evt) {
             const type = evt.type;
             const state = evt.state;
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const context = this._ruleContextState;
             updateState(type, state, viewModel, context);
         },

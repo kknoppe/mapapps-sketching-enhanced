@@ -20,7 +20,7 @@
 
 import d_lang from "dojo/_base/lang";
 import {fromJSON} from "esri/symbols/support/jsonUtils";
-import geometryEngine from "esri/geometry/geometryEngine";
+import * as geometryEngine from "esri/geometry/geometryEngine";
 import {createScreenPoint} from "esri/core/screenUtils";
 
 export default function () {
@@ -207,7 +207,7 @@ export default function () {
 
         _checkShouldSnappingByPoint(point, geometry) {
             const geo = geometry.object.geometry;
-            return geo.type === "polygon" && geometryEngine.disjoint(geo, point);
+            return geo.type === "polygon" && disjoint(geo, point);
         },
 
         _checkShouldSnappingByOperator(point, geometry, operator) {
@@ -365,7 +365,7 @@ export default function () {
         handler(evt) {
             const type = this._sketchType = evt.type;
             const state = this._sketchState = evt.state;
-            const viewModel = evt.target;
+            const viewModel = this._sketchingHandler.sketchViewModel;
             const graphics = evt.graphics || [evt.graphic];
             const firstGraphic = graphics.length && graphics[0];
             const snappingManager = this._snappingManager;
