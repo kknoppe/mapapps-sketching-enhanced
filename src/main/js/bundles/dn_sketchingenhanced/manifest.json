@@ -50,9 +50,6 @@
                     "w": 650,
                     "h": 450
                 },
-                "tools": [
-                    "windowCollapseTool"
-                ],
                 "windowClass": "noPadding sketching noCollapseHandles",
                 "windowName": "sketching"
             }
