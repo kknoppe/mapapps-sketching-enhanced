@@ -48,7 +48,7 @@
                             "systemWkid": 3857
                         },
                         {
-                            "systemLabel": "DHDN3 Gaus-Krüger",
+                            "systemLabel": "DHDN3 Gaus-KrÃ¼ger",
                             "systemWkid": 31467
                         },
                         {
@@ -64,8 +64,8 @@
                 "unitAbbreviationMapping": {
                     "meters": "m",
                     "kilometers": "km",
-                    "square-meters": "m²",
-                    "square-kilometers": "km²",
+                    "square-meters": "mÂ²",
+                    "square-kilometers": "kmÂ²",
                     "hectares": "ha"
                 },
                 "disabledMeasurementTools": [
@@ -83,8 +83,8 @@
                 "pointSRS": "4326",
                 "systemsWithUnits": ["4326"],
                 "pointCoordPlaces": "3",
-                "pointCoordUnitSymbolX": "°E",
-                "pointCoordUnitSymbolY": "°N",
+                "pointCoordUnitSymbolX": "Â°E",
+                "pointCoordUnitSymbolY": "Â°N",
                 "srs":{
                     "geodetic": [
                         4326,
