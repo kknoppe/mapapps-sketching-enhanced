@@ -152,7 +152,7 @@ export default class DrawFurtherGeometries {
         let verticesCount = 0;
 
         viewModel.on(['create'], evt => {
-            if (evt.target.tool && evt.target.tool.id === 'drawarrowtool') {
+            if (evt.activeTool && evt.activeTool === 'drawarrowtool') {
 
                 if (evt.toolEventInfo && evt.toolEventInfo.type === 'vertex-add') {
                     verticesCount++;

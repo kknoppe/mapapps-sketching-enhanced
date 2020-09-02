@@ -108,7 +108,8 @@ module.exports = {
             aggregateLength: 'Aktuelle Gesamtlänge: ',
             area: 'Gesamtfläche: ',
             currentArea: 'Aktuelle Fläche: ',
-            perimeter: 'Umfang: '
+            perimeter: 'Umfang: ',
+            copyToClipboard: 'Kopieren'
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',

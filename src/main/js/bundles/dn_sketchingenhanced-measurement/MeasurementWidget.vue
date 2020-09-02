@@ -76,9 +76,20 @@
                                 {{measurements[type.measure]}}
                             </span>
                         </p>
-                        <v-btn icon color="" v-show="measurements[rule]" @click="_copyTextToClipboard(measurements[type.measure])">
-                            <v-icon class="icon-select-none">icon-select-none</v-icon>
-                        </v-btn>
+
+                        <v-tooltip top>
+                            <v-btn icon color=""
+                                   v-show="measurements[rule]"
+                                   @click="_copyTextToClipboard(measurements[type.measure])"
+                                    slot="activator"
+                            >
+                                <v-icon class="icon-select-none">icon-select-none</v-icon>
+                            </v-btn>
+                            <span>{{i18n.measurement.copyToClipboard}}</span>
+                        </v-tooltip>
+
+
+
                     </v-layout>
                 </v-layout>
             </v-card>
