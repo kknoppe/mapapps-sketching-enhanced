@@ -19,6 +19,7 @@ module.exports = {
         bundleDescription: 'Sketching Enhanced',
         ui: {
             windowTitle: 'Sketching',
+            noActiveTool: 'Please select a tool or move the map.',
             activeConstructionLength: 'Length',
             activeConstructionAngle: 'Angle',
             turnOnVisibility: 'Show drawings',

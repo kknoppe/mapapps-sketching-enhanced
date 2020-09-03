@@ -18,6 +18,7 @@ module.exports = {
     bundleDescription: 'Sketching Enhanced',
     ui: {
         windowTitle: 'Zeichnen',
+        noActiveTool: 'Bitte wählen Sie ein Werkzeug aus oder verschieben Sie die Karte.',
         activeConstructionLength: 'Länge',
         activeConstructionAngle: 'Winkel',
         turnOnVisibility: 'Zeichnungen einblenden',
