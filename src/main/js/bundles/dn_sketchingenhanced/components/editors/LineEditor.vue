@@ -17,9 +17,9 @@
 -->
 <template>
     <div>
-        <color-picker label="Linienfarbe" :color.sync="color"></color-picker>
-        <style-picker label="Linienstil" :shape.sync="shape" type="line"></style-picker>
-        <size-picker label="Linienstärke" :size.sync="size" type="line"></size-picker>
+        <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="color" :i18n="i18n"></color-picker>
+        <style-picker v-bind:label="i18n.symbolEditor.lineStyleSelectorTooltip" :shape.sync="shape" type="line" :i18n="i18n"></style-picker>
+        <size-picker v-bind:label="i18n.symbolEditor.lineWeightSliderLabel" :size.sync="size" type="line" :i18n="i18n"></size-picker>
     </div>
 </template>
 
@@ -37,6 +37,9 @@
         },
         props: {
             settings: Object,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             color: {

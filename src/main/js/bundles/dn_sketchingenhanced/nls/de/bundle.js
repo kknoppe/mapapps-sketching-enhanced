@@ -29,6 +29,7 @@ module.exports = {
         profileLoaded: 'Aufzeichnung aktiv',
         enableMeasurements: 'Messen aktivieren',
         disableKeepMeasurements: 'Alte Messungen löschen',
+        settings: 'Einstellungen',
         enableKeepMeasurements: 'Messungen beibehalten',
         textEditor: {
             bold: 'Fett',
@@ -104,13 +105,19 @@ module.exports = {
             showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
             showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
             coordinates: 'Koordinaten: ',
+            coordinateSystem: 'Koordinatensystem',
             totalLength: 'Gesamtlänge: ',
             currentLength: 'Aktuelle Teilstrecke: ',
             aggregateLength: 'Aktuelle Gesamtlänge: ',
             area: 'Gesamtfläche: ',
             currentArea: 'Aktuelle Fläche: ',
             perimeter: 'Umfang: ',
-            copyToClipboard: 'Kopieren'
+            copyToClipboard: 'Kopieren',
+            unitLengthSelect: 'Längeneinheit',
+            unitAreaSelect: 'Flächeneinheit',
+            drawTab: 'Darstellung',
+            measureTab: 'Messung',
+            constructionTab: 'Konstruction'
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',

@@ -38,7 +38,7 @@
                         v-show="measurements.polylineEnabled || measurements.polygonEnabled"
                         v-model="selectedLengthItem"
                         :items="units.length"
-                        label="Längeneinheit"
+                        :label="i18n.measurement.unitLengthSelect"
                         outlined
                         dense
                     ></v-combobox>
@@ -46,7 +46,7 @@
                         v-show="measurements.polygonEnabled"
                         v-model="selectedAreaItem"
                         :items="units.area"
-                        label="Flächeneinheit"
+                        :label="i18n.measurement.unitAreaSelect"
                         outlined
                         dense
                     ></v-combobox>
@@ -55,7 +55,7 @@
                         v-show="measurements.pointEnabled"
                         v-model="selectedPointItem"
                         :items="coordinateSystems"
-                        label="Koordinatensystem"
+                        :label="i18n.measurement.coordinateSystem"
                         outlined
                         dense
                     ></v-select>

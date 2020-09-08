@@ -62,6 +62,9 @@
             label: String,
             size: Number,
             maxPointSize: Number,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             radius: {

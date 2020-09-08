@@ -53,6 +53,9 @@
         props: {
             label: String,
             font: String,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             currentFont: {

@@ -121,15 +121,8 @@
     margin: 6px 8px 6px 14px!important;
 }
 
-.unitSelectors .v-input__slot {
-    max-width:80%!important;
-}
-
-.unitSelectors .srsSelect {
-    max-width: 13em;
-}
-.unitSelectors .srsSelect .v-select__selections {
-    max-width: 95%;
+.unitSelectors .v-input {
+    font-size: 13px!important;
 }
 
 .unitSelectors .srsSelect .v-select__selections .v-select__selection.v-select__selection--comma {
