@@ -710,7 +710,7 @@ export default class MeasurementController {
         const id = evt.graphic.uid.toString();
         const viewModel = this._sketchingHandler.sketchViewModel;
         const coordinates = this.coordinates;
-        const point = evt.graphic.geometry.extent.center;
+        const point = evt.graphic.geometry;
         const coordString = this._getPointString(evt).then(coordString => {
             const textSymbol = new TextSymbol({
                 text: coordString,
