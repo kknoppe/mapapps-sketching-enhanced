@@ -691,7 +691,8 @@ export default class MeasurementController {
             const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
             this._sketchingHandler.sketchViewModel.layer.add(graphic);
         } else {
-            this._model.showLineMeasurementsAtPolygons && evt.graphic.geometry.rings.forEach(rings => {
+            const isPolygon = evt.graphic.geometry.rings;
+            this._model.showLineMeasurementsAtPolygons && isPolygon && evt.graphic.geometry.rings.forEach(rings => {
                 for (let i = 1; i < rings.length; i++) {
 	                const checkedPath = [rings[i - 1], rings[i]];
 	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
