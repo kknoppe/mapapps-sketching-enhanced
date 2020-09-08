@@ -53,7 +53,7 @@
         props: {
             label: String,
             textStyle: Object,
-            i18n: Object,
+            i18n: {type:Object},
         },
         computed: {
             currentTextStyle: {

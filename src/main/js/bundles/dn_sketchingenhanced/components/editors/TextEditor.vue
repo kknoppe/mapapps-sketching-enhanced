@@ -18,14 +18,14 @@
 <template>
     <v-layout row>
         <v-layout column>
-            <font-component v-bind:label="i18n.textEditor.textFontButton" :font.sync="font"></font-component>
-            <color-picker v-bind:label="i18n.textEditor.textColorButton" :color.sync="color"></color-picker>
-            <blur-component v-bind:label="i18n.textEditor.textStyleButton" :color.sync="blurColor" :radius.sync="blurRadius"></blur-component>
+            <font-component v-bind:label="i18n.textEditor.textFontButton" :font.sync="font" :i18n="i18n"></font-component>
+            <color-picker v-bind:label="i18n.textEditor.textColorButton" :color.sync="color" :i18n="i18n"></color-picker>
+            <blur-component v-bind:label="i18n.textEditor.textStyleButton" :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n"></blur-component>
         </v-layout>
         <v-layout column>
-            <text-style-component v-bind:label="i18n.textEditor.textStyleButton" :textStyle.sync="textStyle"></text-style-component>
-            <font-size-component v-bind:label="i18n.textEditor.textSizeButton" :fontSize.sync="fontSize"></font-size-component>
-            <text-angle-component v-bind:label="i18n.textEditor.textAngleButton" :angle.sync="textAngle"></text-angle-component>
+            <text-style-component v-bind:label="i18n.textEditor.textStyleButton" :textStyle.sync="textStyle" :i18n="i18n"></text-style-component>
+            <font-size-component v-bind:label="i18n.textEditor.textSizeButton" :fontSize.sync="fontSize" :i18n="i18n"></font-size-component>
+            <text-angle-component v-bind:label="i18n.textEditor.textAngleButton" :angle.sync="textAngle" :i18n="i18n"></text-angle-component>
         </v-layout>
     </v-layout>
 </template>
@@ -51,7 +51,7 @@
         },
         props: {
             settings: Object,
-            i18n: {type: Object, default: () => i18n.ui.textEditor},
+            i18n: {type: Object, default: () => i18n.ui},
         },
         computed: {
             color: {
