@@ -19,6 +19,7 @@ module.exports = {
         bundleDescription: 'Sketching Enhanced',
         ui: {
             windowTitle: 'Sketching',
+            noActiveTool: 'Please select a tool or move the map.',
             activeConstructionLength: 'Length',
             activeConstructionAngle: 'Angle',
             turnOnVisibility: 'Show drawings',
@@ -28,6 +29,7 @@ module.exports = {
             layerLimitReached: 'Layer limit reached',
             profileLoaded: 'Currently recording',
             enableMeasurements: 'Enable measurements',
+            settings: 'Settings',
             disableKeepMeasurements: 'disable keeping measurements',
             enableKeepMeasurements: 'enable keeping measurements',
             textEditor: {
@@ -103,13 +105,19 @@ module.exports = {
                 showLineMeasurementsAtPolylines: 'Show length of line elements',
                 showLineMeasurementsAtPolygons: 'Show edge length of polygons',
                 coordinates: 'Coordinates: ',
+                coordinateSystem: 'Coordinate System',
                 totalLength: 'Gesamtlänge: ',
                 currentLength: 'Current Segment Length: ',
                 aggregateLength: 'Current Total Length: ',
                 area: 'Total Area: ',
                 currentArea: 'Current Area: ',
                 perimeter: 'Perimeter: ',
-                copyToClipboard: 'Copy to Clipboard'
+                copyToClipboard: 'Copy to Clipboard',
+                unitLengthSelect: 'Length Unit',
+                unitAreaSelect: 'Area Unit',
+                drawTab: 'Appearance',
+                measureTab: 'Measurement',
+                constructionTab: 'Construction'
             },
             layerEditor: {
                 header: 'Sketching Layer',

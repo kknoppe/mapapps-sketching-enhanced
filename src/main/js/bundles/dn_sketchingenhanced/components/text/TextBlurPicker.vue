@@ -18,7 +18,7 @@
 <template>
     <div class="text-blur-picker">
         <color-picker v-model="blurColor"></color-picker>
-        <v-slider :label="i18n.blurSize" v-model="blurRadius" thumb-label="always" thumb-size="20" max="20"></v-slider>
+        <v-slider :label="i18n.textEditor.blurSize" v-model="blurRadius" thumb-label="always" thumb-size="20" max="20"></v-slider>
     </div>
 </template>
 <script>

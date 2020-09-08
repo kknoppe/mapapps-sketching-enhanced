@@ -132,7 +132,7 @@
         },
 
         props: {
-            i18n: {type: Object, default: () => ({})},
+            i18n: {type: Object},
             settings: {type: Object, required: true},
         },
 

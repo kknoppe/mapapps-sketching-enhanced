@@ -18,13 +18,13 @@
 <template>
     <v-layout row>
         <v-layout column>
-            <color-picker label="Füllfarbe" :color.sync="color"></color-picker>
-            <color-picker label="Linienfarbe" :color.sync="outlineColor"></color-picker>
-            <size-picker label="Linienstärke" :size.sync="size" type="line"></size-picker>
+            <color-picker v-bind:label="i18n.symbolEditor.colorPickerFillTooltip" :color.sync="color"></color-picker>
+            <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="outlineColor"></color-picker>
+            <size-picker v-bind:label="i18n.symbolEditor.lineWeightSliderLabel" :size.sync="size" type="line"></size-picker>
         </v-layout>
         <v-layout column style="flex: 0 0 auto!important;">
-            <style-picker style="flex: inherit;" label="Füllung" :shape.sync="shape" type="polygon"></style-picker>
-            <style-picker style="flex: inherit;" label="Linienstil" :shape.sync="lineStyle" type="line"></style-picker>
+            <style-picker style="flex: inherit;" v-bind:label="i18n.symbolEditor.fillStyleSelectorTooltip" :shape.sync="shape" type="polygon" :i18n="i18n"></style-picker>
+            <style-picker style="flex: inherit;" v-bind:label="i18n.symbolEditor.lineStyleSelectorTooltip" :shape.sync="lineStyle" type="line" :i18n="i18n"></style-picker>
         </v-layout>
     </v-layout>
 </template>
@@ -43,6 +43,9 @@
         },
         props: {
             settings: Object,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             color: {

@@ -17,9 +17,9 @@
 -->
 <template>
     <div>
-        <color-picker label="Füllfarbe" :color.sync="color"></color-picker>
-        <style-picker label="Symbol" :shape.sync="shape" type="point"></style-picker>
-        <size-picker label="Punktgröße" :size.sync="size" :maxPointSize="settings.maxPointSize" type="point"></size-picker>
+        <color-picker v-bind:label="i18n.symbolEditor.PointSymbolSelectorTooltip" :color.sync="color"></color-picker>
+        <style-picker v-bind:label="i18n.symbolEditor.PointSymbolSelectorTooltip" :shape.sync="shape" type="point"></style-picker>
+        <size-picker v-bind:label="i18n.symbolEditor.pointRadiusSliderLabel" :size.sync="size" :maxPointSize="settings.maxPointSize" type="point" :i18n="i18n"></size-picker>
     </div>
 </template>
 
@@ -37,6 +37,9 @@
         },
         props: {
             settings: Object,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             color: {
@@ -44,6 +47,7 @@
                     return this.settings.color;
                 },
                 set(val) {
+                    console.log(this.i18n)
                     if(val && val.rgba) {
                         const settings = this.settings;
                         settings.color = val.rgba;
@@ -72,6 +76,11 @@
                 }
             }
         },
+        methods: {
+            _getLabel(typ){
+                return this.i18n[typ];
+            }
+        }
     }
 
 </script>

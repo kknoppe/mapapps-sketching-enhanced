@@ -34,16 +34,17 @@
             class="mx-1"
         ></v-divider>
         <v-layout class="sketchingCenterContainer" height="100%" row>
-            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus"></navigation>
+            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="item in tabs">
-                    {{item}}
+                    {{i18n.measurement[item]}}
                 </v-tab>
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
-                        <v-tab-item :key="index">
-                            <illustration class="flex grow pa-2" v-if="item === 'Darstellung'" :settings.sync="settings" :tool="currentTool"></illustration>
-                            <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'Messung'" grow>
+                        <v-card class="mx-6" v-if="!item">{{i18n.noActiveTool}}</v-card>
+                        <v-tab-item v-if="item" :key="index">
+                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool"></illustration>
+                            <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements.sync="measurements"
                                                  :units="units"
@@ -59,7 +60,7 @@
                                 <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :multiMeasurement.sync="multiMeasurement" :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
                             </v-flex>
-                            <construction-panel class="flex grow pa-2" v-if="item === 'Konstruktion'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
+                            <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
                                             @toggleSketchingLayerVisibility="$emit('toggleSketchingLayerVisibility', $event)"
@@ -76,7 +77,7 @@
             <v-toolbar class="sketchingFooterToolbar">
                 <v-btn @click="showSettings">
                     <v-icon>icon-cog</v-icon>
-                    <span class="pl-2">Einstellungen</span>
+                    <span class="pl-2">{{i18n.settings}}</span>
                 </v-btn>
             </v-toolbar>
         </v-footer>
@@ -188,17 +189,17 @@
                         case 'drawarrowtool':
                         case 'drawellipsetool':
                         case 'drawcircletool':
-                            return ['Darstellung'];
+                            return ['drawTab'];
                         case 'drawpolygontool':
                         case 'drawpolylinetool':
-                            return ['Darstellung', 'Messung', 'Konstruktion'];
+                            return ['drawTab', 'measureTab', 'constructionTab'];
                         case 'drawcopytool':
                         case 'drawremovetool':
                         case 'drawreshape1tool':
                             this.tab = null;
                             return [''];
                         default:
-                            return ['Darstellung', 'Messung'];
+                            return ['drawTab', 'measureTab'];
                     }
                 } else {
                     return [''];

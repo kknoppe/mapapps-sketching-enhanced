@@ -53,7 +53,7 @@
             label: String,
             color: Object,
             radius: Number,
-            i18n: Object,
+            i18n: {type:Object},
         },
         computed: {
             blurColor: {

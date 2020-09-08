@@ -287,7 +287,6 @@ export default function () {
             let that = this;
             const viewModel = this._getSketchViewModel();
 
-            //viewMondel
             this._ownHandler.add(d_aspect.before(viewModel, "reset", d_lang.hitch(this, this.removeSnappingGraphics)));
             this._ownHandler.add(d_aspect.before(viewModel, "_emitUpdateEvent", d_lang.hitch(this, this._onUpdateHandler)));
             this._ownHandler.add(d_aspect.after(viewModel, "_getReshape", res => {
@@ -301,8 +300,10 @@ export default function () {
 
 
             this._ownHandler.add(d_aspect.after(viewModel, "create", (res) => {
-                const operationHandle = viewModel._operationHandle;
-                operationHandle && that._addChangeDrawActiveActionHandler(operationHandle.activeComponent);
+                ct_when(res, create => {
+                    const operationHandle = viewModel._operationHandle;
+                    viewModel.activeComponent && that._addChangeDrawActiveActionHandler(viewModel.activeComponent);
+                });
                 return res;
             }));
         },

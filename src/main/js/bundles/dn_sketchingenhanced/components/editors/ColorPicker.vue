@@ -68,7 +68,7 @@
         },
         props: {
             color: Object,
-            label: String,
+            label: String
         }
     }
 </script>

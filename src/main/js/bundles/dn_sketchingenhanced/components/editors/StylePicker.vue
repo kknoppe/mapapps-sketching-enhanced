@@ -67,6 +67,9 @@
             type: String,
             label: String,
             shape: String,
+            i18n: {
+                type: Object,
+            }
         },
         computed: {
             pattern: {

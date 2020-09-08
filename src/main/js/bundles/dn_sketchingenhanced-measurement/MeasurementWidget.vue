@@ -19,26 +19,26 @@
         <v-layout row class="pa-0" height="100%">
             <v-card class="leftContainer">
                 <v-card class="">
-                    <v-checkbox class="pa-1 ma-0 measurementCheckboxes" color="primary"
+                    <v-switch class="pa-1 ma-0 measurementCheckboxes" color="primary"
                                 v-show="measurements.polylineEnabled"
                                 :label="i18n.measurement.showLineMeasurementsAtPolylines"
                                 v-model="polylineMeasurementLineEnabled"
                                 hide-details>
-                    </v-checkbox>
-                    <v-checkbox class="pa-1 ma-0 measurementCheckboxes" color="primary"
+                    </v-switch>
+                    <v-switch class="pa-1 ma-0 measurementCheckboxes" color="primary"
                                 v-show="measurements.polygonEnabled"
                                 :label="i18n.measurement.showLineMeasurementsAtPolygons"
                                 v-model="polygonMeasurementLineEnabled"
                                 hide-details>
 
-                    </v-checkbox>
+                    </v-switch>
                 </v-card>
                 <v-flex class="unitSelectors">
                     <v-combobox
                         v-show="measurements.polylineEnabled || measurements.polygonEnabled"
                         v-model="selectedLengthItem"
                         :items="units.length"
-                        label="Längeneinheit"
+                        :label="i18n.measurement.unitLengthSelect"
                         outlined
                         dense
                     ></v-combobox>
@@ -46,7 +46,7 @@
                         v-show="measurements.polygonEnabled"
                         v-model="selectedAreaItem"
                         :items="units.area"
-                        label="Flächeneinheit"
+                        :label="i18n.measurement.unitAreaSelect"
                         outlined
                         dense
                     ></v-combobox>
@@ -55,7 +55,7 @@
                         v-show="measurements.pointEnabled"
                         v-model="selectedPointItem"
                         :items="coordinateSystems"
-                        label="Koordinatensystem"
+                        :label="i18n.measurement.coordinateSystem"
                         outlined
                         dense
                     ></v-select>
@@ -68,14 +68,14 @@
             <v-card class="rightContainer">
                 <v-layout class="pa-0 ma-0 measurementText" column v-for="(type, index) in types">
                     <v-layout class="pa-0 ma-0 flex justify-space-between" row v-for="(rule, index) in type.rules">
-                        <p v-show="measurements[rule]">
-                            <span class="measureLabel">
+                        <div v-show="measurements[rule]">
+                            <div class="measureLabel">
                                 &nbsp&nbsp{{i18n.measurement[type.measure]}}
-                            </span>
-                            <span class="measureRecord">
+                            </div>
+                            <div class="measureRecord">
                                 {{measurements[type.measure]}}
-                            </span>
-                        </p>
+                            </div>
+                        </div>
 
                         <v-tooltip top>
                             <v-btn icon color=""

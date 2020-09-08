@@ -38,14 +38,15 @@
             TextStyleCheckbox,
         },
         props: {
-            i18n: Object,
+            i18n: {type:Object},
             active: Object,
             styles: Array,
         },
 
         data() {
+            console.log(this.i18n)
             return {
-                i18nStyles: [this.i18n.bold, this.i18n.italic, this.i18n.underlined],
+                i18nStyles: [this.i18n.textEditor.bold, this.i18n.textEditor.italic, this.i18n.textEditor.underlined],
             };
         },
     };
