@@ -22,7 +22,7 @@
         :close-on-content-click="true"
         offset-y
     >
-        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus" :tooltipIfDisabled="!tool.enabled ? 'Es liegen keine Zeichnungen vor' : null"></tool-button>
+        <tool-button slot="activator" :tool="tool" :id="tool.id" :active="active" :bus="bus" :tooltipIfDisabled="!tool.enabled ? i18n.noDrawings : null"></tool-button>
         <v-card>
             <v-list class="sketchingMenu">
                 <div v-for="item in listTools(tool)">
@@ -68,6 +68,9 @@
             bus: {
                 type: Object,
             },
+            i18n: {
+                type: Object,
+            }
         },
         methods: {
             /**

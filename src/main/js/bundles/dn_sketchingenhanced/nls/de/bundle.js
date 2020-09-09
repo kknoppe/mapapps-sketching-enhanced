@@ -31,6 +31,7 @@ module.exports = {
         disableKeepMeasurements: 'Alte Messungen löschen',
         settings: 'Einstellungen',
         enableKeepMeasurements: 'Messungen beibehalten',
+        noDrawings: "Es liegen keine Zeichnungen vor",
         textEditor: {
             bold: 'Fett',
             italic: 'Kursiv',
@@ -117,7 +118,7 @@ module.exports = {
             unitAreaSelect: 'Flächeneinheit',
             drawTab: 'Darstellung',
             measureTab: 'Messung',
-            constructionTab: 'Konstruction'
+            constructionTab: 'Konstruktion'
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',
