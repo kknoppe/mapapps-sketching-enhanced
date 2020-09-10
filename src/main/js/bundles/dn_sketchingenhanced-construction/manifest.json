@@ -10,8 +10,8 @@
         "bundle"
     ],
     "dependencies": {
-        "dn_sketchingenhanced-tools": "^1.0.0",
-        "dn_sketchingenhanced-snappingmanager": "^1.0.0"
+        "dn_sketchingenhanced-tools": "^2.0.0",
+        "dn_sketchingenhanced-snappingmanager": "^2.0.0"
     },
     "components": [
         {
