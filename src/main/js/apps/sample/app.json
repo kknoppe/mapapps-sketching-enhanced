@@ -14,7 +14,11 @@
             "splashscreen",
             "templatelayout",
             "template-seasons",
-            "theme-everlasting",
+            "theme-autumn@^4.8.2",
+            "theme-everlasting@^4.8.2",
+            "theme-spring@^4.8.2",
+            "theme-summer@^4.8.2",
+            "theme-winter@^4.8.2",
             "map-init",
             "map-preload-2D",
             "toolset",
@@ -32,6 +36,14 @@
         ]
     },
     "bundles": {
+        "themes": {
+            "ThemeModel": {
+                "_selectedTheme": "everlasting"
+            },
+            "ThemeSelector": {
+                "componentEnabled": true
+            }
+        },
         "dn_sketchingenhanced": {
             "Config": {
                 "activeToolOnStartup": "drawpointtool",
