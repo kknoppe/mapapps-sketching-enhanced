@@ -13,26 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.icon.icon-keep-measurements {
-    background-image: url("../assets/keepMeasurements.png");
-    height: 25px;
-    width: 25px;
-}
-
-.icon.icon-remove-measurements {
-    background-image: url("../assets/removeMeasurements.png");
-    height: 25px;
-    width: 25px;
-}
-
-.icon.icon-keep-measurements-white {
-    background-image: url("../assets/keepMeasurements_white.png");
-    height: 25px;
-    width: 25px;
-}
-
-.icon.icon-remove-measurements-white {
-    background-image: url("../assets/removeMeasurements_white.png");
-    height: 25px;
-    width: 25px;
-}

@@ -29,7 +29,7 @@
                 <v-tooltip top v-if="measurementEnabled">
                     <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
                         <v-icon>
-                            {{multiMeasurement ? iconKeep : iconRemove}}
+                            {{multiMeasurement ? 'icon-keep-measurements' : 'icon-remove-measurements'}}
                         </v-icon>
                     </v-btn>
                     <span> {{multiMeasurement ? i18n.disableKeepMeasurements : i18n.enableKeepMeasurements}}</span>
@@ -47,9 +47,7 @@
         data() {
             return {
                 visible: true,
-                measurementEnabled: this.measurementBoolean,
-                iconKeep: document.body.classList.contains('everlasting') ? 'icon-keep-measurements-white' : 'icon-keep-measurements',
-                iconRemove: document.body.classList.contains('everlasting') ? 'icon-remove-measurements-white' : 'icon-remove-measurements',
+                measurementEnabled: this.measurementBoolean
             };
         },
         props: {

@@ -102,34 +102,9 @@
              * @param id
              */
             onToolClickHandler(id) {
-                this._changeToolIcon(id);
                 // emit event
                 this.$emit('onToolClick', id);
-            },
-
-            /**
-             * change the icon of the menu tool to make it fit to the active tool
-             * @param id
-             * @private
-             */
-            _changeToolIcon(id) {
-                // do not change icon for toolbox
-                if (this.tool.id === 'sketchingtoolbox') {
-                    return;
-                }
-
-                // change Menu Image when selecting new tool
-                const icon = document.getElementById(this.tool.id);
-                if (icon) {
-                    const newTool = this._getTool(id);
-                    const currentClass = icon.parentElement.children[0].children[0].children[0].children[0].className;
-                    const firstIndex = currentClass.indexOf('icon-');
-                    const lastIndex = currentClass.indexOf(' ', firstIndex + 1);
-                    const oldClassName = currentClass.substr(firstIndex, lastIndex - firstIndex);
-                    const newIconClassName = newTool.iconClass.indexOf('construction') !== -1 && document.body.classList.contains('everlasting') ? `${newTool.iconClass}-white` : newTool.iconClass;
-                    icon.parentElement.children[0].children[0].children[0].children[0].className = currentClass.replace(oldClassName, newIconClassName);
-                }
-            },
+            }
         },
 
     };

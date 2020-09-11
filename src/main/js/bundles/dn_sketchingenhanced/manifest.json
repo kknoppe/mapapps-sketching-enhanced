@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced",
-    "version": "1.0.4-SNAPSHOT",
+    "version": "2.0.1-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -16,13 +16,14 @@
         "apprt-binding": "^4.4.0",
         "apprt-vue": "^4.4.0",
         "apprt-vuetify": "^4.4.0",
-        "dn_sketchingenhanced-tools": "^1.0.0",
-        "dn_sketchingenhanced-command": "^1.0.0",
-        "dn_sketchingenhanced-construction": "^1.0.0",
-        "dn_sketchingenhanced-styles": "^1.0.0",
-        "dn_sketchingenhanced-snappingmanager": "^1.0.0",
-        "dn_sketchingenhanced-symboleditor": "^1.0.0",
-        "dn_sketchingenhanced-measurement": "^1.0.0"
+        "dn_sketchingenhanced-tools": "^2.0.0",
+        "dn_sketchingenhanced-command": "^2.0.0",
+        "dn_sketchingenhanced-construction": "^2.0.0",
+        "dn_sketchingenhanced-styles": "^2.0.0",
+        "dn_sketchingenhanced-snappingmanager": "^2.0.0",
+        "dn_sketchingenhanced-symboleditor": "^2.0.0",
+        "dn_sketchingenhanced-measurement": "^2.0.0",
+        "dn_sketchingenhanced-themes": "^2.0.0"
     },
     "CSS-Themes-Extension": [
         {
