@@ -32,6 +32,7 @@ module.exports = {
             settings: 'Settings',
             disableKeepMeasurements: 'disable keeping measurements',
             enableKeepMeasurements: 'enable keeping measurements',
+            noDrawings: "No drawings",
             textEditor: {
                 bold: 'Bold',
                 italic: 'Italic',
@@ -106,7 +107,7 @@ module.exports = {
                 showLineMeasurementsAtPolygons: 'Show edge length of polygons',
                 coordinates: 'Coordinates: ',
                 coordinateSystem: 'Coordinate System',
-                totalLength: 'Gesamtlänge: ',
+                totalLength: 'Total Length: ',
                 currentLength: 'Current Segment Length: ',
                 aggregateLength: 'Current Total Length: ',
                 area: 'Total Area: ',
