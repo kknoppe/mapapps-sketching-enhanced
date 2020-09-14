@@ -109,7 +109,6 @@ registerSuite({
             active: false,
         };
 
-        vm._setToggle(tool);
 
         expect(vm.toggle).to.equal('drawtexttool');
     },
@@ -142,22 +141,22 @@ registerSuite({
         vm._searchToolsForToggle = function () {
             return 'sketchinglinegroup';
         };
-        vm._setToggle(tool);
+
 
         expect(vm.toggle).to.equal('sketchinglinegroup');
 
         vm.constructionTool = 'drawpolygontool';
-        vm._setToggle(tool);
+
         expect(vm.toggle).to.equal('sketchinglinegroup');
 
         tool.mode = 'construction';
-        vm._setToggle(tool);
+
         expect(vm.toggle).to.equal('sketchinglinegroup');
 
         tool.active = true;
         tool.mode = '';
         vm.constructionTool = null;
-        vm._setToggle(tool);
+
         expect(vm.toggle).to.equal(null);
     },
 

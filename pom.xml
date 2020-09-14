@@ -215,9 +215,55 @@
         </pluginManagement>
         <sourceDirectory>src/main/js</sourceDirectory>
         <resources>
+            <!-- +++++++++++++++++ -->
+            <!-- Copy map.apps base themes to dn_sketchingenhanced-themes -->
+            <!-- +++++++++++++++++ -->
             <resource>
-                <directory>src/main/js</directory>
-                <targetPath>${js.build.outputPath}</targetPath>
+                <directory>${project.build.directory}/unpacked/layout/theme-common/styles</directory>
+                <includes>
+                    <include>crossBrowserSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/theme-common/styles/</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/unpacked/layout/theme-everlasting/styles</directory>
+                <includes>
+                    <include>themeSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/dn_sketchingenhanced-themes/everlasting</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/unpacked/layout/theme-winter/styles</directory>
+                <includes>
+                    <include>themeSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/dn_sketchingenhanced-themes/winter</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/unpacked/layout/theme-spring/styles</directory>
+                <includes>
+                    <include>themeSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/dn_sketchingenhanced-themes/spring</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/unpacked/layout/theme-summer/styles</directory>
+                <includes>
+                    <include>themeSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/dn_sketchingenhanced-themes/summer</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/unpacked/layout/theme-autumn/styles</directory>
+                <includes>
+                    <include>themeSettings.less</include>
+                </includes>
+                <targetPath>${js.build.outputPath}/bundles/dn_sketchingenhanced-themes/autumn</targetPath>
                 <filtering>false</filtering>
             </resource>
         </resources>
@@ -297,8 +343,7 @@
                                     <version>${mapapps.version}</version>
                                     <classifier>src</classifier>
                                     <outputDirectory>${project.build.directory}/unpacked</outputDirectory>
-                                    <includes>layout/theme-everlasting/**,layout/theme-common/**</includes>
-                                    <excludes>layout/theme-everlasting/styles/vuetify/**</excludes>
+                                    <includes>layout/theme-**/**</includes>
                                 </artifactItem>
                                 <artifactItem>
                                     <!-- unpack stylus files provided by beautify to map.apps themes -->
@@ -378,6 +423,7 @@
                         <goals>
                             <goal>gulp</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <arguments>${gulp.task}</arguments>
                         </configuration>

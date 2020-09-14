@@ -35,7 +35,7 @@
             class="mx-1"
         ></v-divider>
         <v-layout class="sketchingCenterContainer" height="100%" row>
-            <navigation class="navigationContainer" @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
+            <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="item in tabs">
                     {{i18n.measurement[item]}}
@@ -280,12 +280,10 @@
                 if(tool.mode !== 'secondary') {
                     this.currentTool = tool;
                     this._setSettings(tool);
-                    this._setToggle(tool.id);
                 }
 
                 if(tool.active) {
                    this.currentTool = null;
-                   this._setToggle(id, true);
                 }
                 this.$emit('onToolClick', {id});
             },
@@ -326,21 +324,8 @@
             _setAreaUnits(unit){
                 this.$emit('area-unit-input', unit);
             },
-            _setToggle(id, unset) {
-                const el = document.getElementById(id);
-                this.elements.forEach(e => e.style.backgroundColor = '');
-                if(el) {
-                    if(unset) {
-                        el.style.backgroundColor = '';
-                        return;
-                    }
-                    this.elements.push(el);
-                    el.style.backgroundColor = 'highlight';
-                }
-            },
             showSettings() {
                 this.settingsEnabled = true;
-                this._setToggle(null);
                 this.currentTool && this.$emit('onToolClick', {id: this.currentTool.id})
             }
         },

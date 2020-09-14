@@ -23,7 +23,7 @@
     >
         <v-list>
             <div v-for="tool in firstTools">
-                <v-list-tile v-if="!tool.menu" @click="$emit('onToolClick', tool.id)" :id="tool.id">
+                <v-list-tile v-if="!tool.menu" @click="_onNonGroupToolClick(tool)" :id="tool.id">
                     <v-list-tile-action>
                         <v-icon>{{tool.iconClass}}</v-icon>
                     </v-list-tile-action>
@@ -32,7 +32,8 @@
                 <v-list-group v-if="tool.menu"
                               no-action>
                     <template v-slot:activator>
-                        <v-list-tile :id="tool.id" @click="onGroupToolClick(tool)">
+                        <v-list-tile :id="tool.id">
+                        <!--<v-list-tile :id="tool.id">-->
                             <v-list-tile-action>
                                 <v-icon>{{tool.iconClass}}</v-icon>
                             </v-list-tile-action>
@@ -92,6 +93,14 @@
             },
             subToolClickHandler(tool, parentId) {
                 this.$emit('onToolClick', tool.id);
+                this._deactivateOtherTools();
+                const toolIcon = document.getElementById(tool.id);
+                const childToolNode = toolIcon ? toolIcon.parentElement : null;
+                if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
+                    childToolNode.classList.add('highlightedTool');
+                } else {
+                    childToolNode.classList.remove('highlightedTool');
+                }
                 const parentIcon = document.getElementById(parentId);
                 if(parentIcon && parentIcon.children.length && parentIcon.children[0].children.length) {
                     const classList = parentIcon.children[0].children[0].classList;
@@ -99,23 +108,26 @@
                     classList.replace(oldVal, tool.iconClass);
                 }
             },
-            onGroupToolClick(clickedTool) {
-                this.tools.forEach(tool => {
-                    if(tool.menu) {
-                        const test = document.getElementById(tool.id);
-                        if (test && test.parentElement) {
-                            if(tool === clickedTool && test.parentElement.parentElement.style.backgroundColor === 'highlight') {
-                                test.parentElement.parentElement.style.backgroundColor = '';
-                            } else if (this.listTools(tool).some(item => item.active)) {
-                                test.parentElement.parentElement.style.backgroundColor = 'highlight';
-                                this.bus.elements.push(test.parentElement.parentElement);
-                            } else {
-                                test.parentElement.parentElement.style.backgroundColor = '';
-                            }
-                        }
-                    }
-                });
+
+            _onNonGroupToolClick(tool){
+                this.$emit('onToolClick', tool.id);
+                this._deactivateOtherTools();
+                const toolIcon = document.getElementById(tool.id);
+                const childToolNode = toolIcon ? toolIcon.parentElement : null;
+                if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
+                    childToolNode.classList.add('highlightedTool');
+                } else {
+                    childToolNode.classList.remove('highlightedTool');
+                }
             },
+
+            _deactivateOtherTools(){
+                  this.tools.forEach(tool => {
+                      const toolIcon = document.getElementById(tool.id);
+                      const childToolNode = toolIcon ? toolIcon.parentElement : null;
+                      toolIcon && childToolNode.classList.remove('highlightedTool');
+                  });
+            }
         },
     }
 </script>
