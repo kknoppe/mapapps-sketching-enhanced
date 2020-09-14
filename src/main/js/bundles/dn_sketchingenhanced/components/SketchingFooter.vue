@@ -17,7 +17,7 @@
 -->
 <template>
     <div class="footer">
-        <v-toolbar dense class="sketchingFooterToolbar">
+        <v-toolbar flat dense class="sketchingFooterToolbar">
             <v-tooltip top>
                 <v-btn slot="activator" icon @click="toggleVisibility">
                     <v-icon>{{visible ? 'icon-visibility-visible' : 'icon-visibility-disabled'}}</v-icon>

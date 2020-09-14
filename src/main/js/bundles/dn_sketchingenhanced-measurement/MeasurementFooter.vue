@@ -17,7 +17,7 @@
 -->
 <template>
     <div class="footer">
-        <v-toolbar dense class="measurementFooterToolbar">
+        <v-toolbar dense flat class="measurementFooterToolbar">
             <v-switch
                 v-model="enableMeasurement"
                 :label="i18n.enableMeasurements"
