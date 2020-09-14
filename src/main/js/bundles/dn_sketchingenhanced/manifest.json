@@ -23,7 +23,7 @@
         "dn_sketchingenhanced-snappingmanager": "^2.0.0",
         "dn_sketchingenhanced-symboleditor": "^2.0.0",
         "dn_sketchingenhanced-measurement": "^2.0.0",
-        "dn_sketchingenhanced-themes": "^2.0.0"
+        "dn_sketchingenhanced-themes-extension": "^2.0.0"
     },
     "CSS-Themes-Extension": [
         {

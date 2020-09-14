@@ -24,8 +24,8 @@ mapapps.registerTasks({
     hasBaseThemes: false,
     /* state that we want to support vuetify components and therefore need the the vuetify core styles*/
     hasVuetify: true,
-    themesSrcLocation: "./src/main/js/bundles/dn_sketchingenhanced-themes",
-    themesDestLocation: "./target/webapp/js/bundles/dn_sketchingenhanced-themes",
+    themesSrcLocation: "./src/main/js/bundles/dn_sketchingenhanced-themes-extension",
+    themesDestLocation: "./target/webapp/js/bundles/dn_sketchingenhanced-themes-extension",
     themeChangeTargets: {
         "everlasting": ["winter", "summer", "spring", "autumn"]
     }
