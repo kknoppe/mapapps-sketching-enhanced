@@ -25,14 +25,6 @@
         "dn_sketchingenhanced-measurement": "^2.0.0",
         "dn_sketchingenhanced-themes-extension": "^2.0.0"
     },
-    "CSS-Themes-Extension": [
-        {
-            "name": "*",
-            "files": [
-                "./css/sketching_base.css"
-            ]
-        }
-    ],
     "layout-widgets": [
         {
             "widgetRole": "sketchingEnhancedWidget",

@@ -74,12 +74,12 @@
     margin-top: 8px;
 }
 
-.ctAppRoot .visualisationEditor .uniqeValueList {
+.visualisationEditor .uniqeValueList {
     border-top: thin solid rgba(0, 0, 0, 0.12);
     border-bottom: thin solid rgba(0, 0, 0, 0.12);
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn {
+.visualisationEditor .uniqueValueBtn {
     height: 25px;
     width: 80px;
     max-width: 100px;
@@ -203,34 +203,34 @@
     font-weight: bold;
 }
 
-.ctAppRoot .visualisationEditor .editor-layout .v-toolbar__content {
+.visualisationEditor .editor-layout .v-toolbar__content {
     padding-right: 8px;
 }
 
-.ctAppRoot .visualisationEditor .preview {
+.visualisationEditor .preview {
     height: 8px;
     width: 34px;
     overflow: hidden;
     position: relative;
 }
 
-.ctAppRoot .visualisationEditor .preview.text {
+.visualisationEditor .preview.text {
     display: flex;
     justify-content: center;
 }
 
-.ctAppRoot .visualisationEditor .preview .text-preview {
+.visualisationEditor .preview .text-preview {
     font-size: 8px;
     line-height: 8px;
 }
 
-.ctAppRoot .visualisationEditor .color-preview {
+.visualisationEditor .color-preview {
     display: block;
     margin-bottom: -2px;
     transform-style: preserve-3d;
 }
 
-.ctAppRoot .visualisationEditor .color-preview:before {
+.visualisationEditor .color-preview:before {
     content: "";
     display: block;
     background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
@@ -242,28 +242,28 @@
     transform: translateZ(-1px);
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn {
+.visualisationEditor .uniqueValueBtn {
     transform-style: preserve-3d;
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn.polygon > div {
+.visualisationEditor .uniqueValueBtn.polygon > div {
     flex-direction: column;
     margin-top: -4px;
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn .polygon-fill {
+.visualisationEditor .uniqueValueBtn .polygon-fill {
     width: 100%;
     height: 11px;
     padding: 0 !important;
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn .polygon-outline {
+.visualisationEditor .uniqueValueBtn .polygon-outline {
     height: 8px;
     margin-top: -2px;
     padding: 0 !important;
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn:before {
+.visualisationEditor .uniqueValueBtn:before {
     content: "";
     display: block;
     background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
@@ -275,7 +275,7 @@
     transform: translateZ(-1px);
 }
 
-.ctAppRoot .visualisationEditor .uniqueValueBtn .v-btn__content {
+.visualisationEditor .uniqueValueBtn .v-btn__content {
     height: 20px;
 }
 
@@ -283,13 +283,13 @@
     -ms-user-select: none;
 }
 
-.ctAppRoot .visualisationEditor .btnGroupSingleSymbol {
+.visualisationEditor .btnGroupSingleSymbol {
     height: auto;
     padding: 4px !important;
     padding-bottom: 0 !important;
 }
 
-.ctAppRoot .visualisationEditor .btnGroupSingleSymbol .main-icon {
+.visualisationEditor .btnGroupSingleSymbol .main-icon {
     height: 26px;
     width: 26px;
 
@@ -300,36 +300,92 @@
     justify-content: center;
 }
 
-.ctAppRoot .visualisationEditor .btnGroupSingleSymbol .main-icon i {
+.visualisationEditor .btnGroupSingleSymbol .main-icon i {
     font-size: 26px;
 }
 
-.ctAppRoot .visualisationEditor .fill_color .btnGroupSingleSymbol .main-icon i {
+.visualisationEditor .fill_color .btnGroupSingleSymbol .main-icon i {
     font-size: 32px;
 }
 
-.ctAppRoot .visualisationEditor .btnGroupSingleSymbol .main-icon .point-shape {
+.visualisationEditor .btnGroupSingleSymbol .main-icon .point-shape {
     font-size: 26px;
     line-height: 26px;
 }
 
-.ctAppRoot .visualisationEditor .btnGroupSingleSymbol .flex {
+.visualisationEditor .btnGroupSingleSymbol .flex {
     padding: 0 !important;
 }
 
-.ctAppRoot .visualisationEditor .editor-content {
+.visualisationEditor .editor-content {
     margin: 20px auto !important;
     display: block;
     max-width: 260px;
 }
 
-.ctAppRoot .visualisationEditor .fill-style-picker .v-list__tile,
-.ctAppRoot .visualisationEditor .point-shape-picker .v-list__tile,
-.ctAppRoot .visualisationEditor .line-style-picker .v-list__tile {
+.visualisationEditor .fill-style-picker .v-list__tile,
+.visualisationEditor .point-shape-picker .v-list__tile,
+.visualisationEditor .line-style-picker .v-list__tile {
     height: 24px;
 }
 
-.ctAppRoot .visualisationEditor .lineWeightSlider,
-.ctAppRoot .visualisationEditor .pointRadiusSlider {
+.visualisationEditor .lineWeightSlider,
+.visualisationEditor .pointRadiusSlider {
     margin-top: 30px;
+}
+
+/* adjust position and size of slider and text-field */
+.sizeSliderLayout {
+    width: 85% !important;
+    position: relative;
+    left: -1em;
+}
+
+.sliderNumberText {
+    width: 4.5em !important;
+}
+
+.sliderNumberText:after {
+    content: '';
+    width: 4.5em !important;
+}
+
+/* move text field to the right to avoid overlapping slider */
+.textFieldSlider {
+    position: relative;
+    left: 0.5em;
+}
+
+/* deactivate default controls for + and - */
+/* these default controls are not working in MS Edge */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* place the custom controls for + and - */
+/* so that they are the same in Chrome and Edge */
+.upDownControl {
+    position: absolute;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.arrowDown {
+    position: relative;
+    top: 1.1em;
+    left: 1.8em;
+    font-size: medium !important;
+    cursor: default !important;
+}
+
+.arrowUp {
+    position: relative;
+    top: 1.4em;
+    left: 1.8em;
+    font-size: medium !important;
+    cursor: default !important;
 }

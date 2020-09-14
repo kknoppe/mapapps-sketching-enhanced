@@ -13,14 +13,6 @@
     "dependencies": {
         "esri": "^4.7.2"
     },
-    "CSS-Themes-Extension": [
-        {
-            "name": "*",
-            "files": [
-                "css/measurement.css"
-            ]
-        }
-    ],
     "components": [
         {
             "name": "Config",
