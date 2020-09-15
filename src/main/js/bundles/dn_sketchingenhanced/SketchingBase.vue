@@ -34,7 +34,7 @@
         <v-divider
             class="mx-1"
         ></v-divider>
-        <v-layout class="sketchingCenterContainer" height="100%" row>
+        <v-layout class="sketchingCenterContainer" row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="item in tabs">
@@ -75,7 +75,7 @@
             </v-tabs>
         </v-layout>
         <v-footer class="sketchingFooter" absolute>
-            <v-toolbar class="sketchingFooterToolbar" flat>
+            <v-toolbar flat>
                 <v-btn @click="showSettings">
                     <v-icon>icon-cog</v-icon>
                     <span class="pl-2">{{i18n.settings}}</span>
