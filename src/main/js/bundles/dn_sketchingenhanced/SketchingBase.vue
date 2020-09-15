@@ -17,7 +17,7 @@
 -->
 <template>
     <v-container class="sketchingMainContainer" pa-0>
-        <v-toolbar dense pa-0 class="SketchingToolsBar">
+        <v-toolbar flat dense pa-0 class="SketchingToolsBar">
             <top-toolbar height="50" absolute :tools="headerTools" @onToolClick="onToolClickHandler"></top-toolbar>
             <v-flex shrink pa-1>
                 <v-layout row wrap>
@@ -42,7 +42,7 @@
                 </v-tab>
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
-                        <v-card class="mx-6" v-if="!item">{{i18n.noActiveTool}}</v-card>
+                        <v-container class="pa-2" v-if="!item">{{i18n.noActiveTool}}</v-container>
                         <v-tab-item v-if="item" :key="index">
                             <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool"></illustration>
                             <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
@@ -75,7 +75,7 @@
             </v-tabs>
         </v-layout>
         <v-footer class="sketchingFooter" absolute>
-            <v-toolbar class="sketchingFooterToolbar">
+            <v-toolbar class="sketchingFooterToolbar" flat>
                 <v-btn @click="showSettings">
                     <v-icon>icon-cog</v-icon>
                     <span class="pl-2">{{i18n.settings}}</span>

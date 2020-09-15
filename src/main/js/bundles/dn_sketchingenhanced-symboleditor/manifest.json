@@ -15,14 +15,5 @@
         "apprt-binding": "^4.4.0",
         "apprt-vuetify": "^4.4.0",
         "esri": "^4.7.2"
-    },
-    "CSS-Themes-Extension": [
-        {
-            "name": "*",
-            "files": [
-                "./styles/styles.css",
-                "./styles/SizeSlider.css"
-            ]
-        }
-    ]
+    }
 }

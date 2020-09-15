@@ -18,7 +18,7 @@
 <template>
     <v-card class="mt-2 editor-layout" color="grey lighten-2">
         <!-- Header -->
-        <v-toolbar dense color="grey lighten-2">
+        <v-toolbar dense flat color="grey lighten-2">
             <v-toolbar-title class="primary--text subheading">{{ label }}</v-toolbar-title>
             <v-spacer></v-spacer>
 
