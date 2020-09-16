@@ -58,7 +58,10 @@
                                 <v-divider
                                     class="mx-4"
                                 ></v-divider>
-                                <measurement-toggle v-if="measurement" :measurementBoolean.sync="enableMeasurement" :showKeepMeasurements="showKeepMeasurements" :multiMeasurement.sync="multiMeasurement" :i18n="i18n"
+                                <measurement-toggle :measurementBoolean.sync="enableMeasurement"
+                                                    :showKeepMeasurements="showKeepMeasurements"
+                                                    :multiMeasurement.sync="multiMeasurement"
+                                                    :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
                             </v-flex>
                             <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
@@ -90,8 +93,8 @@
     import i18n from 'dojo/i18n!./nls/bundle';
     import TopToolbar from './components/TopToolbar.vue';
     import Illustration from './components/Illustration.vue';
-    import MeasurementWidget from '../dn_sketchingenhanced-measurement/MeasurementWidget.vue'
-    import MeasurementFooter from '../dn_sketchingenhanced-measurement/MeasurementFooter.vue';
+    import MeasurementWidget from './components/MeasurementWidget.vue'
+    import MeasurementFooter from './components/MeasurementFooter.vue';
     import Navigation from './components/Navigation.vue';
     import ConstructionPanel from './components/construction/ConstructionPanel.vue';
     import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
