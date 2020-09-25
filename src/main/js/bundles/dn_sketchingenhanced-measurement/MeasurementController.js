@@ -362,6 +362,7 @@ export default class MeasurementController {
         const textSymbol = new TextSymbol({
             text: temporary ? lengthString : `${i18n.totalLength}: ${lengthString}`,
             color: this.textSettings.color,
+            flag: "measurementText",
             name: temporary ? 'temporary' : '',
             font: this.textSettings.font,
             horizontalAlignment: textPosition,
@@ -655,6 +656,7 @@ export default class MeasurementController {
         const textSymbol = new TextSymbol({
             angle: degAngle,
             text: lengthString,
+            flag: "measurementText",
             color: this.textSettings.color,
             name: id ? `measurement-${id}` : nameString,
             font: this.textSettings.font,
@@ -716,6 +718,7 @@ export default class MeasurementController {
             const textSymbol = new TextSymbol({
                 text: coordString,
                 color: this.textSettings.color,
+                flag: "measurementText",
                 name: id ? `measurement-${id}` : coordString,
                 font: this.textSettings.font,
                 haloColor: this.textSettings.haloColor,
@@ -854,6 +857,7 @@ export default class MeasurementController {
             text: `${i18n.area}: ${areaString} \n ${i18n.circumference}: ${circumString}`,
             color: this.textSettings.color,
             font: this.textSettings.font,
+            flag: "measurementText",
             name: temporary ? 'temporary' : '',
             horizontalAlignment: textPosition,
             haloColor: this.textSettings.haloColor,

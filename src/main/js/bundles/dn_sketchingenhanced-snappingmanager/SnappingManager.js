@@ -274,6 +274,12 @@ export default function () {
                 const snapCoordinate = nearestPoint.coordinate;
                 this.removeSnappingGraphics();
                 if (snapCoordinate && nearestPoint.distance !== null && nearestPoint.distance !== undefined) {
+                    if (nearestPoint.objectGeometry.object.symbol &&
+                        nearestPoint.objectGeometry.object.symbol.type === "text" &&
+                        nearestPoint.objectGeometry.object.symbol.flag &&
+                        nearestPoint.objectGeometry.object.symbol.flag === "measurementText"){
+                        return
+                    }
                     moveToSnapPoint && this._setPointCoordinate(snapCoordinate, moverCoordinate, viewModel.view);
                     showSnappingGraphics && this.addSnappingGraphics(snapCoordinate, nearestPoint.objectGeometry);
                     return snapCoordinate;
