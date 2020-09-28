@@ -62,11 +62,15 @@ export default class MeasurementController {
         });
         this.resetPanelStates();
         this.resetMeasurementResults();
+
     }
 
     handler(evt) {
-        if(evt.activeTool && this._measurementDisabledTools.includes(evt.activeTool) && this.measurementBoolean) {
-            return;
+        if(evt.activeTool && this._measurementDisabledTools.includes(evt.activeTool)) {
+            evt.graphic.noMeasurementLabels = true;
+            if (this.measurementBoolean){
+                return;
+            }
         }
 
         if (evt.activeTool){
@@ -112,6 +116,9 @@ export default class MeasurementController {
                 }
                 const newEvent = evt;
                 evt.graphics.forEach(graphic => {
+                    if (graphic.noMeasurementLabels){
+                        return;
+                    }
                     graphic.group = this.sketchGroup;
                     newEvent.graphic = graphic;
                     if (evt.graphics[0].geometry.type !== 'polyline') {
@@ -281,18 +288,24 @@ export default class MeasurementController {
      */
     _removeCorrelatedMeasurementTexts(evt) {
         const graphicGroup = evt.graphics[0].group;
-
         const viewModel = this._sketchingHandler.sketchViewModel;
         const graphics = viewModel.layer.graphics.items;
-        const gs = graphics.filter(x => x.symbol && x.symbol.group === graphicGroup);
-
+        const gs = graphics.filter(x => {
+            if (x.symbol && x.symbol.type === "text"){
+                return x.symbol.group === graphicGroup
+            }
+        });
         viewModel.layer.removeMany(gs);
     }
 
     _removeMeasurementsOnCancel(evt) {
         const id = evt.graphic.uid;
         const viewModel = this._sketchingHandler.sketchViewModel;
-        const gs = viewModel.layer.graphics.items.filter(graphic => graphic.symbol.name === `measurement-${id}`);
+        const gs = viewModel.layer.graphics.items.filter(graphic => {
+            if (graphic.symbol){
+                return graphic.symbol.name === `measurement-${id}`
+            }
+        });
         viewModel.layer.removeMany(gs);
     }
 
@@ -330,7 +343,9 @@ export default class MeasurementController {
             viewModel.layer.add(graphic);
         }
         // remove labeling of line elements so that line lengths can be added for all elements later on
-        (evt.tool === 'polygon' && !temporary) && this._removePolygonMeasurements(viewModel, evt.graphic.uid);
+        if ((evt.tool === 'polygon' || evt.tool === 'reshape') && !temporary) {
+            this._removePolygonMeasurements(viewModel, evt.graphic.uid);
+        }
 
         // add line lengths for all sides of the polygon (for circles and ellipsis area and circmference is calculated)
         this._addPolygonLineMeasurements(evt, spatialReference, temporary);
@@ -554,7 +569,12 @@ export default class MeasurementController {
     _removeTemporaryMeasurements(evt) {
         const viewModel = this._sketchingHandler.sketchViewModel;
         const graphics = viewModel.layer.graphics.items;
-        const gs = graphics.filter(x => x.symbol && x.symbol.name === 'temporary');
+        const gs = graphics.filter(x => {
+            if (x.symbol && x.symbol.name){
+                return x.symbol.name === 'temporary'
+            }
+
+        });
         viewModel.layer.removeMany(gs);
     }
 
@@ -676,7 +696,11 @@ export default class MeasurementController {
     _removePolygonMeasurements(viewModel, id) {
         // find all help lines and remove them from the graphics layer
         const graphics = viewModel.layer.graphics.items;
-        const gs = graphics.filter(x => x.symbol.name === `measurement-${id}`);
+        const gs = graphics.filter(x => {
+            if (x.symbol){
+                return  x.symbol.name === `measurement-${id}`
+            }
+        });
         viewModel.layer.removeMany(gs);
     }
 
