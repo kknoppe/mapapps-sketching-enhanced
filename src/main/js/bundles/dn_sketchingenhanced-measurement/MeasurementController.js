@@ -66,7 +66,7 @@ export default class MeasurementController {
     }
 
     handler(evt) {
-        if(evt.activeTool && this._measurementDisabledTools.includes(evt.activeTool)) {
+        if(evt.activeTool && evt.graphic && this._measurementDisabledTools.includes(evt.activeTool)) {
             evt.graphic.noMeasurementLabels = true;
             if (this.measurementBoolean){
                 return;
