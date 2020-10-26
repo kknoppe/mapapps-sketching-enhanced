@@ -291,7 +291,7 @@
                 "deactivateHandler": "deactivateTool",
                 "type": "polyline",
                 "menu": false,
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]
@@ -380,7 +380,7 @@
                 "deactivateHandler": "deactivateTool",
                 "type": "polygon",
                 "menu": false,
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]
@@ -580,7 +580,7 @@
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
                 "type": "arrow",
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]

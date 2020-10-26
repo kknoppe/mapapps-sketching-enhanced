@@ -204,8 +204,21 @@ function SketchingHandler() {
 
         _update(graphics, toolActive, type = "reshape") {
             graphics.length > 1 && (type = "transform");
+            if (this._graphicTypeIsText(graphics)){
+                return;
+            }
             this._getSketchViewModel().update(graphics, {tool: type});
             toolActive && this.activateTool({type: type});
+        },
+
+        _graphicTypeIsText(graphics){
+            let isText = false;
+            graphics.forEach(graphic => {
+                if (graphic.symbol.type === "text" && graphic.symbol.flag){
+                    isText = true;
+                }
+            });
+            return isText;
         },
 
         _addGraphic(geometry, attributes, symbol) {

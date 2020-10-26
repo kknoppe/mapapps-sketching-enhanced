@@ -193,7 +193,7 @@
                         case 'drawarrowtool':
                         case 'drawellipsetool':
                         case 'drawcircletool':
-                            return ['drawTab'];
+                            return ['drawTab','measureTab'];
                         case 'drawpolygontool':
                         case 'drawpolylinetool':
                             return ['drawTab', 'measureTab', 'constructionTab'];
