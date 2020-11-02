@@ -13,14 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import '.';
-import "./components/input/SizeSlider.vue";
-import "./components/mixins/AsciiPoint";
-import "./components/symbol/line/LineStyle.vue";
-import "./components/symbol/line/LineStylePicker.vue";
-import "./components/symbol/point/PointShape.vue";
-import "./components/symbol/point/PointShapePicker.vue";
-import "./components/symbol/polygon/FillStyle.vue";
-import "./components/symbol/polygon/FillStylePicker.vue";
-
-
+import "dojo/i18n!./nls/bundle";
