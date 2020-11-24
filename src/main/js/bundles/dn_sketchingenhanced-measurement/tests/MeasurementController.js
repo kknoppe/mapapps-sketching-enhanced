@@ -22,16 +22,27 @@ import * as geoEngine from 'esri/geometry/geometryEngine';
 import Polyline from 'esri/geometry/Polyline';
 import Polygon from 'esri/geometry/Polygon';
 
+const controller = new MeasurementController()
+controller._properties = {
+    unitAbbreviationMapping : {
+        "meters": "m",
+        "kilometers": "km",
+        "square-meters": "m²",
+        "square-kilometers": "km²",
+        "hectares": "ha"
+    }
+};
+
 registerSuite({
     name: module.id,
     'Measurement Controller': function () {
-        assert.ok(new MeasurementController());
+        assert.ok(controller);
     },
     'Calculate length for a short line': function () {
-        const controller = new MeasurementController();
         controller.mDecimal = 1;
         controller.kmDecimal = 2;
         controller.geoEngine = geoEngine;
+        controller._setLengthUnits("meter");
         const spatialReference = {
             wkid: 31466,
         };
@@ -40,10 +51,10 @@ registerSuite({
         expect(length).to.equal('20 m');
     },
     'Calculate length for a long line': function () {
-        const controller = new MeasurementController();
         controller.mDecimal = 1;
         controller.kmDecimal = 2;
         controller.geoEngine = geoEngine;
+        controller._setLengthUnits("kilometer");
         const spatialReference = {
             wkid: 31466,
         };
@@ -52,10 +63,10 @@ registerSuite({
         expect(length).to.equal('2 km');
     },
     'Calculate area for a small polygon': function () {
-        const controller = new MeasurementController();
         controller.mDecimal = 1;
         controller.kmDecimal = 2;
         controller.geoEngine = geoEngine;
+        controller._setAreaUnits("quadratmeter");
         const spatialReference = {
             wkid: 31466,
         };
@@ -64,10 +75,10 @@ registerSuite({
         expect(area).to.equal('2 m²');
     },
     'Calculate area for a big polygon': function () {
-        const controller = new MeasurementController();
         controller.mDecimal = 1;
         controller.kmDecimal = 2;
         controller.geoEngine = geoEngine;
+        controller._setAreaUnits("quadratkilometer");
         const spatialReference = {
             wkid: 31466,
         };
@@ -76,7 +87,6 @@ registerSuite({
         expect(area).to.equal('4 km²');
     },
     'get text position': function () {
-        const controller = new MeasurementController();
         let path = [[0, 0], [0, 20]];
         expect(controller._getTextPosition(path)).to.equal('center');
         path = [[0, 0], [0, -20]];
@@ -91,7 +101,6 @@ registerSuite({
         expect(controller._getTextPosition(path)).to.equal('left');
     },
     'get text y offset': function () {
-        const controller = new MeasurementController();
         let path = [[0, 0], [0, 20]];
         let offset = controller._getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(1);
