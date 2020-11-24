@@ -20,7 +20,7 @@
         <v-layout column>
             <font-component v-bind:label="i18n.textEditor.textFontButton" :font.sync="font" :i18n="i18n"></font-component>
             <color-picker v-bind:label="i18n.textEditor.textColorButton" :color.sync="color" :i18n="i18n"></color-picker>
-            <blur-component v-bind:label="i18n.textEditor.textStyleButton" :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n"></blur-component>
+            <blur-component v-bind:label="i18n.textEditor.textBlurButton" :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n"></blur-component>
         </v-layout>
         <v-layout column>
             <text-style-component v-bind:label="i18n.textEditor.textStyleButton" :textStyle.sync="textStyle" :i18n="i18n"></text-style-component>

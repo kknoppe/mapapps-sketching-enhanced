@@ -71,7 +71,7 @@ module.exports = {
             singleSymbolLabel: 'Einzelsymbol',
             categoriesLabel: 'Kategorie',
             lineStyleSelectorTooltip: 'Linienstil',
-            PointSymbolSelectorTooltip: 'Punktsymbol',
+            pointSymbolSelectorTooltip: 'Punktsymbol',
             lineWeightSliderLabel: 'Linienstärke',
             colorPickerPointTooltip: 'Punktfarbe',
             noFillTitle: 'Keine',

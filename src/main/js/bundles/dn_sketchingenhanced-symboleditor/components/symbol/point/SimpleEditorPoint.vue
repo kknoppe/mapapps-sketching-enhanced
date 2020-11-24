@@ -36,7 +36,7 @@
                 <editor-button
                     :active="activeTab === 1"
                     icon="format_color_fill"
-                    :tooltip="i18n.PointSymbolSelectorTooltip">
+                    :tooltip="i18n.pointSymbolSelectorTooltip">
                     <template slot="icon">
                         <point-shape :shape="settings.shape"></point-shape>
                     </template>

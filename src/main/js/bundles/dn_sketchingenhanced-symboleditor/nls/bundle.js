@@ -72,7 +72,7 @@ module.exports = {
                 colorPickerFillTooltip: 'Fill color',
                 lineStyleSelectorTooltip: 'Line style',
                 fillStyleSelectorTooltip: 'Fill style',
-                PointSymbolSelectorTooltip: 'Point symbol',
+                pointSymbolSelectorTooltip: 'Point symbol',
                 pointRadiusSliderLabel: 'Point radius',
                 colorPickerPointTooltip: 'Point color',
                 colorPickerLineTooltip: 'Line color',
