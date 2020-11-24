@@ -20,8 +20,6 @@
 
 import Point from "esri/geometry/Point";
 import Circle from "esri/geometry/Circle";
-import Graphic from "esri/Graphic";
-import ct_async from "ct/async";
 
 const pi = Math.PI;
 const r2d = 180.0 / pi;
@@ -61,9 +59,6 @@ export default class SketchingConstruction {
         const tools = this._getOption("tools", false, []);
         const snappingManager = this._snappingManager;
         const radius = this._getOption("radius");
-        if(radius) {
-            this._createCircle(radius);
-        }
 
         this._setViewModel(viewModel);
         if (tool && tool.id && tools.includes(tool.id)) {
@@ -71,6 +66,9 @@ export default class SketchingConstruction {
                 if (snappingManager && snappingManager._mandatoryWithoutSnappingMode === true) {
                     snappingManager._mandatoryWithoutSnappingMode = false;
                     snappingManager.removeSnappingGraphics();
+                }
+                if (tool.id === "drawcircletool" && radius) {
+                    this._createCircle(radius, evt.graphic);
                 }
             } else if (type === "create" && state === "active" && !this._selfSendingEvent) {
                 const angle = this._getOption("angle");
@@ -137,35 +135,14 @@ export default class SketchingConstruction {
         }
     }
 
-    _createCircle(radius) {
-        const viewModel = this._viewModel;
-        const view = viewModel.view;
-        const activeAction = viewModel.activeComponent?.activeAction;
-        const vertices = activeAction?.vertices;
-        if(!vertices) {
-            return;
-        }
-        const p = vertices[0];
-        if (!p) {
-            return;
-        }
-        const point = this._createGeoPoint(p[0], p[1], view.spatialReference);
-        const circle = new Circle({
+    _createCircle(radius, graphic) {
+        const center = graphic.geometry.centroid;
+        graphic.geometry = new Circle({
             geodesic: false,
-            center: point,
+            center: center,
             radius: radius,
             radiusUnit: "meters"
         });
-        const circleGraphic = new Graphic({
-            geometry: circle,
-            symbol: viewModel.polygonSymbol,
-            layer: viewModel.layer
-        })
-        viewModel.layer.add(circleGraphic);
-        viewModel.cancel();
-        ct_async(() => {
-            viewModel.create("circle", {mode: "construction"});
-        }, 100);
     }
 
     _calcAngleRadians2PI(points, angle, angleModulus, angleTypeRelative) {
