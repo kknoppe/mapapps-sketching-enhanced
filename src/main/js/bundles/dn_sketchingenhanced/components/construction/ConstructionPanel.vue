@@ -17,14 +17,22 @@
 -->
 <template>
     <div class="construction_panel_interior">
-        <construction-checkbox setting="planarLength"
+        <construction-checkbox v-if="type==='polyline' || type==='polygon' || type==='ellipse'"
+                               setting="planarLength"
                                :constructionModel="constructionModel"
                                :label="i18n.activeConstructionLength"
                                :i18n="i18n.symbolEditor">
         </construction-checkbox>
-        <construction-checkbox setting="angleModulus"
+        <construction-checkbox v-if="type==='polyline' || type==='polygon' || type==='ellipse'"
+                               setting="angleModulus"
                                :constructionModel="constructionModel"
                                :label="i18n.activeConstructionAngle"
+                               :i18n="i18n.symbolEditor">
+        </construction-checkbox>
+        <construction-checkbox v-if="type==='circle'"
+                               setting="radius"
+                               :constructionModel="constructionModel"
+                               :label="i18n.activeConstructionRadius"
                                :i18n="i18n.symbolEditor">
         </construction-checkbox>
     </div>
@@ -46,9 +54,18 @@
             constructionModel: {
                 type: Object,
             },
+            tool: Object,
             i18n: {
                 type: Object,
             },
+        },
+        computed: {
+            type() {
+                if (this.tool && this.tool.type) {
+                    this.newType = this.tool.type;
+                }
+                return this.newType;
+            }
         },
         methods: {},
     };

@@ -25,10 +25,12 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
         "angleModulus": 45,
         "planarLength": 10,
         "commaPlace": 2,
+        "radius": 10,
         "use": {
           "snap": true,
           "angleModulus": false,
-          "planarLength": false
+          "planarLength": false,
+          "radius": false
         },
         "hotkeys": {
           "snap": ["s","S"],

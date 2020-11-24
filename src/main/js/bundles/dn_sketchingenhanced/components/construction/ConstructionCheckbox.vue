@@ -67,8 +67,14 @@
                     return this.constructionModel.use[this.setting];
                 },
                 set(value) {
-                    const use = (this.setting === 'angleModulus') ? Object.assign({}, this.constructionModel.use, {angleModulus: value}) :
-                        Object.assign({}, this.constructionModel.use, {planarLength: value});
+                    let use = null;
+                    if (this.setting === 'angleModulus') {
+                        use = Object.assign({}, this.constructionModel.use, {angleModulus: value})
+                    } else if (this.setting === 'radius') {
+                        use = Object.assign({}, this.constructionModel.use, {radius: value})
+                    } else if (this.setting === 'planarLength') {
+                        use = Object.assign({}, this.constructionModel.use, {planarLength: value})
+                    }
                     this.constructionModel.set('use', use);
                 },
             },

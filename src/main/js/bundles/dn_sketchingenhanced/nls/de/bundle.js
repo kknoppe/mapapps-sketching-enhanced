@@ -21,6 +21,7 @@ module.exports = {
         noActiveTool: 'Bitte wählen Sie ein Werkzeug aus oder verschieben Sie die Karte.',
         activeConstructionLength: 'Länge',
         activeConstructionAngle: 'Winkel',
+        activeConstructionRadius: 'Radius',
         turnOnVisibility: 'Zeichnungen einblenden',
         turnOffVisibility: 'Zeichnungen ausblenden',
         addNewSketchingLayer: 'Neuen Layer anlegen',

@@ -35,7 +35,8 @@
                 },
                 "tools": [
                     "drawpolylinetool",
-                    "drawpolygontool"
+                    "drawpolygontool",
+                    "drawcircletool"
                 ]
             }
         },

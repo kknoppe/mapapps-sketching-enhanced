@@ -23,11 +23,13 @@ module.exports = declare([Stateful], {
     angleModulus: 45,
     angleTypeRelative: true,
     planarLength: 10,
+    radius: 10,
     use: {
         snap: true,
         angle: false,
         angleModulus: false,
-        planarLength: false
+        planarLength: false,
+        radius: false
     },
 
 

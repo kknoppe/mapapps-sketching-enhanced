@@ -468,7 +468,7 @@
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
                 "type": "circle",
-                "mode": "freehand",
+                "mode": "construction",
                 "groups": [
                     "sketching"
                 ]

@@ -22,6 +22,7 @@ module.exports = {
             noActiveTool: 'Please select a tool or move the map.',
             activeConstructionLength: 'Length',
             activeConstructionAngle: 'Angle',
+            activeConstructionRadius: 'Radius',
             turnOnVisibility: 'Show drawings',
             turnOffVisibility: 'Hide drawings',
             addNewSketchingLayer: 'Create new layer',

@@ -64,7 +64,7 @@
                                                     :i18n="i18n"
                                                     :bus="eventBus"></measurement-toggle>
                             </v-flex>
-                            <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :i18n="i18n"></construction-panel>
+                            <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :tool="currentTool" :i18n="i18n"></construction-panel>
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
                                             @toggleSketchingLayerVisibility="$emit('toggleSketchingLayerVisibility', $event)"
@@ -192,10 +192,10 @@
                         case 'drawfreehandpolylinetool':
                         case 'drawarrowtool':
                         case 'drawellipsetool':
-                        case 'drawcircletool':
                             return ['drawTab','measureTab'];
                         case 'drawpolygontool':
                         case 'drawpolylinetool':
+                        case 'drawcircletool':
                             return ['drawTab', 'measureTab', 'constructionTab'];
                         case 'drawcopytool':
                         case 'drawremovetool':
