@@ -17,7 +17,7 @@
 -->
 <template>
     <v-layout wrap row>
-        <v-checkbox v-model="active" :label="label"></v-checkbox>
+        <v-checkbox color="primary" v-model="active" :label="label"></v-checkbox>
         <v-text-field
             v-model="currentProperty"
             :suffix="suffix"
