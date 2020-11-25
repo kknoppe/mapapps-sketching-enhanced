@@ -137,8 +137,15 @@ export default class SketchingConstruction {
 
     _createCircle(radius, graphic) {
         const center = graphic.geometry.centroid;
+        let geodesic = false;
+        if (center.spatialReference.wkid === 3857
+            || center.spatialReference.wkid === 4326
+            || center.spatialReference.latestWkid === 3857
+            || center.spatialReference.latestWkid === 4326) {
+            geodesic = true;
+        }
         graphic.geometry = new Circle({
-            geodesic: false,
+            geodesic: geodesic,
             center: center,
             radius: radius,
             radiusUnit: "meters"
