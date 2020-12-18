@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-themes-extension",
-    "version": "2.1.2-SNAPSHOT",
+    "version": "2.1.2",
     "title": "Enhanced Sketching Styles",
     "description": "This bundle provides the CSS extension for map.apps default themes.",
     "productName": "map.apps Advanced Editing",
