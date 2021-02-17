@@ -74,26 +74,9 @@
                 "showLineMeasurementsAtPolygons": true,
                 "pointSRS": "4326",
                 "systemsWithUnits": ["4326"],
-                "pointCoordPlaces": "3",
+                "pointCoordPlaces": 3,
                 "pointCoordUnitSymbolX": "°E",
                 "pointCoordUnitSymbolY": "°N",
-                "srs":{
-                    "geodetic": [
-                        4326,
-                        3857,
-                        4258
-                    ],
-                    "planar": [
-                        2398,
-                        2399,
-                        25832,
-                        25833,
-                        31466,
-                        31467,
-                        31468,
-                        31469
-                    ]
-                },
                 "sketch": {
                     "textSymbol": {
                         "type": "esriTS",
@@ -143,6 +126,10 @@
                     "name": "_coordinateTransformer",
                     "providing": "ct.api.coordinatetransformer.CoordinateTransformer",
                     "cardinality": "0..1"
+                },
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
                 },
                 {
                     "name": "_sketchingHandler",
