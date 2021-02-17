@@ -88,10 +88,46 @@ export default function () {
             if (geometries) {
                 const sketchingHandler = this._sketchingHandler;
                 const graphics = geometries.map(geometry => {
-                    return sketchingHandler._addGraphic(geometry.clone(), null, symbol);
+                    const newGeometry = this._getCopyGeometry(geometry);
+                    return sketchingHandler._addGraphic(newGeometry, null, symbol);
                 });
                 this._resetAndUpdate(graphics);
             }
+        },
+
+        /**
+         * clone given geometry and shift it a little to the right and to the bottom
+         * @param geometry
+         * @returns cloned shifted geometry
+         * @private
+         */
+        _getCopyGeometry(geometry) {
+            const percent = this._properties.percentToShiftCopy || 5;
+            const newGeometry = geometry.clone();
+            const viewModel = this._getSketchViewModel();
+
+            //get extent of current view to use percentage as shift
+            const viewExtent = viewModel.view.extent;
+            const xrange = viewExtent.xmax - viewExtent.xmin;
+            const yrange = viewExtent.ymax - viewExtent.ymin;
+
+            // shift geometry
+            if(newGeometry.type !== 'point') {
+                const paths = newGeometry.paths ? newGeometry.paths : newGeometry.rings;
+                if(paths) {
+                    paths.forEach(path => {
+                        path.forEach(x => {
+                            x[0] += xrange * (percent/100.);
+                            x[1] -= yrange * (percent/100);
+                        });
+                    });
+                }
+            } else {
+                newGeometry.x += xrange/20;
+                newGeometry.y -= yrange/20;
+            }
+
+            return newGeometry;
         },
 
         bufferSelected() {
