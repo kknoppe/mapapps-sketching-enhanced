@@ -194,18 +194,20 @@
                 }
                 if(this.currentTool) {
                     switch(this.currentTool.id){
+                        case 'drawpolygontool':
+                        case 'drawpolylinetool':
+                            return ['drawTab', 'measureTab', 'constructionTab'];
+                        case 'drawcopytool':
+                        case 'drawremovetool':
+                        case 'drawcircletool':
+                            return ['drawTab', 'constructionTab'];
                         case 'drawtexttool':
+                        case 'drawtriangletool':
                         case 'drawfreehandpolygontool':
                         case 'drawfreehandpolylinetool':
                         case 'drawarrowtool':
                         case 'drawellipsetool':
-                            return ['drawTab','measureTab'];
-                        case 'drawpolygontool':
-                        case 'drawpolylinetool':
-                        case 'drawcircletool':
-                            return ['drawTab', 'measureTab', 'constructionTab'];
-                        case 'drawcopytool':
-                        case 'drawremovetool':
+                            return ['drawTab'];
                         case 'drawreshape1tool':
                             this.tab = null;
                             return [''];
