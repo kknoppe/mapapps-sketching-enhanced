@@ -44,7 +44,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-container class="pa-2" v-if="!item">{{i18n.noActiveTool}}</v-container>
                         <v-tab-item v-if="item" :key="index">
-                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool"></illustration>
+                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool" v-on:update:settings="settingsChange"></illustration>
                             <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements.sync="measurements"
@@ -149,7 +149,14 @@
                 polylineEnabled: false,
                 polygonEnabled: false,
                 areaEnabled: false,
-                units: {}
+                units: {},
+
+                toolSettings: {
+                    PointSetting: null,
+                    PolygonSetting: null,
+                    LineSetting: null,
+                    TextSetting: null,
+                }
             }
         },
         props: {
@@ -289,21 +296,36 @@
                    this.currentTool = null;
                 }
                 this.$emit('onToolClick', {id});
+                // the style settings have to be reset after each tool change
+                this.$emit('settingsSelectionChanged', this.settings);
             },
             _setSettings(tool) {
                 const type = tool.type;
+                const settings = this.toolSettings;
                 switch (type) {
                     case 'point': {
-                        this.symbolSettings = new PointSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
-                        this.symbolSettings.maxPointSize = 100;
+                        if (!settings.PointSetting){
+                            this.symbolSettings = settings.PointSetting = new PointSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
+                            this.symbolSettings.maxPointSize = settings.PointSetting.maxPointSize = 100;
+                        } else {
+                            this.symbolSettings = new PointSetting(settings.PointSetting);
+                        }
                         break;
                     }
                     case 'polyline': {
-                        this.symbolSettings = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polylineSymbol : '');
+                        if (!settings.LineSetting){
+                            this.symbolSettings = settings.LineSetting = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
+                        } else {
+                            this.symbolSettings = new LineSetting(settings.LineSetting);
+                        }
                         break;
                     }
                     case 'text': {
-                        this.symbolSettings = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.textSymbol : '');
+                        if (!settings.TextSetting){
+                            this.symbolSettings = settings.TextSetting = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '')
+                        } else {
+                            this.symbolSettings = new TextSetting(settings.TextSetting);
+                        }
                         break;
                     }
                     case 'polygon':
@@ -313,7 +335,11 @@
                     case 'ellipse':
                     case 'arrow': {
                         // TODO: new tools with fill pattern must be added here
-                        this.symbolSettings = new PolygonSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polygonSymbol : '');
+                        if (!settings.PolygonSetting){
+                            this.symbolSettings = settings.PolygonSetting = new PolygonSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polygonSymbol : '');
+                        } else {
+                            this.symbolSettings = new PolygonSetting(settings.PolygonSetting);
+                        }
                         break;
                     }
                     default: {
@@ -330,6 +356,10 @@
             showSettings() {
                 this.settingsEnabled = true;
                 this.currentTool && this.$emit('onToolClick', {id: this.currentTool.id})
+            },
+            settingsChange(settings) {
+                Object.assign(this.toolSettings[settings.typeName],settings);
+                Object.assign(this.symbolSettings,settings)
             }
         },
 
