@@ -68,6 +68,18 @@
                     "drawellipsetool",
                     "drawtexttool"
                 ],
+                "measurementLabels": {
+                    "de-de": {
+                        "totalLength": "Gesamtlänge",
+                        "area": "Fläche",
+                        "circumference": "Umfang"
+                    },
+                    "en-en": {
+                        "totalLength": "Total length",
+                        "area": "Area",
+                        "circumference": "Perimeter"
+                    }
+                },
                 "decimalPlacesMeter": 1,
                 "decimalPlacesKiloMeter": 2,
                 "showLineMeasurementsAtPolylines": true,

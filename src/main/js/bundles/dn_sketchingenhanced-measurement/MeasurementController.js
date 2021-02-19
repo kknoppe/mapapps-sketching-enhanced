@@ -24,6 +24,7 @@ export default class MeasurementController {
 
     activate() {
         this.geoEngine = geoEngine;
+        console.log(i18n.locale);
         this.activeToolType = null;
         this._oldVertex = null;
         this._vertexArray = [];
@@ -903,9 +904,12 @@ export default class MeasurementController {
         let textPosition = (temporary && this._oldVertex && this.coordinates[0] - this._oldVertex[0] > 0) ? 'left' : 'right';
         textPosition = temporary ? textPosition : 'center';
         textPosition = horizontalAlignment ? horizontalAlignment : textPosition;
-
+        const areaText = (this._properties.measurementLabels && this._properties.measurementLabels[i18n.locale]) ?
+            this._properties.measurementLabels[i18n.locale].area : i18n.circumference;
+        const circumferenceText = (this._properties.measurementLabels  && this._properties.measurementLabels[i18n.locale]) ?
+            this._properties.measurementLabels[i18n.locale].circumference : i18n.circumference;
         const textSymbol = new TextSymbol({
-            text: `${i18n.area}: ${areaString} \n ${i18n.circumference}: ${circumString}`,
+            text: `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`,
             color: this.textSettings.color,
             font: this.textSettings.font,
             flag: "measurementText",
