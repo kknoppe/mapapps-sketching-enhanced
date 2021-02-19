@@ -17,13 +17,11 @@
 -->
 <template>
     <v-layout wrap row class="text-angle-picker">
-        <span class="text-angle-label">{{i18n.angle}}:</span>
+        <span class="text-angle-label">{{i18n.angle}}</span>
 
         <v-text-field
             v-model="rotation"
             :suffix="suffix"
-            step="1"
-            type="number"
             :rules="[rules.required, rules.tooSmall, rules.tooBig]"
             single-line>
         </v-text-field>

@@ -24,8 +24,7 @@
                 :max=max
                 :min="min"
                 thumb-label="always"
-                :thumb-size="24"
-                :step="step"
+                :thumb-size="20"
                 hide-details>
             </v-slider>
         </v-flex>
@@ -39,8 +38,7 @@
                     :max="max"
                     v-model="extent"
                     single-line
-                    :rules="[rules.small, rules.big, rules.wrong]"
-                    type="number">
+                    :rules="[rules.small, rules.big, rules.wrong]">
                 </v-text-field>
                 <!-- Arrows to increase or decrease the v-model of the slider and the input of the textfield -->
                 <!-- manual add of these controls because MS EDGE does not support controls of v-text-field -->
