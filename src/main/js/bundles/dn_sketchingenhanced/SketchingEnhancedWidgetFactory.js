@@ -16,7 +16,6 @@
 import Binding from 'apprt-binding/Binding';
 import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
-// import SketchingWidget from './components/SketchingWidget.vue';
 import SketchingWidget from './SketchingBase.vue';
 import {whenOnce, watch} from 'esri/core/watchUtils';
 

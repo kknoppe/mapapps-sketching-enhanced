@@ -23,7 +23,7 @@
         props: {
             i18n: {type: Object, default: () => ({})},
             lineStyle: String,
-            height: {type: Number, default: 6},
+            height: {type: Number, default: 3},
             baseSize: {type: Number, default: 3},
             color: {type: String, default: document.body.classList.contains('everlasting') ? 'white' : 'black'},
         },

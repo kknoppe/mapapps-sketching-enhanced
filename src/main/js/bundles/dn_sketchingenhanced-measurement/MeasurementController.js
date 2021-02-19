@@ -24,6 +24,7 @@ export default class MeasurementController {
 
     activate() {
         this.geoEngine = geoEngine;
+        console.log(i18n.locale);
         this.activeToolType = null;
         this._oldVertex = null;
         this._vertexArray = [];
@@ -55,7 +56,6 @@ export default class MeasurementController {
         this.sketchGroup = 0;
 
         this._model.watch("measurementBoolean",(evt)=>{
-            //this._toggleMeasurementDisabledTools(evt.value);
             if (this.activeToolType){
                 this.setActiveToolType(this.activeToolType);
             }
@@ -447,10 +447,17 @@ export default class MeasurementController {
         if (unit !== 'auto'){
             return `${this._getLengthNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
         } else {
-            const meters = this._getLengthNumeric(geometry,'meters');
-            return meters > 1000 ?
-                `${this._getLengthNumeric(geometry,'kilometers').toLocaleString(i18n.locale)} km` :
-                `${meters.toLocaleString(i18n.locale)} m`;
+            let meters = this._getLengthNumeric(geometry,'meters');
+            const useKms = meters > 1000;
+            if (useKms){
+                const places = this._properties.decimalPlacesKiloMeter;
+                const length = this.lastLengthSegment = this._getLengthNumeric(geometry,'kilometers');
+                return `${(length.toFixed(places) || 2).toLocaleString(i18n.locale)} km`;
+            } else {
+                const places = this._properties.decimalPlacesMeter || 2;
+                const length = this.lastLengthSegment = meters;
+                return `${length.toFixed(places).toLocaleString(i18n.locale)} m`;
+            }
         }
     }
     /**
@@ -477,8 +484,25 @@ export default class MeasurementController {
      */
     _getLengthNumeric(geometry,unit) {
         if (unit === 'auto') unit = null;
-        return Math.round(this.geoEngine.planarLength(geometry, unit || 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+        let length = (this._getMapLength(geometry, unit || 'meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+        return +length;
     }
+
+    /**
+     * calculates the linear map length depending on the spatial reference system
+     * @param geometry, unit
+     * @returns {number}
+     * @private
+     */
+    _getMapLength(geometry,unit) {
+        const srs = this._mapWidgetModel.spatialReference;
+        if (srs.isWebMercator || srs.isWGS84){
+            return this.geoEngine.geodesicLength(geometry, unit);
+        } else {
+            return this.geoEngine.planarLength(geometry, unit);
+        }
+    }
+
 
     /**
      * get Area of given geometry
@@ -492,9 +516,16 @@ export default class MeasurementController {
             return `${this._getAreaNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
         } else {
             const squareMeters = this._getAreaNumeric(geometry,'square-meters');
-            return squareMeters > 1000000 ?
-                `${this._getAreaNumeric(geometry,'square-kilometers').toLocaleString(i18n.locale)} km²` :
-                `${squareMeters.toLocaleString(i18n.locale)} m²`;
+            const useKms = squareMeters > 1000000;
+            if (useKms){
+                const places = this._properties.decimalPlacesKiloMeter;
+                const area = this._getAreaNumeric(geometry,'square-kilometers').toFixed(places) || 2;
+                return `${area.toLocaleString(i18n.locale)} km²`
+            } else {
+                const places = this._properties.decimalPlacesMeter || 2;
+                const area = squareMeters.toFixed(places);
+                return `${area.toLocaleString(i18n.locale)} m²`;
+            }
         }
     }
 
@@ -524,7 +555,23 @@ export default class MeasurementController {
      */
     _getAreaNumeric(geometry,unit) {
         if (unit === 'auto') unit = null;
-        return Math.round(this.geoEngine.planarArea(geometry, unit || 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+        let area = (this._getMapArea(geometry, unit || 'square-meters') * Math.pow(10, this.mDecimal)) / Math.pow(10, this.mDecimal);
+        return +area;
+    }
+
+    /**
+     * calculates the map area depending on the spatial reference system
+     * @param geometry, unit
+     * @returns {number}
+     * @private
+     */
+    _getMapArea(geometry,unit) {
+        const srs = this._mapWidgetModel.spatialReference;
+        if (srs.isWebMercator || Srs.isWGS84){
+            return this.geoEngine.geodesicArea(geometry, unit);
+        } else {
+            return this.geoEngine.planarArea(geometry, unit);
+        }
     }
 
     /**
@@ -720,11 +767,11 @@ export default class MeasurementController {
             const isPolygon = evt.graphic.geometry.rings;
             this._model.showLineMeasurementsAtPolygons && isPolygon && evt.graphic.geometry.rings.forEach(rings => {
                 for (let i = 1; i < rings.length; i++) {
-	                const checkedPath = [rings[i - 1], rings[i]];
-	                const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
-	                this._sketchingHandler.sketchViewModel.layer.add(graphic);
-	            }
-	        });
+                    const checkedPath = [rings[i - 1], rings[i]];
+                    const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
+                    this._sketchingHandler.sketchViewModel.layer.add(graphic);
+                }
+            });
         }
     }
 
@@ -769,7 +816,7 @@ export default class MeasurementController {
             if(evt){
                 const srs = evt.graphic.geometry.spatialReference.wkid;
                 const targetSrs = this.srs && this.srs.systemWkid ? this.srs.systemWkid : srs;
-                const places = this._properties.pointCoordPlaces || (this._srsIsPlanar(targetSrs) ? 0 : 5);
+                const places = this._properties.pointCoordPlaces || 2;
                 const unitSymbolX = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolX : '';
                 const unitSymbolY = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolY : '';
                 const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
@@ -822,25 +869,6 @@ export default class MeasurementController {
     }
 
     /**
-     * returns true if the spatial reference system is planar
-     * or false if it is geodesic
-     * @param srs - (WKID)
-     * @private
-     */
-    _srsIsPlanar(srs){
-        const planar = this._properties.srs.planar;
-        const geodetic = this._properties.srs.geodetic;
-        if(planar.indexOf(srs)!=-1){
-            return true;
-        }
-        if(geodetic.indexOf(srs)!=-1){
-            return false;
-        }else{
-            console.error("Could not determine if EPSG:"+srs+" is planar or geodetic. Missing entry in configuration.");
-        }
-    }
-
-    /**
      * add line measurements to a polyline after reshaping
      * @param evt
      * @private
@@ -876,9 +904,12 @@ export default class MeasurementController {
         let textPosition = (temporary && this._oldVertex && this.coordinates[0] - this._oldVertex[0] > 0) ? 'left' : 'right';
         textPosition = temporary ? textPosition : 'center';
         textPosition = horizontalAlignment ? horizontalAlignment : textPosition;
-
+        const areaText = (this._properties.measurementLabels && this._properties.measurementLabels[i18n.locale]) ?
+            this._properties.measurementLabels[i18n.locale].area : i18n.circumference;
+        const circumferenceText = (this._properties.measurementLabels  && this._properties.measurementLabels[i18n.locale]) ?
+            this._properties.measurementLabels[i18n.locale].circumference : i18n.circumference;
         const textSymbol = new TextSymbol({
-            text: `${i18n.area}: ${areaString} \n ${i18n.circumference}: ${circumString}`,
+            text: `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`,
             color: this.textSettings.color,
             font: this.textSettings.font,
             flag: "measurementText",
@@ -989,7 +1020,8 @@ export default class MeasurementController {
      */
     _showCompleteResultsInTab(evt){
         const activeTool = this.activeTool || evt.activeTool;
-        this.measurements.totalLength = this.measurements.totalLength + this.measurements.segmentLength;
+        const lastSegment = this._getLastSegmentLength(evt);
+        this.measurements.totalLength = this.measurements.totalLength + lastSegment;
         const currentArea = this.measurements.currentArea;
         switch(activeTool){
             case("drawpolylinetool"):
@@ -1023,7 +1055,6 @@ export default class MeasurementController {
     _getLastSegmentLength(evt){
         // this is to get the length of the set new segment
         let firstPoint = evt.graphic.geometry.paths ? evt.graphic.geometry.paths[0][0] : evt.graphic.geometry.rings[0][0];
-        let id = evt.graphic.uid;
         const viewModel = this._sketchingHandler.sketchViewModel;
         const spatialReference = viewModel.view.spatialReference;
         const newVertex = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
@@ -1032,15 +1063,6 @@ export default class MeasurementController {
         const checkedPath = this._oldVertex ? [this._oldVertex, newVertex] : [firstPoint, newVertex];
         const geometry = new Polyline(checkedPath, spatialReference);
         return this._getLengthNumeric(geometry,this.lengthUnit)
-    }
-
-    _toggleMeasurementDisabledTools(enabled){
-        const measurementDisabledTools = this._properties.disabledMeasurementTools;
-        const tools = this._tools;
-        measurementDisabledTools && measurementDisabledTools.forEach(id => {
-            const tool = tools.filter((x) => x.id === id)[0].tool;
-            tool.set("enabled",!enabled);
-        });
     }
 
 }

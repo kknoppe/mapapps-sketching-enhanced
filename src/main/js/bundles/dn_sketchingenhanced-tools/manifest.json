@@ -283,6 +283,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawpolylinetool",
+                "toolGroup": "sketchinglinegroup",
                 "title": "${tools.drawpolylinetool}",
                 "iconClass": "icon-polyline",
                 "toolRole": "toolset",
@@ -309,9 +310,11 @@
             "provides": [
                 "ct.tools.Tool"
             ],
+            "toolGroup": "sketchinglinegroup",
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawfreehandpolylinetool",
+                "toolGroup": "sketchinglinegroup",
                 "title": "${tools.drawfreehandpolylinetool}",
                 "iconClass": "icon-polyline-freeform",
                 "toolRole": "toolset",
@@ -372,6 +375,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawpolygontool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawpolygontool}",
                 "iconClass": "icon-polygon",
                 "toolRole": "toolset",
@@ -401,6 +405,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawfreehandpolygontool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawfreehandpolygontool}",
                 "iconClass": "icon-polygon-freeform",
                 "toolRole": "toolset",
@@ -461,6 +466,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawcircletool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawcircletool}",
                 "iconClass": "icon-radio-unselected",
                 "toolRole": "toolset",
@@ -489,6 +495,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawtriangletool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawtriangletool}",
                 "iconClass": "icon-triangle",
                 "toolRole": "toolset",
@@ -517,6 +524,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawellipsetool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawellipsetool}",
                 "iconClass": "icon-ellipsis",
                 "toolRole": "toolset",
@@ -545,6 +553,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawrectangletool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawrectangletool}",
                 "iconClass": "icon-checkbox-unchecked",
                 "toolRole": "toolset",
@@ -573,6 +582,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "id": "drawarrowtool",
+                "toolGroup": "sketchingpolygongroup",
                 "title": "${tools.drawarrowtool}",
                 "iconClass": "icon-swap",
                 "toolRole": "toolset",

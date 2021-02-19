@@ -22,7 +22,6 @@
             v-model="currentProperty"
             :suffix="suffix"
             step="1"
-            type="number"
             :rules="[rules.required]"
             single-line>
         </v-text-field>

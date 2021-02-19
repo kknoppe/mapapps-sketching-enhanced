@@ -19,8 +19,8 @@
     <v-item-group mandatory v-model="selectedItem" class="text-size-picker">
         <v-list>
             <v-item active-class="active" :value="item" v-for="(item, index) in sizes" :key="index">
-                <v-list-tile @click="toggle" slot-scope="{ toggle }">
-                    <v-layout align-center style="font-size: 14px">
+                <v-list-tile class="textSizeItem" @click="toggle" slot-scope="{ toggle }">
+                    <v-layout align-center style="font-size: 12px">
                         {{ item }}
                     </v-layout>
                 </v-list-tile>

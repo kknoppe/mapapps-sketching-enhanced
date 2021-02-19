@@ -183,7 +183,7 @@ module.exports = {
         },
         totalLength: 'Total length',
         area: 'Area',
-        circumference: 'Circumference',
+        circumference: 'Perimeter',
         locale: 'en-en',
     }),
     'de': true,
