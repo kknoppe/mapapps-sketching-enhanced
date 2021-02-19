@@ -96,10 +96,13 @@
                 this._deactivateOtherTools();
                 const toolIcon = document.getElementById(tool.id);
                 const childToolNode = toolIcon ? toolIcon.parentElement : null;
+                const toolGroupNode = tool.toolGroup ? document.getElementById(tool.toolGroup).parentElement.parentElement : null;
                 if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
                     childToolNode.classList.add('highlightedTool');
+                    toolGroupNode && toolGroupNode.classList.add('highlightedToolParent');
                 } else {
                     childToolNode.classList.remove('highlightedTool');
+                    toolGroupNode && toolGroupNode.classList.remove('highlightedToolParent');
                 }
                 const parentIcon = document.getElementById(parentId);
                 if(parentIcon && parentIcon.children.length && parentIcon.children[0].children.length) {
