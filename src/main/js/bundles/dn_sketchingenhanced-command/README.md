@@ -61,7 +61,7 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
           255
         ],
         "width": 2,
-        "type": " esriSLS",
+        "type": "esriSLS",
         "style": "esriSLSSolid"
       }
     },
@@ -115,7 +115,7 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
           128
         ],
         "width": 1,
-        "type": " esriSLS",
+        "type": "esriSLS",
         "style": "esriSLSSolid"
       }
     },
