@@ -246,6 +246,7 @@ export default class MeasurementController {
      */
     _stateActiveHandler(evt) {
         if (!this.measurementBoolean) {
+            this._removeCorrelatedMeasurementTexts(evt);
             return;
         }
 
@@ -286,7 +287,7 @@ export default class MeasurementController {
      * @private
      */
     _removeCorrelatedMeasurementTexts(evt) {
-        const graphicGroup = evt.graphics[0].group;
+        const graphicGroup = (evt.graphics && evt.graphics[0]) ? evt.graphics[0].group : null;
         const viewModel = this._sketchingHandler.sketchViewModel;
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => {
