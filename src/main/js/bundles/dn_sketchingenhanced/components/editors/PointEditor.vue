@@ -47,7 +47,6 @@
                     return this.settings.color;
                 },
                 set(val) {
-                    console.log(this.i18n)
                     if(val && val.rgba) {
                         const settings = this.settings;
                         settings.color = val.rgba;

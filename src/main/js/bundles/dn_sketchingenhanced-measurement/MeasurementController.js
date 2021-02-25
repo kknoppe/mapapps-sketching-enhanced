@@ -24,7 +24,6 @@ export default class MeasurementController {
 
     activate() {
         this.geoEngine = geoEngine;
-        console.log(i18n.locale);
         this.activeToolType = null;
         this._oldVertex = null;
         this._vertexArray = [];

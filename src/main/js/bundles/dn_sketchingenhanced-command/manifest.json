@@ -120,7 +120,7 @@
                             255
                         ],
                         "width": 2,
-                        "type": " esriSLS",
+                        "type": "esriSLS",
                         "style": "esriSLSSolid"
                     }
                 },
@@ -174,7 +174,7 @@
                             128
                         ],
                         "width": 1,
-                        "type": " esriSLS",
+                        "type": "esriSLS",
                         "style": "esriSLSSolid"
                     }
                 },
