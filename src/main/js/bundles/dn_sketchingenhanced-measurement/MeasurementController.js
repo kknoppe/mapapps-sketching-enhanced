@@ -567,7 +567,7 @@ export default class MeasurementController {
      */
     _getMapArea(geometry,unit) {
         const srs = this._mapWidgetModel.spatialReference;
-        if (srs.isWebMercator || Srs.isWGS84){
+        if (srs.isWebMercator || srs.isWGS84){
             return this.geoEngine.geodesicArea(geometry, unit);
         } else {
             return this.geoEngine.planarArea(geometry, unit);

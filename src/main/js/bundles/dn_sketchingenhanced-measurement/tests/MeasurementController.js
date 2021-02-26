@@ -32,6 +32,11 @@ controller._properties = {
         "hectares": "ha"
     }
 };
+controller._mapWidgetModel = {
+    spatialReference: {
+        isWebMercator: false
+    }
+}
 
 registerSuite({
     name: module.id,
