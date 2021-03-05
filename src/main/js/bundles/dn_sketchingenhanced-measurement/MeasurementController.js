@@ -443,6 +443,7 @@ export default class MeasurementController {
      * @private
      */
     _getLength(geometry) {
+        const locale = i18n.locale;
         let unit = this.lengthUnit;
         if (unit !== 'auto'){
             return `${this._getLengthNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
@@ -451,12 +452,14 @@ export default class MeasurementController {
             const useKms = meters > 1000;
             if (useKms){
                 const places = this._properties.decimalPlacesKiloMeter;
-                const length = this.lastLengthSegment = this._getLengthNumeric(geometry,'kilometers');
-                return `${(length.toFixed(places) || 2).toLocaleString(i18n.locale)} km`;
+                let segment = this.lastLengthSegment = this._getLengthNumeric(geometry,'kilometers');
+                let length = segment.toFixed(places || 2)
+                return `${parseFloat(length).toLocaleString(locale)} km`;
             } else {
                 const places = this._properties.decimalPlacesMeter || 2;
-                const length = this.lastLengthSegment = meters;
-                return `${length.toFixed(places).toLocaleString(i18n.locale)} m`;
+                let segment = this.lastLengthSegment = meters;
+                let length = segment.toFixed(places || 2)
+                return `${parseFloat(length).toLocaleString(locale)} m`;
             }
         }
     }
@@ -511,6 +514,7 @@ export default class MeasurementController {
      * @private
      */
     _getArea(geometry) {
+        const locale = i18n.locale;
         let unit = this.areaUnit;
         if (unit !== 'auto'){
             return `${this._getAreaNumeric(geometry,unit).toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`
@@ -519,12 +523,12 @@ export default class MeasurementController {
             const useKms = squareMeters > 1000000;
             if (useKms){
                 const places = this._properties.decimalPlacesKiloMeter;
-                const area = this._getAreaNumeric(geometry,'square-kilometers').toFixed(places) || 2;
-                return `${area.toLocaleString(i18n.locale)} km²`
+                const area = this._getAreaNumeric(geometry,'square-kilometers').toFixed(places || 2);
+                return `${parseFloat(area).toLocaleString(locale)} km²`
             } else {
-                const places = this._properties.decimalPlacesMeter || 2;
-                const area = squareMeters.toFixed(places);
-                return `${area.toLocaleString(i18n.locale)} m²`;
+                const places = this._properties.decimalPlacesMeter;
+                const area = squareMeters.toFixed(places || 2);
+                return `${parseFloat(area).toLocaleString(locale)} m²`;
             }
         }
     }
