@@ -96,39 +96,40 @@
                                 font-size: 0.9em;
                             }
                             &.v-navigation-drawer {
+                                background-color: darken(@container-background-color,10%);
                                 max-width: 230px;
                                 top: 49px;
                                 position: absolute;
                                 height: calc(100% - 92px)!important;
-                                background-color: darken(@container-background-color,10%);
-                                .v-list__group__header:hover {
-                                    background: darken(@ct-highlight-color,10%);
-                                    color: @ct-highlight-text-color;
-                                    i {
+                                .v-list {
+                                    .v-list__group__header:hover {
+                                        background: darken(@ct-highlight-color,10%);
                                         color: @ct-highlight-text-color;
-                                    }
+                                        i {
+                                            color: @ct-highlight-text-color;
+                                        }
 
-                                }
-                                a:hover {
-                                    background: darken(@ct-highlight-color,10%);
-                                    color: @ct-highlight-text-color;
-                                    i {
-                                        color: @ct-highlight-text-color;
                                     }
-                                }
-                                .highlightedToolParent {
-                                    background-color: darken(@ct-highlight-color,10%);
-                                    color: @ct-highlight-text-color;
-                                    i {
+                                    a:hover {
+                                        background: darken(@ct-highlight-color,10%);
                                         color: @ct-highlight-text-color;
+                                        i {
+                                            color: @ct-highlight-text-color;
+                                        }
                                     }
-                                }
-
-                                .highlightedTool {
-                                    background-color: @ct-highlight-color;
-                                    color: @ct-highlight-text-color;
-                                    i {
+                                    .highlightedToolParent {
+                                        background-color: darken(@ct-highlight-color,10%);
                                         color: @ct-highlight-text-color;
+                                        i {
+                                            color: @ct-highlight-text-color;
+                                        }
+                                    }
+                                    .highlightedTool {
+                                        background-color: @ct-highlight-color;
+                                        color: @ct-highlight-text-color;
+                                        i {
+                                            color: @ct-highlight-text-color;
+                                        }
                                     }
                                 }
                             }
