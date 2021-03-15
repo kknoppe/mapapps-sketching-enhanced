@@ -30,10 +30,10 @@
                     <v-list-tile-title>{{tool.title}}</v-list-tile-title>
                 </v-list-tile>
                 <v-list-group v-if="tool.menu"
-                              no-action>
+                              no-action
+                              @transitionend="transitionEnd($event,tool)">
                     <template v-slot:activator>
                         <v-list-tile :id="tool.id">
-                        <!--<v-list-tile :id="tool.id">-->
                             <v-list-tile-action>
                                 <v-icon>{{tool.iconClass}}</v-icon>
                             </v-list-tile-action>
@@ -59,6 +59,7 @@
     export default {
         data() {
             return {
+                activeNodes: []
             }
         },
         props: {
@@ -98,8 +99,12 @@
                 const childToolNode = toolIcon ? toolIcon.parentElement : null;
                 const toolGroupNode = tool.toolGroup ? document.getElementById(tool.toolGroup).parentElement.parentElement : null;
                 if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
+                    this.activeNodes.push(childToolNode);
                     childToolNode.classList.add('highlightedTool');
-                    toolGroupNode && toolGroupNode.classList.add('highlightedToolParent');
+                    if (toolGroupNode) {
+                        this.activeNodes.push(toolGroupNode);
+                        toolGroupNode.classList.add('highlightedToolParent');
+                    }
                 } else {
                     childToolNode.classList.remove('highlightedTool');
                     toolGroupNode && toolGroupNode.classList.remove('highlightedToolParent');
@@ -109,6 +114,18 @@
                     const classList = parentIcon.children[0].children[0].classList;
                     const oldVal = classList[2];
                     classList.replace(oldVal, tool.iconClass);
+                }
+            },
+
+            transitionEnd(evt,tool){
+                const subTools = this.listTools(tool);
+                if (evt.propertyName === 'transform') {
+                    const node = evt.target.parentElement.parentElement;
+                    const hasActiveTool = subTools.some(tool => tool.active === true);
+                    if (hasActiveTool) {
+                        this.activeNodes.push(node);
+                        node.classList.add('highlightedToolParent');
+                    }
                 }
             },
 
@@ -125,11 +142,18 @@
             },
 
             _deactivateOtherTools(){
-                  this.tools.forEach(tool => {
-                      const toolIcon = document.getElementById(tool.id);
-                      const childToolNode = toolIcon ? toolIcon.parentElement : null;
-                      toolIcon && childToolNode.classList.remove('highlightedTool');
-                  });
+                if (this.activeNodes && this.activeNodes.length) {
+                    this.activeNodes.forEach(node => {
+                        node.classList.remove('highlightedTool');
+                        node.classList.remove('highlightedToolParent');
+                    });
+                    this.activeNodes = [];
+                }
+                this.tools.forEach(tool => {
+                    const toolIcon = document.getElementById(tool.id);
+                    const childToolNode = toolIcon ? toolIcon.parentElement : null;
+                    toolIcon && childToolNode.classList.remove('highlightedTool');
+                });
             }
         },
     }
