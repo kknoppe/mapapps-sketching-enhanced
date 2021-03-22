@@ -62,9 +62,10 @@ export default declare({
     _getConstructionInfo(viewModel, graphic) {
         const geo = graphic.geometry;
         const srs = this._mapWidgetModel.spatialReference;
+
         const isGeodesic = srs.isWebMercator || srs.isWGS84;
+
         let area;
-        // const area = geo.type !== "polygon" ? "" : (isGeodesic ? this._toFixed(planarArea(geo,'square-meters')) + "qm" : this._toFixed(geodesicArea(geo,'square-meters')) + "qm");
         if (isGeodesic && geo.type !== "polygon") {
             area = this._toFixed(planarArea(geo,'square-meters')) + "qm";
         } else if (!isGeodesic && geo.type !== "polygon") {
@@ -72,6 +73,7 @@ export default declare({
         } else {
             area = "";
         }
+
         const lengthTotal = isGeodesic ? this._toFixed(geodesicLength(geo,'meters')) + "m" : this._toFixed(planarLength(geo,'meters')) + "m";
         let length = "";
         let angle = "";
