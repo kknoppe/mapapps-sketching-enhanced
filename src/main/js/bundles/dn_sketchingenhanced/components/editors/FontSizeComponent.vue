@@ -31,7 +31,7 @@
                     {{ fontSize }}
                 </v-btn>
             </template>
-            <text-size-picker style="height: 150px; overflow: auto" :sizes="sizes" v-model="textSize"></text-size-picker>
+            <text-size-picker style="height: 150px" :sizes="sizes" v-model="textSize"></text-size-picker>
         </v-menu>
     </v-layout>
 </template>
