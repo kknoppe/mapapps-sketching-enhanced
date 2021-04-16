@@ -27,7 +27,6 @@ export default class MeasurementController {
         this.activeToolType = null;
         this._oldVertex = null;
         this._vertexArray = [];
-        this._undoRedoGraphics = [];
         const props = this._properties;
         this.mDecimal = props.decimalPlacesMeter;
         this.kmDecimal = props.decimalPlacesKiloMeter;
@@ -43,6 +42,8 @@ export default class MeasurementController {
         this._model.polylineEnabled = false;
         this._model.polygonEnabled = false;
         this._model.areaEnabled = false;
+
+        this.lastEnabledTool = null;
 
         this.coordinates = null;
         this.radiusPath = null;
@@ -65,6 +66,17 @@ export default class MeasurementController {
     }
 
     handler(evt) {
+
+        this._removeGraphicMeasurements(evt);
+
+        if (evt.type === 'remove') {
+            // get textGraphics to remove
+            const viewModel = this._sketchingHandler.sketchViewModel;
+            evt.graphics.forEach(g => {
+                this._removeTextGraphics(viewModel, g.uid);
+            });
+        }
+
         if(evt.activeTool && evt.graphic && this._measurementDisabledTools.includes(evt.activeTool)) {
             evt.graphic.noMeasurementLabels = true;
             if (this.measurementBoolean){
@@ -80,7 +92,6 @@ export default class MeasurementController {
         if(evt.state === 'cancel' && evt.type === 'create' && evt.graphic) {
             this.resetMeasurementResults();
             this.resetPanelStates();
-            this._removeMeasurementsOnCancel(evt);
             return;
         }
 
@@ -103,8 +114,6 @@ export default class MeasurementController {
         if (evt.state === 'complete' && this.measurementBoolean) {
             this._oldVertex = null;
             this._vertexArray = [];
-            this._undoRedoGraphics = [];
-
 
             if (evt.tool === 'point' && evt.activeTool && evt.activeTool === "drawpointtool") {
                 this._addPointCoordinatesTextToPoint(evt);
@@ -113,18 +122,17 @@ export default class MeasurementController {
                 if (evt.graphics[0].geometry.type === 'point') {
                     return;
                 }
-                const newEvent = evt;
                 evt.graphics.forEach(graphic => {
                     if (graphic.noMeasurementLabels){
                         return;
                     }
                     graphic.group = this.sketchGroup;
-                    newEvent.graphic = graphic;
+                    evt.graphic = graphic;
                     if (evt.graphics[0].geometry.type !== 'polyline') {
-                        this._calculatePolygonMeasurements(newEvent);
+                        this._calculatePolygonMeasurements(evt);
                     } else {
-                        this._model.showLineMeasurementsAtPolylines && this._addLineMeasurementsToPolylines(newEvent);
-                        this._calculateTotalLineMeasurement(newEvent);
+                        this._model.showLineMeasurementsAtPolylines && this._addLineMeasurementsToPolylines(evt);
+                        this._calculateTotalLineMeasurement(evt);
                     }
                 });
 
@@ -141,15 +149,13 @@ export default class MeasurementController {
             }
         }
 
+        if (evt.state === 'complete' && this.lastEnabledTool) {
+            this._model[this.lastEnabledTool] = true;
+        }
+
         if (evt.state === 'active') {
             this._stateActiveHandler(evt);
         }
-
-        if(this.measurementBoolean) {
-            this._undoRedoHandler(evt);
-        }
-
-
 
     }
 
@@ -158,65 +164,36 @@ export default class MeasurementController {
         if (!this.measurementBoolean){
             return
         }
+        this._disableAllTools();
         switch(activeTool) {
             case "drawpointtool":
+                this.lastEnabledTool = 'pointEnabled'
                 this._model.pointEnabled = true;
-                this._model.polylineEnabled = false;
-                this._model.polygonEnabled = false;
-                this._model.areaEnabled = false;
                 break;
             case "drawpolylinetool":
             case "drawfreehandpolylinetool":
-                this._model.pointEnabled = false;
+                this.lastEnabledTool = 'polylineEnabled'
                 this._model.polylineEnabled = true;
-                this._model.polygonEnabled = false;
-                this._model.areaEnabled = false;
                 break;
             case "drawpolygontool":
             case "drawfreehandpolygontool":
-                this._model.pointEnabled = false;
-                this._model.polylineEnabled = false;
+                this.lastEnabledTool = 'polygonEnabled'
                 this._model.polygonEnabled = true;
-                this._model.areaEnabled = false;
                 break;
             case "drawrectangletool":
             case "drawtriangletool":
             case "drawcircletool":
             case "drawellipsetool":
-                this._model.pointEnabled = false;
-                this._model.polylineEnabled = false;
-                this._model.polygonEnabled = false;
+                this.lastEnabledTool = 'areaEnabled'
                 this._model.areaEnabled = true;
                 break;
-            default:
-                this._model.pointEnabled = false;
-                this._model.polylineEnabled = false;
-                this._model.polygonEnabled = false;
-                this._model.areaEnabled = false;
         }
     }
 
-    _undoRedoHandler(evt) {
-        if (evt.type === 'undo') {
-            const viewModel = this._sketchingHandler.sketchViewModel;
-            const lastGraphic = viewModel.layer.graphics.items.slice(-1);
-            if(lastGraphic && lastGraphic.length) {
-                viewModel.layer.removeMany(lastGraphic);
-                this._undoRedoGraphics.push(lastGraphic);
-                const index = this._vertexArray.findIndex(x => x === this._oldVertex);
-                this._oldVertex = this._vertexArray[index - 1];
-            }
-        }
-
-        if (evt.type === 'redo') {
-            const viewModel = this._sketchingHandler.sketchViewModel;
-            const graphic = this._undoRedoGraphics.pop();
-            if(graphic && graphic.length) {
-                viewModel.layer.add(graphic[0]);
-                const index = this._vertexArray.findIndex(x => x === this._oldVertex);
-                this._oldVertex = this._vertexArray[index + 1];
-            }
-        }
+    _disableAllTools(){
+        ['pointEnabled','polylineEnabled','polygonEnabled','areaEnabled'].forEach(tool => {
+            this._model[tool] = false;
+        })
     }
 
     /**
@@ -298,7 +275,8 @@ export default class MeasurementController {
         viewModel.layer.removeMany(gs);
     }
 
-    _removeMeasurementsOnCancel(evt) {
+    _removeGraphicMeasurements(evt) {
+        if (!evt.graphic) return;
         const id = evt.graphic.uid;
         const viewModel = this._sketchingHandler.sketchViewModel;
         const gs = viewModel.layer.graphics.items.filter(graphic => {
@@ -339,16 +317,12 @@ export default class MeasurementController {
         // calculate area of polygon
         if (evt.tool !== 'circle' && evt.tool !== 'ellipse') {
             if (!evt.graphic) return;
-            const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, temporary);
+            const graphic = this._calculateCircumferenceAndArea(evt, temporary);
             viewModel.layer.add(graphic);
-        }
-        // remove labeling of line elements so that line lengths can be added for all elements later on
-        if ((evt.tool === 'polygon' || evt.tool === 'reshape') && !temporary) {
-            this._removePolygonMeasurements(viewModel, evt.graphic.uid);
         }
 
         // add line lengths for all sides of the polygon (for circles and ellipsis area and circmference is calculated)
-        this._addPolygonLineMeasurements(evt, spatialReference, temporary);
+        this._addPolygonLineMeasurements(evt, spatialReference);
     }
 
     /**
@@ -357,10 +331,10 @@ export default class MeasurementController {
      * @param temporary
      * @private
      */
-    _calculateTotalLineMeasurement(evt, temporary) {
+    _calculateTotalLineMeasurement(evt) {
         const path = evt.graphic.geometry.paths[0];
-
-        if (path.length < 3 && !temporary) {
+        const id = evt.graphic.uid;
+        if (path.length < 3) {
             return;
         }
         const viewModel = this._sketchingHandler.sketchViewModel;
@@ -378,7 +352,7 @@ export default class MeasurementController {
             text: temporary ? lengthString : `${i18n.totalLength}: ${lengthString}`,
             color: this.textSettings.color,
             flag: "measurementText",
-            name: temporary ? 'temporary' : '',
+            name: `measurement-${id}`,
             font: this.textSettings.font,
             horizontalAlignment: textPosition,
             yoffset: yOffset,
@@ -704,7 +678,7 @@ export default class MeasurementController {
         });
         viewModel.layer.add(lineGraphic);
 
-        const graphic = this._createTextWithDistance(path, spatialReference);
+        const graphic = this._createTextWithDistance(path, spatialReference, evt.graphic.uid);
         viewModel.layer.add(graphic);
     }
 
@@ -716,20 +690,20 @@ export default class MeasurementController {
      * @param temporary Boolean parameter which is true if text should be deleted on next cursor move
      * @private
      */
-    _createTextWithDistance(checkedPath, spatialReference, id, temporary) {
+    _createTextWithDistance(checkedPath, spatialReference, id) {
         const line = new Polyline(checkedPath, spatialReference);
         const lengthString = this._getLength(line);
         const pnt = line.extent.center;
         // calculate rotation angle for text
         const degAngle = -180 / Math.PI * Math.atan((checkedPath[1][1] - checkedPath[0][1]) / (checkedPath[1][0] - checkedPath[0][0]));
-        const nameString = temporary ? 'temporary' : '';
+        const nameString = `measurement-${id}`;
 
         const textSymbol = new TextSymbol({
             angle: degAngle,
             text: lengthString,
             flag: "measurementText",
             color: this.textSettings.color,
-            name: id ? `measurement-${id}` : nameString,
+            name: `measurement-${id}`,
             font: this.textSettings.font,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
@@ -744,7 +718,7 @@ export default class MeasurementController {
      * @param id: uid of the polygon
      * @private
      */
-    _removePolygonMeasurements(viewModel, id) {
+    _removeTextGraphics(viewModel, id) {
         // find all help lines and remove them from the graphics layer
         const graphics = viewModel.layer.graphics.items;
         const gs = graphics.filter(x => {
@@ -762,17 +736,17 @@ export default class MeasurementController {
      * @param temporary Boolean parameter which is true if text should be deleted on next cursor move
      * @private
      */
-    _addPolygonLineMeasurements(evt, spatialReference, temporary) {
+    _addPolygonLineMeasurements(evt, spatialReference) {
         if (evt.tool === 'circle' || evt.tool === 'ellipse') {
             const horizontalAlignment = (evt.tool === 'circle' && this.radiusPath) ? this._getHorizontalAlignmentForCircle() : null;
-            const graphic = this._calculateCircumferenceAndArea(evt.graphic.geometry, false, horizontalAlignment);
+            const graphic = this._calculateCircumferenceAndArea(evt, false, horizontalAlignment);
             this._sketchingHandler.sketchViewModel.layer.add(graphic);
         } else {
             const isPolygon = evt.graphic.geometry.rings;
             this._model.showLineMeasurementsAtPolygons && isPolygon && evt.graphic.geometry.rings.forEach(rings => {
                 for (let i = 1; i < rings.length; i++) {
                     const checkedPath = [rings[i - 1], rings[i]];
-                    const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, temporary);
+                    const graphic = this._createTextWithDistance(checkedPath, spatialReference, evt.graphic.uid);
                     this._sketchingHandler.sketchViewModel.layer.add(graphic);
                 }
             });
@@ -785,7 +759,7 @@ export default class MeasurementController {
      * @private
      */
     _addPointCoordinatesTextToPoint(evt) {
-        const id = evt.graphic.uid.toString();
+        const id = evt.graphic.uid;
         const viewModel = this._sketchingHandler.sketchViewModel;
         const coordinates = this.coordinates;
         const point = evt.graphic.geometry;
@@ -794,7 +768,7 @@ export default class MeasurementController {
                 text: coordString,
                 color: this.textSettings.color,
                 flag: "measurementText",
-                name: id ? `measurement-${id}` : coordString,
+                name: `measurement-${id}`,
                 font: this.textSettings.font,
                 haloColor: this.textSettings.haloColor,
                 haloSize: this.textSettings.haloSize,
@@ -884,7 +858,7 @@ export default class MeasurementController {
         const paths = evt.graphic.geometry.paths[0];
         for (let i = 1; i < paths.length; i++) {
             const checkedPath = [paths[i - 1], paths[i]];
-            const graphic = this._createTextWithDistance(checkedPath, spatialReference, null, false);
+            const graphic = this._createTextWithDistance(checkedPath, spatialReference, evt.graphic.uid);
             viewModel.layer.add(graphic);
         }
     }
@@ -900,7 +874,9 @@ export default class MeasurementController {
      * @param horizontalAlignment
      * @private
      */
-    _calculateCircumferenceAndArea(geometry, temporary, horizontalAlignment) {
+    _calculateCircumferenceAndArea(evt, temporary, horizontalAlignment) {
+        const geometry = evt.graphic.geometry;
+        const id = evt.graphic.uid;
         const circumString = this._getLength(geometry);
         const areaString = this._getArea(geometry);
 
@@ -912,12 +888,13 @@ export default class MeasurementController {
             this._properties.measurementLabels[i18n.locale].area : i18n.circumference;
         const circumferenceText = (this._properties.measurementLabels  && this._properties.measurementLabels[i18n.locale]) ?
             this._properties.measurementLabels[i18n.locale].circumference : i18n.circumference;
+
         const textSymbol = new TextSymbol({
             text: `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`,
             color: this.textSettings.color,
             font: this.textSettings.font,
             flag: "measurementText",
-            name: temporary ? 'temporary' : '',
+            name: `measurement-${id}`,
             horizontalAlignment: textPosition,
             haloColor: this.textSettings.haloColor,
             haloSize: this.textSettings.haloSize,
@@ -1068,6 +1045,4 @@ export default class MeasurementController {
         const geometry = new Polyline(checkedPath, spatialReference);
         return this._getLengthNumeric(geometry,this.lengthUnit)
     }
-
 }
-
