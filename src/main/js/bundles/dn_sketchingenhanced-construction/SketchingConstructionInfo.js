@@ -96,7 +96,7 @@ export default declare({
 
             angle = this._toFixed(a) + "°";
             angleRelative = this._toFixed(aRelative) + "°";
-            length = this._toFixed(planarLength(polyline)) + "m";
+            length = isGeodesic ? this._toFixed(geodesicLength(polyline)) + "m" : this._toFixed(planarLength(polyline)) + "m";
         }
         return this._createConstructionInfo(angle, angleRelative, length, lengthTotal, area);
     },
