@@ -31,6 +31,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
                 "drawarrowtool",
                 "drawfreehandpolygontool",
                 "drawfreehandpolylinetool",
+                "drawtriangletool",
                 "drawcircletool",
                 "drawellipsetool",
                 "drawtexttool"
@@ -42,23 +43,6 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
             "pointCoordPlaces": "3",
             "pointCoordUnitSymbolX": "°E",
             "pointCoordUnitSymbolY": "°N",
-            "srs":{
-                "geodetic": [
-                    4326,
-                    3857,
-                    4258
-                ],
-                "planar": [
-                    2398,
-                    2399,
-                    25832,
-                    25833,
-                    31466,
-                    31467,
-                    31468,
-                    31469
-                ]
-            }
             "sketch": {
                  "textSymbol": {
                    "type": "esriTS",

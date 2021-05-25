@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-tools",
-    "version": "2.1.5-SNAPSHOT",
+    "version": "2.1.4-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -206,7 +206,7 @@
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
                 "type": "point",
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]
@@ -234,7 +234,7 @@
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
                 "type": "multipoint",
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]
@@ -262,7 +262,7 @@
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
                 "type": "text",
-                "mode": "",
+                "mode": "click",
                 "groups": [
                     "sketching"
                 ]

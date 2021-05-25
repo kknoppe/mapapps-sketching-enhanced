@@ -17,50 +17,46 @@
 -->
 <template>
     <v-layout column px-8>
-        <v-switch v-model="visible" :label="i18n.turnOnVisibility"></v-switch>
-        <v-switch v-model="multi" :label="i18n.enableKeepMeasurements"></v-switch>
+        <v-switch v-model="onSketchingVisible" :label="i18n.turnOnVisibility"></v-switch>
+        <v-switch v-model="onMultiMeasurement" :label="i18n.enableKeepMeasurements"></v-switch>
     </v-layout>
 </template>
 
 <script>
 
-    export default {
-        data() {
-            return {
-                visible: true,
-            };
+export default {
+    data() {
+        return {
+            multiMeasurement: true,
+            sketchingVisible: true
+        }
+    },
+    props: {
+        i18n: {
+            type: Object,
         },
-        mounted() {
-            this.bus.$on('sketchingLayerVisibilityChanged', val => {
-                this.visible = val;
-            });
-        },
-        props: {
-            i18n: {
-                type: Object,
+        bus: {
+            type: Object,
+        }
+    },
+    computed: {
+        onMultiMeasurement:{
+            get() {
+                return this.multiMeasurement;
             },
-            bus: {
-                type: Object,
-            },
-            multiMeasurement: {
-                type: Boolean,
-            },
-        },
-        computed: {
-            multi: {
-                get() {
-                    return this.multiMeasurement;
-                },
-                set(val) {
-                    this.$emit('update:multiMeasurement', val);
-                },
-            },
-        },
-        watch: {
-            visible(val) {
-                this.$emit('toggleSketchingLayerVisibility', val);
+            set(val) {
+                this.$emit('updateMultiMeasurement', val);
             }
         },
+        onSketchingVisible:{
+            get() {
+                return this.sketchingVisible;
+            },
+            set(val) {
+                this.$emit('toggleSketchingLayerVisibility', val);
+            }
+        }
     }
+}
 
 </script>

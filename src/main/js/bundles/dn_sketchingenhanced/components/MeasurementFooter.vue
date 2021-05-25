@@ -19,14 +19,14 @@
     <div class="footer">
         <v-toolbar dense flat class="measurementFooterToolbar">
             <v-switch
-                v-model="enableMeasurement"
+                v-model="enabled"
                 :label="i18n.enableMeasurements"
                 color="primary"
                 hide-details>
             </v-switch>
             <v-spacer></v-spacer>
             <v-btn-toggle v-show="showKeepMeasurements">
-                <v-tooltip top v-if="measurementEnabled">
+                <v-tooltip top>
                     <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
                         <v-icon>
                             {{multiMeasurement ? 'icon-keep-measurements' : 'icon-remove-measurements'}}
@@ -35,7 +35,6 @@
                     <span> {{multiMeasurement ? i18n.disableKeepMeasurements : i18n.enableKeepMeasurements}}</span>
                 </v-tooltip>
             </v-btn-toggle>
-
         </v-toolbar>
     </div>
 </template>
@@ -43,63 +42,60 @@
 
 <script>
 
-    export default {
-        data() {
-            return {
-                visible: true,
-                measurementEnabled: this.measurementBoolean
-            };
+export default {
+    data() {
+        return {
+            visible: true
+        };
+    },
+    props: {
+        i18n: {
+            type: Object,
         },
-        props: {
-            i18n: {
-                type: Object,
+        bus: {
+            type: Object,
+        },
+        showKeepMeasurements: {
+            type: Boolean,
+        },
+        multiMeasurement: {
+            type: Boolean,
+        },
+        measurementBoolean: {
+            type: Boolean,
+        }
+    },
+    computed: {
+        enabled: {
+            get(){
+                return this.measurementBoolean;
             },
-            bus: {
-                type: Object,
-            },
-            measurementBoolean: {
-                type: Boolean,
-            },
-            showKeepMeasurements: {
-                type: Boolean,
-            },
-            multiMeasurement: {
-                type: Boolean,
+            set(value) {
+                this.$emit("toggleMeasurement",value)
             }
-        },
-        computed: {
-            enableMeasurement: {
-                get() {
-                    return this.measurementBoolean;
-                },
-                set(value) {
-                    this.measurementEnabled = value;
-                    this.$emit('update:measurementBoolean', value);
-                },
-            },
-        },
-        methods: {
-            /**
-             *  use toolId to find all tool information
-             * @param toolId
-             * @returns Object (tool)
-             * @private
-             */
-            _getTool(toolId) {
-                return this.tools.find(x => x.id === toolId);
-            },
-
-            /**
-             * ClickHandler transfers event to parent element
-             * @param id
-             */
-            onToolClickHandler(id) {
-                this.$emit('onToolClick', id);
-            },
-            toggleKeepMeasurements() {
-                this.$emit('update:multiMeasurement', !this.multiMeasurement);
-            },
+        }
+    },
+    methods: {
+        /**
+         *  use toolId to find all tool information
+         * @param toolId
+         * @returns Object (tool)
+         * @private
+         */
+        _getTool(toolId) {
+            return this.tools.find(x => x.id === toolId);
         },
 
-    };
+        /**
+         * ClickHandler transfers event to parent element
+         * @param id
+         */
+        onToolClickHandler(id) {
+            this.$emit('onToolClick', id);
+        },
+        toggleKeepMeasurements() {
+            this.$emit('update:multiMeasurement', !this.multiMeasurement);
+        }
+    }
+};
 </script>

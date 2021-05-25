@@ -53,8 +53,8 @@ export default class SketchingEnhancedWidgetFactory {
         vm.lastToolGroupIds = props.lastToolGroupIds;
         //vm.footerToolIds = props.footerToolIds;
         vm.headerToolIds = props.headerToolIds;
-        vm.measurementBoolean = this._measurementModel.measurementBoolean = this._measurementController.measurementBoolean;
-        this._measurementController.lineMeasurementTimeout = props.lineMeasurementTimeout;
+        vm.measurementEnabled = this._measurementModel.measurementEnabled;
+        this._measurementModel.lineMeasurementTimeout = props.lineMeasurementTimeout;
 
         vm.measurement = props.measurement;
 
@@ -63,7 +63,7 @@ export default class SketchingEnhancedWidgetFactory {
         });
 
         if (props.multipleMeasurementsEnabled){
-            this._measurementController.multiMeasurement = props.multipleMeasurementsEnabled;
+            this._measurementHandler.multiMeasurement = props.multipleMeasurementsEnabled;
         }
 
         // loading symbol settings from sketching Handler properties
@@ -74,19 +74,19 @@ export default class SketchingEnhancedWidgetFactory {
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
 
         vm.$on('length-unit-input', val => {
-            this._measurementController._setLengthUnits(val.toLowerCase());
+            this._measurementHandler.setLengthUnits(val.toLowerCase());
         });
 
         vm.$on('area-unit-input', val => {
-            this._measurementController._setAreaUnits(val.toLowerCase());
+            this._measurementHandler.setAreaUnits(val.toLowerCase());
         });
 
         vm.$on('coordinate-system-input', val => {
-           this._measurementController._setCoordinateSystem(val);
+            this._measurementHandler.setCoordinatesystem(val);
         });
 
         vm.$on('measurementStatusChanged', val => {
-            this._measurementController.measurementBoolean = this._measurementModel.measurementBoolean = this.measurementBoolean = vm.measurementBoolean = val;
+            this._measurementModel.measurementEnabled = this.measurementEnabled = vm.measurementEnabled = val;
         });
 
         vm.$on('settingsSelectionChanged', settings => {
@@ -104,6 +104,7 @@ export default class SketchingEnhancedWidgetFactory {
                     this._mapWidgetModel.view.map.layers.items[index].visible = visible;
                 });
             });
+
         });
 
         // watch on changes in sketching layer visibility from somewhere else (e.g. ToC)

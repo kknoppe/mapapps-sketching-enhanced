@@ -32,6 +32,15 @@ controller._properties = {
         "hectares": "ha"
     }
 };
+controller.i18n = {
+    locale: 'de-de'
+}
+controller._model = {
+    spatialReference: {
+        isWebMercator: false
+    },
+    mDecimal: 0
+}
 controller._mapWidgetModel = {
     spatialReference: {
         isWebMercator: false
@@ -44,88 +53,88 @@ registerSuite({
         assert.ok(controller);
     },
     'Calculate length for a short line': function () {
-        controller.mDecimal = 1;
-        controller.kmDecimal = 2;
+        controller._model.mDecimal = 1;
+        controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
-        controller._setLengthUnits("meter");
+        controller._model.lengthUnit = 'meters'
         const spatialReference = {
             wkid: 31466,
         };
         const path = [[0, 0], [0, 20]];
-        const length = controller._getLength(new Polyline(path, spatialReference));
+        const length = controller.getLength(new Polyline(path, spatialReference));
         expect(length).to.equal('20 m');
     },
     'Calculate length for a long line': function () {
-        controller.mDecimal = 1;
-        controller.kmDecimal = 2;
+        controller._model.mDecimal = 1;
+        controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
-        controller._setLengthUnits("kilometer");
+        controller._model.lengthUnit = 'kilometers'
         const spatialReference = {
             wkid: 31466,
         };
         const path = [[0, 0], [0, 2000]];
-        const length = controller._getLength(new Polyline(path, spatialReference));
+        const length = controller.getLength(new Polyline(path, spatialReference));
         expect(length).to.equal('2 km');
     },
     'Calculate area for a small polygon': function () {
-        controller.mDecimal = 1;
-        controller.kmDecimal = 2;
+        controller._model.mDecimal = 1;
+        controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
-        controller._setAreaUnits("quadratmeter");
+        controller._model.areaUnit = 'square-meters'
         const spatialReference = {
             wkid: 31466,
         };
         const rings = [[0, 0], [0, 2], [1, 2], [1, 0]];
-        const area = controller._getArea(new Polygon(rings, spatialReference));
+        const area = controller.getArea(new Polygon(rings, spatialReference));
         expect(area).to.equal('2 m²');
     },
     'Calculate area for a big polygon': function () {
-        controller.mDecimal = 1;
-        controller.kmDecimal = 2;
+        controller._model.mDecimal = 1;
+        controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
-        controller._setAreaUnits("quadratkilometer");
+        controller._model.areaUnit = 'square-kilometers';
         const spatialReference = {
             wkid: 31466,
         };
         const rings = [[0, 0], [0, 2000], [2000, 2000], [2000, 0]];
-        const area = controller._getArea(new Polygon(rings, spatialReference));
+        const area = controller.getArea(new Polygon(rings, spatialReference));
         expect(area).to.equal('4 km²');
     },
     'get text position': function () {
         let path = [[0, 0], [0, 20]];
-        expect(controller._getTextPosition(path)).to.equal('center');
+        expect(controller.getTextPosition(path)).to.equal('center');
         path = [[0, 0], [0, -20]];
-        expect(controller._getTextPosition(path)).to.equal('center');
+        expect(controller.getTextPosition(path)).to.equal('center');
         path = [[0, 0], [20, 0]];
-        expect(controller._getTextPosition(path)).to.equal('left');
+        expect(controller.getTextPosition(path)).to.equal('left');
         path = [[0, 0], [-20, 0]];
-        expect(controller._getTextPosition(path)).to.equal('right');
+        expect(controller.getTextPosition(path)).to.equal('right');
         path = [[0, 0], [-20, 20]];
-        expect(controller._getTextPosition(path)).to.equal('right');
+        expect(controller.getTextPosition(path)).to.equal('right');
         path = [[0, 0], [20, 20]];
-        expect(controller._getTextPosition(path)).to.equal('left');
+        expect(controller.getTextPosition(path)).to.equal('left');
     },
     'get text y offset': function () {
         let path = [[0, 0], [0, 20]];
-        let offset = controller._getYOffset(path);
+        let offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(1);
         path = [[0, 0], [0, -20]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(-1);
         path = [[0, 0], [20, 0]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset).to.equal(0);
         path = [[0, 0], [-20, 0]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset).to.equal(0);
         path = [[0, 0], [-20, 20]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(1);
         path = [[0, 0], [20, 20]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(1);
         path = [[0, 0], [20, -20]];
-        offset = controller._getYOffset(path);
+        offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(-1);
     },
 });

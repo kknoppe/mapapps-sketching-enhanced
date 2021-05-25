@@ -16,15 +16,19 @@
 import {Mutable, properties} from 'apprt-core/Mutable';
 
 class MeasurementModel extends Mutable {
-
     constructor() {
         super();
     }
 }
 
 properties(MeasurementModel, {
-    showLineMeasurementsAtPolylines: true,
+    viewModel: {},
+    showLineMeasurementsAtPolylines: false,
     showLineMeasurementsAtPolygons: false,
+    lineMeasurementTimeout: 100, //default
+    mDecimal: 2, //default
+    kmDecimal: 2, //default
+    spatialReference: null,
 
     currentLength: 0,
     aggregateLength: 0,
@@ -34,13 +38,27 @@ properties(MeasurementModel, {
     perimeter: 0,
     coordinates: null,
 
-    measurementBoolean: false,
+    lengthUnit: 'auto',
+    areaUnit: 'auto',
+
+    measurementEnabled: false,
     multiMeasurement: true,
 
     pointEnabled: false,
     polylineEnabled: false,
     polygonEnabled: false,
-    areaEnabled: false
+    areaEnabled: false,
+
+    textSettings: "",
+    lineSettings: "",
+
+    cursorUpdate: false,
+    vertexAdded: false,
+    _lastVertex: null,
+    _vertices: [],
+
+    sketchGroup: 0,
+    activeTool: ""
 
 });
 
