@@ -110,14 +110,35 @@ export default class DrawFurtherGeometries {
             if (event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
                 viewModel.emit('create', {
                     state: 'start',
-                    type: 'update',
+                    type: 'create',
                     tool: 'drawtriangletool',
                 });
             }
         });
 
+        // TODO - triangle events for cursor updates
+        // triangle.on(['cursor-update'], event => {
+        //     if (event.vertices.length > 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
+        //         const vs = event.vertices;
+        //         const ring = that._createTriangleRing(vs);
+        //         const polygonSymbol = this._createPolygonSymbol(props);
+        //         const graphic = this._createAndAddGraphic(viewModel, ring, polygonSymbol, false);
+        //         const tool = 'triangle';
+        //         viewModel.emit('create', {
+        //             target: viewModel,
+        //             state: 'active',
+        //             type: 'create',
+        //             toolEventInfo: {
+        //                 coordinates: event.coordinates,
+        //                 type: 'cursor-update'
+        //             },
+        //             graphic: graphic,
+        //             tool: tool
+        //         });
+        //     }
+        // });
 
-        triangle.on(['draw-complete', 'cursor-update'], event => {
+        triangle.on(['draw-complete','cursor-update'], event => {
             this._drawCompleteActions(event, listener);
 
             const viewModelOperator = viewModel && viewModel.tool && viewModel.tool.id === 'drawtriangletool';

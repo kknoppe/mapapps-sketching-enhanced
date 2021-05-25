@@ -31,78 +31,80 @@
 
 <script>
 
-    import ColorPicker from './ColorPicker.vue';
-    import StylePicker from './StylePicker.vue';
-    import SizePicker from './SizePicker.vue';
+import ColorPicker from './ColorPicker.vue';
+import StylePicker from './StylePicker.vue';
+import SizePicker from './SizePicker.vue';
 
-    export default {
-        components: {
-            ColorPicker,
-            StylePicker,
-            SizePicker,
+export default {
+    components: {
+        ColorPicker,
+        StylePicker,
+        SizePicker,
+    },
+    props: {
+        settings: Object,
+        i18n: {
+            type: Object,
+        }
+    },
+    computed: {
+        color: {
+            get() {
+                return this.settings.color;
+            },
+            set(val) {
+                if(val && val.rgba) {
+                    const settings = this.settings;
+                    settings.color = val.rgba;
+                    this.$emit('update:settings', settings);
+                }
+            },
         },
-        props: {
-            settings: Object,
-            i18n: {
-                type: Object,
+        outlineColor: {
+            get() {
+                return this.settings.outline?.color;
+            },
+            set(val) {
+                if(val && val.rgba && this.settings.outline) {
+                    this.settings.outline.color = val.rgba;
+                    this.$emit('update:settings', this.settings);
+                }
+            },
+        },
+        shape: {
+            get() {
+                return this.settings.style;
+            },
+            set(val) {
+                const settings = this.settings;
+                settings.style = val;
+                this.$emit('update:settings', settings);
             }
         },
-        computed: {
-            color: {
-                get() {
-                    return this.settings.color;
-                },
-                set(val) {
-                    if(val && val.rgba) {
-                        const settings = this.settings;
-                        settings.color = val.rgba;
-                        this.$emit('update:settings', settings);
-                    }
-                },
+        lineStyle: {
+            get() {
+                return this.settings.outline?.style;
             },
-            outlineColor: {
-                get() {
-                    return this.settings.outline.color;
-                },
-                set(val) {
-                    if(val && val.rgba) {
-                        const settings = this.settings;
-                        settings.outline.color = val.rgba;
-                        this.$emit('update:settings', settings);
-                    }
-                },
-            },
-            shape: {
-                get() {
-                    return this.settings.style;
-                },
-                set(val) {
-                    const settings = this.settings;
-                    settings.style = val;
-                    this.$emit('update:settings', settings);
+            set(val) {
+                if (this.settings.outline){
+                    this.settings.outline.style = val;
+                    this.$emit('update:settings', this.settings);
                 }
-            },
-            lineStyle: {
-                get() {
-                    return this.settings.outline.style;
-                },
-                set(val) {
-                    const settings = this.settings;
-                    settings.outline.style = val;
-                    this.$emit('update:settings', settings);
-                }
-            },
-            size: {
-                get() {
-                    return this.settings.outline.width;
-                },
-                set(val) {
-                    const settings = this.settings;
-                    settings.outline.width = val;
-                    this.$emit('update:settings', settings);
-                }
+
             }
         },
-    }
+        size: {
+            get() {
+                return this.settings.outline?.width;
+            },
+            set(val) {
+                if (this.settings.outline){
+                    this.settings.outline.width = val;
+                    this.$emit('update:settings', this.settings);
+                }
+            }
+        }
+    },
+}
 
 </script>

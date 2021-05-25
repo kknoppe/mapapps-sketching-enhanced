@@ -19,7 +19,7 @@
  */
 
 import Polyline from "esri/geometry/Polyline";
-import {planarArea, planarLength, geodesicLength, geodesicArea} from "esri/geometry/geometryEngine";
+import {planarArea, planarLength, geodesicArea, geodesicLength} from "esri/geometry/geometryEngine";
 import {declare} from "apprt-core/Mutable";
 
 const pi = Math.PI;
@@ -61,15 +61,13 @@ export default declare({
 
     _getConstructionInfo(viewModel, graphic) {
         const geo = graphic.geometry;
-        const srs = this._mapWidgetModel.spatialReference;
-
+        const srs = graphic.geometry.spatialReference;
         const isGeodesic = srs.isWebMercator || srs.isWGS84;
-
         let area;
         if (isGeodesic && geo.type !== "polygon") {
-            area = this._toFixed(planarArea(geo,'square-meters')) + "qm";
+            area = this._toFixed(geodesicArea(geo,'square-meters')) + "qm";
         } else if (!isGeodesic && geo.type !== "polygon") {
-            area = this._toFixed(geodesicArea(geo,'square-meters')) + "qm"
+            area = this._toFixed(planarArea(geo,'square-meters')) + "qm"
         } else {
             area = "";
         }
@@ -98,7 +96,7 @@ export default declare({
 
             angle = this._toFixed(a) + "°";
             angleRelative = this._toFixed(aRelative) + "°";
-            length = isGeodesic ? this._toFixed(geodesicLength(polyline)) + "m" : this._toFixed(planarLength(polyline)) + "m";
+            length = this._toFixed(planarLength(polyline)) + "m";
         }
         return this._createConstructionInfo(angle, angleRelative, length, lengthTotal, area);
     },
