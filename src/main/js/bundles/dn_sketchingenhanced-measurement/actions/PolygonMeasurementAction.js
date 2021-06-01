@@ -32,6 +32,9 @@ export default class PolygonMeasurementAction {
         const polygonToolActive = evt.graphic && evt.graphic.geometry.type === 'polygon';
         const activeState = polygonToolActive && evt.state === 'active';
         const completeState = polygonToolActive && evt.state === 'complete';
+        if (!evt.graphic.getAttribute("id")) {
+            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
+        }
         if (activeState){
             if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolygons && isDrawpolygontool){
                 this._addTextForPolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
@@ -42,8 +45,10 @@ export default class PolygonMeasurementAction {
             }
         }
         if (completeState){
-            this._addPolygonLineMeasurements(evt);
-            this._calculatePolygonMeasurements(evt);
+            if (this._model.measurementEnabled) {
+                this._addPolygonLineMeasurements(evt);
+                this._calculatePolygonMeasurements(evt);
+            }
         }
     }
 
@@ -67,6 +72,7 @@ export default class PolygonMeasurementAction {
         // set up array with current line
         const checkedPath = this._model._lastVertex ? [this._model._lastVertex, newVertex] : [firstPoint, newVertex];
         // calculate Distance between last two points and create graphic with textsymbol
+        evt.graphic.setAttribute("id",`measurement-${id}`);
         const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
 
         // add this graphic to measurement layer
@@ -115,6 +121,7 @@ export default class PolygonMeasurementAction {
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const geometry = graphic.geometry;
         const id = graphic.uid;
+        graphic.setAttribute("id",`measurement-${id}`)
         const circumString = this.controller.getLength(geometry);
         const areaString = this.controller.getArea(geometry);
 
@@ -133,13 +140,15 @@ export default class PolygonMeasurementAction {
                 color: this._model.textSettings.color,
                 font: this._model.textSettings.font,
                 flag: "measurementText",
-                name: `measurement-${id}`,
+                id: `measurement-${id}`,
                 horizontalAlignment: textPosition,
                 haloColor: this._model.textSettings.haloColor,
                 haloSize: this._model.textSettings.haloSize,
                 temporary: this._model.cursorUpdate || this._model.vertexAdded
             });
             const textGraphic = new Graphic(pnt, textSymbol);
+            textGraphic.setAttribute("id",`measurement-${id}`);
+            textGraphic.setAttribute("type",textGraphic.symbol.type);
             this.viewModel.layer.add(textGraphic);
         }
     }
@@ -155,7 +164,7 @@ export default class PolygonMeasurementAction {
         // remove the graphics so they do not stack on one another
         const update = evt.type === 'update' || evt.type === 'undo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
-        this.controller.removeGraphicsByName(graphic.uid);
+        this.controller.removeGraphicsById(graphic.getAttribute("id"));
         if (this._model.showLineMeasurementsAtPolygons && this.isDrawpolygontool) {
             const spatialReference = this.viewModel.view.spatialReference;
             const rings = graphic.geometry.rings;

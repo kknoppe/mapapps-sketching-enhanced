@@ -35,7 +35,7 @@ export default class MeasurementHandler {
 
     handler(evt) {
         this._model.spatialReference = this.viewModel.view.spatialReference;
-        const showMeasurement = this._model.measurementEnabled
+        const showMeasurement = this._model.measurementEnabled;
         this._model.cursorUpdate = evt.toolEventInfo && evt.toolEventInfo.type === "cursor-update";
         this._model.vertexAdded = evt.toolEventInfo && evt.toolEventInfo.type === "vertex-add";
 
@@ -52,19 +52,17 @@ export default class MeasurementHandler {
             evt.toolEventInfo && this.setCoordinates(evt);
         }
 
-        if (showMeasurement) {
-            switch(evt.type){
-                case 'create':
-                    evt.tool && this._handleCreate(evt);
-                    break;
-                case 'undo':
-                case 'update':
-                    evt.graphics && this._handleUpdate(evt);
-                    break;
-                case 'remove':
-                    this._handleRemove(evt);
-                    break;
-            }
+        switch(evt.type){
+            case 'create':
+                showMeasurement && evt.tool && this._handleCreate(evt);
+                break;
+            case 'undo':
+            case 'update':
+                evt.graphics && this._handleUpdate(evt);
+                break;
+            case 'remove':
+                this._handleRemove(evt);
+                break;
         }
     }
 
@@ -159,8 +157,8 @@ export default class MeasurementHandler {
 
     _handleRemove(evt){
         if (!evt.graphics) return;
-        const id = evt.graphics[0].uid;
-        this._removeGraphicsByName(id);
+        const id = evt.graphics[0].attributes.id || evt.graphics[0].symbol.id;
+        this.controller.removeGraphicsById(id);
         this.controller.resetMeasurementResults();
         this.setActiveToolType(this._model.activeTool);
     }
@@ -202,29 +200,23 @@ export default class MeasurementHandler {
         }))
     }
 
-    _removeGraphicsByName(id) {
-        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
-            if (graphic.symbol){
-                return graphic.symbol.name === `measurement-${id}`
-            }
-        });
-        this.viewModel.layer.removeMany(gs);
-    }
-
     _removeTemporaryMeasurements(evt) {
         if (!evt.graphic) return;
-        const id = evt.graphic.uid;
+        const id = evt.graphic.getAttribute("id") || `measurement-${evt.graphic.uid}`;
         const viewModel = this.viewModel;
         const gs = viewModel.layer.graphics.items.filter(graphic => {
-            if (graphic.symbol){
-                return graphic.symbol.name === `measurement-${id}` && graphic.symbol.temporary === true
+            const type = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            const temporary = graphic.symbol?.temporary;
+            if (textGraphicId){
+                return graphic.getAttribute("id") === id && type && type === "text" && temporary;
             }
         });
         viewModel.layer.removeMany(gs);
     }
 
     setCoordinates(evt){
-         this._model.coordinates = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
+        this._model.coordinates = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
     }
 
     setLengthUnits(unit){
