@@ -280,20 +280,24 @@ export default class MeasurementHandler {
             text: lengthString,
             flag: "measurementText",
             color: this._model.textSettings.color,
-            name: `measurement-${id}`,
+            id: `measurement-${id}`,
             font: this._model.textSettings.font,
             haloColor: this._model.textSettings.haloColor,
             haloSize: this._model.textSettings.haloSize,
             temporary: this._model.cursorUpdate
         });
-        return new Graphic(pnt, textSymbol);
+        const graphic = new Graphic(pnt, textSymbol);
+        graphic.setAttribute("id",`measurement-${id}`);
+        graphic.setAttribute("type",graphic.symbol.type);
+        return graphic;
     }
 
-    removeGraphicsByName(id) {
+    removeGraphicsById(id) {
         const gs = this.viewModel.layer.graphics.items.filter(graphic => {
-            if (graphic.symbol){
-                // return graphic.symbol.name === `measurement-${id}` && graphic.symbol.temporary
-                return graphic.symbol.name === `measurement-${id}`
+            const type = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId) {
+                return textGraphicId === id && type && type === "text";
             }
         });
         this.viewModel.layer.removeMany(gs);

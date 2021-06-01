@@ -18,23 +18,23 @@
 <template>
     <v-tooltip top>
         <template v-slot:activator="{on}">
-                <div v-on="on">
-                    <v-btn flat
-                           icon
-                           class="sketchingToolButton"
-                           :key="tool.id"
-                           :value="tool.id"
-                           :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)"
-                           @click="onToolClickHandler(tool.id)"
-                    >
-                        <v-icon>{{tool.iconClass}}</v-icon>
-                    </v-btn>
-                </div>
-                <!--<v-icon class="iconMenuArrowDown"
-                        :style="{visibility: toolActive ? 'visible' : 'hidden'}"
-                        style="height:12px">
-                    arrow_drop_down
-                </v-icon>-->
+            <div v-on="on">
+                <v-btn flat
+                       icon
+                       class="sketchingToolButton"
+                       :key="tool.id"
+                       :value="tool.id"
+                       :disabled="toolDisabled(tool)"
+                       @click="onToolClickHandler(tool.id)"
+                >
+                    <v-icon>{{tool.iconClass}}</v-icon>
+                </v-btn>
+            </div>
+            <!--<v-icon class="iconMenuArrowDown"
+                    :style="{visibility: toolActive ? 'visible' : 'hidden'}"
+                    style="height:12px">
+                arrow_drop_down
+            </v-icon>-->
         </template>
         <span>{{tooltipIfDisabled ? tooltipIfDisabled : tool.title}}</span>
     </v-tooltip>
@@ -43,58 +43,64 @@
 
 <script>
 
-    export default {
-        data() {
-            return {
-                profileLoaded: false,
-            };
+export default {
+    data() {
+        return {
+            profileLoaded: true,
+        };
+    },
+    props: {
+        tool: {
+            type: Object,
         },
-        props: {
-            tool: {
-                type: Object,
-            },
-            active: {
-                type: Boolean,
-                required: false,
-            },
-            bus: {
-                type: Object,
-                required: false,
-            },
-            tooltipIfDisabled: {
-                type: String,
-            },
+        active: {
+            type: Boolean,
+            required: false,
         },
-        mounted() {
-            if (this.bus) {
-                this.bus.$on('startRecording', () => {
-                    this.profileLoaded = true;
-                });
-                this.bus.$on('stopRecording', () => {
-                    this.profileLoaded = false;
-                });
+        bus: {
+            type: Object,
+            required: false,
+        },
+        tooltipIfDisabled: {
+            type: String,
+        },
+    },
+    mounted() {
+        if (this.bus) {
+            this.bus.$on('startRecording', () => {
+                this.profileLoaded = true;
+            });
+            this.bus.$on('stopRecording', () => {
+                this.profileLoaded = false;
+            });
+        }
+    },
+    computed: {
+        notActiveTool() {
+            if (this.tool.id !== 'sketchingtoolbox' && this.toolActive && this.tool.menu) {
+                this.$parent.$parent._changeToolIcon && this.$parent.$parent._changeToolIcon(this.bus.currentActiveTool.id);
             }
+            return !(this.tool.id === 'sketchinglayeradd' || this.toolActive);
         },
-        computed: {
-            notActiveTool() {
-                if (this.tool.id !== 'sketchingtoolbox' && this.toolActive && this.tool.menu) {
-                    this.$parent.$parent._changeToolIcon && this.$parent.$parent._changeToolIcon(this.bus.currentActiveTool.id);
-                }
-                return !(this.tool.id === 'sketchinglayeradd' || this.toolActive);
-            },
-            // calculates whether the little arrow beneath the toolbar icon should be visible or not
-            toolActive() {
-                return this.active ? this.active : this.tool.active;
-            },
+        // calculates whether the little arrow beneath the toolbar icon should be visible or not
+        toolActive() {
+            return this.active ? this.active : this.tool.active;
+        }
+    },
+    methods: {
+        /**
+         * ClickHandler transfers event to parent element
+         * @param id
+         */
+        onToolClickHandler(id) {
+            this.$emit('onToolClick', id);
         },
-        methods: {
-            /**
-             * ClickHandler transfers event to parent element
-             * @param id
-             */
-            onToolClickHandler(id) {
-                this.$emit('onToolClick', id);
-            },
-        },
-    };
+        toolDisabled(tool) {
+            if (tool.menu && tool.id === 'sketchingtoolbox') {
+                return false;
+            }
+            return !tool.enabled || tool.processing || (this.profileLoaded && this.notActiveTool)
+        }
+    },
+};
 </script>

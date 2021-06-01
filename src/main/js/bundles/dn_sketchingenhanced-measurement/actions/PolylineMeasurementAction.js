@@ -31,6 +31,9 @@ export default class PolylineMeasurementHandler {
         const polylineToolActive = evt.activeTool && evt.activeTool === 'drawpolylinetool';
         const activeState = polylineToolActive && evt.state === 'active';
         const completeState = polylineToolActive && evt.state === 'complete';
+        if (!evt.graphic.getAttribute("id")) {
+            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
+        }
         if (activeState){
             if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines){
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
@@ -47,8 +50,10 @@ export default class PolylineMeasurementHandler {
     }
 
     _updateMeasurements(evt){
-        this._addLineMeasurementsToPolylines(evt);
-        this._calculateTotalLineMeasurement(evt);
+        if (this._model.measurementEnabled) {
+            this._addLineMeasurementsToPolylines(evt);
+            this._calculateTotalLineMeasurement(evt);
+        }
     }
 
     /*
@@ -68,6 +73,7 @@ export default class PolylineMeasurementHandler {
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const path = graphic.geometry.paths[0];
         const id = graphic.uid;
+        graphic.setAttribute("id",`measurement-${id}`)
         if (path.length < 2) {
             return;
         }
@@ -87,7 +93,7 @@ export default class PolylineMeasurementHandler {
                 text: lengthString,
                 color: this._model.textSettings.color,
                 flag: "measurementText",
-                name: `measurement-${id}`,
+                id: `measurement-${id}`,
                 font: this._model.textSettings.font,
                 horizontalAlignment: textPosition,
                 yoffset: yOffset,
@@ -96,6 +102,8 @@ export default class PolylineMeasurementHandler {
                 temporary: this._model.cursorUpdate || this._model.vertexAdded
             });
             const textGraphic = new Graphic(pnt, textSymbol);
+            textGraphic.setAttribute("id",`measurement-${id}`)
+            textGraphic.setAttribute("type",textGraphic.symbol.type);
             viewModel.layer.add(textGraphic);
         }
     }
@@ -116,8 +124,9 @@ export default class PolylineMeasurementHandler {
         const checkedPath = this._model._lastVertex ? [this._model._lastVertex, newVertex] : [firstPoint, newVertex];
 
         // calculate Distance between last two points and create graphic with textsymbol
+        evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`)
         const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, evt.graphic.uid);
-
+        graphic.setAttribute("id",`measurement-${evt.graphic.uid}`)
         // add this graphic to measurement layer
         viewModel.layer.add(graphic);
         this._model._lastVertex = newVertex;
@@ -132,9 +141,8 @@ export default class PolylineMeasurementHandler {
         // remove the graphics so they do not stack on one another
         const update = evt.type === 'update' || evt.type === 'undo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
-        this.controller.removeGraphicsByName(graphic.uid);
+        this.controller.removeGraphicsById(graphic.getAttribute("id"));
         const spatialReference = this.viewModel.view.spatialReference;
-
         const paths = graphic.geometry.paths[0];
         for (let i = 1; i < paths.length; i++) {
             const checkedPath = [paths[i - 1], paths[i]];
