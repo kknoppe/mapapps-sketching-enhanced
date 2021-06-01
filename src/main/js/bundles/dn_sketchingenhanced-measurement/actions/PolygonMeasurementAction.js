@@ -53,6 +53,8 @@ export default class PolygonMeasurementAction {
     }
 
     _updateMeasurements(evt){
+        const update = evt.type === 'update' || evt.type === 'undo';
+        this.isDrawpolygontool = update && evt.graphics[0].geometry.rings;
         this._addPolygonLineMeasurements(evt);
         this._calculatePolygonMeasurements(evt);
     }
