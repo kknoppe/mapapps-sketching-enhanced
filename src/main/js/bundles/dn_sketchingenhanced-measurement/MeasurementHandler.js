@@ -46,16 +46,22 @@ export default class MeasurementHandler {
                 if (evt.graphic){
                     evt.graphic.ignoreOnReshape = true;
                 }
-                return
+                return;
             }
             this._recordMeasurements(evt);
             evt.toolEventInfo && this.setCoordinates(evt);
         }
 
+        // cases in which to exit
+        if (evt.state === 'cancel' || !showMeasurement){
+            return;
+        }
+
         switch(evt.type){
             case 'create':
-                showMeasurement && evt.tool && this._handleCreate(evt);
+                evt.tool && this._handleCreate(evt);
                 break;
+            case 'redo':
             case 'undo':
             case 'update':
                 evt.graphics && this._handleUpdate(evt);
@@ -77,6 +83,10 @@ export default class MeasurementHandler {
                         this._removeTemporaryMeasurements(evt);
                     }
                     break;
+                case 'cancel':
+                    this.controller.resetMeasurementResults();
+                    evt.graphic && this.controller.removeGraphicsById(evt.graphic.getAttribute("id"));
+                    break
                 case 'complete':
                     break;
 
@@ -157,7 +167,7 @@ export default class MeasurementHandler {
 
     _handleRemove(evt){
         if (!evt.graphics) return;
-        const id = evt.graphics[0].attributes.id || evt.graphics[0].symbol.id;
+        const id = evt.graphics[0].attributes?.id || evt.graphics[0].symbol.id;
         this.controller.removeGraphicsById(id);
         this.controller.resetMeasurementResults();
         this.setActiveToolType(this._model.activeTool);

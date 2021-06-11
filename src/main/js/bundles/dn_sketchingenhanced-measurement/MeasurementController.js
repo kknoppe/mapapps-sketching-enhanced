@@ -150,7 +150,9 @@ export default class MeasurementHandler {
      */
     getLastSegmentLength(evt){
         // this is to get the length of the set new segment
-        const vertices = evt.graphic.geometry.paths ? evt.graphic.geometry.paths : evt.graphic.geometry.rings;
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        const vertices = graphic.geometry.paths ? graphic.geometry.paths : graphic.geometry.rings;
         const lastPath = vertices[0].slice(vertices[0].length - 2)
         const spatialReference = this._model.spatialReference;
         const geometry = new Polyline(lastPath, spatialReference);
@@ -318,6 +320,8 @@ export default class MeasurementHandler {
      * @private
      */
     showActiveResultsInTab(evt){
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
         let lastSegment, currentArea;
         switch(activeTool){
@@ -329,7 +333,7 @@ export default class MeasurementHandler {
                 break;
             case("drawpolygontool"):
             case("drawfreehandpolylgontool"):
-                currentArea = this.measurements.currentArea = this.getAreaNumeric(evt.graphic.geometry);
+                currentArea = this.measurements.currentArea = this.getAreaNumeric(graphic.geometry);
                 lastSegment = this.measurements.segmentLength = this.getLastSegmentLength(evt);
                 this._model.currentLength = this.getLengthString(lastSegment);
                 this._model.currentArea = this.getAreaString(currentArea);
@@ -338,7 +342,7 @@ export default class MeasurementHandler {
             case("drawcircletool"):
             case("drawtriangletool"):
             case("drawellipsetool"):
-                currentArea = this.measurements.currentArea = this.getAreaNumeric(evt.graphic.geometry);
+                currentArea = this.measurements.currentArea = this.getAreaNumeric(graphic.geometry);
                 this._model.currentArea = this.getAreaString(currentArea);
                 break;
             case(null):
@@ -352,6 +356,8 @@ export default class MeasurementHandler {
      * @private
      */
     showCompleteResultsInTab(evt){
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
         const lastSegment = this.getLastSegmentLength(evt);
         this.measurements.totalLength = this.measurements.totalLength + lastSegment;
@@ -360,19 +366,21 @@ export default class MeasurementHandler {
             case("drawpolylinetool"):
             case("drawfreehandpolylinetool"):
                 this._model.currentLength = this.getLengthString(0);
-                this._model.totalLength = this.getLengthString(this.measurements.totalLength);
+                // this._model.totalLength = this.getLengthString(this.measurements.totalLength);
+                this._model.totalLength = this.getLength(graphic.geometry);
                 break;
             case("drawpolygontool"):
             case("drawfreehandpolylgontool"):
                 this._model.currentLength = this.getLengthString(0);
-                this._model.perimeter = this.getLength(evt.graphic.geometry);
-                this._model.currentArea = this._model.area = this.getAreaString(currentArea);
+                this._model.perimeter = this.getLength(graphic.geometry);
+                // this._model.currentArea = this._model.area = this.getAreaString(currentArea);
+                this._model.area = this.getArea(graphic.geometry)
                 break;
             case("drawrectangletool"):
             case("drawcircletool"):
             case("drawtriangletool"):
             case("drawellipsetool"):
-                this._model.perimeter = this.getLength(evt.graphic.geometry);
+                this._model.perimeter = this.getLength(graphic.geometry);
                 this._model.currentArea = this._model.area = this.getAreaString(currentArea);
                 break;
             case(null):
