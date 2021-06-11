@@ -24,6 +24,7 @@
                     <div v-for="(tool,index) in lastTools" :key="index">
                         <menu-button v-if="tool.menu" :tool="tool" :tools="tools"
                                      @onToolClick="onToolClickHandler" :bus="eventBus"
+                                     :hasGraphicsOnLoad="hasGraphicsOnLoad"
                                      :i18n="i18n"></menu-button>
                         <tool-button v-else :tool="tool" @onToolClick="onToolClickHandler" :id="tool.id"
                                      :bus="eventBus"></tool-button>
@@ -130,6 +131,7 @@ export default {
             currentTool: null,
             tab: 0,
             settingsEnabled: false,
+            hasGraphicsOnLoad: false,
             eventBus: this,
             elements: [],
 
