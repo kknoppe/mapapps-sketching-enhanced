@@ -110,6 +110,10 @@ export default class SketchingEnhancedWidgetFactory {
         // watch on changes in sketching layer visibility from somewhere else (e.g. ToC)
         whenOnce(this._mapWidgetModel, 'ready', () => {
             whenOnce(this._mapWidgetModel.view, 'ready', () => {
+                const sketchingGraphics = this._mapWidgetModel.map.findLayerById(this._sketchingHandler._graphicLayerId);
+                if (sketchingGraphics && sketchingGraphics.graphics && sketchingGraphics.graphics.length > 0) {
+                    vm.hasGraphicsOnLoad = true;
+                }
                 const index = this._mapWidgetModel.view.map.layers.items.findIndex(item => item.id === this._sketchingHandler._properties.graphicLayerId);
                 watch(this._mapWidgetModel.view.map.layers.items[index], 'visible', val => {
                     vm.$emit('sketchingLayerVisibilityChanged', val)

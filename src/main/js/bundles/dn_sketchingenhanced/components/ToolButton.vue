@@ -46,7 +46,7 @@
 export default {
     data() {
         return {
-            profileLoaded: true,
+            profileLoaded: false,
         };
     },
     props: {
@@ -64,6 +64,10 @@ export default {
         tooltipIfDisabled: {
             type: String,
         },
+        hasGraphicsOnLoad: {
+            type: Boolean,
+            required: false,
+        }
     },
     mounted() {
         if (this.bus) {
@@ -85,7 +89,7 @@ export default {
         // calculates whether the little arrow beneath the toolbar icon should be visible or not
         toolActive() {
             return this.active ? this.active : this.tool.active;
-        }
+        },
     },
     methods: {
         /**
@@ -96,10 +100,11 @@ export default {
             this.$emit('onToolClick', id);
         },
         toolDisabled(tool) {
-            if (tool.menu && tool.id === 'sketchingtoolbox') {
+            if (tool.menu && tool.id === 'sketchingtoolbox' && this.hasGraphicsOnLoad) {
                 return false;
+            } else {
+                return !tool.enabled || tool.processing || (this.profileLoaded && this.notActiveTool)
             }
-            return !tool.enabled || tool.processing || (this.profileLoaded && this.notActiveTool)
         }
     },
 };
