@@ -192,6 +192,11 @@
                 {
                     "name": "_measurementModel",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
+                },
+                {
+                    "name": "_sketchingEnhancedTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=sketchingEnhancedWidgetToggleTool)"
                 }
             ]
         },

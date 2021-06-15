@@ -51,8 +51,12 @@ export default class PolylineMeasurementHandler {
 
     _updateMeasurements(evt){
         if (this._model.measurementEnabled) {
+            const redoUndo = evt.type === 'redo' || evt.type === 'undo';
             this._addLineMeasurementsToPolylines(evt);
-            this._calculateTotalLineMeasurement(evt);
+            this.controller.showCompleteResultsInTab(evt);
+            if (!redoUndo){
+                this._calculateTotalLineMeasurement(evt);
+            }
         }
     }
 
@@ -69,7 +73,7 @@ export default class PolylineMeasurementHandler {
     }
 
     _calculateTotalLineMeasurement(evt) {
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const path = graphic.geometry.paths[0];
         const id = graphic.uid;
@@ -139,15 +143,19 @@ export default class PolylineMeasurementHandler {
      */
     _addLineMeasurementsToPolylines(evt) {
         // remove the graphics so they do not stack on one another
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         this.controller.removeGraphicsById(graphic.getAttribute("id"));
         const spatialReference = this.viewModel.view.spatialReference;
         const paths = graphic.geometry.paths[0];
         for (let i = 1; i < paths.length; i++) {
-            const checkedPath = [paths[i - 1], paths[i]];
-            const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, graphic.uid);
-            this.viewModel.layer.add(textGraphic);
+            const redoUndo = evt.type === 'redo' || evt.type === 'undo';
+            const lastPassOnUndo = redoUndo && i === paths.length - 1;
+            if (!lastPassOnUndo) {
+                const checkedPath = [paths[i - 1], paths[i]];
+                const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, graphic.uid);
+                this.viewModel.layer.add(textGraphic);
+            }
         }
     }
 }

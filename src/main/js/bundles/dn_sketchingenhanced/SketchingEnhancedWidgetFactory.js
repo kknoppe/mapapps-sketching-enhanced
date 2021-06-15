@@ -127,6 +127,14 @@ export default class SketchingEnhancedWidgetFactory {
             }
         });
 
+        if (this._sketchingEnhancedTool){
+            this._sketchingEnhancedTool.watch('active', (name, oldValue, active) => {
+                if (active === false){
+                    this._sketchingHandler.cancel();
+                }
+            })
+        }
+
         const widget = VueDijit(vm);
 
         widget.onSketchingActivated = () => this._activateToolOnStartup(vm);

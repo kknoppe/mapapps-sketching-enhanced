@@ -53,10 +53,14 @@ export default class PolygonMeasurementAction {
     }
 
     _updateMeasurements(evt){
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         this.isDrawpolygontool = update && evt.graphics[0].geometry.rings;
         this._addPolygonLineMeasurements(evt);
-        this._calculatePolygonMeasurements(evt);
+        // only show full measurement text on update event
+        if (evt.type === 'update'){
+            this._calculatePolygonMeasurements(evt);
+        }
+        this.controller.showCompleteResultsInTab(evt);
     }
 
     /*
@@ -103,7 +107,7 @@ export default class PolygonMeasurementAction {
     _calculatePolygonMeasurements(evt) {
         const viewModel = this.viewModel;
         // calculate area of polygon
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         if (evt.tool !== 'circle' && evt.tool !== 'ellipse') {
             if (!graphic) return;
@@ -119,7 +123,7 @@ export default class PolygonMeasurementAction {
      * @private
      */
     _calculateCircumferenceAndArea(evt) {
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const geometry = graphic.geometry;
         const id = graphic.uid;
@@ -164,7 +168,7 @@ export default class PolygonMeasurementAction {
      */
     _addPolygonLineMeasurements(evt) {
         // remove the graphics so they do not stack on one another
-        const update = evt.type === 'update' || evt.type === 'undo';
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';;
         const graphic = update ? evt.graphics[0] : evt.graphic;
         this.controller.removeGraphicsById(graphic.getAttribute("id"));
         if (this._model.showLineMeasurementsAtPolygons && this.isDrawpolygontool) {
