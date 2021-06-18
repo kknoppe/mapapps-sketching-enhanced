@@ -88,6 +88,7 @@ export default class MeasurementHandler {
                     evt.graphic && this.controller.removeGraphicsById(evt.graphic.getAttribute("id"));
                     break
                 case 'complete':
+                    this._recordMeasurements(evt);
                     break;
 
             }
@@ -100,11 +101,12 @@ export default class MeasurementHandler {
      * @private
      */
     _recordMeasurements(evt){
-        if (evt.type === "create" && evt.state === "active"){
-            switch(evt.toolEventInfo.type){
+        if (evt.type === "create" && (evt.state === "active" || evt.state === "complete")){
+            switch(evt.toolEventInfo?.type){
                 case("cursor-update"):
                     this.controller.showActiveResultsInTab(evt);
                     break;
+                case("draw-complete"):
                 case("vertex-add"):
                     this.controller.showCompleteResultsInTab(evt);
                     break
@@ -132,7 +134,7 @@ export default class MeasurementHandler {
                 this._model.activeTool = toolId;
                 break;
             case "drawrectangletool":
-            // case "drawtriangletool":
+            case "drawtriangletool":
             case "drawcircletool":
             case "drawellipsetool":
                 this._model.areaEnabled = enabled;

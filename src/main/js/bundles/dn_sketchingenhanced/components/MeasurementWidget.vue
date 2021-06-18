@@ -103,7 +103,7 @@ export default {
                 {measure:"totalLength",rules:["polylineEnabled"]},
                 {measure:"currentArea",rules:["polygonEnabled","areaEnabled"]},
                 {measure:"perimeter",rules:["polygonEnabled","areaEnabled"]},
-                {measure:"area",rules:["polygonEnabled","areaEnabled"]}
+                {measure:"area",rules:["polygonEnabled"]}
             ]
         }
     },
