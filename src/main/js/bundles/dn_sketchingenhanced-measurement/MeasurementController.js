@@ -342,8 +342,8 @@ export default class MeasurementHandler {
             case("drawcircletool"):
             case("drawtriangletool"):
             case("drawellipsetool"):
-                currentArea = this.measurements.currentArea = this.getAreaNumeric(graphic.geometry);
-                this._model.currentArea = this.getAreaString(currentArea);
+                this._model.perimeter = this.getLength(graphic.geometry);
+                this._model.area = this.getArea(graphic.geometry);
                 break;
             case(null):
                 break;
@@ -381,7 +381,7 @@ export default class MeasurementHandler {
             case("drawtriangletool"):
             case("drawellipsetool"):
                 this._model.perimeter = this.getLength(graphic.geometry);
-                this._model.currentArea = this._model.area = this.getAreaString(currentArea);
+                this._model.area = this.getArea(graphic.geometry);
                 break;
             case(null):
                 break;
