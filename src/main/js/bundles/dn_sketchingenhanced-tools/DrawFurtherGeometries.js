@@ -411,6 +411,17 @@ export default class DrawFurtherGeometries {
             graphic,
             tool,
         });
+
+        event.type === 'cursor-update' && viewModel.emit('create', {
+            target: viewModel,
+            state: 'active',
+            toolEventInfo: {
+                type: 'cursor-update'
+            },
+            type: 'create',
+            graphic,
+            tool,
+        });
     }
 
 

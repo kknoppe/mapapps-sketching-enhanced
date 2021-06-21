@@ -101,9 +101,9 @@ export default {
                 {measure:"currentLength",rules:["polygonEnabled","polylineEnabled"]},
                 {measure:"aggregateLength",rules:["polylineEnabled"]},
                 {measure:"totalLength",rules:["polylineEnabled"]},
-                {measure:"currentArea",rules:["polygonEnabled","areaEnabled"]},
+                {measure:"currentArea",rules:["polygonEnabled"]},
                 {measure:"perimeter",rules:["polygonEnabled","areaEnabled"]},
-                {measure:"area",rules:["polygonEnabled"]}
+                {measure:"area",rules:["polygonEnabled","areaEnabled"]}
             ]
         }
     },
