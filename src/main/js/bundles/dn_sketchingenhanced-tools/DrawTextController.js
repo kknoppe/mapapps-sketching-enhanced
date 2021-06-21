@@ -17,13 +17,18 @@
 
 import d_lang from "dojo/_base/lang";
 import d_html from "dojo/_base/html";
+import d_domclass from "dojo/dom-class";
+import d_domconstruct from "dojo/dom-construct";
+import d_win from "dojo/_base/window";
 import TextSymbol from "esri/symbols/TextSymbol";
 import Connect from "ct/_Connect";
 import ct_async from "ct/async";
-import AutoResizeTextBox from "ct/ui/controls/forms/AutoResizeTextBox";
+import TextArea from "dijit/form/Textarea";
 import d_event from "dojo/_base/event";
 import d_keys from "dojo/keys";
 import has from "dojo/has";
+import css from "ct/util/css";
+
 
 
 export default class DrawTextController extends Connect {
@@ -108,7 +113,22 @@ export default class DrawTextController extends Connect {
             tbOpts.style.textDecoration = textSymbol.get("fontDecoration");
         }
 
-        const textbox = this._textbox = new AutoResizeTextBox(tbOpts);
+        const textbox = this._textbox = new TextArea(tbOpts);
+
+        const textboxInputNode = textbox.domNode;
+        let width = this._calculateWidth();
+        const extentsTextBox = css.getMarginPadBorderExtents(textboxInputNode);
+        const wOffset = extentsTextBox.w + extentsTextBox.l;
+        width = width + wOffset;
+        const minWidth = Math.max(0, (this._properties.minWidth || 400));
+        const maxWidth = Math.max(0, (this._properties.maxWidth || 800));
+        width = Math.max(minWidth, width);
+        if (maxWidth) {
+            width = Math.min(maxWidth, width);
+        }
+        d_html.contentBox(textboxInputNode, {w: width});
+        d_domclass.add(textbox.domNode, "ctAutoResizeTextBox");
+
         !!text && (textbox.textbox.value = text);
 
         this.connect("textbox", textbox, "onBlur", "_onFinishInput");
@@ -188,13 +208,48 @@ export default class DrawTextController extends Connect {
     }
 
     _onTextBoxKeypress(event) {
-        if (event.keyCode === d_keys.TAB || event.keyCode === d_keys.ENTER) {
+        if (event.keyCode === d_keys.TAB) {
             d_event.stop(event);
             this._onFinishInput();
         } else if (event.keyCode === d_keys.ESCAPE) {
             d_event.stop(event);
             this._onCancelInput();
         }
+    }
+
+    _calculateWidth() {
+        const textbox = this._textbox;
+        let sizeCalcDiv;
+        const s = d_html.style;
+        const node = textbox.domNode;
+        // Creating a temp div with current box style to get the value width
+        const tmpDiv = sizeCalcDiv || (sizeCalcDiv = d_domconstruct.create("div", {
+            style: {
+                "zIndex": -1000,
+                "position": "absolute",
+                "visibility": "hidden",
+                "border": "none",
+                "margin": "0",
+                "padding": "0",
+                "top": "0px",
+                "left": "0px"
+            }
+        }, d_win.body()));
+        s(tmpDiv, {
+            "fontSize": s(node, "fontSize") || "12px",
+            "fontFamily": s(node, "fontFamily") || "Arial",
+            "fontWeight": s(node, "fontWeight") || "normal",
+            "fontStyle": s(node, "fontStyle") || "normal",
+            "display": "block"
+        });
+        const value = textbox.get("value") || "";
+        const placeholder = textbox.get("placeHolder") || "";
+        // Need "_" at end to precalculate next char into size
+        const divVal = (value.length < placeholder.length ? placeholder : value) + "_";
+        tmpDiv.innerHTML = divVal.replace(/ /g, "&nbsp;");
+        const size = d_html.contentBox(tmpDiv).w;
+        s(tmpDiv, {"display": "none"});
+        return size;
     }
 
 }

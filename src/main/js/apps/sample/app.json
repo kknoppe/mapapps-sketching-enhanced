@@ -201,6 +201,10 @@
                         "width": 2
                     }
                 }
+            },
+            "DrawTextController": {
+                "minWidth": 400,
+                "maxWidth": 800
             }
         },
         "banner": {
