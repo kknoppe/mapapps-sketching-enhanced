@@ -43,7 +43,12 @@ export default class DrawFurtherGeometries {
         });
 
         // create ellipse
-        const action = draw.create('ellipse', {mode});
+        if (this._ellipseAction){
+            this._ellipseAction.destroy();
+        }
+
+        // create ellipse
+        const action = this._ellipseAction =  draw.create('ellipse', {mode});
 
         this._changeCursor();
 
@@ -91,74 +96,37 @@ export default class DrawFurtherGeometries {
      * @param props
      */
     createTriangle(viewModel, props) {
-        const that = this;
-
         // create a new Draw using the viewmodel's view
         const draw = new Draw({
             view: viewModel.view,
         });
 
         // create ellipse
-        const triangle = draw.create('triangle');
+        if (this._triangleAction){
+            this._triangleAction.destroy();
+        }
+
+        const action = this._triangleAction =  draw.create('triangle');
 
         this._changeCursor();
 
         const listener = this._createMouseUpListener(viewModel);
 
 
-        triangle.on(['vertex-add'], event => {
-            if (event.vertices.length === 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
-                viewModel.emit('create', {
-                    state: 'start',
-                    type: 'create',
-                    tool: 'drawtriangletool',
-                });
-            }
-        });
-
-        // TODO - triangle events for cursor updates
-        // triangle.on(['cursor-update'], event => {
-        //     if (event.vertices.length > 1 && viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
-        //         const vs = event.vertices;
-        //         const ring = that._createTriangleRing(vs);
-        //         const polygonSymbol = this._createPolygonSymbol(props);
-        //         const graphic = this._createAndAddGraphic(viewModel, ring, polygonSymbol, false);
-        //         const tool = 'triangle';
-        //         viewModel.emit('create', {
-        //             target: viewModel,
-        //             state: 'active',
-        //             type: 'create',
-        //             toolEventInfo: {
-        //                 coordinates: event.coordinates,
-        //                 type: 'cursor-update'
-        //             },
-        //             graphic: graphic,
-        //             tool: tool
-        //         });
-        //     }
-        // });
-
-        triangle.on(['draw-complete','cursor-update'], event => {
+        action.on(['draw-complete', 'cursor-update'], event => {
             this._drawCompleteActions(event, listener);
 
             const viewModelOperator = viewModel && viewModel.tool && viewModel.tool.id === 'drawtriangletool';
             if (event.vertices && event.vertices.length > 1 && viewModelOperator && !this.checkIfTooFast) {
 
-                // remove former help ellipsis
-                that._removeHelpGraphics(viewModel);
+                // remove cursor update geometry (triangles)
+                this._removeHelpGraphics(viewModel);
 
-                // use vertices to create ellipse ring
+                // use vertices to create triangle ring
                 const vs = event.vertices;
-                const ring = that._createTriangleRing(vs);
+                const ring = this._createTriangleRing(vs);
 
                 this._drawEventHandler(event, props, 'triangle', viewModel, ring);
-            } else {
-                if (viewModel.tool && viewModel.tool.id === 'drawtriangletool') {
-                    event.type === 'draw-complete' && viewModel.emit('update', {
-                        state: 'cancel',
-                        type: 'update',
-                    });
-                }
             }
         });
     }
@@ -436,6 +404,9 @@ export default class DrawFurtherGeometries {
         event.type === 'draw-complete' && viewModel.emit('update', {
             target: viewModel,
             state: 'complete',
+            toolEventInfo: {
+                type: 'draw-complete'
+            },
             type: 'create',
             graphic,
             tool,
