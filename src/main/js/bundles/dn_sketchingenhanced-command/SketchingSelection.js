@@ -21,7 +21,6 @@
 import d_lang from "dojo/_base/lang";
 import {fromJSON} from "esri/symbols/support/jsonUtils";
 import * as geometryEngine from "esri/geometry/geometryEngine";
-import {createScreenPoint} from "esri/core/screenUtils";
 
 export default function () {
     return {
@@ -337,7 +336,10 @@ export default function () {
             const pointer = this._pointerEvt;
             if (pointer) {
                 const view = this._viewModel.view;
-                return view.toMap(createScreenPoint(pointer.x, pointer.y));
+                return view.toMap({
+                    x: pointer.x,
+                    y: pointer.y
+                });
             }
         },
 
