@@ -35,7 +35,7 @@ export default class MeasurementHandler {
 
     handler(evt) {
         this._model.spatialReference = this.viewModel.view.spatialReference;
-        const showMeasurement = this._model.measurementEnabled;
+        const showMeasurement = this._showMeasurementsAllowed(evt);
         this._model.cursorUpdate = evt.toolEventInfo && evt.toolEventInfo.type === "cursor-update";
         this._model.vertexAdded = evt.toolEventInfo && evt.toolEventInfo.type === "vertex-add";
 
@@ -53,23 +53,35 @@ export default class MeasurementHandler {
         }
 
         // cases in which to exit
-        if (evt.state === 'cancel' || !showMeasurement){
+        if (evt.state === 'cancel'){
             return;
         }
 
         switch(evt.type){
             case 'create':
-                evt.tool && this._handleCreate(evt);
+                if (evt.tool && showMeasurement){
+                    this._handleCreate(evt);
+                }
                 break;
             case 'redo':
             case 'undo':
             case 'update':
-                evt.graphics && this._handleUpdate(evt);
+                if (evt.graphics && showMeasurement){
+                    this._handleUpdate(evt);
+                }
                 break;
             case 'remove':
                 this._handleRemove(evt);
                 break;
         }
+    }
+
+    _showMeasurementsAllowed(evt){
+        let measurementEnabledAttr = false;
+        if (evt.graphics && evt.graphics[0]){
+            measurementEnabledAttr = evt.graphics[0].getAttribute('measurementEnabled')
+        }
+        return this._model.measurementEnabled || measurementEnabledAttr;
     }
 
     _handleEventState(evt){
@@ -80,7 +92,7 @@ export default class MeasurementHandler {
                     break;
                 case 'active':
                     if (this._model.cursorUpdate){
-                        this._removeTemporaryMeasurements(evt);
+                        this.controller.removeTemporaryMeasurements(evt);
                     }
                     break;
                 case 'cancel':
@@ -188,43 +200,17 @@ export default class MeasurementHandler {
                 this.setActiveToolType(this._model.activeTool);
             }
         });
-        this._measurementActions.push(new PointAction({
+        const args = {
             _properties: this._properties,
             viewModel: this.viewModel,
             _model: this._model,
             controller: this.controller,
             coordinateTransformer: this._coordinateTransformer,
             i18n: this.i18n
-        }))
-        this._measurementActions.push(new PolylineAction({
-            _properties: this._properties,
-            viewModel: this.viewModel,
-            _model: this._model,
-            controller: this.controller,
-            i18n: this.i18n
-        }))
-        this._measurementActions.push(new PolygonAction({
-            _properties: this._properties,
-            viewModel: this.viewModel,
-            _model: this._model,
-            controller: this.controller,
-            i18n: this.i18n
-        }))
-    }
-
-    _removeTemporaryMeasurements(evt) {
-        if (!evt.graphic) return;
-        const id = evt.graphic.getAttribute("id") || `measurement-${evt.graphic.uid}`;
-        const viewModel = this.viewModel;
-        const gs = viewModel.layer.graphics.items.filter(graphic => {
-            const type = graphic.getAttribute("type");
-            const textGraphicId = graphic.getAttribute("id");
-            const temporary = graphic.symbol?.temporary;
-            if (textGraphicId){
-                return graphic.getAttribute("id") === id && type && type === "text" && temporary;
-            }
-        });
-        viewModel.layer.removeMany(gs);
+        }
+        this._measurementActions.push(new PointAction(args))
+        this._measurementActions.push(new PolylineAction(args))
+        this._measurementActions.push(new PolygonAction(args))
     }
 
     setCoordinates(evt){
