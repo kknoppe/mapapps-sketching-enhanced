@@ -349,7 +349,7 @@ export default class MeasurementHandler {
     setGraphicAttributes(evt,showLinesAttr){
         if (!evt.graphic.getAttribute("id")) {
             evt.graphic.setAttribute("measurementEnabled",this._model.measurementEnabled);
-            const showLines = (evt.tool === 'triangle' && evt.tool === 'rectangle') ? false : this._model[showLinesAttr];
+            const showLines = (evt.tool === 'triangle' || evt.tool === 'rectangle') ? false : this._model[showLinesAttr];
             evt.graphic.setAttribute(showLinesAttr,showLines);
             evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
         }
