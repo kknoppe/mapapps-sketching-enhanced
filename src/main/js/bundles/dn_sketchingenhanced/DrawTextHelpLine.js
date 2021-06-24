@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import Graphic from 'esri/Graphic';
+import Polyline from 'esri/geometry/Polyline';
 
 export default class DrawTextHelpLine {
 
@@ -35,32 +36,29 @@ export default class DrawTextHelpLine {
 
         const graphic = this.graphic = firstGraphic ? firstGraphic : this.graphic;
 
-        require(['esri/geometry/Polyline'], function (Polyline) {
-            // use the generated point to create a path
-            const path = [[graphic.geometry.x, graphic.geometry.y],
-                [graphic.geometry.x + dx, graphic.geometry.y + dy]];
-            // set the style of the help line
-            const polylineSymbol = {
-                type: 'simple-line',
-                color: 'black',
-                width: '1',
-                style: 'dot',
-            };
-            // create the line
-            const line = new Polyline({
-                hasZ: false,
-                hasM: true,
-                paths: path,
-                spatialReference: graphic.geometry.spatialReference,
-            });
-            // and add it to the graphics layer
-            const helpLine = new Graphic({
-                geometry: line,
-                symbol: polylineSymbol,
-                name: 'helpLine',
-            });
-            viewModel.layer.add(helpLine);
+        const path = [[graphic.geometry.x, graphic.geometry.y],
+            [graphic.geometry.x + dx, graphic.geometry.y + dy]];
+        // set the style of the help line
+        const polylineSymbol = {
+            type: 'simple-line',
+            color: 'black',
+            width: '1',
+            style: 'dot',
+        };
+        // create the line
+        const line = new Polyline({
+            hasZ: false,
+            hasM: true,
+            paths: path,
+            spatialReference: graphic.geometry.spatialReference,
         });
+        // and add it to the graphics layer
+        const helpLine = new Graphic({
+            geometry: line,
+            symbol: polylineSymbol,
+            name: 'helpLine',
+        });
+        viewModel.layer.add(helpLine);
     }
 
     removeHelpLine(viewModel) {
