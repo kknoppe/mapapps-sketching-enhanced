@@ -29,12 +29,8 @@ export default class PolylineMeasurementHandler {
     }
     _getMeasurements(evt){
         const polylineToolActive = evt.activeTool && evt.activeTool === 'drawpolylinetool';
-        const activeState = polylineToolActive && evt.state === 'active';
-        const completeState = polylineToolActive && evt.state === 'complete';
-        if (!evt.graphic.getAttribute("id")) {
-            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
-        }
-        if (activeState){
+        this.controller.setGraphicAttributes(evt,"showLineMeasurementsAtPolylines");
+        if (polylineToolActive && evt.state === 'active'){
             if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines){
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
                 this._addLineMeasurementsToPolylines(evt)
@@ -43,20 +39,34 @@ export default class PolylineMeasurementHandler {
                 this._checkIfPositionHasChanged(evt);
             }
         }
-        if (completeState){
-            this._addLineMeasurementsToPolylines(evt);
+        if (polylineToolActive && evt.state === 'complete'){
+            this.controller.removeTemporaryMeasurements(evt);
             this._calculateTotalLineMeasurement(evt);
         }
     }
 
     _updateMeasurements(evt){
-        if (this._model.measurementEnabled) {
+        if (evt.graphics[0].getAttribute('measurementEnabled') === true || this._model.measurementEnabled) {
+            if (!evt.graphics[0].attributes?.id){
+                return;
+            }
             const redoUndo = evt.type === 'redo' || evt.type === 'undo';
-            this._addLineMeasurementsToPolylines(evt);
-            this.controller.showCompleteResultsInTab(evt);
+            this._showLineMeasurementsOnPolylines(evt) && this._addLineMeasurementsToPolylines(evt);
             if (!redoUndo){
                 this._calculateTotalLineMeasurement(evt);
+                this._addLineMeasurementsToPolylines(evt);
             }
+            this.controller.showCompleteResultsInTab(evt);
+        }
+    }
+
+    _showLineMeasurementsOnPolylines(evt){
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        if (graphic.getAttribute('showLineMeasurementsAtPolylines') !== undefined) {
+            return graphic.getAttribute('showLineMeasurementsAtPolylines');
+        } else {
+            return this._model.showLineMeasurementsAtPolylines;
         }
     }
 
@@ -72,12 +82,24 @@ export default class PolylineMeasurementHandler {
         }, lineMeasurementTimeout);
     }
 
+    _removeLengthGraphicsById(id) {
+        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
+            const type = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId) {
+                return textGraphicId === id && type && type === "lengthText";
+            }
+        });
+        this.viewModel.layer.removeMany(gs);
+    }
+
     _calculateTotalLineMeasurement(evt) {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const path = graphic.geometry.paths[0];
-        const id = graphic.uid;
-        graphic.setAttribute("id",`measurement-${id}`)
+        const id = graphic.getAttribute('id') || `measurement-${graphic.uid}`;
+        update && this._removeLengthGraphicsById(id)
+        graphic.setAttribute("id",id)
         if (path.length < 2) {
             return;
         }
@@ -97,7 +119,7 @@ export default class PolylineMeasurementHandler {
                 text: lengthString,
                 color: this._model.textSettings.color,
                 flag: "measurementText",
-                id: `measurement-${id}`,
+                id: id,
                 font: this._model.textSettings.font,
                 horizontalAlignment: textPosition,
                 yoffset: yOffset,
@@ -106,8 +128,9 @@ export default class PolylineMeasurementHandler {
                 temporary: this._model.cursorUpdate || this._model.vertexAdded
             });
             const textGraphic = new Graphic(pnt, textSymbol);
-            textGraphic.setAttribute("id",`measurement-${id}`)
-            textGraphic.setAttribute("type",textGraphic.symbol.type);
+            const type = evt.state === 'complete' ? "lengthText" : "text"
+            textGraphic.setAttribute("id",id)
+            textGraphic.setAttribute("type",type);
             viewModel.layer.add(textGraphic);
         }
     }
@@ -123,14 +146,13 @@ export default class PolylineMeasurementHandler {
         const viewModel = this.viewModel;
         const spatialReference = viewModel.view.spatialReference;
         const newVertex = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
-
+        const id = evt.graphic.getAttribute("id") || `measurement-${evt.graphic.uid}`
         // set up array with current line
         const checkedPath = this._model._lastVertex ? [this._model._lastVertex, newVertex] : [firstPoint, newVertex];
 
         // calculate Distance between last two points and create graphic with textsymbol
-        evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`)
-        const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, evt.graphic.uid);
-        graphic.setAttribute("id",`measurement-${evt.graphic.uid}`)
+        evt.graphic.setAttribute("id",id)
+        const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
         // add this graphic to measurement layer
         viewModel.layer.add(graphic);
         this._model._lastVertex = newVertex;
@@ -145,16 +167,19 @@ export default class PolylineMeasurementHandler {
         // remove the graphics so they do not stack on one another
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
-        this.controller.removeGraphicsById(graphic.getAttribute("id"));
-        const spatialReference = this.viewModel.view.spatialReference;
-        const paths = graphic.geometry.paths[0];
-        for (let i = 1; i < paths.length; i++) {
-            const redoUndo = evt.type === 'redo' || evt.type === 'undo';
-            const lastPassOnUndo = redoUndo && i === paths.length - 1;
-            if (!lastPassOnUndo) {
-                const checkedPath = [paths[i - 1], paths[i]];
-                const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, graphic.uid);
-                this.viewModel.layer.add(textGraphic);
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`
+        this.controller.removeTextGraphicsById(id);
+        if (this._showLineMeasurementsOnPolylines(evt)) {
+            const spatialReference = this.viewModel.view.spatialReference;
+            const paths = graphic.geometry.paths[0];
+            for (let i = 1; i < paths.length; i++) {
+                const redoUndo = evt.type === 'redo' || evt.type === 'undo';
+                const lastPassOnUndo = redoUndo && i === paths.length - 1;
+                if (!lastPassOnUndo) {
+                    const checkedPath = [paths[i - 1], paths[i]];
+                    const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
+                    this.viewModel.layer.add(textGraphic);
+                }
             }
         }
     }

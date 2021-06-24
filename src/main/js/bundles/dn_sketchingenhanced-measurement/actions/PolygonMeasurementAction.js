@@ -32,9 +32,7 @@ export default class PolygonMeasurementAction {
         const polygonToolActive = evt.graphic && evt.graphic.geometry.type === 'polygon';
         const activeState = polygonToolActive && evt.state === 'active';
         const completeState = polygonToolActive && evt.state === 'complete';
-        if (!evt.graphic.getAttribute("id")) {
-            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
-        }
+        this.controller.setGraphicAttributes(evt,"showLineMeasurementsAtPolygons");
         if (activeState){
             if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolygons && isDrawpolygontool){
                 this._addTextForPolygon(evt, evt.graphic.geometry.rings[0][0], evt.graphic.uid);
@@ -53,14 +51,27 @@ export default class PolygonMeasurementAction {
     }
 
     _updateMeasurements(evt){
+        if (!evt.graphics[0].attributes?.id){
+            return;
+        }
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         this.isDrawpolygontool = update && evt.graphics[0].geometry.rings;
-        this._addPolygonLineMeasurements(evt);
+        this._showLineMeasurementsOnPolygons(evt) && this._addPolygonLineMeasurements(evt);
         // only show full measurement text on update event
         if (evt.type === 'update'){
             this._calculatePolygonMeasurements(evt);
         }
         this.controller.showCompleteResultsInTab(evt);
+    }
+
+    _showLineMeasurementsOnPolygons(evt){
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';;
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        if (graphic.getAttribute('showLineMeasurementsAtPolygons') !== undefined) {
+            return graphic.getAttribute('showLineMeasurementsAtPolygons');
+        } else {
+            return this._model.showLineMeasurementsAtPolygons;
+        }
     }
 
     /*
@@ -87,25 +98,12 @@ export default class PolygonMeasurementAction {
     }
 
     /*
-     * check if the current position is still the same as 'n' seconds ago -> if yes show line length and (for polygons) circumference & area
-     * @param evt
-     * @private
-     */
-    _checkIfPositionHasChanged(evt) {
-        const lineMeasurementTimeout = this._model.lineMeasurementTimeout;
-        setTimeout(() => {
-            this._addPolygonLineMeasurements(evt);
-        }, lineMeasurementTimeout);
-    }
-
-    /*
      * calculate length, area, circumference of polygons
      * @param evt
      * @param temporary Boolean parameter which is true if text should be deleted on next cursor move
      * @private
      */
     _calculatePolygonMeasurements(evt) {
-        const viewModel = this.viewModel;
         // calculate area of polygon
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
@@ -126,37 +124,57 @@ export default class PolygonMeasurementAction {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const geometry = graphic.geometry;
-        const id = graphic.uid;
-        graphic.setAttribute("id",`measurement-${id}`)
+        const id = graphic.getAttribute('id') || `measurement-${graphic.uid}`;
+
+        update && this._removeAreaGraphicsById(id);
+        graphic.setAttribute("id",id)
+
         const circumString = this.controller.getLength(geometry);
         const areaString = this.controller.getArea(geometry);
 
         const pnt = this._model.cursorUpdate ? new Point(this.controller.getCoordinates(evt), geometry.spatialReference) : this.controller.getCenterOfPoint(geometry);
 
-        let textPosition = (this._model._lastVertex && this._model.coordinates[0] - this._model._lastVertex[0] > 0) ? 'left' : 'right';
+        let textPosition = (this._model._lastVertex && this._model.coordinates && this._model.coordinates[0] - this._model._lastVertex[0] > 0) ? 'left' : 'right';
+
         textPosition = evt.state === 'complete' ? 'center' : textPosition;
+
         const areaText = (this._properties.measurementLabels && this._properties.measurementLabels[this.i18n.locale]) ?
             this._properties.measurementLabels[this.i18n.locale].area : this.i18n.circumference;
+
         const circumferenceText = (this._properties.measurementLabels  && this._properties.measurementLabels[this.i18n.locale]) ?
             this._properties.measurementLabels[this.i18n.locale].circumference : this.i18n.circumference;
-        const text = `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`
+
+        const text = `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`;
+
         if (!this.controller.stringIsDuplicate(text)){
             const textSymbol = new TextSymbol({
                 text: text,
                 color: this._model.textSettings.color,
                 font: this._model.textSettings.font,
                 flag: "measurementText",
-                id: `measurement-${id}`,
+                id: id,
                 horizontalAlignment: textPosition,
                 haloColor: this._model.textSettings.haloColor,
                 haloSize: this._model.textSettings.haloSize,
                 temporary: this._model.cursorUpdate || this._model.vertexAdded
             });
+
             const textGraphic = new Graphic(pnt, textSymbol);
-            textGraphic.setAttribute("id",`measurement-${id}`);
-            textGraphic.setAttribute("type",textGraphic.symbol.type);
+            textGraphic.setAttribute("id",id);
+            textGraphic.setAttribute("type","areaText");
             this.viewModel.layer.add(textGraphic);
         }
+    }
+
+    _removeAreaGraphicsById(id) {
+        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
+            const type = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId) {
+                return textGraphicId === id && type && type === "areaText";
+            }
+        });
+        this.viewModel.layer.removeMany(gs);
     }
 
     /*
@@ -170,14 +188,15 @@ export default class PolygonMeasurementAction {
         // remove the graphics so they do not stack on one another
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';;
         const graphic = update ? evt.graphics[0] : evt.graphic;
-        this.controller.removeGraphicsById(graphic.getAttribute("id"));
-        if (this._model.showLineMeasurementsAtPolygons && this.isDrawpolygontool) {
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`
+        this.controller.removeTextGraphicsById(id);
+        if (this._showLineMeasurementsOnPolygons(evt) && this.isDrawpolygontool) {
             const spatialReference = this.viewModel.view.spatialReference;
             const rings = graphic.geometry.rings;
             rings.forEach(rings => {
                 for (let i = 1; i < rings.length; i++) {
                     const checkedPath = [rings[i - 1], rings[i]];
-                    const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, graphic.uid);
+                    const textGraphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
                     this.viewModel.layer.add(textGraphic);
                 }
             });

@@ -289,12 +289,27 @@ export default class MeasurementHandler {
             temporary: this._model.cursorUpdate
         });
         const graphic = new Graphic(pnt, textSymbol);
-        graphic.setAttribute("id",`measurement-${id}`);
+        if (typeof id === "string"){
+            graphic.setAttribute("id",id);
+        } else {
+            graphic.setAttribute("id",`measurement-${id}`);
+        }
         graphic.setAttribute("type",graphic.symbol.type);
         return graphic;
     }
 
     removeGraphicsById(id) {
+        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
+            const type = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId) {
+                return textGraphicId === id;
+            }
+        });
+        this.viewModel.layer.removeMany(gs);
+    }
+
+    removeTextGraphicsById(id) {
         const gs = this.viewModel.layer.graphics.items.filter(graphic => {
             const type = graphic.getAttribute("type");
             const textGraphicId = graphic.getAttribute("id");
@@ -305,6 +320,23 @@ export default class MeasurementHandler {
         this.viewModel.layer.removeMany(gs);
     }
 
+    removeTemporaryMeasurements(evt) {
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        if (!graphic) return;
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+        const viewModel = this.viewModel;
+        const gs = viewModel.layer.graphics.items.filter(g => {
+            const type = g.getAttribute("type");
+            const textGraphicId = g.getAttribute("id");
+            const temporary = g.symbol?.temporary;
+            if (textGraphicId){
+                return g.getAttribute("id") === id && type && type === "text" && temporary;
+            }
+        });
+        viewModel.layer.removeMany(gs);
+    }
+
     stringIsDuplicate(text){
         const gs = this.viewModel.layer.graphics.items.filter(graphic => {
             if (graphic.symbol){
@@ -312,6 +344,15 @@ export default class MeasurementHandler {
             }
         });
         return gs.length > 0
+    }
+
+    setGraphicAttributes(evt,showLinesAttr){
+        if (!evt.graphic.getAttribute("id")) {
+            evt.graphic.setAttribute("measurementEnabled",this._model.measurementEnabled);
+            const showLines = (evt.tool === 'triangle' || evt.tool === 'rectangle') ? false : this._model[showLinesAttr];
+            evt.graphic.setAttribute(showLinesAttr,showLines);
+            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
+        }
     }
 
     /*
