@@ -25,6 +25,10 @@ module.exports = {
         enableMeasurements: 'Messen aktivieren',
         disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
         enableKeepMeasurements: 'Messungen beibehalten aktivieren',
+        angleUnit: {
+            unit1: "Grad",
+            unit2: "Gon"
+        },
         textEditor: {
             bold: 'Fett',
             italic: 'Kursiv',
