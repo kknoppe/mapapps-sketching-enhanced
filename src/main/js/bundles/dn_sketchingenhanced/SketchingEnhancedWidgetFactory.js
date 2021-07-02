@@ -30,6 +30,7 @@ export default class SketchingEnhancedWidgetFactory {
             .syncAll('showLineMeasurementsAtPolylines')
             .syncAll('showLineMeasurementsAtPolygons')
             .syncAll('showLineMeasurementsAngle')
+            .syncAll('enableAngleMeasurement')
             .syncAll('angleUnit')
             .syncAll('currentLength')
             .syncAll('aggregateLength')
