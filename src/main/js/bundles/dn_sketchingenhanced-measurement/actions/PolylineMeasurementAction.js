@@ -280,7 +280,7 @@ export default class PolylineMeasurementHandler {
 
     _renderAngleText(quadrantsString, resultString, anglePoint) {
         let resultStringWithUnit;
-        if (this._model.angleUnit === "degree") {
+        if (this._model.angleUnit === this.i18n.ui.angleUnit.unit1) {
             resultStringWithUnit = resultString + " °"
         } else {
             let number = parseInt(resultString);
