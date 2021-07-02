@@ -32,7 +32,7 @@
                           hide-details>
                 </v-switch>
                 <v-switch class="pa-1 ma-0 measurementCheckboxes" color="primary"
-                          v-show="measurements.polylineEnabled"
+                          v-show="measurements.polylineEnabled && measurements.enableAngleMeasurement"
                           :label="i18n.measurement.showLineMeasurementsAngle"
                           v-model="polylineAngleMeasurentEnabled"
                           hide-details>
@@ -40,7 +40,7 @@
             </v-card>
             <v-flex class="unitSelectors">
                 <v-combobox
-                    v-show="measurements.polylineEnabled"
+                    v-show="measurements.polylineEnabled && measurements.showLineMeasurementsAngle"
                     v-model="angleUnit"
                     :items="[i18n.measurement.angleUnit.unit1, i18n.measurement.angleUnit.unit2]"
                     :label="i18n.measurement.angleUnit.header"
