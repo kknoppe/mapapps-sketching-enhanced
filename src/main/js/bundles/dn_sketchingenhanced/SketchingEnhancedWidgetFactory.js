@@ -29,6 +29,8 @@ export default class SketchingEnhancedWidgetFactory {
         measurementBinding
             .syncAll('showLineMeasurementsAtPolylines')
             .syncAll('showLineMeasurementsAtPolygons')
+            .syncAll('showLineMeasurementsAngle')
+            .syncAll('angleUnit')
             .syncAll('currentLength')
             .syncAll('aggregateLength')
             .syncAll('totalLength')
