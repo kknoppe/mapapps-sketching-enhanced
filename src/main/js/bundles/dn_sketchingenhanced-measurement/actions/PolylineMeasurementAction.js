@@ -162,7 +162,7 @@ export default class PolylineMeasurementHandler {
 
         // if enabled also calculate angles between lines and display them as textsymbol
         const geometryToTransform = viewModel.createGraphic.geometry;
-        if (geometryToTransform.type === "polyline" && this._model.showLineMeasurementsAngle) {
+        if (geometryToTransform.type === "polyline" && this._model.enableAngleMeasurement) {
             this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
                 const path = transformedGeometry.paths[0];
                 if (path.length >= 3) {
