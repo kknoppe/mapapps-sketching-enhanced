@@ -106,6 +106,7 @@ module.exports = {
         measurement: {
             showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
             showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
+            showLineMeasurementsAngle: 'Zeige Winkel',
             coordinates: 'Koordinaten: ',
             coordinateSystem: 'Koordinatensystem',
             totalLength: 'Gesamtlänge: ',
@@ -119,7 +120,12 @@ module.exports = {
             unitAreaSelect: 'Flächeneinheit',
             drawTab: 'Darstellung',
             measureTab: 'Messung',
-            constructionTab: 'Konstruktion'
+            constructionTab: 'Konstruktion',
+            angleUnit: {
+                header: "Einheit der Winklemessung",
+                unit1: "Grad",
+                unit2: "Gon"
+            }
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',
