@@ -40,7 +40,7 @@
             </v-card>
             <v-flex class="unitSelectors">
                 <v-combobox
-                    v-show="measurements.polylineEnabled && measurements.showLineMeasurementsAngle"
+                    v-show="measurements.polylineEnabled && measurements.showLineMeasurementsAngle && measurements.enableAngleMeasurement"
                     v-model="angleUnit"
                     :items="[i18n.measurement.angleUnit.unit1, i18n.measurement.angleUnit.unit2]"
                     :label="i18n.measurement.angleUnit.header"
