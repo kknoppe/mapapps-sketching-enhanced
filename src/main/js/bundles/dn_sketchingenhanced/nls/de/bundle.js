@@ -122,7 +122,7 @@ module.exports = {
             measureTab: 'Messung',
             constructionTab: 'Konstruktion',
             angleUnit: {
-                header: "Einheit der Winklemessung",
+                header: "Winkleinheit",
                 unit1: "Grad",
                 unit2: "Gon"
             }
