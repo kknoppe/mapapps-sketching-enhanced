@@ -49,6 +49,7 @@
                             <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements.sync="measurements"
+                                                 :angle-unit.sync="angleUnit"
                                                  :units="units"
                                                  :i18n="i18n"
                                                  @length-unit-input="setLengthUnits"
@@ -138,6 +139,7 @@ export default {
             measurementEnabled: false,
             showLineMeasurementsAtPolylines: false,
             showLineMeasurementsAtPolygons: false,
+            showLineMeasurementsAngle: false,
             showKeepMeasurements: true,
 
             coordinates: null,
@@ -190,7 +192,10 @@ export default {
         },
         sketchingVisible: {
             type: Boolean
-        }
+        },
+        angleUnit: {
+        type: String
+    }
     },
     computed: {
         tabs() {
@@ -244,6 +249,8 @@ export default {
                 return {
                     showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
                     showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
+                    showLineMeasurementsAngle: this.showLineMeasurementsAngle,
+                    angleUnit: this.angleUnit,
                     showKeepMeasurements: this.showKeepMeasurements,
                     coordinates: this.coordinates,
                     currentLength: this.currentLength,
@@ -262,6 +269,8 @@ export default {
             set(measurement) {
                 this.showLineMeasurementsAtPolylines = measurement.showLineMeasurementsAtPolylines;
                 this.showLineMeasurementsAtPolygons =  measurement.showLineMeasurementsAtPolygons;
+                this.showLineMeasurementsAngle = measurement.showLineMeasurementsAngle;
+                this.angleUnit = measurement.angleUnit;
             }
         }
     },
