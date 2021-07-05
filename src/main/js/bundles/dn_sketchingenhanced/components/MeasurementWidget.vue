@@ -40,14 +40,6 @@
             </v-card>
             <v-flex class="unitSelectors">
                 <v-combobox
-                    v-show="measurements.polylineEnabled && measurements.showLineMeasurementsAngle && measurements.enableAngleMeasurement"
-                    v-model="angleUnit"
-                    :items="[i18n.measurement.angleUnit.unit1, i18n.measurement.angleUnit.unit2]"
-                    :label="i18n.measurement.angleUnit.header"
-                    outlined
-                    dense
-                ></v-combobox>
-                <v-combobox
                     v-show="measurements.polylineEnabled || measurements.polygonEnabled"
                     v-model="selectedLengthItem"
                     :items="units.length"
@@ -72,6 +64,14 @@
                     outlined
                     dense
                 ></v-select>
+                <v-combobox
+                    v-show="measurements.polylineEnabled && measurements.enableAngleMeasurement"
+                    v-model="angleUnit"
+                    :items="[i18n.measurement.angleUnit.unit1, i18n.measurement.angleUnit.unit2]"
+                    :label="i18n.measurement.angleUnit.header"
+                    outlined
+                    dense
+                ></v-combobox>
             </v-flex>
         </v-card>
         <v-divider
