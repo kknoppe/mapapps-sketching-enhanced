@@ -30,10 +30,10 @@ function filterTools(tools, filterIds) {
             });
 
             pTools.forEach(tool => {
-                ct_array.arrayFirstIndexOf(fTools, {id: tool.id}) === -1 && fTools.push(tool);
+                fTools.findIndex(e => e.id === tool.id) === -1 && fTools.push(tool);
             });
         } else {
-            const tool = ct_array.arraySearchFirst(tools, {id: id});
+            const tool = tools.find(e => e.id === id);
             tool && fTools.push(tool);
         }
     });
@@ -56,7 +56,7 @@ function copyToolProps(tools, filterIds, toolProps) {
             });
 
             pTools.forEach(tool => {
-                ct_array.arrayFirstIndexOf(fTools, {id: tool.id}) === -1 && fTools.push(ct_lang.copyProps({}, tool, toolProps));
+                fTools.findIndex(e => e.id === tool.id) === -1 && fTools.push(ct_lang.copyProps({}, tool, toolProps));
             });
         }
     });
@@ -79,7 +79,7 @@ function bindToViewModel(vueModelConfig, vueModel, property, toolIds, toolsWatch
                 }
             });
             tools.length !== toolIds.length && toolIds.forEach(id => {
-                ct_array.arrayFirstIndexOf(tools, {id}) === -1 && delete toolsWatchHandles[id];
+                tools.findIndex(e => e.id === id) === -1 && delete toolsWatchHandles[id];
             });
 
             const vueModelToolProps = vueModelConfig.vueModelToolProps;
