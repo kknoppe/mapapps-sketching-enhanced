@@ -31,6 +31,12 @@
                           v-model="polygonMeasurementLineEnabled"
                           hide-details>
                 </v-switch>
+                <v-switch class="pa-1 ma-0 measurementCheckboxes" color="primary"
+                          v-show="measurements.polylineEnabled && measurements.enableAngleMeasurement"
+                          :label="i18n.measurement.showLineMeasurementsAngle"
+                          v-model="polylineAngleMeasurentEnabled"
+                          hide-details>
+                </v-switch>
             </v-card>
             <v-flex class="unitSelectors">
                 <v-combobox
@@ -58,6 +64,14 @@
                     outlined
                     dense
                 ></v-select>
+                <v-combobox
+                    v-show="measurements.polylineEnabled && measurements.enableAngleMeasurement"
+                    v-model="angleUnit"
+                    :items="[i18n.measurement.angleUnit.unit1, i18n.measurement.angleUnit.unit2]"
+                    :label="i18n.measurement.angleUnit.header"
+                    outlined
+                    dense
+                ></v-combobox>
             </v-flex>
         </v-card>
         <v-divider
@@ -145,6 +159,24 @@ export default {
                 this.$emit('update:measurements', measurements);
             }
         },
+        polylineAngleMeasurentEnabled: {
+            get() {
+                return this.measurements.showLineMeasurementsAngle;
+            },
+            set(val) {
+                const measurements = this.measurements;
+                measurements.showLineMeasurementsAngle = val;
+                this.$emit('update:measurements', measurements);
+       }
+},
+        angleUnit: {
+            get() {
+                return this.measurements.angleUnit;
+            },
+            set(val) {
+                this.$emit('update:angle-unit', val);
+            }
+            },
         selectedAreaItem: {
             get() {
                 return this.value || 'auto'

@@ -48,6 +48,10 @@ module.exports = {
                     tooBig: 'Maximum 360°',
                     tooSmall: 'Minimum 0°',
                 },
+                angleUnit: {
+                    unit1: "Degree",
+                    unit2: "Gradian"
+                }
             },
             symbolEditor: {
                 title: 'Symbol style editor',

@@ -82,6 +82,7 @@
                 "decimalPlacesKiloMeter": 2,
                 "showLineMeasurementsAtPolylines": true,
                 "showLineMeasurementsAtPolygons": false,
+                "showLineMeasurementsAngle": false,
                 "pointSRS": "4326",
                 "pointCoordPlaces": "3",
                 "pointCoordUnitSymbolX": "°E",

@@ -25,6 +25,8 @@ properties(MeasurementModel, {
     viewModel: {},
     showLineMeasurementsAtPolylines: false,
     showLineMeasurementsAtPolygons: false,
+    showLineMeasurementsAngle: false,
+    enableAngleMeasurement: false,
     lineMeasurementTimeout: 100, //default
     mDecimal: 2, //default
     kmDecimal: 2, //default
@@ -38,6 +40,7 @@ properties(MeasurementModel, {
     perimeter: 0,
     coordinates: null,
 
+    angleUnit: "Grad",
     lengthUnit: 'auto',
     areaUnit: 'auto',
 

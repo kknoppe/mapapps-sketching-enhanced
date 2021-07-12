@@ -106,6 +106,7 @@ module.exports = {
             measurement: {
                 showLineMeasurementsAtPolylines: 'Show length of line elements',
                 showLineMeasurementsAtPolygons: 'Show edge length of polygons',
+                showLineMeasurementsAngle: 'Show angle',
                 coordinates: 'Coordinates: ',
                 coordinateSystem: 'Coordinate System',
                 totalLength: 'Total Length: ',
@@ -119,7 +120,12 @@ module.exports = {
                 unitAreaSelect: 'Area Unit',
                 drawTab: 'Appearance',
                 measureTab: 'Measurement',
-                constructionTab: 'Construction'
+                constructionTab: 'Construction',
+                angleUnit: {
+                    header: "Angle Measurement Unit",
+                    unit1: "Degree",
+                    unit2: "Gradian"
+                }
             },
             layerEditor: {
                 header: 'Sketching Layer',
