@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-measurement",
-    "version": "2.1.9-SNAPSHOT",
+    "version": "2.1.9",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
