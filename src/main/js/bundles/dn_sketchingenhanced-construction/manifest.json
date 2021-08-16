@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-construction",
-    "version": "2.1.9",
+    "version": "2.1.10-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
