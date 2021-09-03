@@ -41,6 +41,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
             "showLineMeasurementsAtPolylines": true,
             "showLineMeasurementsAtPolygons": false,
             "showLineMeasurementsAngle": false,
+            "enableAngleMeasurement": false,
             "pointCoordPlaces": "3",
             "pointCoordUnitSymbolX": "°E",
             "pointCoordUnitSymbolY": "°N",
@@ -114,6 +115,7 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 |showLineMeasurementsAtPolylines          |Boolean    |wie im Beispiel |Anzeige der Messwerte an Polylinien (an/aus)
 |showLineMeasurementsAtPolygons          |Boolean    |wie im Beispiel |Anzeige der Messwerte von Linien an Polygonen (an/aus)
 |showLineMeasurementsAngle               | Boolean | wie im Beispiel| Anzeige von Winkelmessungen zwischen Polylinien-Teilen (an/aus)
+|enableAngleMeasurement                 | Boolean | wie im Beispiel | (De-)Aktiviert die Winkelmessfunktion für Polylinien
 |pointCoordPlaces          |Number    |wie im Beispiel |Nachkommastellen der Koordinatenanzeige
 |pointCoordUnitSymbolX          |String    |wie im Beispiel |x-Label für Koordinatenanzeige
 |pointCoordUnitSymbolY          |String    |wie im Beispiel |y-Label für Koordinatenanzeige
