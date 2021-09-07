@@ -13,55 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import assert from 'intern/chai!assert';
-import expect from 'intern/chai!expect';
-import module from 'module';
+import {assert, expect} from "chai";
+import module from "module";
 import Vue from 'apprt-vue/Vue';
 import ConstructionCheckbox from '../components/construction/ConstructionCheckbox.vue';
 
-registerSuite({
-    name: module.id,
-    'Simple Text Editor Component': function () {
+describe(module.id, function () {
+    it("Simple Text Editor Component", function () {
         assert.ok(new Vue(ConstructionCheckbox));
-    },
-    'Validate number as a string input of Checkbox': function () {
+    });
+    it("Validate number as a string input of Checkbox", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.constructionModel = {planarLength: 20};
         vm.setting = 'planarLength';
         expect(vm._validateInput('10')).to.equal(10);
-    },
-    'Validate number input of Checkbox': function () {
+    });
+    it("Validate number input of Checkbox", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.constructionModel = {planarLength: 20};
         vm.setting = 'planarLength';
         expect(vm._validateInput(10)).to.equal(10);
-    },
-    'Validate string with no number input of Checkbox': function () {
+    });
+    it("Validate string with no number input of Checkbox", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.constructionModel = {planarLength: 20};
         vm.setting = 'planarLength';
         expect(vm._validateInput('test')).to.equal(20);
-    },
-    'Check suffix for planarLength': function () {
+    });
+    it("Check suffix for planarLength", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.setting = 'planarLength';
         expect(vm.suffix).to.equal('m');
-    },
-    'Check suffix for angleModulus': function () {
+    });
+    it("Check suffix for angleModulus", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.setting = 'angleModulus';
         expect(vm.suffix).to.equal('°');
-    },
-    'Check getter of currentProperty property': function () {
+    });
+    it("Check getter of currentProperty property", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.key = 1;
         vm.constructionModel = {planarLength: 20};
         vm.setting = 'planarLength';
 
         expect(vm.currentProperty).to.equal(20);
-    },
-    'Check setter of currentProperty property': function () {
+    });
+    it("Check setter of currentProperty property", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.key = 1;
         vm.constructionModel = {planarLength: 20};
@@ -73,16 +70,16 @@ registerSuite({
         vm.currentProperty++;
 
         expect(vm.constructionModel.planarLength).to.equal(21);
-    },
-    'Check getter of active property': function () {
+    });
+    it("Check getter of active property", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.key = 1;
         vm.constructionModel = {use: {planarLength: true}};
         vm.setting = 'planarLength';
 
         expect(vm.active).to.equal(true);
-    },
-    'Check setter of active property': function () {
+    });
+    it("Check setter of active property", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.key = 1;
         vm.constructionModel = {use: {planarLength: false}};
@@ -94,8 +91,8 @@ registerSuite({
         vm.active = true;
 
         expect(vm.constructionModel.use.planarLength).to.equal(true);
-    },
-    'Check increment & decrement': function () {
+    });
+    it("Check increment & decrement", function () {
         const vm = new Vue(ConstructionCheckbox);
         vm.key = 1;
         vm.constructionModel = {};
@@ -110,6 +107,5 @@ registerSuite({
         vm.decrement();
         expect(vm.currentProperty).to.equal(9);
         expect(vm.key).to.equal(4);
-
-    }
+    });
 });

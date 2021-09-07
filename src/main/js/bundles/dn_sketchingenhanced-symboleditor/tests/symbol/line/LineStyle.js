@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import expect from 'intern/chai!expect';
+import { expect } from "chai";
 import module from 'module';
 import LineStyle from '../../../components/symbol/line/LineStyle.vue';
-import {describe, it} from 'intern!bdd';
 import Vue from 'apprt-vue/Vue';
 
 const _createComponent = () => new Vue(LineStyle);

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import expect from 'intern/chai!expect';
+import { expect } from "chai";
 import module from 'module';
 import FillStyle from '../../../components/symbol/polygon/FillStyle.vue';
-import {describe, it} from 'intern!bdd';
 import Vue from 'apprt-vue/Vue';
 
 const _createComponent = () => new Vue(FillStyle);

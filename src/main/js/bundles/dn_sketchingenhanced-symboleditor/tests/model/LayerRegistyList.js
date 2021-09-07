@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import expect from 'intern/chai!expect';
+import { expect } from "chai";
 import module from 'module';
 import LayerRegistryList from '../../model/LayerRegistryList';
 import LayerListItem from '../../model/LayerRegistryItem';
-import {describe, it} from 'intern!bdd';
 
 const _createComponent = () => new LayerRegistryList();
 const _createMockItem = (id, source) => {
@@ -25,7 +24,6 @@ const _createMockItem = (id, source) => {
     item.settings = {id, source};
     return item;
 };
-
 
 describe(module.id, () => {
 

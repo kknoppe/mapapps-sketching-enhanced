@@ -13,57 +13,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import expect from 'intern/chai!expect';
+import {expect} from "chai";
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
 import SimpleEditorLine from '../components/symbol/line/SimpleEditorLine.vue';
 
-registerSuite({
-    name: module.id,
-    'SimpleEditorPolygon Vue Component': function () {
+describe(module.id, function () {
+    it("SimpleEditorPolygon Vue Component", function () {
         expect(new Vue(SimpleEditorLine)).to.be.an('object');
-    },
-    'lineStyles is an array which length is equal 6': function () {
+    });
+    it("lineStyles is an array which length is equal 6", function () {
         const vm = new Vue(SimpleEditorLine);
         expect(vm.lineStyles).to.be.an('array');
         expect(vm.lineStyles.length).to.equal(6);
-    },
-    'lineStyle is type string': function () {
+    });
+    it("lineStyle is type string", function () {
         const vm = new Vue(SimpleEditorLine);
         expect(vm.lineStyle).to.be.an('string');
-    },
-    'lineColorValue is a string and is equal to #262626 if lineColor is equal to #262626': function () {
+    });
+    it("lineColorValue is a string and is equal to #262626 if lineColor is equal to #262626", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.lineColor = '#262626';
         expect(vm.lineColorValue).to.be.an('string');
         expect(vm.lineColorValue).to.equal('#262626');
-    },
-    'lineWeightValue is a string and is equal to 7 if lineWeight is equal to 7': function () {
+    });
+    it("lineWeightValue is a string and is equal to 7 if lineWeight is equal to 7", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.lineWeight = 7;
         expect(vm.lineWeightValue).to.be.an('number');
         expect(vm.lineWeightValue).to.equal(7);
-    },
-    'selectedLineStyle is a string and is equal to long-dash-dot-dot if lineStyle is equal to long-dash-dot-dot': function () {
+    });
+    it("selectedLineStyle is a string and is equal to long-dash-dot-dot if lineStyle is equal to long-dash-dot-dot", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.lineStyle = 'long-dash-dot-dot';
         expect(vm.selectedLineStyle).to.be.an('string');
         expect(vm.selectedLineStyle).to.equal('long-dash-dot-dot');
-    },
-    'lineStyle change after selected line style changes': function () {
+    });
+    it("lineStyle change after selected line style changes", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.selectedLineStyle = 'dash';
         expect(vm.lineStyle).to.equal(vm.selectedLineStyle);
-    },
-    'lineColor changes after selected lineColorValue changes': function () {
+    });
+    it("lineColor changes after selected lineColorValue changes", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.lineColorValue = '#92D050';
         expect(vm.lineColor).to.equal(vm.lineColorValue);
-    },
-    'lineWeight changes after selected lineWeightValue changes': function () {
+    });
+    it("lineWeight changes after selected lineWeightValue changes", function () {
         const vm = new Vue(SimpleEditorLine);
         vm.lineWeightValue = 1;
         expect(vm.lineWeight).to.equal(vm.lineWeightValue);
-    },
+    });
 });

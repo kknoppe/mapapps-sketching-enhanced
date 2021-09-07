@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import assert from 'intern/chai!assert';
-import expect from 'intern/chai!expect';
-import module from 'module';
+import {assert, expect} from "chai";
+import module from "module";
 import MeasurementController from '../MeasurementController';
 import * as geoEngine from 'esri/geometry/geometryEngine';
 import Polyline from 'esri/geometry/Polyline';
@@ -24,7 +22,7 @@ import Polygon from 'esri/geometry/Polygon';
 
 const controller = new MeasurementController()
 controller._properties = {
-    unitAbbreviationMapping : {
+    unitAbbreviationMapping: {
         "meters": "m",
         "kilometers": "km",
         "square-meters": "m²",
@@ -47,12 +45,11 @@ controller._mapWidgetModel = {
     }
 }
 
-registerSuite({
-    name: module.id,
-    'Measurement Controller': function () {
+describe(module.id, function () {
+    it("Measurement Controller", function () {
         assert.ok(controller);
-    },
-    'Calculate length for a short line': function () {
+    });
+    it("Calculate length for a short line", function () {
         controller._model.mDecimal = 1;
         controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
@@ -63,8 +60,8 @@ registerSuite({
         const path = [[0, 0], [0, 20]];
         const length = controller.getLength(new Polyline(path, spatialReference));
         expect(length).to.equal('20 m');
-    },
-    'Calculate length for a long line': function () {
+    });
+    it("Calculate length for a long line", function () {
         controller._model.mDecimal = 1;
         controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
@@ -75,8 +72,8 @@ registerSuite({
         const path = [[0, 0], [0, 2000]];
         const length = controller.getLength(new Polyline(path, spatialReference));
         expect(length).to.equal('2 km');
-    },
-    'Calculate area for a small polygon': function () {
+    });
+    it("Calculate area for a small polygon", function () {
         controller._model.mDecimal = 1;
         controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
@@ -87,8 +84,8 @@ registerSuite({
         const rings = [[0, 0], [0, 2], [1, 2], [1, 0]];
         const area = controller.getArea(new Polygon(rings, spatialReference));
         expect(area).to.equal('2 m²');
-    },
-    'Calculate area for a big polygon': function () {
+    });
+    it("Calculate area for a big polygon", function () {
         controller._model.mDecimal = 1;
         controller._model.kmDecimal = 2;
         controller.geoEngine = geoEngine;
@@ -99,8 +96,8 @@ registerSuite({
         const rings = [[0, 0], [0, 2000], [2000, 2000], [2000, 0]];
         const area = controller.getArea(new Polygon(rings, spatialReference));
         expect(area).to.equal('4 km²');
-    },
-    'get text position': function () {
+    });
+    it("get text position", function () {
         let path = [[0, 0], [0, 20]];
         expect(controller.getTextPosition(path)).to.equal('center');
         path = [[0, 0], [0, -20]];
@@ -113,8 +110,8 @@ registerSuite({
         expect(controller.getTextPosition(path)).to.equal('right');
         path = [[0, 0], [20, 20]];
         expect(controller.getTextPosition(path)).to.equal('left');
-    },
-    'get text y offset': function () {
+    });
+    it("get text y offset", function () {
         let path = [[0, 0], [0, 20]];
         let offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(1);
@@ -136,5 +133,5 @@ registerSuite({
         path = [[0, 0], [20, -20]];
         offset = controller.getYOffset(path);
         expect(offset / Math.abs(offset)).to.equal(-1);
-    },
+    });
 });

@@ -13,43 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import expect from 'intern/chai!expect';
+import {expect} from "chai";
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
-import SimpleSymbolEditor from '../components/symbol/polygon/SimpleEditorPolygon.vue';
+import SimpleEditorPolygon from '../components/symbol/polygon/SimpleEditorPolygon.vue';
 
-registerSuite({
-    name: module.id,
-    'SimpleEditorPolygon Vue Component': function () {
-        expect(new Vue(SimpleSymbolEditor)).to.be.an('object');
-    },
-    'fillStyles is an array which length is 8': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+describe(module.id, function () {
+    it("fillStyles is an array which length is 8", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         expect(vm.fillStyles).to.be.an('array');
         expect(vm.fillStyles.length).to.equal(8);
-    },
-    'lineStyles is an array which legth is equal 6': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+    });
+    it("lineStyles is an array which legth is equal 6", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         expect(vm.lineStyles).to.be.an('array');
         expect(vm.lineStyles.length).to.equal(6);
-    },
-    'lineStyle is type string': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+    });
+    it("lineStyle is type string", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         expect(vm.lineStyle).to.be.an('string');
-    },
-    'fillStyle is type string': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+    });
+    it("fillStyle is type string", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         expect(vm.fillStyle).to.be.an('string');
-    },
-    'selectedFillStyleIndex is type string': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+    });
+    it("selectedFillStyleIndex is type string", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         expect(vm.selectedFillStyleIndex).to.be.an('number');
-    },
-    'colorValue is a string and is equal to #262626 if color is equal to #262626': function () {
-        const vm = new Vue(SimpleSymbolEditor);
+    });
+    it("colorValue is a string and is equal to #262626 if color is equal to #262626", function () {
+        const vm = new Vue(SimpleEditorPolygon);
         vm.color = '#262626';
         expect(vm.colorValue).to.be.an('string');
         expect(vm.colorValue).to.equal('#262626');
-    },
+    });
 });

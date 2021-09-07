@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import expect from 'intern/chai!expect';
+import {expect} from "chai";
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
 import UniqueValueWidget from '../components/symbol/UniqueValueWidget.vue';
 
-registerSuite({
-    name: module.id,
-    'Unique Value Vue Component': function () {
+describe(module.id, function () {
+    it("Unique Value Vue Component", function () {
         expect(new Vue(UniqueValueWidget)).to.be.an('object');
-    },
-    'UniqueValue is type string': function () {
+    });
+    it("UniqueValue is type string", function () {
         const vm = new Vue(UniqueValueWidget);
         expect(vm.uniqueValue).to.be.an('string');
-    },
-    'uniqueValueColor is type string': function () {
+    });
+    it("uniqueValueColor is type string", function () {
         const vm = new Vue(UniqueValueWidget);
         expect(vm.color).to.be.an('string');
-    },
-    'Click on toggle button should return false if it is true after init': function () {
+    });
+    it("Click on toggle button should return false if it is true after init", function () {
         const comp = new Vue(UniqueValueWidget);
         comp.isToggled = true;
         comp.$mount();
         const child = comp.$el.getElementsByClassName('uniqueValueBtn')[0];
         child.click();
         expect(comp.isToggled).to.equal(true);
-    },
+    });
 });

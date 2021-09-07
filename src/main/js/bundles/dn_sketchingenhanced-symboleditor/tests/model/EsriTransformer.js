@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import expect from 'intern/chai!expect';
+import { expect } from "chai";
 import module from 'module';
 import EsriTransformer from '../../model/EsriTransformer';
-import {describe, it} from 'intern!bdd';
 import PointSetting from '../../model/PointSetting';
 import PolygonSetting from '../../model/PolygonSetting';
 

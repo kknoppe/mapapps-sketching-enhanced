@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from 'intern!object';
-import expect from 'intern/chai!expect';
+import {expect} from "chai";
 import module from 'module';
 import Vue from 'apprt-vue/Vue';
 import ColorGradient from '../components/symbol/ColorGradient.vue';
 
-registerSuite({
-    name: module.id,
-    'Color Gradient Vue Component': function () {
+describe(module.id, function () {
+    it("Color Gradient Vue Component", function () {
         expect(new Vue(ColorGradient)).to.be.an('object');
-    },
-
-    'colorPathList is an array and it has 2 items': function () {
+    });
+    it("colorPathList is an array and it has 2 items", function () {
         const vm = new Vue(ColorGradient);
         expect(vm.colorPathList).to.an('array');
         expect(vm.colorPathList.length).to.deep.equal(2);
-    },
-
-    'selectedColorPath is equal to 0': function () {
+    });
+    it("selectedColorPath is equal to 0", function () {
         const vm = new Vue(ColorGradient);
         expect(vm.selectedColorGradient).to.deep.equal(0);
-    },
+    });
 });
