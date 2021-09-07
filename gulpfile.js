@@ -19,50 +19,34 @@ const mapapps = require('ct-mapapps-gulp-js');
 mapapps.registerTasks({
     /* A detailed description of available setting is available at https://www.npmjs.com/package/ct-mapapps-gulp-js */
     /* a list of themes inside this project */
-    themes: ["everlasting", "winter", "summer", "spring", "autumn"],
+    themes: [/*"sample-theme"*/],
     /* state that the custom theme will be dependant from map.apps everlasting theme that provides the base styles */
-    hasBaseThemes: false,
+    hasBaseThemes: true,
     /* state that we want to support vuetify components and therefore need the the vuetify core styles*/
     hasVuetify: true,
-    themesSrcLocation: "./src/main/js/bundles/dn_sketchingenhanced-themes-extension",
-    themesDestLocation: "./target/webapp/js/bundles/dn_sketchingenhanced-themes-extension",
-    themeChangeTargets: {
-        "everlasting": ["winter", "summer", "spring", "autumn"]
-    }
+    /*themeChangeTargets: {
+        "vuetify": [
+            "sample_theme"
+        ]
+    }*/
 });
 
 gulp.task("default",
     gulp.series(
         "copy-resources",
         "themes-copy",
-        gulp.parallel("js-transpile", "themes-compile")
+        gulp.parallel(
+            //"js-lint",
+            //"style-lint",
+            "js-transpile",
+            "themes-compile"
+        )
     )
 );
 
 gulp.task("compress",
     gulp.series(
-        "copy-resources",
-        "themes-copy",
-        gulp.parallel(
-            "js-transpile",
-            gulp.series(
-                "themes-compile",
-                "themes-compress"
-            )
-        )
+        "default",
+        "themes-compress"
     )
 );
-
-gulp.task("run-js-tests", function (done) {
-    const initialWait = 10000;
-    setTimeout(() => {
-        const trigger = gulp.series("run-browser-tests");
-        trigger(done);
-    }, initialWait);
-});
-
-gulp.task("skip", function (done) {
-    setTimeout(() => {
-        done();
-    }, 1);
-});
