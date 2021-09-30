@@ -7,6 +7,7 @@ Dieses Bundle erstellt Layout-Widgets, mit denen die Sketching-, Konstruktion- u
 * [dn_sketchingenhanced-styles](#bundle=dn_sketchingenhanced-styles@)
 * [dn_sketchingenhanced-construction](#bundle=dn_sketchingenhanced-construction@)
 * [dn_sketchingenhanced-snappingmanager](#bundle=dn_sketchingenhanced-snappingmanager@)
+* [dn_sketchingenhanced-measurement](#bundle=dn_sketchingenhanced-measurement@)
 
 ## Usage
 
