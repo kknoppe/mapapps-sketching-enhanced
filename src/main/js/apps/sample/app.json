@@ -83,7 +83,7 @@
                 "showLineMeasurementsAtPolylines": true,
                 "showLineMeasurementsAtPolygons": false,
                 "showAngleMeasurementsAtPolylines": false,
-                "enableAngleMeasurement": true,
+                "enableAngleMeasurement": false,
                 "pointSRS": "4326",
                 "pointCoordPlaces": "3",
                 "pointCoordUnitSymbolX": "°E",
