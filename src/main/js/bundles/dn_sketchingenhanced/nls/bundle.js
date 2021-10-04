@@ -106,7 +106,7 @@ module.exports = {
             measurement: {
                 showLineMeasurementsAtPolylines: 'Show length of line elements',
                 showLineMeasurementsAtPolygons: 'Show edge length of polygons',
-                showLineMeasurementsAngle: 'Show angle',
+                showAngleMeasurementsAtPolyline: 'Show angle',
                 coordinates: 'Coordinates: ',
                 coordinateSystem: 'Coordinate System',
                 totalLength: 'Total Length: ',

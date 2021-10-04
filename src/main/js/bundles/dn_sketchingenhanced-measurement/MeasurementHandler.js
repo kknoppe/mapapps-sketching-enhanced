@@ -29,7 +29,7 @@ export default class MeasurementHandler {
         this._model.lineSettings = props.sketch.polylineSymbol;
         this._model.showLineMeasurementsAtPolylines = props.showLineMeasurementsAtPolylines;
         this._model.showLineMeasurementsAtPolygons = props.showLineMeasurementsAtPolygons;
-        this._model.showLineMeasurementsAngle = props.showLineMeasurementsAngle;
+        this._model.showAngleMeasurementsAtPolyline = props.showAngleMeasurementsAtPolyline;
         this._model.enableAngleMeasurement = props.enableAngleMeasurement;
 
         this._measurementDisabledTools = props.disabledMeasurementTools;

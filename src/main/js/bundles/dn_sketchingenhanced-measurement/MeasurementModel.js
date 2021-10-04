@@ -25,7 +25,7 @@ properties(MeasurementModel, {
     viewModel: {},
     showLineMeasurementsAtPolylines: false,
     showLineMeasurementsAtPolygons: false,
-    showLineMeasurementsAngle: false,
+    showAngleMeasurementsAtPolyline: false,
     enableAngleMeasurement: false,
     lineMeasurementTimeout: 100, //default
     mDecimal: 2, //default

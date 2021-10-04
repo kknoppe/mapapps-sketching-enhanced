@@ -33,7 +33,7 @@
                 </v-switch>
                 <v-switch class="pa-1 ma-0 measurementCheckboxes" color="primary"
                           v-show="measurements.polylineEnabled && measurements.enableAngleMeasurement"
-                          :label="i18n.measurement.showLineMeasurementsAngle"
+                          :label="i18n.measurement.showAngleMeasurementsAtPolyline"
                           v-model="polylineAngleMeasurentEnabled"
                           hide-details>
                 </v-switch>
@@ -161,11 +161,11 @@ export default {
         },
         polylineAngleMeasurentEnabled: {
             get() {
-                return this.measurements.showLineMeasurementsAngle;
+                return this.measurements.showAngleMeasurementsAtPolyline;
             },
             set(val) {
                 const measurements = this.measurements;
-                measurements.showLineMeasurementsAngle = val;
+                measurements.showAngleMeasurementsAtPolyline = val;
                 this.$emit('update:measurements', measurements);
        }
 },

@@ -58,7 +58,7 @@
                 "decimalPlacesKiloMeter": 2,
                 "showLineMeasurementsAtPolylines": true,
                 "showLineMeasurementsAtPolygons": true,
-                "showlineMeasurementsAngle": true,
+                "showAngleMeasurementsAtPolyline": true,
                 "enableAngleMeasurement": false,
                 "pointSRS": "4326",
                 "systemsWithUnits": ["4326"],
