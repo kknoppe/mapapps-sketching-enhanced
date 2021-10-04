@@ -40,7 +40,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
             "decimalPlacesKiloMeter": 2,
             "showLineMeasurementsAtPolylines": true,
             "showLineMeasurementsAtPolygons": false,
-            "showAngleMeasurementsAtPolyline": false,
+            "showAngleMeasurementsAtPolylines": false,
             "enableAngleMeasurement": false,
             "pointCoordPlaces": "3",
             "pointCoordUnitSymbolX": "°E",
@@ -114,7 +114,7 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 |decimalPlacesKiloMeter          |Number    |wie im Beispiel |Nachkommastellen für Kilometer-Angaben
 |showLineMeasurementsAtPolylines          |Boolean    |wie im Beispiel |Anzeige der Messwerte an Polylinien (an/aus)
 |showLineMeasurementsAtPolygons          |Boolean    |wie im Beispiel |Anzeige der Messwerte von Linien an Polygonen (an/aus)
-|showAngleMeasurementsAtPolyline               | Boolean | wie im Beispiel| Anzeige von Winkelmessungen zwischen Polylinien-Teilen (an/aus)
+|showAngleMeasurementsAtPolylines               | Boolean | wie im Beispiel| Anzeige von Winkelmessungen zwischen Polylinien-Teilen (an/aus)
 |enableAngleMeasurement                 | Boolean | wie im Beispiel | (De-)Aktiviert die Winkelmessfunktion für Polylinien
 |pointCoordPlaces          |Number    |wie im Beispiel |Nachkommastellen der Koordinatenanzeige
 |pointCoordUnitSymbolX          |String    |wie im Beispiel |x-Label für Koordinatenanzeige

@@ -41,6 +41,9 @@ export default class PolylineMeasurementHandler {
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
                 this._addLineMeasurementsToPolylines(evt)
             }
+            if (this._model.vertexAdded && this._model.showAngleMeasurementsAtPolylines) {
+
+            }
             if (this._model.cursorUpdate){
                 this._checkIfPositionHasChanged(evt);
             }
@@ -163,7 +166,7 @@ export default class PolylineMeasurementHandler {
 
         // if enabled also calculate angles between lines and display them as textsymbol
         const geometryToTransform = viewModel.createGraphic.geometry;
-        if (geometryToTransform.type === "polyline" && this._model.showAngleMeasurementsAtPolyline) {
+        if (geometryToTransform.type === "polyline" && this._model.showAngleMeasurementsAtPolylines) {
             this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
                 const path = transformedGeometry.paths[0];
                 if (path.length >= 3) {

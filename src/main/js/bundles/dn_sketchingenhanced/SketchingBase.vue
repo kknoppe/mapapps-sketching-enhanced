@@ -139,7 +139,7 @@ export default {
             measurementEnabled: false,
             showLineMeasurementsAtPolylines: false,
             showLineMeasurementsAtPolygons: false,
-            showAngleMeasurementsAtPolyline: false,
+            showAngleMeasurementsAtPolylines: false,
             enableAngleMeasurement: false,
             showKeepMeasurements: true,
 
@@ -250,7 +250,7 @@ export default {
                 return {
                     showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
                     showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
-                    showAngleMeasurementsAtPolyline: this.showAngleMeasurementsAtPolyline,
+                    showAngleMeasurementsAtPolylines: this.showAngleMeasurementsAtPolylines,
                     enableAngleMeasurement: this.enableAngleMeasurement,
                     angleUnit: this.angleUnit,
                     showKeepMeasurements: this.showKeepMeasurements,
@@ -271,7 +271,7 @@ export default {
             set(measurement) {
                 this.showLineMeasurementsAtPolylines = measurement.showLineMeasurementsAtPolylines;
                 this.showLineMeasurementsAtPolygons =  measurement.showLineMeasurementsAtPolygons;
-                this.showAngleMeasurementsAtPolyline = measurement.showAngleMeasurementsAtPolyline;
+                this.showAngleMeasurementsAtPolylines = measurement.showAngleMeasurementsAtPolylines;
                 this.enableAngleMeasurement = measurement.enableAngleMeasurement;
                 this.angleUnit = measurement.angleUnit;
             }
