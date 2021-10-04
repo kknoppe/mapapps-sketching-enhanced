@@ -37,13 +37,25 @@ export default class PolylineMeasurementHandler {
         this.controller.setGraphicAttributes(evt,"showLineMeasurementsAtPolylines");
         if (polylineToolActive && evt.state === 'active'){
 
-            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines){
+            // Case: Show both kinds of measurements
+            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && this._model.showAngleMeasurementsAtPolylines){
+                console.info("both")
+                this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
+                this._addAngleTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
+                this._addLineMeasurementsToPolylines(evt)
+            }
+            // Case: Show length but no angle measurements
+            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && !this._model.showAngleMeasurementsAtPolylines){
+                console.info("l")
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
                 this._addLineMeasurementsToPolylines(evt)
             }
-            if (this._model.vertexAdded && this._model.showAngleMeasurementsAtPolylines) {
-
+            // Case: Show angles but no length measurements
+            if (this._model.vertexAdded && this._model.showAngleMeasurementsAtPolylines && !this._model.showLineMeasurementsAtPolylines) {
+                console.info("a")
+                this._addAngleTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
             }
+
             if (this._model.cursorUpdate){
                 this._checkIfPositionHasChanged(evt);
             }
@@ -164,30 +176,31 @@ export default class PolylineMeasurementHandler {
         evt.graphic.setAttribute("id",id)
         const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
 
-        // if enabled also calculate angles between lines and display them as textsymbol
-        const geometryToTransform = viewModel.createGraphic.geometry;
-        if (geometryToTransform.type === "polyline" && this._model.showAngleMeasurementsAtPolylines) {
-            this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
-                const path = transformedGeometry.paths[0];
-                if (path.length >= 3) {
-                    const p3 = new Point(path[path.length - 1]);
-                    const p2 = new Point(path[path.length - 2]);
-                    const p1 = new Point(path[path.length - 3]);
-                    const orgPath = viewModel.createGraphic.geometry.paths[0];
-                    const pointCoordinates = orgPath[orgPath.length - 2]
-                    const point = new Point({
-                        spatialReference: viewModel.createGraphic.geometry.spatialReference,
-                        x: pointCoordinates[0],
-                        y: pointCoordinates[1]
-                    })
-                    this._calculateAngleAndShowResults(p2, p3, p1, point);
-                }
-            })
-        }
-
         // add this graphic to measurement layer
         viewModel.layer.add(graphic);
         this._model._lastVertex = newVertex;
+    }
+
+    _addAngleTextForPolyline(){
+        const viewModel = this.viewModel;
+        const geometryToTransform = viewModel.createGraphic.geometry;
+
+        this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
+            const path = transformedGeometry.paths[0];
+            if (path.length >= 3) {
+                const p3 = new Point(path[path.length - 1]);
+                const p2 = new Point(path[path.length - 2]);
+                const p1 = new Point(path[path.length - 3]);
+                const orgPath = viewModel.createGraphic.geometry.paths[0];
+                const pointCoordinates = orgPath[orgPath.length - 2]
+                const point = new Point({
+                    spatialReference: viewModel.createGraphic.geometry.spatialReference,
+                    x: pointCoordinates[0],
+                    y: pointCoordinates[1]
+                })
+                this._calculateAngleAndShowResults(p2, p3, p1, point);
+            }
+        })
     }
 
     /*
