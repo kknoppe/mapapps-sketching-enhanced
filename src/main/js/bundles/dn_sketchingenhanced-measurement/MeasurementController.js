@@ -18,10 +18,12 @@ import * as geoEngine from 'esri/geometry/geometryEngine';
 import TextSymbol from "esri/symbols/TextSymbol";
 import Graphic from "esri/Graphic";
 import i18n from "./nls/bundle";
+import ct_geometry from "ct/mapping/geometry";
+import Point from "esri/geometry/Point";
 
 export default class MeasurementHandler {
 
-    activate(){
+    activate() {
         this.i18n = this._i18n.get();
     }
 
@@ -35,14 +37,14 @@ export default class MeasurementHandler {
     getArea(geometry) {
         const locale = this.i18n.locale;
         let unit = this._model.areaUnit;
-        if (unit !== 'auto'){
-            return `${this.getAreaNumeric(geometry,unit).toLocaleString(this.i18n.locale)} ${this._getUnitAbbreviation(unit)}`
+        if (unit !== 'auto') {
+            return `${this.getAreaNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this._getUnitAbbreviation(unit)}`
         } else {
-            const squareMeters = this.getAreaNumeric(geometry,'square-meters');
+            const squareMeters = this.getAreaNumeric(geometry, 'square-meters');
             const useKms = squareMeters > 1000000;
-            if (useKms){
+            if (useKms) {
                 const places = this._properties.decimalPlacesKiloMeter;
-                const area = this.getAreaNumeric(geometry,'square-kilometers').toFixed(places || 2);
+                const area = this.getAreaNumeric(geometry, 'square-kilometers').toFixed(places || 2);
                 return `${parseFloat(area).toLocaleString(locale)} km²`
             } else {
                 const places = this._properties.decimalPlacesMeter;
@@ -58,9 +60,9 @@ export default class MeasurementHandler {
      * @returns {string}
      * @private
      */
-    getAreaString(area){
+    getAreaString(area) {
         let unit = this._model.areaUnit;
-        if (unit !== 'auto'){
+        if (unit !== 'auto') {
             return `${area.toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`;
         } else {
             return area > 1000000 ?
@@ -75,7 +77,7 @@ export default class MeasurementHandler {
      * @returns {number}
      * @private
      */
-    getAreaNumeric(geometry,unit) {
+    getAreaNumeric(geometry, unit) {
         if (unit === 'auto') unit = null;
         let area = (this.getMapArea(geometry, unit || 'square-meters') * Math.pow(10, this._model.mDecimal)) / Math.pow(10, this._model.mDecimal);
         return +area;
@@ -87,9 +89,9 @@ export default class MeasurementHandler {
      * @returns {number}
      * @private
      */
-    getMapArea(geometry,unit) {
+    getMapArea(geometry, unit) {
         const srs = this._model.spatialReference;
-        if (srs.isWebMercator || srs.isWGS84){
+        if (srs.isWebMercator || srs.isWGS84) {
             return geoEngine.geodesicArea(geometry, unit);
         } else {
             return geoEngine.planarArea(geometry, unit);
@@ -107,14 +109,14 @@ export default class MeasurementHandler {
     getLength(geometry) {
         const locale = this.i18n.locale;
         let unit = this._model.lengthUnit;
-        if (unit !== 'auto'){
-            return `${this.getLengthNumeric(geometry,unit).toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
+        if (unit !== 'auto') {
+            return `${this.getLengthNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
         } else {
-            let meters = this.getLengthNumeric(geometry,'meters');
+            let meters = this.getLengthNumeric(geometry, 'meters');
             const useKms = meters > 1000;
-            if (useKms){
+            if (useKms) {
                 const places = this._properties.decimalPlacesKiloMeter;
-                let segment = this.lastLengthSegment = this.getLengthNumeric(geometry,'kilometers');
+                let segment = this.lastLengthSegment = this.getLengthNumeric(geometry, 'kilometers');
                 let length = segment.toFixed(places || 2)
                 return `${parseFloat(length).toLocaleString(locale)} km`;
             } else {
@@ -132,9 +134,9 @@ export default class MeasurementHandler {
      * @returns {string}
      * @private
      */
-    getLengthString(length){
+    getLengthString(length) {
         let unit = this._model.lengthUnit;
-        if (unit !== 'auto'){
+        if (unit !== 'auto') {
             return `${length.toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
         } else {
             return length > 1000 ? `${((length / 1000) * Math.pow(10, this._model.kmDecimal) / Math.pow(10, this._model.kmDecimal)).toLocaleString(this.i18n.locale)} km` :
@@ -148,7 +150,7 @@ export default class MeasurementHandler {
      * @returns returns a number representing the previous laid vector in meters
      * @private
      */
-    getLastSegmentLength(evt){
+    getLastSegmentLength(evt) {
         // this is to get the length of the set new segment
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
@@ -156,7 +158,7 @@ export default class MeasurementHandler {
         const lastPath = vertices[0].slice(vertices[0].length - 2)
         const spatialReference = this._model.spatialReference;
         const geometry = new Polyline(lastPath, spatialReference);
-        return this.getLengthNumeric(geometry,this._model.lengthUnit)
+        return this.getLengthNumeric(geometry, this._model.lengthUnit)
     }
 
     /*
@@ -165,7 +167,7 @@ export default class MeasurementHandler {
      * @returns {number}
      * @private
      */
-    getLengthNumeric(geometry,unit) {
+    getLengthNumeric(geometry, unit) {
         if (unit === 'auto') unit = null;
         let length = (this.getMapLength(geometry, unit || 'meters') * Math.pow(10, this._model.mDecimal)) / Math.pow(10, this._model.mDecimal);
         return +length;
@@ -177,9 +179,9 @@ export default class MeasurementHandler {
      * @returns {number}
      * @private
      */
-    getMapLength(geometry,unit) {
+    getMapLength(geometry, unit) {
         const srs = this._model.spatialReference;
-        if (srs.isWebMercator || srs.isWGS84){
+        if (srs.isWebMercator || srs.isWGS84) {
             return geoEngine.geodesicLength(geometry, unit);
         } else {
             return geoEngine.planarLength(geometry, unit);
@@ -200,8 +202,8 @@ export default class MeasurementHandler {
         return (m > 2 || m < -2) ? 'center' : textPosition;
     }
 
-    getCenterOfPoint(g){
-        if (g.extent && g.extent.center){
+    getCenterOfPoint(g) {
+        if (g.extent && g.extent.center) {
             return g.extent.center
         } else {
             return {
@@ -223,7 +225,7 @@ export default class MeasurementHandler {
         return (m < 1 && m > -1) ? 0 : yOffset;
     }
 
-    getUnitAbbreviation(unit){
+    getUnitAbbreviation(unit) {
         const mapping = this._properties.unitAbbreviationMapping;
         return mapping[unit];
     }
@@ -238,7 +240,7 @@ export default class MeasurementHandler {
         return (path[path.length - 2][1] - path[path.length - 1][1]) / (path[path.length - 2][0] - path[path.length - 1][0]);
     }
 
-    _getUnitAbbreviation(unit){
+    _getUnitAbbreviation(unit) {
         const mapping = this._properties.unitAbbreviationMapping;
         return mapping[unit];
     }
@@ -250,13 +252,13 @@ export default class MeasurementHandler {
      */
     getCoordinates(evt) {
         if (evt && evt.tool === 'point') {
-            if (evt.graphic){
+            if (evt.graphic) {
                 // get the coordinates from the graphic
                 return this.getCenterOfPoint(evt.graphic.geometry);
             } else {
                 return evt;
             }
-        } else if (evt && evt.toolEventInfo){
+        } else if (evt && evt.toolEventInfo) {
             return evt.toolEventInfo.added || evt.toolEventInfo.coordinates
         } else {
             return null;
@@ -289,18 +291,134 @@ export default class MeasurementHandler {
             temporary: this._model.cursorUpdate
         });
         const graphic = new Graphic(pnt, textSymbol);
-        if (typeof id === "string"){
-            graphic.setAttribute("id",id);
+        if (typeof id === "string") {
+            graphic.setAttribute("id", id);
         } else {
-            graphic.setAttribute("id",`measurement-${id}`);
+            graphic.setAttribute("id", `measurement-${id}`);
         }
-        graphic.setAttribute("type",graphic.symbol.type);
+        graphic.setAttribute("type", graphic.symbol.type);
         return graphic;
+    }
+
+    /*
+     * create text symbol with line length on cursor moves
+     * @param checkedPath: path consisting of to points which define the line
+     * @param spatialReference: spatial reference of the maps view
+     * @param id: uid of the sketched polygon
+     */
+    createAngleTextCursorUpdate(angleText, quadrantsString, anglePoint, spatialReference, id) {
+        let resultStringWithUnit;
+        if (this._model.angleUnit === this.i18n.ui.angleUnit.unit1) {
+            resultStringWithUnit = angleText + " °"
+        } else {
+            let number = parseInt(angleText);
+            number = number / 350 * 400;
+            resultStringWithUnit = number.toFixed(0) + " gon";
+        }
+        const textSymbol = new TextSymbol({
+            text: resultStringWithUnit,
+            flag: "measurementText",
+            color: this._model.textSettings.color,
+            id: `measurement-${id}`,
+            font: this._model.textSettings.font,
+            haloColor: this._model.textSettings.haloColor,
+            haloSize: this._model.textSettings.haloSize,
+            temporary: this._model.cursorUpdate,
+            group: this._model.sketchGroup
+        });
+
+        const point = this._calcPointInQuadrant(quadrantsString, anglePoint, spatialReference);
+        const graphic = new Graphic(point, textSymbol);
+
+        if (typeof id === "string") {
+            graphic.setAttribute("id", id);
+        } else {
+            graphic.setAttribute("id", `measurement-${id}`);
+        }
+        graphic.setAttribute("type", graphic.symbol.type);
+        return graphic;
+    }
+
+    _calcPointInQuadrant(quadrantsString, anglePoint, spatialReference) {
+        let manipulateX = 0;
+        let manipulateY = 0;
+        const pixelDistance = 25; // pixel
+
+        // calc the distance
+        const mapPointNew = this._calcGeoPointForPixelDistance(anglePoint, pixelDistance, pixelDistance);
+        const line = new Polyline({
+            spatialReference: spatialReference
+        });
+        line.addPath([anglePoint, mapPointNew])
+        // get distance between p1 and the new mapPoint
+        const geomDistance = geoEngine.planarLength(line);
+
+
+        switch (quadrantsString) {
+            case '1 1':
+            case '4 2':
+                manipulateX -= geomDistance;
+                manipulateY -= geomDistance;
+                break;
+            case '2 1':
+                // angle must be <= 180°
+                break;
+            case '4 1':
+                manipulateY -= geomDistance;
+                break;
+            case '1 2':
+                manipulateX -= geomDistance;
+                break;
+            case '2 2':
+            case '1 3':
+                manipulateX -= geomDistance;
+                manipulateY += geomDistance;
+                break;
+            case '3 2':
+                // angle must be <= 180°
+                break;
+            case '2 3':
+                manipulateY += geomDistance;
+                break;
+            case '3 3':
+            case '2 4':
+                manipulateX += geomDistance;
+                manipulateY += geomDistance;
+                break;
+            case '4 3':
+                // angle must be <= 180°
+                break;
+            case '1 4':
+                // angle must be <= 180°
+                break;
+            case '3 4':
+                manipulateX += geomDistance;
+                break;
+            case '4 4':
+            case '3 1':
+                manipulateX += geomDistance;
+                manipulateY -= geomDistance;
+                break;
+            default:
+                console.warn("error");
+                break;
+        }
+        return ct_geometry.createPoint(anglePoint.x + manipulateX, anglePoint.y + manipulateY, spatialReference);
+    }
+
+    _calcGeoPointForPixelDistance(srcPoint, distanceInPxX, distanceInpxY) {
+        this.mapWidgetModel = this._model._mapWidgetModel;
+
+        const screenPointOfP1 = this.mapWidgetModel.view.toScreen(srcPoint);
+        const newPoint = this.mapWidgetModel.view.toMap({
+            x: screenPointOfP1.x + distanceInPxX,
+            y: screenPointOfP1.y + distanceInpxY
+        });
+        return new Point(newPoint, this.mapWidgetModel.spatialReference);
     }
 
     removeGraphicsById(id) {
         const gs = this.viewModel.layer.graphics.items.filter(graphic => {
-            const type = graphic.getAttribute("type");
             const textGraphicId = graphic.getAttribute("id");
             if (textGraphicId) {
                 return textGraphicId === id;
@@ -330,28 +448,29 @@ export default class MeasurementHandler {
             const type = g.getAttribute("type");
             const textGraphicId = g.getAttribute("id");
             const temporary = g.symbol?.temporary;
-            if (textGraphicId){
+            if (textGraphicId) {
                 return g.getAttribute("id") === id && type && type === "text" && temporary;
             }
         });
         viewModel.layer.removeMany(gs);
     }
 
-    stringIsDuplicate(text){
+    stringIsDuplicate(text) {
         const gs = this.viewModel.layer.graphics.items.filter(graphic => {
-            if (graphic.symbol){
-                return graphic.symbol.text === text
+            if (graphic.symbol) {
+                return graphic.symbol.text === text;
             }
         });
-        return gs.length > 0
+        return gs.length > 0;
     }
 
-    setGraphicAttributes(evt,showLinesAttr){
+    setGraphicAttributes(evt, showLinesAttr) {
         if (!evt.graphic.getAttribute("id")) {
-            evt.graphic.setAttribute("measurementEnabled",this._model.measurementEnabled);
-            const showLines = (evt.tool === 'triangle' || evt.tool === 'rectangle') ? false : this._model[showLinesAttr];
-            evt.graphic.setAttribute(showLinesAttr,showLines);
-            evt.graphic.setAttribute("id",`measurement-${evt.graphic.uid}`);
+            evt.graphic.setAttribute("measurementEnabled", this._model.measurementEnabled);
+            const showLines = (evt.tool === 'triangle' || evt.tool === 'rectangle') ? false
+                : this._model[showLinesAttr];
+            evt.graphic.setAttribute(showLinesAttr, showLines);
+            evt.graphic.setAttribute("id", `measurement-${evt.graphic.uid}`);
         }
     }
 
@@ -360,12 +479,12 @@ export default class MeasurementHandler {
      * @param evt from mouse cursor movement
      * @private
      */
-    showActiveResultsInTab(evt){
+    showActiveResultsInTab(evt) {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
         let lastSegment, currentArea;
-        switch(activeTool){
+        switch (activeTool) {
             case("drawpolylinetool"):
             case ("drawfreehandpolylinetool"):
                 lastSegment = this.measurements.segmentLength = this.getLastSegmentLength(evt);
@@ -396,14 +515,14 @@ export default class MeasurementHandler {
      * @param evt after shape drawn (click)
      * @private
      */
-    showCompleteResultsInTab(evt){
+    showCompleteResultsInTab(evt) {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
         const lastSegment = this.getLastSegmentLength(evt);
         this.measurements.totalLength = this.measurements.totalLength + lastSegment;
         const currentArea = this.measurements.currentArea;
-        switch(activeTool){
+        switch (activeTool) {
             case("drawpolylinetool"):
             case("drawfreehandpolylinetool"):
                 this._model.currentLength = this.getLengthString(0);
@@ -434,7 +553,7 @@ export default class MeasurementHandler {
      * @param none
      * @public
      */
-    resetMeasurementResults(){
+    resetMeasurementResults() {
         this.measurements = {
             totalLength: 0,
             segmentLength: 0,

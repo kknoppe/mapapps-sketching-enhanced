@@ -15,14 +15,11 @@
  */
 
 import Point from "esri/geometry/Point";
-import Polyline from 'esri/geometry/Polyline';
 import TextSymbol from "esri/symbols/TextSymbol";
 import Graphic from "esri/Graphic";
-import ct_geometry from "ct/mapping/geometry";
-import * as geoEngine from 'esri/geometry/geometryEngine';
 
 export default class PolylineMeasurementHandler {
-    constructor(args){
+    constructor(args) {
         this._properties = args._properties;
         this.viewModel = args.viewModel;
         this._model = args._model;
@@ -32,62 +29,95 @@ export default class PolylineMeasurementHandler {
         this.sketchGroup = 0;
     }
 
-    _getMeasurements(evt){
+    _getMeasurements(evt) {
         const polylineToolActive = evt.activeTool && evt.activeTool === 'drawpolylinetool';
-        this.controller.setGraphicAttributes(evt,"showLineMeasurementsAtPolylines");
-        if (polylineToolActive && evt.state === 'active'){
+        this.controller.setGraphicAttributes(evt, "showLineMeasurementsAtPolylines");
+        this.controller.setGraphicAttributes(evt, "showAngleMeasurementsAtPolylines");
+
+        if (polylineToolActive && evt.state === 'active') {
+
+            const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+            const graphic = update ? evt.graphics[0] : evt.graphic;
+            const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+            this.controller.removeTextGraphicsById(id);
 
             // Case: Show both kinds of measurements
-            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && this._model.showAngleMeasurementsAtPolylines){
+            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && this._model.showAngleMeasurementsAtPolylines) {
                 console.info("both")
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
-                this._addAngleTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
+                this._addAngleMeasurementForPolylines(evt);
                 this._addLineMeasurementsToPolylines(evt)
+
+                if (this._model.cursorUpdate) {
+                    this._checkIfPositionHasChanged(evt);
+                }
             }
             // Case: Show length but no angle measurements
-            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && !this._model.showAngleMeasurementsAtPolylines){
+            if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && !this._model.showAngleMeasurementsAtPolylines) {
                 console.info("l")
                 this._addTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
-                this._addLineMeasurementsToPolylines(evt)
+                this._addLineMeasurementsToPolylines(evt);
+
+                if (this._model.cursorUpdate) {
+                    this._checkIfPositionHasChanged(evt);
+                }
             }
             // Case: Show angles but no length measurements
             if (this._model.vertexAdded && this._model.showAngleMeasurementsAtPolylines && !this._model.showLineMeasurementsAtPolylines) {
                 console.info("a")
-                this._addAngleTextForPolyline(evt, evt.graphic.geometry.paths[0][0]);
-            }
-
-            if (this._model.cursorUpdate){
-                this._checkIfPositionHasChanged(evt);
+                this._addAngleMeasurementForPolylines(evt);
             }
         }
-        if (polylineToolActive && evt.state === 'complete'){
+        if (polylineToolActive && evt.state === 'complete') {
             this.controller.removeTemporaryMeasurements(evt);
             this._calculateTotalLineMeasurement(evt);
         }
     }
 
-    _updateMeasurements(evt){
+    _updateMeasurements(evt) {
         if (evt.graphics[0].getAttribute('measurementEnabled') === true || this._model.measurementEnabled) {
-            if (!evt.graphics[0].attributes?.id){
+            if (!evt.graphics[0].attributes?.id) {
                 return;
             }
             const redoUndo = evt.type === 'redo' || evt.type === 'undo';
-            this._showLineMeasurementsOnPolylines(evt) && this._addLineMeasurementsToPolylines(evt);
-            if (!redoUndo){
+            // if (this._showLineMeasurementsOnPolylines(evt)) {
+            //     this._addLineMeasurementsToPolylines(evt);
+            // }
+            // if (this._showAngleMeasurementsOnPolylines(evt)) {
+            //     this._addAngleMeasurementForPolylines(evt);
+            // }
+            if (!redoUndo) {
                 this._calculateTotalLineMeasurement(evt);
                 this._addLineMeasurementsToPolylines(evt);
+                this._addAngleMeasurementForPolylines(evt);
             }
             this.controller.showCompleteResultsInTab(evt);
         }
     }
 
-    _showLineMeasurementsOnPolylines(evt){
+    _showLineMeasurementsOnPolylines(evt) {
+        if (evt.state === "complete") {
+            return false;
+        }
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         if (graphic.getAttribute('showLineMeasurementsAtPolylines') !== undefined) {
             return graphic.getAttribute('showLineMeasurementsAtPolylines');
         } else {
             return this._model.showLineMeasurementsAtPolylines;
+        }
+    }
+
+    _showAngleMeasurementsOnPolylines(evt) {
+        if (evt.state === "complete") {
+            return false;
+        }
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        if (graphic.getAttribute('showAngleMeasurementsAtPolylines') !== undefined) {
+            return graphic.getAttribute('showAngleMeasurementsAtPolylines');
+        } else {
+            return this._model.showAngleMeasurementsAtPolylines;
         }
     }
 
@@ -120,7 +150,7 @@ export default class PolylineMeasurementHandler {
         const path = graphic.geometry.paths[0];
         const id = graphic.getAttribute('id') || `measurement-${graphic.uid}`;
         update && this._removeLengthGraphicsById(id)
-        graphic.setAttribute("id",id)
+        graphic.setAttribute("id", id)
         if (path.length < 2) {
             return;
         }
@@ -129,7 +159,7 @@ export default class PolylineMeasurementHandler {
         const lengthString = evt.state === 'complete' ?
             `${this.i18n.totalLength}: ${this.controller.getLength(graphic.geometry)}` :
             `${this.controller.getLength(graphic.geometry)}`
-        if (!this.controller.stringIsDuplicate(lengthString)){
+        if (!this.controller.stringIsDuplicate(lengthString)) {
             const pnt = new Point(path[path.length - 1], spatialReference);
 
             // calculate text position due to last line element
@@ -150,8 +180,8 @@ export default class PolylineMeasurementHandler {
             });
             const textGraphic = new Graphic(pnt, textSymbol);
             const type = evt.state === 'complete' ? "lengthText" : "text"
-            textGraphic.setAttribute("id",id)
-            textGraphic.setAttribute("type",type);
+            textGraphic.setAttribute("id", id)
+            textGraphic.setAttribute("type", type);
             viewModel.layer.add(textGraphic);
         }
     }
@@ -173,7 +203,7 @@ export default class PolylineMeasurementHandler {
         const checkedPath = this._model._lastVertex ? [this._model._lastVertex, newVertex] : [firstPoint, newVertex];
 
         // calculate Distance between last two points and create graphic with textsymbol
-        evt.graphic.setAttribute("id",id)
+        evt.graphic.setAttribute("id", id)
         const graphic = this.controller.createDistanceTextCursorUpdate(checkedPath, spatialReference, id);
 
         // add this graphic to measurement layer
@@ -181,46 +211,18 @@ export default class PolylineMeasurementHandler {
         this._model._lastVertex = newVertex;
     }
 
-    _addAngleTextForPolyline(){
-        const viewModel = this.viewModel;
-        const geometryToTransform = viewModel.createGraphic.geometry;
-
-        this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
-            const path = transformedGeometry.paths[0];
-            if (path.length >= 3) {
-                const p3 = new Point(path[path.length - 1]);
-                const p2 = new Point(path[path.length - 2]);
-                const p1 = new Point(path[path.length - 3]);
-                const orgPath = viewModel.createGraphic.geometry.paths[0];
-                const pointCoordinates = orgPath[orgPath.length - 2]
-                const point = new Point({
-                    spatialReference: viewModel.createGraphic.geometry.spatialReference,
-                    x: pointCoordinates[0],
-                    y: pointCoordinates[1]
-                })
-                this._calculateAngleAndShowResults(p2, p3, p1, point);
-            }
-        })
-    }
-
     /*
      * calculate angles using points
      * @param p1, p2, p3: points used for calulation
-     * @param point: point handed down for localization
      * @private
      */
-    _calculateAngleAndShowResults(p1, p2, p3, point) {
-
-        // calculate quadrant relative to p1
-        p2.quadrant = this._getQuadrant(p2, p1);
-        p3.quadrant = this._getQuadrant(p3, p1);
+    _calculateAngle(p1, p2, p3, quadrantsString) {
 
         // construction of right triangles from p1, p2 and p1, p3
         // calculating angle at p1
         const a = Math.atan((Math.abs(p2.y - p1.y) / Math.abs(p2.x - p1.x))) * 180 / Math.PI;
         const b = Math.atan((Math.abs(p3.y - p1.y) / Math.abs(p3.x - p1.x))) * 180 / Math.PI;
 
-        const quadrantsString = [p2.quadrant, p3.quadrant].join(' ');
         switch (quadrantsString) {
             case '1 1':
                 this._angleButton_meas = (Math.abs(b - a));
@@ -279,9 +281,7 @@ export default class PolylineMeasurementHandler {
                 break;
         }
 
-        const resultString = this._angleButton_meas.toFixed(0).toString();
-        this._renderAngleText(quadrantsString, resultString, point);
-        return resultString;
+        return this._angleButton_meas.toFixed(0).toString();
     }
 
     _getQuadrant(point, relativeTo) {
@@ -295,120 +295,6 @@ export default class PolylineMeasurementHandler {
         if (tempPoint.x <= 0 && tempPoint.y >= 0) return 4;
     }
 
-    _renderAngleText(quadrantsString, resultString, anglePoint) {
-        let resultStringWithUnit;
-        if (this._model.angleUnit === this.i18n.ui.angleUnit.unit1) {
-            resultStringWithUnit = resultString + " °"
-        } else {
-            let number = parseInt(resultString);
-            number = number / 350 * 400;
-            resultStringWithUnit = number.toFixed(0) + " gon";
-        }
-        const textSymbol = this._getTextSymbol(null, false);
-        textSymbol.text = resultStringWithUnit;
-        const point = this._calcPointInQuadrant(quadrantsString, anglePoint);
-
-        const viewModel = this.controller._sketchingHandler.sketchViewModel;
-        const graphic = new Graphic(point, textSymbol);
-        graphic.geometry.spatialReference = viewModel.createGraphic.geometry.spatialReference
-        viewModel.layer.add(graphic);
-    }
-
-    _getTextSymbol(id, temporary) {
-        const nameString = temporary ? 'temporary' : '';
-        this.textSettings = this._properties.sketch.textSymbol;
-
-        return new TextSymbol({
-            flag: "measurementText",
-            color: this.textSettings.color,
-            name: id ? `measurement-${id}` : nameString,
-            font: this.textSettings.font,
-            haloColor: this.textSettings.haloColor,
-            haloSize: this.textSettings.haloSize,
-            group: this.sketchGroup
-        });
-    }
-
-    _calcPointInQuadrant(quadrantsString, anglePoint) {
-        let manipulateX = 0;
-        let manipulateY = 0;
-        const pixelDistance = 25; // pixel
-
-        // calc the distance
-        const viewModel = this.controller._sketchingHandler.sketchViewModel;
-        const ref = viewModel.view.spatialReference;
-        const mapPointNew = this._calcGeoPointForPixelDistance(anglePoint, pixelDistance, pixelDistance);
-        const line = new Polyline({
-            spatialReference: this.mapWidgetModel.spatialReference
-        });
-        line.addPath([anglePoint, mapPointNew])
-        // get distance between p1 and the new mapPoint
-        const geomDistance = geoEngine.planarLength(line);
-
-
-        switch (quadrantsString) {
-            case '1 1':
-            case '4 2':
-                manipulateX -= geomDistance;
-                manipulateY -= geomDistance;
-                break;
-            case '2 1':
-                // angle must be <= 180°
-                break;
-            case '4 1':
-                manipulateY -= geomDistance;
-                break;
-            case '1 2':
-                manipulateX -= geomDistance;
-                break;
-            case '2 2':
-            case '1 3':
-                manipulateX -= geomDistance;
-                manipulateY += geomDistance;
-                break;
-            case '3 2':
-                // angle must be <= 180°
-                break;
-            case '2 3':
-                manipulateY += geomDistance;
-                break;
-            case '3 3':
-            case '2 4':
-                manipulateX += geomDistance;
-                manipulateY += geomDistance;
-                break;
-            case '4 3':
-                // angle must be <= 180°
-                break;
-            case '1 4':
-                // angle must be <= 180°
-                break;
-            case '3 4':
-                manipulateX += geomDistance;
-                break;
-            case '4 4':
-            case '3 1':
-                manipulateX += geomDistance;
-                manipulateY -= geomDistance;
-                break;
-            default:
-                console.warn("error");
-                break;
-        }
-        return ct_geometry.createPoint(anglePoint.x + manipulateX, anglePoint.y + manipulateY, ref);
-    }
-
-    _calcGeoPointForPixelDistance(srcPoint, distanceInPxX, distanceInpxY) {
-        this.mapWidgetModel = this._model._mapWidgetModel
-
-        const screenPointOfP1 = this.mapWidgetModel.view.toScreen(srcPoint);
-        const newPoint = this.mapWidgetModel.view.toMap({
-            x: screenPointOfP1.x + distanceInPxX,
-            y: screenPointOfP1.y + distanceInpxY
-        });
-        return new Point(newPoint, this.mapWidgetModel.spatialReference);
-    }
-
     /*
      * add line measurements to a polyline after reshaping
      * @param evt
@@ -418,8 +304,8 @@ export default class PolylineMeasurementHandler {
         // remove the graphics so they do not stack on one another
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
-        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`
-        this.controller.removeTextGraphicsById(id);
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+
         if (this._showLineMeasurementsOnPolylines(evt)) {
             const spatialReference = this.viewModel.view.spatialReference;
             const paths = graphic.geometry.paths[0];
@@ -432,6 +318,48 @@ export default class PolylineMeasurementHandler {
                     this.viewModel.layer.add(textGraphic);
                 }
             }
+        }
+    }
+
+    _addAngleMeasurementForPolylines(evt) {
+        // remove the graphics so they do not stack on one another
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+
+        // const viewModel = this.viewModel;
+        const geometryToTransform = graphic.geometry;
+        const spatialReference = geometryToTransform.spatialReference;
+
+        if (this._showAngleMeasurementsOnPolylines(evt)) {
+            this.controller._coordinateTransformer.transform(geometryToTransform, 3857).then(transformedGeometry => {
+                const paths = transformedGeometry.paths[0];
+                if (paths.length >= 3) {
+                    for (let i = 2; i < paths.length; i++) {
+                        const p3 = new Point(paths[i]);
+                        const p2 = new Point(paths[i - 1]);
+                        const p1 = new Point(paths[i - 2]);
+
+                        const orgPath = geometryToTransform.paths[0];
+                        const pointCoordinates = orgPath[i - 1];
+                        const point = new Point({
+                            spatialReference: spatialReference,
+                            x: pointCoordinates[0],
+                            y: pointCoordinates[1]
+                        });
+
+                        // calculate quadrant relative to p1
+                        const p2quadrant = this._getQuadrant(p3, p2);
+                        const p3quadrant = this._getQuadrant(p1, p2);
+                        const quadrantsString = [p2quadrant, p3quadrant].join(' ');
+
+                        const angleText = this._calculateAngle(p2, p3, p1, quadrantsString);
+                        const angleGraphic = this.controller.createAngleTextCursorUpdate(
+                            angleText, quadrantsString, point, spatialReference, id);
+                        this.viewModel.layer.add(angleGraphic);
+                    }
+                }
+            });
         }
     }
 }
