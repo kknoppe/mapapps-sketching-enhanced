@@ -35,12 +35,6 @@ export default class PolylineMeasurementHandler {
         this.controller.setGraphicAttributes(evt, "showAngleMeasurementsAtPolylines");
 
         if (polylineToolActive && evt.state === 'active') {
-
-            const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
-            const graphic = update ? evt.graphics[0] : evt.graphic;
-            const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
-            this.controller.removeTextGraphicsById(id);
-
             // Case: Show both kinds of measurements
             if (this._model.vertexAdded && this._model.showLineMeasurementsAtPolylines && this._model.showAngleMeasurementsAtPolylines) {
                 console.info("both")
@@ -71,6 +65,8 @@ export default class PolylineMeasurementHandler {
         if (polylineToolActive && evt.state === 'complete') {
             this.controller.removeTemporaryMeasurements(evt);
             this._calculateTotalLineMeasurement(evt);
+            this._addAngleMeasurementForPolylines(evt);
+            this._addLineMeasurementsToPolylines(evt)
         }
     }
 
@@ -96,9 +92,6 @@ export default class PolylineMeasurementHandler {
     }
 
     _showLineMeasurementsOnPolylines(evt) {
-        if (evt.state === "complete") {
-            return false;
-        }
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         if (graphic.getAttribute('showLineMeasurementsAtPolylines') !== undefined) {
@@ -109,9 +102,6 @@ export default class PolylineMeasurementHandler {
     }
 
     _showAngleMeasurementsOnPolylines(evt) {
-        if (evt.state === "complete") {
-            return false;
-        }
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         if (graphic.getAttribute('showAngleMeasurementsAtPolylines') !== undefined) {
@@ -305,6 +295,7 @@ export default class PolylineMeasurementHandler {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+        this.controller.removeTextGraphicsById(id);
 
         if (this._showLineMeasurementsOnPolylines(evt)) {
             const spatialReference = this.viewModel.view.spatialReference;
@@ -326,6 +317,7 @@ export default class PolylineMeasurementHandler {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+        this.controller.removeTextGraphicsById(id);
 
         // const viewModel = this.viewModel;
         const geometryToTransform = graphic.geometry;
