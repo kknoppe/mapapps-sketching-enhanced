@@ -83,12 +83,12 @@
                 </v-tabs-items>
             </v-tabs>
         </v-layout>
-        <v-footer class="sketchingFooter" absolute>
+        <v-container class="pa-1 sketchingFooter">
             <v-btn @click="showSettings" outlined>
                 <v-icon>icon-cog</v-icon>
                 <span class="pl-2">{{i18n.settings}}</span>
             </v-btn>
-        </v-footer>
+        </v-container>
     </v-container>
 </template>
 
