@@ -306,7 +306,13 @@ export default class MeasurementHandler {
      * @param spatialReference: spatial reference of the maps view
      * @param id: uid of the sketched polygon
      */
-    createAngleTextCursorUpdate(angleText, quadrantsString, anglePoint, spatialReference, id) {
+    createAngleTextCursorUpdate(p1, p2, p3, anglePoint, spatialReference, id) {
+        // calculate quadrant relative to p1
+        const p2quadrant = this._getQuadrant(p2, p1);
+        const p3quadrant = this._getQuadrant(p3, p1);
+        const quadrantsString = [p2quadrant, p3quadrant].join(' ');
+
+        const angleText = this._calculateAngle(p1, p2, p3, quadrantsString);
         let resultStringWithUnit;
         if (this._model.angleUnit === this.i18n.ui.angleUnit.unit1) {
             resultStringWithUnit = angleText + " °"
@@ -335,7 +341,7 @@ export default class MeasurementHandler {
         } else {
             graphic.setAttribute("id", `measurement-${id}`);
         }
-        graphic.setAttribute("type", graphic.symbol.type);
+        graphic.setAttribute("type", "angle");
         return graphic;
     }
 
@@ -406,6 +412,90 @@ export default class MeasurementHandler {
         return ct_geometry.createPoint(anglePoint.x + manipulateX, anglePoint.y + manipulateY, spatialReference);
     }
 
+    /*
+     * calculate angles using points
+     * @param p1, p2, p3: points used for calulation
+     * @private
+     */
+    _calculateAngle(p1, p2, p3, quadrantsString) {
+
+        // construction of right triangles from p1, p2 and p1, p3
+        // calculating angle at p1
+        const a = Math.atan((Math.abs(p2.y - p1.y) / Math.abs(p2.x - p1.x))) * 180 / Math.PI;
+        const b = Math.atan((Math.abs(p3.y - p1.y) / Math.abs(p3.x - p1.x))) * 180 / Math.PI;
+
+        switch (quadrantsString) {
+            case '1 1':
+                this._angleButton_meas = (Math.abs(b - a));
+                if (b < a) this._angleButton_meas = (360 - this._angleButton_meas);
+                break;
+            case '2 1':
+                this._angleButton_meas = 360 - (360 - (a + b));
+                break;
+            case'3 1':
+                this._angleButton_meas = 360 - (180 + a - b);
+                break;
+            case'4 1':
+                this._angleButton_meas = 360 - (180 - (a + b));
+                break;
+            case'1 2':
+                this._angleButton_meas = 360 - (a + b);
+                break;
+            case'2 2':
+                this._angleButton_meas = (Math.abs(a - b));
+                if (a < b) this._angleButton_meas = (360 - this._angleButton_meas);
+                break;
+            case'3 2':
+                this._angleButton_meas = 360 - (360 - (180 - (a + b)));
+                break;
+            case'4 2':
+                this._angleButton_meas = 360 - (180 - a + b);
+                break;
+            case'1 3':
+                this._angleButton_meas = 360 - (180 + a - b);
+                break;
+            case'2 3':
+                this._angleButton_meas = 360 - (180 - (a + b));
+                break;
+            case'3 3':
+                this._angleButton_meas = (Math.abs(b - a));
+                if (b < a) this._angleButton_meas = (360 - this._angleButton_meas);
+                break;
+            case'4 3':
+                this._angleButton_meas = 360 - (360 - (a + b));
+                break;
+            case'1 4':
+                this._angleButton_meas = 360 - (360 - (180 - (a + b)));
+                break;
+            case'2 4':
+                this._angleButton_meas = 360 - (180 - a + b);
+                break;
+            case'3 4':
+                this._angleButton_meas = 360 - (a + b);
+                break;
+            case'4 4':
+                this._angleButton_meas = (Math.abs(a - b));
+                if (a < b) this._angleButton_meas = (360 - this._angleButton_meas);
+                break;
+            default:
+                console.warn("error");
+                break;
+        }
+
+        return this._angleButton_meas.toFixed(0).toString();
+    }
+
+    _getQuadrant(point, relativeTo) {
+        const tempPoint = {
+            x: point.x - relativeTo.x,
+            y: point.y - relativeTo.y
+        };
+        if (tempPoint.x >= 0 && tempPoint.y >= 0) return 1;
+        if (tempPoint.x >= 0 && tempPoint.y <= 0) return 2;
+        if (tempPoint.x <= 0 && tempPoint.y <= 0) return 3;
+        if (tempPoint.x <= 0 && tempPoint.y >= 0) return 4;
+    }
+
     _calcGeoPointForPixelDistance(srcPoint, distanceInPxX, distanceInpxY) {
         this.mapWidgetModel = this._model._mapWidgetModel;
 
@@ -433,6 +523,17 @@ export default class MeasurementHandler {
             const textGraphicId = graphic.getAttribute("id");
             if (textGraphicId) {
                 return textGraphicId === id && type && type === "text";
+            }
+        });
+        this.viewModel.layer.removeMany(gs);
+    }
+
+    removeGraphicsByIdAndType(id, type) {
+        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
+            const graphicType = graphic.getAttribute("type");
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId && graphicType) {
+                return textGraphicId === id && graphicType === type;
             }
         });
         this.viewModel.layer.removeMany(gs);
@@ -466,11 +567,13 @@ export default class MeasurementHandler {
 
     setGraphicAttributes(evt, showLinesAttr) {
         if (!evt.graphic.getAttribute("id")) {
-            evt.graphic.setAttribute("measurementEnabled", this._model.measurementEnabled);
+            evt.graphic.setAttribute("id", `measurement-${evt.graphic.uid}`);
+        }
+        evt.graphic.setAttribute("measurementEnabled", this._model.measurementEnabled);
+        if (showLinesAttr) {
             const showLines = (evt.tool === 'triangle' || evt.tool === 'rectangle') ? false
                 : this._model[showLinesAttr];
             evt.graphic.setAttribute(showLinesAttr, showLines);
-            evt.graphic.setAttribute("id", `measurement-${evt.graphic.uid}`);
         }
     }
 
