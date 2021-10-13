@@ -16,47 +16,55 @@
 
 -->
 <template>
-    <v-layout column px-8>
-        <v-switch v-model="onSketchingVisible" :label="i18n.turnOnVisibility"></v-switch>
-        <v-switch v-model="onMultiMeasurement" :label="i18n.enableKeepMeasurements"></v-switch>
+    <v-layout
+        column
+        px-8
+    >
+        <v-switch
+            v-model="onSketchingVisible"
+            :label="i18n.turnOnVisibility"
+            color="primary"
+        />
+        <v-switch
+            v-model="onMultiMeasurement"
+            :label="i18n.enableKeepMeasurements"
+            color="primary"
+        />
     </v-layout>
 </template>
-
 <script>
-
-export default {
-    data() {
-        return {
-            multiMeasurement: true,
-            sketchingVisible: true
-        }
-    },
-    props: {
-        i18n: {
-            type: Object,
-        },
-        bus: {
-            type: Object,
-        }
-    },
-    computed: {
-        onMultiMeasurement:{
-            get() {
-                return this.multiMeasurement;
+    export default {
+        props: {
+            i18n: {
+                type: Object
             },
-            set(val) {
-                this.$emit('updateMultiMeasurement', val);
+            bus: {
+                type: Object
             }
         },
-        onSketchingVisible:{
-            get() {
-                return this.sketchingVisible;
+        data() {
+            return {
+                multiMeasurement: true,
+                sketchingVisible: true
+            }
+        },
+        computed: {
+            onMultiMeasurement:{
+                get() {
+                    return this.multiMeasurement;
+                },
+                set(val) {
+                    this.$emit('updateMultiMeasurement', val);
+                }
             },
-            set(val) {
-                this.$emit('toggleSketchingLayerVisibility', val);
+            onSketchingVisible:{
+                get() {
+                    return this.sketchingVisible;
+                },
+                set(val) {
+                    this.$emit('toggleSketchingLayerVisibility', val);
+                }
             }
         }
-    }
 }
-
 </script>
