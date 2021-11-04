@@ -21,7 +21,8 @@
             <v-item active-class="active" v-for="(item, index) in styles" :key="index">
                 <v-list-tile @click="toggle" slot-scope="{ toggle }">
                     <text-style-checkbox :class="item" :label="i18nStyles[index]"
-                                         :active.sync="active[item]"></text-style-checkbox>
+                                         @update:active="setStyle(item, $event)"
+                                         :active="active[item]"></text-style-checkbox>
                 </v-list-tile>
                 <v-divider></v-divider>
             </v-item>
@@ -47,6 +48,15 @@
             return {
                 i18nStyles: [this.i18n.textEditor.bold, this.i18n.textEditor.italic, this.i18n.textEditor.underlined],
             };
+        },
+
+        methods: {
+            setStyle(style, value) {
+                // apply value to settings object and notify parent components
+                const newStyleset = {...this.active};
+                newStyleset[style] = value;
+                this.$emit('update:active', newStyleset);
+            },
         },
     };
 </script>
