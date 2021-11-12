@@ -31,7 +31,6 @@ module.exports = {
         enableMeasurements: 'Messen aktivieren',
         disableKeepMeasurements: 'Alte Messungen löschen',
         settings: 'Einstellungen',
-        enableKeepMeasurements: 'Messungen beibehalten',
         noDrawings: "Es liegen keine Zeichnungen vor",
         textEditor: {
             bold: 'Fett',

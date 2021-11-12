@@ -62,8 +62,6 @@
                                 ></v-divider>
                                 <measurement-toggle v-on:toggleMeasurement="_toggleMeasurementEnabled"
                                                     :measurementBoolean="measurementEnabled"
-                                                    :showKeepMeasurements.sync="showKeepMeasurements"
-                                                    :multiMeasurement.sync="multiMeasurement"
                                                     :i18n="i18n"
                                                     :bus="eventBus">
                                 </measurement-toggle>
@@ -72,8 +70,6 @@
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
                                             @toggleSketchingLayerVisibility="_toggleSketchingVisible"
-                                            @updateMultiMeasurement="_toggleMultiMeasurement"
-                                            multiMeasurement="multiMeasurement"
                                             sketchingVisible="sketchingVisible"
                                             :bus="eventBus"
                                             :i18n="i18n">
@@ -141,7 +137,6 @@ export default {
             showLineMeasurementsAtPolygons: false,
             showAngleMeasurementsAtPolylines: false,
             enableAngleMeasurement: false,
-            showKeepMeasurements: true,
 
             coordinates: null,
             currentLength: null,
@@ -187,9 +182,6 @@ export default {
         },
         measurement: {
             type: Boolean,
-        },
-        multiMeasurement: {
-            type: Boolean
         },
         sketchingVisible: {
             type: Boolean
@@ -253,7 +245,6 @@ export default {
                     showAngleMeasurementsAtPolylines: this.showAngleMeasurementsAtPolylines,
                     enableAngleMeasurement: this.enableAngleMeasurement,
                     angleUnit: this.angleUnit,
-                    showKeepMeasurements: this.showKeepMeasurements,
                     coordinates: this.coordinates,
                     currentLength: this.currentLength,
                     aggregateLength: this.aggregateLength,
@@ -378,10 +369,6 @@ export default {
         _toggleSketchingVisible(val){
             //this.sketchingVisible = val;
             this.$emit('toggleSketchingLayerVisibility', val)
-        },
-        _toggleMultiMeasurement(val){
-            //this.multiMeasurement = val;
-            this.$emit('update:multiMeasurement', val);
         }
     }
 }
