@@ -4,7 +4,7 @@ This bundle adds an extended sketching functionality the map.
 
 ![Screenshot App](https://github.com/conterra/mapapps-sketching-enhanced/blob/master/screenshot.JPG)
 
-## Build
+## Build status
 
 ![example workflow](https://github.com/conterra/mapapps-sketching-enhanced/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)
 
