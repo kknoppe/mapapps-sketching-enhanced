@@ -309,16 +309,21 @@ export default {
             // the style settings have to be reset after each tool change
             this.$emit('settingsSelectionChanged', this.settings);
         },
+
+        transformPointSettingsOrDefault(pointSetting) {
+            const pointSettingsTemplate = pointSetting.PointSetting || this.initialSymbolSettings?.pointSymbol;
+            return new PointSetting(pointSettingsTemplate, this.initialSymbolSettings?.maxPointSymbolSize);
+        },
+
         _setSettings(tool) {
             const type = tool.type;
             const settings = this.toolSettings;
             switch (type) {
                 case 'point': {
-                    if (!settings.PointSetting){
-                        this.symbolSettings = settings.PointSetting = new PointSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
-                        this.symbolSettings.maxPointSize = settings.PointSetting.maxPointSize = 100;
-                    } else {
-                        this.symbolSettings = new PointSetting(settings.PointSetting);
+                    this.symbolSettings = this.transformPointSettingsOrDefault(settings);
+                    if (!settings.PointSetting) {
+                        // apply settings to tool
+                        settings.PointSetting = this.symbolSettings;
                     }
                     break;
                 }

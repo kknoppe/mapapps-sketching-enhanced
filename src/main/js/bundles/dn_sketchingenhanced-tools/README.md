@@ -110,6 +110,7 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
                 "style": "esriSLSSolid"
               }
             },
+            "maxPointSymbolSize": 100,
             "polygonSymbol": {
               "type": "esriSFS",
               "color": [
@@ -161,3 +162,4 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
 |`pointSymbol`          |Object   |Ein Symbol, das zur Darstellung der gezeichneten Punktgeometrie verwendet wird|[pointSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#pointSymbol)
 |`polygonSymbol`        |Object   |Ein Symbol, das zur Darstellung der gezeichneten Polygongeometrie verwendet wird|[polygonSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#polygonSymbol)
 |`polylineSymbol`       |Object   |Ein Symbol, das zur Darstellung der gezeichneten Polyliniengeometrie verwendet wird|[polylineSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#polylineSymbol)
+|`maxPointSymbolSize`     |Number   |Maximal einstellbare Größe eines Punktsymbols |100

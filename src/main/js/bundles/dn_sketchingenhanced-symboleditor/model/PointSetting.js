@@ -21,8 +21,9 @@ class PointSetting {
     /**
      *
      * @param {PointSetting} copy
+     * @param {number} maxSymbolSize
      */
-    constructor(copy) {
+    constructor(copy, maxSymbolSize) {
         /**
          *
          * @type {ColorSetting}
@@ -48,6 +49,9 @@ class PointSetting {
         this.typeName = 'PointSetting';
         // default label added, so that this can be shown in symbol editor and legend (if existing)
         this.defaultLabel = copy && copy.defaultLabel || '';
+
+        // maximum size of a point symbol
+        this.maxPointSize = copy?.maxPointSize || maxSymbolSize || 100;
     }
 
     toEsri() {
