@@ -228,10 +228,37 @@ export default class DrawFurtherGeometries {
         const lx = vs[0][0] + vs[0][0] - vs[1][0];
         const ly = vs[1][1];
         ring.push([lx, ly]);
+
         const ux = vs[0][0];
         const uy = vs[0][1] + vs[0][1] - vs[1][1];
         ring.push([ux, uy]);
+
+        // last point should be the same as the first point
+        ring.push(ring[0]);
+
+        if (this._lineIsRising(vs[0],vs[1])) {
+            // bugfix for negative areas in measurements
+            ring.reverse()
+        }
+
         return ring;
+    }
+
+    /**
+     * Returns true if the two points create a line, that is rising ( / ).
+     * Returns false if the two points create a line, that is falling ( \ ).
+     * @param first {number[]} First point
+     * @param second {number[]} Second point
+     * @returns {boolean}
+     */
+    _lineIsRising(first, second) {
+        if (!first || !second) {
+            return undefined;
+        }
+        const leftToRight = first[0] < second[0];
+        const topToBottom = first[1] < second[1];
+
+        return (leftToRight && topToBottom) || (!leftToRight && !topToBottom);
     }
 
     /**
