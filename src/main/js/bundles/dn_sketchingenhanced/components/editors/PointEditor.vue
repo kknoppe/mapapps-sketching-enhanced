@@ -17,7 +17,7 @@
 -->
 <template>
     <div>
-        <color-picker v-bind:label="i18n.symbolEditor.colorPickerPointTooltip" :color.sync="color"></color-picker>
+        <color-picker v-bind:label="i18n.symbolEditor.colorPickerPointTooltip" :color.sync="color" :disableAlpha="options && options.disablePointAlpha"></color-picker>
         <style-picker v-bind:label="i18n.symbolEditor.pointSymbolSelectorTooltip" :shape.sync="shape" type="point"></style-picker>
         <size-picker v-bind:label="i18n.symbolEditor.pointRadiusSliderLabel" :size.sync="size" :maxPointSize="settings.maxPointSize" type="point" :i18n="i18n"></size-picker>
     </div>
@@ -39,7 +39,8 @@
             settings: Object,
             i18n: {
                 type: Object,
-            }
+            },
+            options: Object,
         },
         computed: {
             color: {

@@ -35,6 +35,12 @@
                         "toggleToolOnClick": false,
                         "multipleSelectionEnabled": false
                     },
+                    "disablePointAlpha": false,
+                    "disableLineAlpha": false,
+                    "disablePolygonAlpha": false,
+                    "disablePolygonOutlineAlpha": false,
+                    "disableTextAlpha": false,
+                    "disableTextHaloAlpha": false,
                     "textSymbol": {
                         "type": "esriTS",
                         "color": {
@@ -57,7 +63,7 @@
                             "weight": "normal",
                             "decoration": "none"
                         }
-                    },
+                    },                    
                     "pointSymbol": {
                         "color": {
                             "r": 102,

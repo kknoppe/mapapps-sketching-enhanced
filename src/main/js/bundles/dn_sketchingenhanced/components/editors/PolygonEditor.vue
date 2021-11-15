@@ -18,8 +18,8 @@
 <template>
     <v-layout row>
         <v-layout column>
-            <color-picker v-bind:label="i18n.symbolEditor.colorPickerFillTooltip" :color.sync="color"></color-picker>
-            <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="outlineColor"></color-picker>
+            <color-picker v-bind:label="i18n.symbolEditor.colorPickerFillTooltip" :color.sync="color" :disable-alpha="options && options.disablePolygonAlpha"></color-picker>
+            <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="outlineColor" :disable-alpha="options && options.disablePolygonOutlineAlpha"></color-picker>
             <size-picker v-bind:label="i18n.symbolEditor.lineWeightSliderLabel" :size.sync="size" type="line"></size-picker>
         </v-layout>
         <v-layout column style="flex: 0 0 auto!important;">
@@ -45,7 +45,8 @@ export default {
         settings: Object,
         i18n: {
             type: Object,
-        }
+        },
+        options: Object,
     },
     computed: {
         color: {

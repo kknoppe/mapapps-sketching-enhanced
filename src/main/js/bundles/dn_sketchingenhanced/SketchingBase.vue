@@ -45,7 +45,7 @@
                     <template v-for="(item, index) in tabs">
                         <v-container class="pa-2" v-if="!item">{{i18n.noActiveTool}}</v-container>
                         <v-tab-item v-if="item" :key="index">
-                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool" v-on:update:settings="settingsChange"></illustration>
+                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool" v-on:update:settings="settingsChange" :options="initialSymbolSettings"></illustration>
                             <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
                                 <v-flex v-show="measurementEnabled">
                                     <measurement :measurements.sync="measurements"

@@ -17,7 +17,7 @@
 -->
 <template>
     <div>
-        <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="color" :i18n="i18n"></color-picker>
+        <color-picker v-bind:label="i18n.symbolEditor.colorPickerLineTooltip" :color.sync="color" :i18n="i18n" :disable-alpha="options && options.disableLineAlpha"></color-picker>
         <style-picker v-bind:label="i18n.symbolEditor.lineStyleSelectorTooltip" :shape.sync="shape" type="line" :i18n="i18n"></style-picker>
         <size-picker v-bind:label="i18n.symbolEditor.lineWeightSliderLabel" :size.sync="size" type="line" :i18n="i18n"></size-picker>
     </div>
@@ -39,7 +39,8 @@
             settings: Object,
             i18n: {
                 type: Object,
-            }
+            },
+            options: Object,
         },
         computed: {
             color: {
