@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 const mainTitle = 'Symbolisierung anpassen';
-const submit = 'Änderungen übernehmen';
-const discard = 'Änderungen verwerfen';
+
 module.exports = {
     bundleName: "Sketching Enhanced Symboleditor",
     bundleDescription: "Sketching Enhanced Symboleditor",
@@ -25,47 +24,8 @@ module.exports = {
         tooltip: mainTitle,
     },
     ui: {
-        scaleVisibilityBtnTooltip: 'Maßstabhängige Sichtbarkeit anpassen',
-        textEditorBtnTooltip: 'Beschriftung anpassen',
-        styleEditorBtnTooltip: 'Symbol anpassen',
-        layerEditedInfoLog: 'Layer wurde erfolgreich geändert',
-        notStartable: 'Der Editor konnte nicht gestartet werden!',
-
-        scaleEditor: {
-            title: 'Maßstabsabhängige Sichtbarkeit',
-            submit,
-            discard,
-        },
-        labelEditor: {
-            title: 'Beschriftung anpassen',
-            visible: 'Sichtbar',
-            select_field: 'Beschriftungsfeld wählen',
-            visible_scale_between: 'Sichtbar im Maßstab von ${p1} bis ${p2}.', // NOSONAR
-            visible_scale_larger: 'Sichtbar ab ${p1} und größer.', // NOSONAR
-            visible_scale_smaller: 'Sichtbar ab ${p1} und kleiner.', // NOSONAR
-            default_tag: 'Standard',
-            noFieldsForLabeling: 'Es stehen keine Felder zur Verfügung',
-            layerLabelingWarning: 'Dieser Layer unterstützt keine Beschriftungen!',
-
-            submit,
-            discard,
-        },
         symbolEditor: {
             title: 'Symbol anpassen',
-            layerLabel: 'Layer wählen',
-            fieldLabel: 'Spalte auswählen',
-            methodLabel: 'Methode wählen',
-            unique: 'Eine einzige Farbe verwenden',
-            classBreaks: 'Unterschiedliche Farben nach Spalte verwenden',
-            openFillStyleMenuTooltip: 'Füllung',
-            openLineStyleEditorTooltip: 'Umrisslinie',
-            textFieldLabel: 'Werte: ',
-            textFieldLabelUniqueValue: 'Wert',
-            scaleVisibility: 'Maßstabsabhängigkeit Sichtbarkeit anpassen',
-            styleModifier: 'Angepasste Visualisierung',
-            sliderLabel: 'Transparenz',
-            singleSymbolLabel: 'Einzelsymbol',
-            categoriesLabel: 'Kategorie',
             lineStyleSelectorTooltip: 'Linienstil',
             pointSymbolSelectorTooltip: 'Punktsymbol',
             lineWeightSliderLabel: 'Linienstärke',
@@ -76,50 +36,10 @@ module.exports = {
             fillStyleSelectorTooltip: 'Füllung',
             colorPickerLineTooltip: 'Linienfarbe',
             undo: 'Zurück',
-            lineSizeLabel: 'Größe',
             pointRadiusSliderLabel: 'Punktgröße',
-            colorBtnLabel: 'FüllFarbe',
-            categorySelectorLabel: 'Kategorien',
-            textEditor: 'Text Editor aktivieren',
-            layerEditingWarning: 'Die Symbolisierung des Layers sollte nicht verändert werden',
-            colorGradientLineSelectorLabel: 'Farbverlauf selektieren',
-
-            loadingLayerMessage: 'Layer wird geladen...',
-            loadingValuesMessage: 'Werte werden geladen...',
-            applyChangesBtnTooltip: 'Änderungen vornehmen',
-            discardChangesBtnTooltip: 'Änderungen verwerfen',
-            colorPathLabel: '',
-            getChanges: 'Ändern',
-            noFieldsForSymbology: 'Es stehen keine Felder zur Verfügung',
-            colorPickerLabel: 'Farbe selektieren',
-            rules: {
-                required: 'Wert wird ben\u00f6tigt',
-                number: 'Wert muss vom Typ number sein',
-                string: 'Wert muss vom Typ string sein',
-                invalidPattern: 'Wert muss vom Typ number-number sein',
-            },
-
-            submit,
-            discard,
         },
-        errors: {
-            noResultsError: 'Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!',
-            'FIELD_NOT_IN_LAYER': 'Das Feld existiert nicht in diesem Layer!',
-        }, control: {
-            transparencySlider: {
-                transparency: 'Transparenz',
-            },
-        },
-        form: {
-            dropzone: {
-                placeholder: 'Legen Sie hier Dateien ab, um sie hochzuladen',
-                err_invalid_file: 'Ungültige Datei!',
-            },
-        },
+        
         input: {
-            quickfilter: {
-                label: 'Suchbegriff eingeben',
-            },
             sizeslider: {
                 errorSmall: 'zu klein',
                 errorBig: 'zu groß',
