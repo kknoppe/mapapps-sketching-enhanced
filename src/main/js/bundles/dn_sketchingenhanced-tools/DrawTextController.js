@@ -41,7 +41,9 @@ export default class DrawTextController extends Connect {
     }
 
     handler(evt) {
+        const props = this._properties;
         const viewModel = this._sketchingHandler.sketchViewModel;
+        viewModel.textSymbol.set("lineWidth",props.lineWidth || 512);
         const state = evt.state;
         const type = evt.type;
         const tool = viewModel.tool;
@@ -126,7 +128,8 @@ export default class DrawTextController extends Connect {
         if (maxWidth) {
             width = Math.min(maxWidth, width);
         }
-        d_html.contentBox(textboxInputNode, {w: width});
+        const lineWidth = this._properties.lineWidth;
+        d_html.contentBox(textboxInputNode, {w: lineWidth || width});
         d_domclass.add(textbox.domNode, "ctAutoResizeTextBox");
 
         !!text && (textbox.textbox.value = text);
