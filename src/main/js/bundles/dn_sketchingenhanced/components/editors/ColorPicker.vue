@@ -32,7 +32,7 @@
                 >
                 </v-btn>
             </template>
-            <color-picker v-model="pickerColor"></color-picker>
+            <color-picker v-model="pickerColor" :disable-alpha="disableAlpha"></color-picker>
 
         </v-menu>
     </v-layout>
@@ -68,7 +68,8 @@
         },
         props: {
             color: Object,
-            label: String
+            label: String,
+            disableAlpha: {type: Boolean, default: false},
         }
     }
 </script>

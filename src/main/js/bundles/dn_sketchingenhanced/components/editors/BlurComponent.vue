@@ -31,7 +31,8 @@
                       :style="`background-color: ${backgroundColor}`">
                 </v-btn>
             </template>
-            <text-blur-picker :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n"></text-blur-picker>
+            
+            <text-blur-picker :color.sync="blurColor" :radius.sync="blurRadius" :i18n="i18n" :disable-alpha="options && options.disableTextHaloAlpha"></text-blur-picker>
         </v-menu>
     </v-layout>
 </template>
@@ -54,6 +55,7 @@
             color: Object,
             radius: Number,
             i18n: {type:Object},
+            options: Object,
         },
         computed: {
             blurColor: {

@@ -17,10 +17,10 @@
 -->
 <template>
     <div>
-        <point-editor v-if="type === 'point'" :settings.sync="symbolSettings" :i18n="i18n"></point-editor>
-        <line-editor v-else-if="type === 'polyline'" :settings.sync="symbolSettings" :i18n="i18n"></line-editor>
-        <text-editor v-else-if="type === 'text'" :settings.sync="symbolSettings" :i18n="i18n"></text-editor>
-        <polygon-editor v-else :settings.sync="symbolSettings" :i18n="i18n"></polygon-editor>
+        <point-editor v-if="type === 'point'" :settings.sync="symbolSettings" v-bind="{i18n, options}"></point-editor>
+        <line-editor v-else-if="type === 'polyline'" :settings.sync="symbolSettings" v-bind="{i18n, options}"></line-editor>
+        <text-editor v-else-if="type === 'text'" :settings.sync="symbolSettings" v-bind="{i18n, options}"></text-editor>
+        <polygon-editor v-else :settings.sync="symbolSettings" v-bind="{i18n, options}"></polygon-editor>
     </div>
 </template>
 
@@ -43,7 +43,8 @@
             tool: Object,
             i18n: {
                 type: Object,
-            }
+            },
+            options: {type: Object, default: null},
         },
         computed: {
             type() {

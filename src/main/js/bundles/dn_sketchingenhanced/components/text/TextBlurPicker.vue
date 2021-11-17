@@ -17,7 +17,7 @@
 -->
 <template>
     <div class="text-blur-picker">
-        <color-picker v-model="blurColor"></color-picker>
+        <color-picker v-model="blurColor" :disable-alpha="disableAlpha"></color-picker>
         <v-slider :label="i18n.textEditor.blurSize" v-model="blurRadius" thumb-label="always" thumb-size="20" max="20"></v-slider>
     </div>
 </template>
@@ -32,6 +32,7 @@
             color: Object,
             radius: Number,
             i18n: Object,
+            disableAlpha: {type: Boolean, default: false},
         },
 
         data() {

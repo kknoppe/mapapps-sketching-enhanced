@@ -158,6 +158,12 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
 |`graphicLayerTitle`    |String   |Eine Title der Sketching-Graphik-Layer|Sketching Grafiken
 |`updateOnGraphicClick` |Boolean  |Definiert, ob eine Grafik zur Bearbeitung auf Klicken ausgewählt werden kann|false
 |`defaultUpdateOptions` |Object   |Default-Update-Optionen für die Klasse [SketchViewModel](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#defaultUpdateOptions)|[defaultUpdateOptions](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#defaultUpdateOptions)
+|`disablePointAlpha`    |Boolean  |Definiert, ob die Transparenz für Punktsymbole verändert werden kann.|false
+|`disableLineAlpha`     |Boolean  |Definiert, ob die Transparenz für Liniensymbole verändert werden kann.|false
+|`disablePolygonAlpha`  |Boolean  |Definiert, ob die Transparenz für Polygonsymbole verändert werden kann.|false
+|`disablePolygonOutlineAlpha`|Boolean|Definiert, ob die Transparenz für die Umrandung der Polygonsymbole verändert werden kann.|false
+|`disableTextAlpha`     |Boolean  |Definiert, ob die Transparenz für die Textsymbole verändert werden kann.|false
+|`disableTextHaloAlpha` |Boolean  |Definiert, ob die Transparenz für den Halo-Effekt der Textsymbole verändert werden kann|false
 |`textSymbol`           |Object   |Ein Symbol, das zur Darstellung des eingebenen Textes verwendet wird|[textSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#textSymbol)
 |`pointSymbol`          |Object   |Ein Symbol, das zur Darstellung der gezeichneten Punktgeometrie verwendet wird|[pointSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#pointSymbol)
 |`polygonSymbol`        |Object   |Ein Symbol, das zur Darstellung der gezeichneten Polygongeometrie verwendet wird|[polygonSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Sketch-SketchViewModel.html#polygonSymbol)
