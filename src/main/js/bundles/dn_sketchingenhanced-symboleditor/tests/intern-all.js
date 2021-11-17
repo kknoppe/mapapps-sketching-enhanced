@@ -13,20 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import './ActionButton';
 import './SizeSlider';
 
 // line editor tests
 import './symbol/line/LineStyle';
 // polygon editor tests
 import './symbol/polygon/FillStyle';
-// misc
-import './model/EsriTransformer';
-
-import './model/LayerRegistyList';
-
-// polygon editor tests
-import './symbol/polygon/FillStyle';
-// misc
-import './model/EsriTransformer';
 
