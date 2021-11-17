@@ -24,17 +24,6 @@
                 color="primary"
                 hide-details>
             </v-switch>
-            <v-spacer></v-spacer>
-            <v-btn-toggle v-show="showKeepMeasurements">
-                <v-tooltip top>
-                    <v-btn slot="activator" class="buttonToggleKeepingMeasurements" @click="toggleKeepMeasurements">
-                        <v-icon>
-                            {{multiMeasurement ? 'icon-keep-measurements' : 'icon-remove-measurements'}}
-                        </v-icon>
-                    </v-btn>
-                    <span> {{multiMeasurement ? i18n.disableKeepMeasurements : i18n.enableKeepMeasurements}}</span>
-                </v-tooltip>
-            </v-btn-toggle>
         </v-toolbar>
     </div>
 </template>
@@ -54,12 +43,6 @@ export default {
         },
         bus: {
             type: Object,
-        },
-        showKeepMeasurements: {
-            type: Boolean,
-        },
-        multiMeasurement: {
-            type: Boolean,
         },
         measurementBoolean: {
             type: Boolean,
@@ -92,9 +75,6 @@ export default {
          */
         onToolClickHandler(id) {
             this.$emit('onToolClick', id);
-        },
-        toggleKeepMeasurements() {
-            this.$emit('update:multiMeasurement', !this.multiMeasurement);
         }
     }
 };

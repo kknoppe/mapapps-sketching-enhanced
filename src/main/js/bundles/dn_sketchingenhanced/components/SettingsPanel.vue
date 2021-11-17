@@ -25,11 +25,6 @@
             :label="i18n.turnOnVisibility"
             color="primary"
         />
-        <v-switch
-            v-model="onMultiMeasurement"
-            :label="i18n.enableKeepMeasurements"
-            color="primary"
-        />
     </v-layout>
 </template>
 <script>
@@ -44,19 +39,10 @@
         },
         data() {
             return {
-                multiMeasurement: true,
                 sketchingVisible: true
             }
         },
         computed: {
-            onMultiMeasurement:{
-                get() {
-                    return this.multiMeasurement;
-                },
-                set(val) {
-                    this.$emit('updateMultiMeasurement', val);
-                }
-            },
             onSketchingVisible:{
                 get() {
                     return this.sketchingVisible;

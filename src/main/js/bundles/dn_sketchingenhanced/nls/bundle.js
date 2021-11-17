@@ -32,7 +32,6 @@ module.exports = {
             enableMeasurements: 'Enable measurements',
             settings: 'Settings',
             disableKeepMeasurements: 'disable keeping measurements',
-            enableKeepMeasurements: 'enable keeping measurements',
             noDrawings: "No drawings",
             textEditor: {
                 bold: 'Bold',
