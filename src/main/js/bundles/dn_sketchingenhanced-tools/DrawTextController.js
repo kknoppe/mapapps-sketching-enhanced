@@ -180,6 +180,10 @@ export default class DrawTextController extends Connect {
                     textSymbol.font.style = "italic";
                 }
                 graphic.set("symbol", TextSymbol.fromJSON(textSymbol.toJSON()));
+                if (graphic.symbol.haloSize === 0) {
+                    // unset haloColor, because it changes the symbology when foreground color has opacity
+                    graphic.symbol.haloColor = null;
+                }
                 // after adding text to the map, trigger the _onSketchUpdateHandler
                 viewModel.emit('update', {target: viewModel});
             }
