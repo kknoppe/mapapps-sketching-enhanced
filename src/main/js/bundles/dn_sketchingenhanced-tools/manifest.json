@@ -55,6 +55,7 @@
                             0,
                             0
                         ],
+                        "lineWidth": 512,
                         "horizontalAlignment": "left",
                         "font": {
                             "family": "Arial",
@@ -182,6 +183,7 @@
                 "dn_sketchingenhanced.Action"
             ],
             "properties": {
+                "lineWidth": 512,
                 "minWidth": 400,
                 "maxWidth": 800
             },

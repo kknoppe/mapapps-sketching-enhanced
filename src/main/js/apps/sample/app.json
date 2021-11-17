@@ -136,6 +136,7 @@
                             0,
                             0
                         ],
+                        "lineWidth": 512,
                         "horizontalAlignment": "left",
                         "font": {
                             "family": "Arial",
@@ -205,6 +206,7 @@
                 }
             },
             "DrawTextController": {
+                "lineWidth": 512,
                 "minWidth": 400,
                 "maxWidth": 800
             }
