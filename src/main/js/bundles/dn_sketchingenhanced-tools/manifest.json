@@ -80,6 +80,7 @@
                             "style": "solid"
                         }
                     },
+                    "maxPointSymbolSize": 100,
                     "polygonSymbol": {
                         "type": "esriSFS",
                         "color": {
