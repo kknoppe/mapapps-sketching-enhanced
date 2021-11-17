@@ -82,14 +82,17 @@ export default function () {
             }
         },
 
+        /**
+         * Copies the selected geometry/ies and adds them to the SketchViewModel
+         * @returns void
+         */
         copySelected() {
-            const geometries = this._getSelectedGeometries();
-            const symbol = this.selectedSymbol;
-            if (geometries) {
+            const selectedGraphics = this._getSelectedGraphics();
+            if (selectedGraphics) {
                 const sketchingHandler = this._sketchingHandler;
-                const graphics = geometries.map(geometry => {
-                    const newGeometry = this._getCopyGeometry(geometry);
-                    return sketchingHandler._addGraphic(newGeometry, null, symbol);
+                const graphics = selectedGraphics.map(graphic => {
+                    const newGeometry = this._getCopyGeometry(graphic.geometry);
+                    return sketchingHandler._addGraphic(newGeometry, graphic.attributes, graphic.symbol);
                 });
                 this._resetAndUpdate(graphics);
             }
@@ -200,11 +203,21 @@ export default function () {
             return features && features.length && features[0].geometry;
         },
 
+        /**
+         * Returns geometries of graphics, that were selected by the SketchViewModel
+         * @returns {esri/geometry/Geometry[]}
+         */
         _getSelectedGeometries() {
+            return this._getSelectedGraphics()?.map((graphic) => graphic.geometry);
+        },
+
+        /**
+         * Returns graphics, that were selected by the SketchViewModel
+         * @returns {esri/Graphic[]}
+         */
+        _getSelectedGraphics() {
             const viewModel = this._getSketchViewModel();
-            return viewModel.updateGraphics.length && viewModel.updateGraphics.toArray().map((graphic) => {
-                return graphic.geometry;
-            });
+            return viewModel?.updateGraphics?.toArray();
         },
 
         _resetAndUpdate(graphics) {
