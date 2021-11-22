@@ -194,7 +194,7 @@ export default class MeasurementHandler {
     }
 
     _startMeasurementHandlers(){
-        this.controller._properties = this._properties;
+        this.controller.setProperties(this._properties);
         this.controller.viewModel = this.viewModel;
         this.controller.resetMeasurementResults();
         this._model.watch("measurementEnabled",(evt)=>{

@@ -21,15 +21,7 @@ import Polyline from 'esri/geometry/Polyline';
 import Polygon from 'esri/geometry/Polygon';
 
 const controller = new MeasurementController()
-controller._properties = {
-    unitAbbreviationMapping: {
-        "meters": "m",
-        "kilometers": "km",
-        "square-meters": "m²",
-        "square-kilometers": "km²",
-        "hectares": "ha"
-    }
-};
+
 controller.i18n = {
     locale: 'de-de'
 }
@@ -44,6 +36,17 @@ controller._mapWidgetModel = {
         isWebMercator: false
     }
 }
+
+controller.activate();
+controller.setProperties({
+    unitAbbreviationMapping: {
+        "meters": "m",
+        "kilometers": "km",
+        "square-meters": "m²",
+        "square-kilometers": "km²",
+        "hectares": "ha"
+    }
+});
 
 describe(module.id, function () {
     it("Measurement Controller", function () {

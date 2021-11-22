@@ -17,14 +17,22 @@ import Polyline from "esri/geometry/Polyline";
 import * as geoEngine from 'esri/geometry/geometryEngine';
 import TextSymbol from "esri/symbols/TextSymbol";
 import Graphic from "esri/Graphic";
-import i18n from "./nls/bundle";
 import ct_geometry from "ct/mapping/geometry";
 import Point from "esri/geometry/Point";
+import { MeasurementCalculator } from "./MeasurementCalculator";
 
 export default class MeasurementHandler {
 
     activate() {
-        this.i18n = this._i18n.get();
+        if (!this.i18n) {
+            this.i18n = this._i18n?.get();
+        }
+        this.calculator = new MeasurementCalculator(this._model, this.i18n);
+    }
+
+    setProperties(value) {
+        this._properties = value;
+        Object.assign(this.calculator.settings, value);
     }
 
     // AREA Calculations
@@ -35,23 +43,7 @@ export default class MeasurementHandler {
      * @private
      */
     getArea(geometry) {
-        const locale = this.i18n.locale;
-        let unit = this._model.areaUnit;
-        if (unit !== 'auto') {
-            return `${this.getAreaNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this._getUnitAbbreviation(unit)}`
-        } else {
-            const squareMeters = this.getAreaNumeric(geometry, 'square-meters');
-            const useKms = squareMeters > 1000000;
-            if (useKms) {
-                const places = this._properties.decimalPlacesKiloMeter;
-                const area = this.getAreaNumeric(geometry, 'square-kilometers').toFixed(places || 2);
-                return `${parseFloat(area).toLocaleString(locale)} km²`
-            } else {
-                const places = this._properties.decimalPlacesMeter;
-                const area = squareMeters.toFixed(places || 2);
-                return `${parseFloat(area).toLocaleString(locale)} m²`;
-            }
-        }
+        return this.calculator.getArea(geometry, this._model.areaUnit);
     }
 
     /*
@@ -61,14 +53,7 @@ export default class MeasurementHandler {
      * @private
      */
     getAreaString(area) {
-        let unit = this._model.areaUnit;
-        if (unit !== 'auto') {
-            return `${area.toLocaleString(i18n.locale)} ${this._getUnitAbbreviation(unit)}`;
-        } else {
-            return area > 1000000 ?
-                `${(Math.round((area / 1000000) * Math.pow(10, this._model.kmDecimal)) / Math.pow(10, this._model.kmDecimal)).toLocaleString(this.i18n.locale)} km²` :
-                `${area.toLocaleString(this.i18n.locale)} m²`;
-        }
+        return this.calculator.getAreaString(area, this._model.areaUnit);
     }
 
     /*
@@ -78,24 +63,7 @@ export default class MeasurementHandler {
      * @private
      */
     getAreaNumeric(geometry, unit) {
-        if (unit === 'auto') unit = null;
-        let area = (this.getMapArea(geometry, unit || 'square-meters') * Math.pow(10, this._model.mDecimal)) / Math.pow(10, this._model.mDecimal);
-        return +area;
-    }
-
-    /*
-     * calculates the map area depending on the spatial reference system
-     * @param geometry, unit
-     * @returns {number}
-     * @private
-     */
-    getMapArea(geometry, unit) {
-        const srs = this._model.spatialReference;
-        if (srs.isWebMercator || srs.isWGS84) {
-            return geoEngine.geodesicArea(geometry, unit);
-        } else {
-            return geoEngine.planarArea(geometry, unit);
-        }
+        return this.calculator.getAreaNumeric(geometry, unit);        
     }
 
     // Length Calculations
@@ -107,25 +75,7 @@ export default class MeasurementHandler {
      * @private
      */
     getLength(geometry) {
-        const locale = this.i18n.locale;
-        let unit = this._model.lengthUnit;
-        if (unit !== 'auto') {
-            return `${this.getLengthNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
-        } else {
-            let meters = this.getLengthNumeric(geometry, 'meters');
-            const useKms = meters > 1000;
-            if (useKms) {
-                const places = this._properties.decimalPlacesKiloMeter;
-                let segment = this.lastLengthSegment = this.getLengthNumeric(geometry, 'kilometers');
-                let length = segment.toFixed(places || 2)
-                return `${parseFloat(length).toLocaleString(locale)} km`;
-            } else {
-                const places = this._properties.decimalPlacesMeter || 2;
-                let segment = this.lastLengthSegment = meters;
-                let length = segment.toFixed(places || 2)
-                return `${parseFloat(length).toLocaleString(locale)} m`;
-            }
-        }
+        return this.calculator.getLength(geometry, this._model.lengthUnit);
     }
 
     /*
@@ -135,13 +85,7 @@ export default class MeasurementHandler {
      * @private
      */
     getLengthString(length) {
-        let unit = this._model.lengthUnit;
-        if (unit !== 'auto') {
-            return `${length.toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
-        } else {
-            return length > 1000 ? `${((length / 1000) * Math.pow(10, this._model.kmDecimal) / Math.pow(10, this._model.kmDecimal)).toLocaleString(this.i18n.locale)} km` :
-                `${length.toLocaleString(this.i18n.locale)} m`
-        }
+        return this.calculator.getLengthString(length, this._model.lengthUnit);
     }
 
     /*
@@ -158,34 +102,7 @@ export default class MeasurementHandler {
         const lastPath = vertices[0].slice(vertices[0].length - 2)
         const spatialReference = this._model.spatialReference;
         const geometry = new Polyline(lastPath, spatialReference);
-        return this.getLengthNumeric(geometry, this._model.lengthUnit)
-    }
-
-    /*
-     * get Length of given geometry in meters
-     * @param geometry
-     * @returns {number}
-     * @private
-     */
-    getLengthNumeric(geometry, unit) {
-        if (unit === 'auto') unit = null;
-        let length = (this.getMapLength(geometry, unit || 'meters') * Math.pow(10, this._model.mDecimal)) / Math.pow(10, this._model.mDecimal);
-        return +length;
-    }
-
-    /*
-     * calculates the linear map length depending on the spatial reference system
-     * @param geometry, unit
-     * @returns {number}
-     * @private
-     */
-    getMapLength(geometry, unit) {
-        const srs = this._model.spatialReference;
-        if (srs.isWebMercator || srs.isWGS84) {
-            return geoEngine.geodesicLength(geometry, unit);
-        } else {
-            return geoEngine.planarLength(geometry, unit);
-        }
+        return this.calculator.getLengthNumeric(geometry, this._model.lengthUnit);
     }
 
     // Other Calculations
@@ -225,11 +142,6 @@ export default class MeasurementHandler {
         return (m < 1 && m > -1) ? 0 : yOffset;
     }
 
-    getUnitAbbreviation(unit) {
-        const mapping = this._properties.unitAbbreviationMapping;
-        return mapping[unit];
-    }
-
     /*
      * calculate the slope of the last part of the given path
      * @param path
@@ -238,11 +150,6 @@ export default class MeasurementHandler {
      */
     calculateSlope(path) {
         return (path[path.length - 2][1] - path[path.length - 1][1]) / (path[path.length - 2][0] - path[path.length - 1][0]);
-    }
-
-    _getUnitAbbreviation(unit) {
-        const mapping = this._properties.unitAbbreviationMapping;
-        return mapping[unit];
     }
 
     /*
