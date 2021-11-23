@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import PointAction from "./actions/PointMeasurementAction"
-import PolylineAction from "./actions/PolylineMeasurementAction"
-import PolygonAction from "./actions/PolygonMeasurementAction"
+import PointAction from "./actions/PointMeasurementAction";
+import PolylineAction from "./actions/PolylineMeasurementAction";
+import PolygonAction from "./actions/PolygonMeasurementAction";
+import TopicEvent from 'apprt/event/Event';
 
 export default class MeasurementHandler {
     activate() {
@@ -33,6 +34,11 @@ export default class MeasurementHandler {
         this._model.enableAngleMeasurement = props.enableAngleMeasurement;
 
         this._measurementDisabledTools = props.disabledMeasurementTools;
+        
+        // set viewModel if SketchingHandler was started before this component
+        if (this.sketchingHandler?.sketchViewModel) {
+            this._setSketchViewModel(new TopicEvent('must_not_be_empty', { viewModel: this.sketchingHandler.sketchViewModel }));
+        }
     }
 
     handler(evt) {
