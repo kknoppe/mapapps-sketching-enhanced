@@ -46,26 +46,6 @@ export default class MeasurementHandler {
         return this.calculator.getArea(geometry, this._model.areaUnit);
     }
 
-    /*
-     * get Area of given geometry
-     * @param area {number}
-     * @returns {string}
-     * @private
-     */
-    getAreaString(area) {
-        return this.calculator.getAreaString(area, this._model.areaUnit);
-    }
-
-    /*
-     * get Area of given geometry in meters squared
-     * @param geometry
-     * @returns {number}
-     * @private
-     */
-    getAreaNumeric(geometry, unit) {
-        return this.calculator.getAreaNumeric(geometry, unit);        
-    }
-
     // Length Calculations
 
     /*
@@ -102,7 +82,7 @@ export default class MeasurementHandler {
         const lastPath = vertices[0].slice(vertices[0].length - 2)
         const spatialReference = this._model.spatialReference;
         const geometry = new Polyline(lastPath, spatialReference);
-        return this.calculator.getLengthNumeric(geometry, this._model.lengthUnit);
+        return this.calculator.getLength(geometry, this._model.lengthUnit);
     }
 
     // Other Calculations
@@ -493,20 +473,17 @@ export default class MeasurementHandler {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
-        let lastSegment, currentArea;
+        
         switch (activeTool) {
             case("drawpolylinetool"):
             case ("drawfreehandpolylinetool"):
-                lastSegment = this.measurements.segmentLength = this.getLastSegmentLength(evt);
-                this._model.currentLength = this.getLengthString(lastSegment);
-                this._model.aggregateLength = this.getLengthString(lastSegment + this.measurements.totalLength);
+                this._model.currentLength = this.getLastSegmentLength(evt);
+                this._model.aggregateLength =this.getLength(graphic.geometry)
                 break;
             case("drawpolygontool"):
             case("drawfreehandpolylgontool"):
-                currentArea = this.measurements.currentArea = this.getAreaNumeric(graphic.geometry);
-                lastSegment = this.measurements.segmentLength = this.getLastSegmentLength(evt);
-                this._model.currentLength = this.getLengthString(lastSegment);
-                this._model.currentArea = this.getAreaString(currentArea);
+                this._model.currentLength = this.getLastSegmentLength(evt);
+                this._model.currentArea = this.getArea(graphic.geometry);
                 break;
             case("drawrectangletool"):
             case("drawcircletool"):
@@ -529,21 +506,17 @@ export default class MeasurementHandler {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
         const graphic = update ? evt.graphics[0] : evt.graphic;
         const activeTool = evt.activeTool;
-        const lastSegment = this.getLastSegmentLength(evt);
-        this.measurements.totalLength = this.measurements.totalLength + lastSegment;
-        const currentArea = this.measurements.currentArea;
+
         switch (activeTool) {
             case("drawpolylinetool"):
             case("drawfreehandpolylinetool"):
                 this._model.currentLength = this.getLengthString(0);
-                // this._model.totalLength = this.getLengthString(this.measurements.totalLength);
                 this._model.totalLength = this.getLength(graphic.geometry);
                 break;
             case("drawpolygontool"):
             case("drawfreehandpolylgontool"):
                 this._model.currentLength = this.getLengthString(0);
                 this._model.perimeter = this.getLength(graphic.geometry);
-                // this._model.currentArea = this._model.area = this.getAreaString(currentArea);
                 this._model.area = this.getArea(graphic.geometry)
                 break;
             case("drawrectangletool"):
@@ -564,12 +537,6 @@ export default class MeasurementHandler {
      * @public
      */
     resetMeasurementResults() {
-        this.measurements = {
-            totalLength: 0,
-            segmentLength: 0,
-            currentArea: 0,
-            area: 0
-        }
         this._model._lastVertex = null;
         this._model.coordinates = null;
         this._model.currentLength = 0;

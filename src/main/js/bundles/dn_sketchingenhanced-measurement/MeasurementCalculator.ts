@@ -40,31 +40,8 @@ export class MeasurementCalculator {
      * get Area of given geometry
      */
     public getArea(geometry: Polygon, unit: __esri.ArealUnits | 'auto'): string {
-        const locale = this.i18n.locale;
-        if (unit !== 'auto') {
-            return `${this.getAreaNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`;
-        } else {
-            const squareMeters = this.getAreaNumeric(geometry, 'square-meters');
-            const useKms = squareMeters > 1000000;
-            if (useKms) {
-                const places = this.settings.kmDecimal;
-                const area = this.getAreaNumeric(geometry, 'square-kilometers').toFixed(places || 2);
-                return `${parseFloat(area).toLocaleString(locale)} km²`
-            } else {
-                const places = this.settings.mDecimal;
-                const area = squareMeters.toFixed(places || 2);
-                return `${parseFloat(area).toLocaleString(locale)} m²`;
-            }
-        }
-    }
-
-    /*
-     * get Area of given geometry in meters squared
-     */
-    public getAreaNumeric(geometry: Polygon, unit: __esri.ArealUnits | 'auto'): number {
-        if (unit === 'auto') unit = null as __esri.ArealUnits;
-        let area = (this.getMapArea(geometry, unit || 'square-meters') * Math.pow(10, this.settings.mDecimal)) / Math.pow(10, this.settings.mDecimal);
-        return +area;
+        const unitForCalculation = unit === 'auto' ? 'square-meters' : unit;
+        return this.getAreaString(this.getMapArea(geometry, unitForCalculation), unit);
     }
 
     /*
@@ -83,13 +60,38 @@ export class MeasurementCalculator {
      * get Area of given geometry
      */
     public getAreaString(area: number, unit: __esri.ArealUnits | 'auto'): string {
+        const { area: calculatedArea, unit: calculatedUnit } = this.getCalculatedAreaAndUnit(area, unit);
+        return this.formatValue(calculatedArea, calculatedUnit);
+    }
+
+    protected getCalculatedAreaAndUnit(area: number, unit: __esri.ArealUnits | 'auto'): { area: number, unit: __esri.ArealUnits } {
         if (unit !== 'auto') {
-            return `${area.toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`;
-        } else {
-            return area > 1000000 ?
-                `${(Math.round((area / 1000000) * Math.pow(10, this.settings.kmDecimal)) / Math.pow(10, this.settings.kmDecimal)).toLocaleString(this.i18n.locale)} km²` :
-                `${area.toLocaleString(this.i18n.locale)} m²`;
+            // fixed unit
+            return { area, unit };
         }
+        // automatic recalculation of area
+        if (area > 1000000) {
+            // calculate square-kilometers
+            return { area: area / 1000000, unit: 'square-kilometers' };
+        }
+        return { area: area, unit: 'square-meters' };
+    }
+
+    protected formatValue(value: number, unit: __esri.Unit): string {
+        const digits = this.getDigitForUnit(unit);
+        const formattedValue = value.toLocaleString(this.i18n.locale, { maximumFractionDigits: digits });
+
+        return `${formattedValue} ${this.getUnitAbbreviation(unit)}`;
+    }
+
+    protected getDigitForUnit(unit: __esri.Unit): number {
+        const map = new Map<__esri.Unit, number>();
+        map.set('square-meters', this.settings.mDecimal);
+        map.set('meters', this.settings.mDecimal);
+        map.set('square-kilometers', this.settings.kmDecimal);
+        map.set('kilometers', this.settings.kmDecimal);
+
+        return map.get(unit) || 3;
     }
 
     /**
@@ -104,45 +106,29 @@ export class MeasurementCalculator {
      * get Length of given geometry
      */
     public getLength(geometry: Polygon, unit: __esri.LinearUnits | 'auto'): string {
-        const locale = this.i18n.locale;
+        const unitForCalculation = unit === 'auto' ? 'meters' : unit;
+        return this.getLengthString(this.getMapLength(geometry, unitForCalculation), unit);
+    }
+
+    protected getCalculatedLengthAndUnit(length: number, unit: __esri.LinearUnits | 'auto'): { length: number, unit: __esri.LinearUnits } {
         if (unit !== 'auto') {
-            return `${this.getLengthNumeric(geometry, unit).toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`
-        } else {
-            let meters = this.getLengthNumeric(geometry, 'meters');
-            const useKms = meters > 1000;
-            if (useKms) {
-                const places = this.settings.decimalPlacesKiloMeter;
-                let segment = this.getLengthNumeric(geometry, 'kilometers');
-                let length = segment.toFixed(places || 2)
-                return `${parseFloat(length).toLocaleString(locale)} km`;
-            } else {
-                const places = this.settings.decimalPlacesMeter || 2;
-                let segment = meters;
-                let length = segment.toFixed(places || 2)
-                return `${parseFloat(length).toLocaleString(locale)} m`;
-            }
+            // fixed unit
+            return { length, unit };
         }
+        // automatic recalculation of length
+        if (length > 1000) {
+            // calculate kilometers
+            return { length: length / 1000, unit: 'kilometers' };
+        }
+        return { length: length, unit: 'meters' };
     }
 
     /**
      * get Length of given geometry
      */
     public getLengthString(length: number, unit: __esri.LinearUnits | 'auto'): string {
-        if (unit !== 'auto') {
-            return `${length.toLocaleString(this.i18n.locale)} ${this.getUnitAbbreviation(unit)}`;
-        } else {
-            return length > 1000 ? `${((length / 1000) * Math.pow(10, this.settings.kmDecimal) / Math.pow(10, this.settings.kmDecimal)).toLocaleString(this.i18n.locale)} km` :
-                `${length.toLocaleString(this.i18n.locale)} m`
-        }
-    }
-
-    /*
-     * get Length of given geometry in meters
-     */
-    protected getLengthNumeric(geometry: Polygon, unit: __esri.LinearUnits | 'auto'): number {
-        if (unit === 'auto') unit = null as __esri.LinearUnits;
-        const length = (this.getMapLength(geometry, unit || 'meters') * Math.pow(10, this.settings.mDecimal)) / Math.pow(10, this.settings.mDecimal);
-        return +length;
+        const { length: calculatedLength, unit: calculatedUnit } = this.getCalculatedLengthAndUnit(length, unit);
+        return this.formatValue(calculatedLength, calculatedUnit);
     }
 
     /**
