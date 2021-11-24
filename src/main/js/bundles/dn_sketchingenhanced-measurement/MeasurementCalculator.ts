@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import type Polygon from "esri/geometry/Polygon";
 import type SpatialReference from "esri/geometry/SpatialReference";
 import * as geoEngine from 'esri/geometry/geometryEngine';
-import Polygon from "esri/geometry/Polygon";
 
 export interface MeasurementCalculatorSettings {
     spatialReference: SpatialReference;
@@ -59,7 +59,7 @@ export class MeasurementCalculator {
     /**
      * get Area of given geometry
      */
-    public getAreaString(area: number, unit: __esri.ArealUnits | 'auto'): string {
+    protected getAreaString(area: number, unit: __esri.ArealUnits | 'auto'): string {
         const { area: calculatedArea, unit: calculatedUnit } = this.getCalculatedAreaAndUnit(area, unit);
         return this.formatValue(calculatedArea, calculatedUnit);
     }
