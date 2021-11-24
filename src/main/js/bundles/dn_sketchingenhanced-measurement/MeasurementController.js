@@ -187,7 +187,7 @@ export default class MeasurementHandler {
             resultStringWithUnit = angleText + " °"
         } else {
             let number = parseInt(angleText);
-            number = number / 350 * 400;
+            number = number / 360 * 400;
             resultStringWithUnit = number.toFixed(0) + " gon";
         }
 
