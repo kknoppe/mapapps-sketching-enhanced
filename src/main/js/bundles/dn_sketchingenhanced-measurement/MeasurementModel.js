@@ -60,7 +60,6 @@ properties(MeasurementModel, {
     _lastVertex: null,
     _vertices: [],
 
-    sketchGroup: 0,
     activeTool: ""
 
 });

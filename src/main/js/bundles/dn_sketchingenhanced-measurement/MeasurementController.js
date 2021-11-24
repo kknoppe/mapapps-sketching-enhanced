@@ -15,19 +15,26 @@
  */
 import Polyline from "esri/geometry/Polyline";
 import * as geoEngine from 'esri/geometry/geometryEngine';
-import TextSymbol from "esri/symbols/TextSymbol";
-import Graphic from "esri/Graphic";
 import ct_geometry from "ct/mapping/geometry";
 import Point from "esri/geometry/Point";
 import { MeasurementCalculator } from "./MeasurementCalculator";
+import { MeasurementGraphicFactory } from "./MeasurementGraphicFactory";
 
 export default class MeasurementHandler {
+
+    handlers = [];
 
     activate() {
         if (!this.i18n) {
             this.i18n = this._i18n?.get();
         }
         this.calculator = new MeasurementCalculator(this._model, this.i18n);
+        this.graphicFactory = new MeasurementGraphicFactory(this._model.textSettings);
+        this.handlers.push(this._model.watch('textSettings', ({value}) => (this.graphicFactory.textSettings = value)));
+    }
+
+    deactivate() {
+        this.handlers.forEach(x => x.remove());
     }
 
     setProperties(value) {
@@ -160,31 +167,12 @@ export default class MeasurementHandler {
      */
     createDistanceTextCursorUpdate(checkedPath, spatialReference, id) {
         const line = new Polyline(checkedPath, spatialReference);
-
         const lengthString = this.getLength(line);
-
         // calculate rotation angle for text
         const degAngle = -180 / Math.PI * Math.atan((checkedPath[1][1] - checkedPath[0][1]) / (checkedPath[1][0] - checkedPath[0][0]));
         const pnt = line.extent.center;
-        const textSymbol = new TextSymbol({
-            angle: degAngle,
-            text: lengthString,
-            flag: "measurementText",
-            color: this._model.textSettings.color,
-            id: `measurement-${id}`,
-            font: this._model.textSettings.font,
-            haloColor: this._model.textSettings.haloColor,
-            haloSize: this._model.textSettings.haloSize,
-            temporary: this._model.cursorUpdate
-        });
-        const graphic = new Graphic(pnt, textSymbol);
-        if (typeof id === "string") {
-            graphic.setAttribute("id", id);
-        } else {
-            graphic.setAttribute("id", `measurement-${id}`);
-        }
-        graphic.setAttribute("type", graphic.symbol.type);
-        return graphic;
+
+        return this.graphicFactory.createGraphic(lengthString, pnt, id, this._model.cursorUpdate, degAngle);
     }
 
     /*
@@ -208,26 +196,10 @@ export default class MeasurementHandler {
             number = number / 350 * 400;
             resultStringWithUnit = number.toFixed(0) + " gon";
         }
-        const textSymbol = new TextSymbol({
-            text: resultStringWithUnit,
-            flag: "measurementText",
-            color: this._model.textSettings.color,
-            id: `measurement-${id}`,
-            font: this._model.textSettings.font,
-            haloColor: this._model.textSettings.haloColor,
-            haloSize: this._model.textSettings.haloSize,
-            temporary: this._model.cursorUpdate,
-            group: this._model.sketchGroup
-        });
 
         const point = this._calcPointInQuadrant(quadrantsString, anglePoint, spatialReference);
-        const graphic = new Graphic(point, textSymbol);
 
-        if (typeof id === "string") {
-            graphic.setAttribute("id", id);
-        } else {
-            graphic.setAttribute("id", `measurement-${id}`);
-        }
+        const graphic = this.graphicFactory.createGraphic(resultStringWithUnit,point, id, this._model.cursorUpdate, undefined);
         graphic.setAttribute("type", "angle");
         return graphic;
     }

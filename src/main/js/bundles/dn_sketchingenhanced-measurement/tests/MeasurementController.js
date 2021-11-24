@@ -29,7 +29,8 @@ controller._model = {
     spatialReference: {
         isWebMercator: false
     },
-    mDecimal: 0
+    mDecimal: 0,
+    watch: () => { remove: () => null },
 }
 controller._mapWidgetModel = {
     spatialReference: {

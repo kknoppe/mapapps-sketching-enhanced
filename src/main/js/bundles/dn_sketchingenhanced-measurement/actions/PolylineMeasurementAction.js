@@ -26,7 +26,6 @@ export default class PolylineMeasurementHandler {
         this.controller = args.controller;
         this.i18n = args.i18n;
         this.actionType = 'polyline';
-        this.sketchGroup = 0;
     }
 
     _getMeasurements(evt) {
