@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 import Polyline from "esri/geometry/Polyline";
-import * as geoEngine from 'esri/geometry/geometryEngine';
-import ct_geometry from "ct/mapping/geometry";
-import Point from "esri/geometry/Point";
 import { MeasurementCalculator } from "./MeasurementCalculator";
 import { MeasurementGraphicFactory } from "./MeasurementGraphicFactory";
+import { AngleCalculator } from "./AngleCalculator";
 
 export default class MeasurementHandler {
 
@@ -30,7 +28,7 @@ export default class MeasurementHandler {
         }
         this.calculator = new MeasurementCalculator(this._model, this.i18n);
         this.graphicFactory = new MeasurementGraphicFactory(this._model.textSettings);
-        this.handlers.push(this._model.watch('textSettings', ({value}) => (this.graphicFactory.textSettings = value)));
+        this.handlers.push(this._model?.watch('textSettings', ({value}) => (this.graphicFactory.textSettings = value)));
     }
 
     deactivate() {
@@ -178,16 +176,12 @@ export default class MeasurementHandler {
     /*
      * create text symbol with line length on cursor moves
      * @param checkedPath: path consisting of to points which define the line
-     * @param spatialReference: spatial reference of the maps view
      * @param id: uid of the sketched polygon
      */
-    createAngleTextCursorUpdate(p1, p2, p3, anglePoint, spatialReference, id) {
-        // calculate quadrant relative to p1
-        const p2quadrant = this._getQuadrant(p2, p1);
-        const p3quadrant = this._getQuadrant(p3, p1);
-        const quadrantsString = [p2quadrant, p3quadrant].join(' ');
+    createAngleTextCursorUpdate(p1, p2, p3, anglePoint, id) {
+        const calculator = new AngleCalculator(p1, p2, p3, anglePoint, this._model._mapWidgetModel);
+        const angleText = calculator.getAngle();
 
-        const angleText = this._calculateAngle(p1, p2, p3, quadrantsString);
         let resultStringWithUnit;
         if (this._model.angleUnit === this.i18n.ui.angleUnit.unit1) {
             resultStringWithUnit = angleText + " °"
@@ -197,173 +191,9 @@ export default class MeasurementHandler {
             resultStringWithUnit = number.toFixed(0) + " gon";
         }
 
-        const point = this._calcPointInQuadrant(quadrantsString, anglePoint, spatialReference);
-
-        const graphic = this.graphicFactory.createGraphic(resultStringWithUnit,point, id, this._model.cursorUpdate, undefined);
+        const graphic = this.graphicFactory.createGraphic(resultStringWithUnit, calculator.getPoint(), id, this._model.cursorUpdate, undefined);
         graphic.setAttribute("type", "angle");
         return graphic;
-    }
-
-    _calcPointInQuadrant(quadrantsString, anglePoint, spatialReference) {
-        let manipulateX = 0;
-        let manipulateY = 0;
-        const pixelDistance = 25; // pixel
-
-        // calc the distance
-        const mapPointNew = this._calcGeoPointForPixelDistance(anglePoint, pixelDistance, pixelDistance);
-        const line = new Polyline({
-            spatialReference: spatialReference
-        });
-        line.addPath([anglePoint, mapPointNew])
-        // get distance between p1 and the new mapPoint
-        const geomDistance = geoEngine.planarLength(line);
-
-
-        switch (quadrantsString) {
-            case '1 1':
-            case '4 2':
-                manipulateX -= geomDistance;
-                manipulateY -= geomDistance;
-                break;
-            case '2 1':
-                // angle must be <= 180°
-                break;
-            case '4 1':
-                manipulateY -= geomDistance;
-                break;
-            case '1 2':
-                manipulateX -= geomDistance;
-                break;
-            case '2 2':
-            case '1 3':
-                manipulateX -= geomDistance;
-                manipulateY += geomDistance;
-                break;
-            case '3 2':
-                // angle must be <= 180°
-                break;
-            case '2 3':
-                manipulateY += geomDistance;
-                break;
-            case '3 3':
-            case '2 4':
-                manipulateX += geomDistance;
-                manipulateY += geomDistance;
-                break;
-            case '4 3':
-                // angle must be <= 180°
-                break;
-            case '1 4':
-                // angle must be <= 180°
-                break;
-            case '3 4':
-                manipulateX += geomDistance;
-                break;
-            case '4 4':
-            case '3 1':
-                manipulateX += geomDistance;
-                manipulateY -= geomDistance;
-                break;
-            default:
-                console.warn("error");
-                break;
-        }
-        return ct_geometry.createPoint(anglePoint.x + manipulateX, anglePoint.y + manipulateY, spatialReference);
-    }
-
-    /*
-     * calculate angles using points
-     * @param p1, p2, p3: points used for calulation
-     * @private
-     */
-    _calculateAngle(p1, p2, p3, quadrantsString) {
-
-        // construction of right triangles from p1, p2 and p1, p3
-        // calculating angle at p1
-        const a = Math.atan((Math.abs(p2.y - p1.y) / Math.abs(p2.x - p1.x))) * 180 / Math.PI;
-        const b = Math.atan((Math.abs(p3.y - p1.y) / Math.abs(p3.x - p1.x))) * 180 / Math.PI;
-
-        switch (quadrantsString) {
-            case '1 1':
-                this._angleButton_meas = (Math.abs(b - a));
-                if (b < a) this._angleButton_meas = (360 - this._angleButton_meas);
-                break;
-            case '2 1':
-                this._angleButton_meas = 360 - (360 - (a + b));
-                break;
-            case'3 1':
-                this._angleButton_meas = 360 - (180 + a - b);
-                break;
-            case'4 1':
-                this._angleButton_meas = 360 - (180 - (a + b));
-                break;
-            case'1 2':
-                this._angleButton_meas = 360 - (a + b);
-                break;
-            case'2 2':
-                this._angleButton_meas = (Math.abs(a - b));
-                if (a < b) this._angleButton_meas = (360 - this._angleButton_meas);
-                break;
-            case'3 2':
-                this._angleButton_meas = 360 - (360 - (180 - (a + b)));
-                break;
-            case'4 2':
-                this._angleButton_meas = 360 - (180 - a + b);
-                break;
-            case'1 3':
-                this._angleButton_meas = 360 - (180 + a - b);
-                break;
-            case'2 3':
-                this._angleButton_meas = 360 - (180 - (a + b));
-                break;
-            case'3 3':
-                this._angleButton_meas = (Math.abs(b - a));
-                if (b < a) this._angleButton_meas = (360 - this._angleButton_meas);
-                break;
-            case'4 3':
-                this._angleButton_meas = 360 - (360 - (a + b));
-                break;
-            case'1 4':
-                this._angleButton_meas = 360 - (360 - (180 - (a + b)));
-                break;
-            case'2 4':
-                this._angleButton_meas = 360 - (180 - a + b);
-                break;
-            case'3 4':
-                this._angleButton_meas = 360 - (a + b);
-                break;
-            case'4 4':
-                this._angleButton_meas = (Math.abs(a - b));
-                if (a < b) this._angleButton_meas = (360 - this._angleButton_meas);
-                break;
-            default:
-                console.warn("error");
-                break;
-        }
-
-        return this._angleButton_meas.toFixed(0).toString();
-    }
-
-    _getQuadrant(point, relativeTo) {
-        const tempPoint = {
-            x: point.x - relativeTo.x,
-            y: point.y - relativeTo.y
-        };
-        if (tempPoint.x >= 0 && tempPoint.y >= 0) return 1;
-        if (tempPoint.x >= 0 && tempPoint.y <= 0) return 2;
-        if (tempPoint.x <= 0 && tempPoint.y <= 0) return 3;
-        if (tempPoint.x <= 0 && tempPoint.y >= 0) return 4;
-    }
-
-    _calcGeoPointForPixelDistance(srcPoint, distanceInPxX, distanceInpxY) {
-        this.mapWidgetModel = this._model._mapWidgetModel;
-
-        const screenPointOfP1 = this.mapWidgetModel.view.toScreen(srcPoint);
-        const newPoint = this.mapWidgetModel.view.toMap({
-            x: screenPointOfP1.x + distanceInPxX,
-            y: screenPointOfP1.y + distanceInpxY
-        });
-        return new Point(newPoint, this.mapWidgetModel.spatialReference);
     }
 
     removeGraphicsById(id) {

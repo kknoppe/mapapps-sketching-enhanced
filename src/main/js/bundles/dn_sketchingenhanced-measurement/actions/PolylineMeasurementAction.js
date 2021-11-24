@@ -188,8 +188,7 @@ export default class PolylineMeasurementHandler {
                             y: pointCoordinates[1]
                         });
 
-                        const angleGraphic = this.controller.createAngleTextCursorUpdate(p1, p2, p3,
-                            point, spatialReference, id);
+                        const angleGraphic = this.controller.createAngleTextCursorUpdate(p1, p2, p3, point, id);
                         this.viewModel.layer.add(angleGraphic);
                     }
                 }
