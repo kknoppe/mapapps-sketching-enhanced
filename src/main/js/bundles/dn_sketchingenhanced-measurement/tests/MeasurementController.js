@@ -21,15 +21,7 @@ import Polyline from 'esri/geometry/Polyline';
 import Polygon from 'esri/geometry/Polygon';
 
 const controller = new MeasurementController()
-controller._properties = {
-    unitAbbreviationMapping: {
-        "meters": "m",
-        "kilometers": "km",
-        "square-meters": "m²",
-        "square-kilometers": "km²",
-        "hectares": "ha"
-    }
-};
+
 controller.i18n = {
     locale: 'de-de'
 }
@@ -37,13 +29,25 @@ controller._model = {
     spatialReference: {
         isWebMercator: false
     },
-    mDecimal: 0
+    mDecimal: 0,
+    watch: () => { remove: () => null },
 }
 controller._mapWidgetModel = {
     spatialReference: {
         isWebMercator: false
     }
 }
+
+controller.activate();
+controller.setProperties({
+    unitAbbreviationMapping: {
+        "meters": "m",
+        "kilometers": "km",
+        "square-meters": "m²",
+        "square-kilometers": "km²",
+        "hectares": "ha"
+    }
+});
 
 describe(module.id, function () {
     it("Measurement Controller", function () {
@@ -97,6 +101,35 @@ describe(module.id, function () {
         const area = controller.getArea(new Polygon(rings, spatialReference));
         expect(area).to.equal('4 km²');
     });
+
+    it('Should set unit to meters when length is less than 1000', function() {
+        controller.setProperties({lengthUnit: 'auto'});
+        const rings = [[0, 0], [0, 200], [200, 200], [200, 0]];
+        const actual = controller.getLength(new Polygon(rings, {wkid: 31466}));
+        expect(actual).to.equal("800 m");
+    });
+
+    it('Should set unit to kilometers when length is bigger than 1000', function() {
+        controller.setProperties({lengthUnit: 'auto'});
+        const rings = [[0, 0], [0, 2000], [2000, 2000], [2000, 0]];
+        const actual = controller.getLength(new Polygon(rings, {wkid: 31466}));
+        expect(actual).to.equal("8 km");
+    });
+
+    it('Should set unit to square-meters when area is less than 1 million', function() {
+        controller.setProperties({areaUnit: 'auto'});
+        const rings = [[0, 0], [0, 200], [200, 200], [200, 0]];
+        const actual = controller.getArea(new Polygon(rings, {wkid: 31466}));
+        expect(actual).to.equal("40.000 m²");
+    });
+
+    it('Should set unit to square-kilometers when area is bigger than 1 million', function() {
+        controller.setProperties({areahUnit: 'auto'});
+        const rings = [[0, 0], [0, 2000], [2000, 2000], [2000, 0]];
+        const actual = controller.getArea(new Polygon(rings, {wkid: 31466}));
+        expect(actual).to.equal("4 km²");
+    });
+
     it("get text position", function () {
         let path = [[0, 0], [0, 20]];
         expect(controller.getTextPosition(path)).to.equal('center');

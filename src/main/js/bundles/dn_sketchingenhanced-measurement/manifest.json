@@ -122,6 +122,11 @@
                 {
                     "name": "controller",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementController"
+                },
+                {
+                    "name": "sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler",
+                    "cardinality": "0..1"
                 }
             ]
         },

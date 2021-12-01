@@ -26,7 +26,6 @@ export default class PolylineMeasurementHandler {
         this.controller = args.controller;
         this.i18n = args.i18n;
         this.actionType = 'polyline';
-        this.sketchGroup = 0;
     }
 
     _getMeasurements(evt) {
@@ -189,8 +188,7 @@ export default class PolylineMeasurementHandler {
                             y: pointCoordinates[1]
                         });
 
-                        const angleGraphic = this.controller.createAngleTextCursorUpdate(p1, p2, p3,
-                            point, spatialReference, id);
+                        const angleGraphic = this.controller.createAngleTextCursorUpdate(p1, p2, p3, point, id);
                         this.viewModel.layer.add(angleGraphic);
                     }
                 }
