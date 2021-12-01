@@ -25,7 +25,7 @@ export class MeasurementGraphicFactory {
         this.textSettings = textSettings;
     }
 
-    createGraphic(label: string, geometry: Geometry, id, temporary: boolean, angle: number = 0, symbolOptions?: TextSymbol): Graphic {
+    createGraphic(label: string, geometry: Geometry, id, symbolOptions?: TextSymbol): Graphic {
         //TODO: Check which types id might have
         const textSymbol = new TextSymbol();
         // apply styling
@@ -33,12 +33,10 @@ export class MeasurementGraphicFactory {
 
         // apply data attributes
         Object.assign(textSymbol, {
-            angle,
             text: label,
             // @ts-ignore //TODO: do not use unsupported attributes
             flag: "measurementText",
             id: `measurement-${id}`,
-            temporary,
             ...symbolOptions,
         });
         const graphic = new Graphic({ geometry, symbol: textSymbol });

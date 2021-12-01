@@ -146,7 +146,7 @@ export default class PolygonMeasurementAction {
         const text = `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`;
 
         if (!this.controller.stringIsDuplicate(text)) {            
-            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(text, pnt, parseInt(id.substring(12)), this._model.cursorUpdate || this._model.vertexAdded, undefined, { horizontalAlignment: textPosition }));
+            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(text, pnt, parseInt(id.substring(12)), { horizontalAlignment: textPosition, temporary: this._model.cursorUpdate || this._model.vertexAdded }));
             textGraphic.setAttribute("type","areaText");
             this.viewModel.layer.add(textGraphic);
         }

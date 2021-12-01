@@ -100,7 +100,7 @@ export default class PolylineMeasurementHandler {
             // calculate text position due to last line element
             const textPosition = this.controller.getTextPosition(path);
             const yOffset = this.controller.getYOffset(path);
-            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(lengthString, pnt, parseInt(id.substring(12)), this._model.cursorUpdate || this._model.vertexAdded, undefined, {horizontalAlignment: textPosition, yoffset: yOffset}));
+            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(lengthString, pnt, parseInt(id.substring(12)), { horizontalAlignment: textPosition, yoffset: yOffset, temporary: this._model.cursorUpdate || this._model.vertexAdded }));
             
             textGraphic.setAttribute("type", "fullLength");
             viewModel.layer.add(textGraphic);

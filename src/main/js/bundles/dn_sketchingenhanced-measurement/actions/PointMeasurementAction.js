@@ -43,7 +43,7 @@ export default class PointMeasurementHandler {
         const point = evt.graphic.geometry;
         const coordString = await this._getPointString(evt);
         this._model.coordinates = coordString;
-        const graphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(coordString, point, id, undefined, undefined, { horizontalAlignment: 'left', xoffset: 10, yoffset: -20 }));
+        const graphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(coordString, point, id, { horizontalAlignment: 'left', xoffset: 10, yoffset: -20 }));
         viewModel.layer.add(graphic);
     }
 

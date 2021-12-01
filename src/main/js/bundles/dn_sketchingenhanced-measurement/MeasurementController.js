@@ -170,7 +170,7 @@ export default class MeasurementHandler {
         const degAngle = -180 / Math.PI * Math.atan((checkedPath[1][1] - checkedPath[0][1]) / (checkedPath[1][0] - checkedPath[0][0]));
         const pnt = line.extent.center;
 
-        return this.graphicFactory.createGraphic(lengthString, pnt, id, this._model.cursorUpdate, degAngle);
+        return this.graphicFactory.createGraphic(lengthString, pnt, id, { angle: degAngle, temporary: this._model.cursorUpdate });
     }
 
     /*
@@ -191,7 +191,7 @@ export default class MeasurementHandler {
             resultStringWithUnit = number.toFixed(0) + " gon";
         }
 
-        const graphic = this.graphicFactory.createGraphic(resultStringWithUnit, calculator.getPoint(), id, this._model.cursorUpdate, undefined);
+        const graphic = this.graphicFactory.createGraphic(resultStringWithUnit, calculator.getPoint(), id, { temporary: this._model.cursorUpdate });
         graphic.setAttribute("type", "angle");
         return graphic;
     }
