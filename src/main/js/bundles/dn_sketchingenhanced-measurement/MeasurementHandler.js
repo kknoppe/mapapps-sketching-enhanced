@@ -183,7 +183,7 @@ export default class MeasurementHandler {
         if (!evt.graphics[0].ignoreOnReshape){
             const type = evt.graphics[0].geometry.type
             const handler = this.getMeasurementAction(type);
-            handler && handler._updateMeasurements(evt);
+            handler?._updateMeasurements?.(evt);
         }
     }
 

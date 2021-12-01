@@ -17,6 +17,5 @@ import '.';
 import './MeasurementHandler';
 import './MeasurementController';
 import './MeasurementModel';
-import './actions/PointMeasurementAction';
 import './actions/PolylineMeasurementAction';
 import './actions/PolygonMeasurementAction';

@@ -16,16 +16,16 @@
 
 import { MeasurementGraphicFactory } from "dn_sketchingenhanced-measurement/MeasurementGraphicFactory";
 
-export default class PointMeasurementHandler {
+export default class PointMeasurementAction {
+
     constructor(args){
         this._properties = args._properties;
         this.coordinateTransformer = args.coordinateTransformer;
-        this.viewModel = args.viewModel;
+        this.layer = args.viewModel.layer;
         this._model = args._model;
-        this.controller = args.controller;
-        this.i18n = args.i18n;
-        this.actionType = 'point'
+        this.actionType = 'point';
     }
+
     _getMeasurements(evt){
         if (evt.activeTool && evt.activeTool === "drawpointtool"){
             this._addPointCoordinatesTextToPoint(evt);
@@ -39,12 +39,11 @@ export default class PointMeasurementHandler {
      */
     async _addPointCoordinatesTextToPoint(evt) {
         const id = evt.graphic.uid;
-        const viewModel = this.viewModel;
         const point = evt.graphic.geometry;
         const coordString = await this._getPointString(evt);
         this._model.coordinates = coordString;
         const graphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(coordString, point, id, { horizontalAlignment: 'left', xoffset: 10, yoffset: -20 }));
-        viewModel.layer.add(graphic);
+        this.layer.add(graphic);
     }
 
     /**
@@ -53,45 +52,42 @@ export default class PointMeasurementHandler {
      * @param evt
      * @private
      */
-    _getPointString(evt){
-        return new Promise((resolve,reject) => {
-            if(evt){
-                const srs = evt.graphic.geometry.spatialReference.wkid;
-                const targetSrs = this._model.srs && this._model.srs.systemWkid ? this._model.srs.systemWkid : srs;
-                const places = this._properties.pointCoordPlaces || 2;
-                const unitSymbolX = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolX : '';
-                const unitSymbolY = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolY : '';
-                const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
-                Promise.all([transformedPoint]).then(transformedPoint => {
-                    let x = transformedPoint[0].x.toFixed(places);
-                    let y = transformedPoint[0].y.toFixed(places);
-                    if(this._model.srs && this._model.srs.transform && this._model.srs.transform === 'dms') {
-                        const newX = this._toDMS(x, unitSymbolX.length > 1 ? unitSymbolX[1] : unitSymbolX);
-                        const newY = this._toDMS(y, unitSymbolY.length > 1 ? unitSymbolY[1] : unitSymbolY);
-                        resolve(newX+ " / "+newY);
-                    }
-                    resolve(x+unitSymbolX +" / "+y+unitSymbolY);
-                });
-            } else{
-                resolve("");
-            }
+    async _getPointString(evt) {
+        if (!evt) {
+            return '';
+        }
+
+        return new Promise((resolve, reject) => {
+            const srs = evt.graphic.geometry.spatialReference.wkid;
+            const targetSrs = this._model.srs && this._model.srs.systemWkid ? this._model.srs.systemWkid : srs;
+            const places = this._properties.pointCoordPlaces || 2;
+            const unitSymbolX = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolX : '';
+            const unitSymbolY = this._properties.systemsWithUnits.includes(targetSrs.toString()) ? this._properties.pointCoordUnitSymbolY : '';
+            const transformedPoint = this._transformGeom(evt.graphic.geometry, targetSrs);
+            transformedPoint?.then(transformedPoint => {
+                if (!transformedPoint) {
+                    return resolve(null);
+                }
+                let x = transformedPoint.x.toFixed(places);
+                let y = transformedPoint.y.toFixed(places);
+                if (this._model.srs && this._model.srs.transform && this._model.srs.transform === 'dms') {
+                    const newX = this._toDMS(x, unitSymbolX.length > 1 ? unitSymbolX[1] : unitSymbolX);
+                    const newY = this._toDMS(y, unitSymbolY.length > 1 ? unitSymbolY[1] : unitSymbolY);
+                    resolve(newX + " / " + newY);
+                }
+                resolve(x + unitSymbolX + " / " + y + unitSymbolY);
+            });
         });
-    }
-
-    _updateMeasurements(evt){
-
     }
 
     /**
      * transform the point into a the desired srs
-     * @return corrdinate string
+     * @return {Promise<string>} coordinate
      * @param geom, targetSrs
      * @private
      */
-    _transformGeom(geom, targetSrs){
-        if (this.coordinateTransformer) {
-            return this.coordinateTransformer.transform(geom, targetSrs);
-        }
+    async _transformGeom(geom, targetSrs) {
+        return this.coordinateTransformer?.transform(geom, targetSrs);
     }
 
     /**
