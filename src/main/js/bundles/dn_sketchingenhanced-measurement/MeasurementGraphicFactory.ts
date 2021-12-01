@@ -25,7 +25,7 @@ export class MeasurementGraphicFactory {
         this.textSettings = textSettings;
     }
 
-    createGraphic(label: string, geometry: Geometry, id, temporary: boolean, angle: number = 0): Graphic {
+    createGraphic(label: string, geometry: Geometry, id, temporary: boolean, angle: number = 0, symbolOptions?: TextSymbol): Graphic {
         //TODO: Check which types id might have
         const textSymbol = new TextSymbol();
         // apply styling
@@ -39,6 +39,7 @@ export class MeasurementGraphicFactory {
             flag: "measurementText",
             id: `measurement-${id}`,
             temporary,
+            ...symbolOptions,
         });
         const graphic = new Graphic({ geometry, symbol: textSymbol });
         if (typeof id === "string") {

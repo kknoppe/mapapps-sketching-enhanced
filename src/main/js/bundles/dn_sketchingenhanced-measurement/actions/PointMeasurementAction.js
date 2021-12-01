@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import TextSymbol from "esri/symbols/TextSymbol";
-import Graphic from "esri/Graphic";
+import { MeasurementGraphicFactory } from "dn_sketchingenhanced-measurement/MeasurementGraphicFactory";
 
 export default class PointMeasurementHandler {
     constructor(args){
@@ -38,27 +37,14 @@ export default class PointMeasurementHandler {
      * @param evt
      * @private
      */
-    _addPointCoordinatesTextToPoint(evt) {
+    async _addPointCoordinatesTextToPoint(evt) {
         const id = evt.graphic.uid;
         const viewModel = this.viewModel;
         const point = evt.graphic.geometry;
-        this._getPointString(evt).then(coordString => {
-            this._model.coordinates = coordString;
-            const textSymbol = new TextSymbol({
-                text: coordString,
-                color: this._model.textSettings.color,
-                name: `measurement-${id}`,
-                font: this._model.textSettings.font,
-                haloColor: this._model.textSettings.haloColor,
-                haloSize: this._model.textSettings.haloSize,
-                horizontalAlignment: "left",
-                xoffset: 10,
-                yoffset: -20
-            });
-            this._model.coordinates = coordString;
-            const graphic = new Graphic(point, textSymbol);
-            viewModel.layer.add(graphic);
-        });
+        const coordString = await this._getPointString(evt);
+        this._model.coordinates = coordString;
+        const graphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(coordString, point, id, undefined, undefined, { horizontalAlignment: 'left', xoffset: 10, yoffset: -20 }));
+        viewModel.layer.add(graphic);
     }
 
     /**

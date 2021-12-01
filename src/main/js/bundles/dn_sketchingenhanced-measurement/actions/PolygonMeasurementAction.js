@@ -15,8 +15,7 @@
  */
 
 import Point from "esri/geometry/Point";
-import TextSymbol from "esri/symbols/TextSymbol";
-import Graphic from "esri/Graphic";
+import { MeasurementGraphicFactory } from "dn_sketchingenhanced-measurement/MeasurementGraphicFactory";
 
 export default class PolygonMeasurementAction {
     constructor(args){
@@ -146,21 +145,8 @@ export default class PolygonMeasurementAction {
 
         const text = `${areaText}: ${areaString} \n ${circumferenceText}: ${circumString}`;
 
-        if (!this.controller.stringIsDuplicate(text)){
-            const textSymbol = new TextSymbol({
-                text: text,
-                color: this._model.textSettings.color,
-                font: this._model.textSettings.font,
-                flag: "measurementText",
-                id: id,
-                horizontalAlignment: textPosition,
-                haloColor: this._model.textSettings.haloColor,
-                haloSize: this._model.textSettings.haloSize,
-                temporary: this._model.cursorUpdate || this._model.vertexAdded
-            });
-
-            const textGraphic = new Graphic(pnt, textSymbol);
-            textGraphic.setAttribute("id",id);
+        if (!this.controller.stringIsDuplicate(text)) {            
+            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(text, pnt, parseInt(id.substring(12)), this._model.cursorUpdate || this._model.vertexAdded, undefined, { horizontalAlignment: textPosition }));
             textGraphic.setAttribute("type","areaText");
             this.viewModel.layer.add(textGraphic);
         }

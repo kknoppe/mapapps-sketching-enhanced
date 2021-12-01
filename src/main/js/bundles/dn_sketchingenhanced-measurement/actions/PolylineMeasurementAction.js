@@ -15,8 +15,7 @@
  */
 
 import Point from "esri/geometry/Point";
-import TextSymbol from "esri/symbols/TextSymbol";
-import Graphic from "esri/Graphic";
+import { MeasurementGraphicFactory } from "dn_sketchingenhanced-measurement/MeasurementGraphicFactory";
 
 export default class PolylineMeasurementHandler {
     constructor(args) {
@@ -101,23 +100,9 @@ export default class PolylineMeasurementHandler {
             // calculate text position due to last line element
             const textPosition = this.controller.getTextPosition(path);
             const yOffset = this.controller.getYOffset(path);
-
-            const textSymbol = this.textGraphic = new TextSymbol({
-                text: lengthString,
-                color: this._model.textSettings.color,
-                flag: "measurementText",
-                id: id,
-                font: this._model.textSettings.font,
-                horizontalAlignment: textPosition,
-                yoffset: yOffset,
-                haloColor: this._model.textSettings.haloColor,
-                haloSize: this._model.textSettings.haloSize,
-                temporary: this._model.cursorUpdate || this._model.vertexAdded
-            });
-            const textGraphic = new Graphic(pnt, textSymbol);
-            const type = "fullLength";
-            textGraphic.setAttribute("id", id)
-            textGraphic.setAttribute("type", type);
+            const textGraphic = (new MeasurementGraphicFactory(this._model.textSettings).createGraphic(lengthString, pnt, parseInt(id.substring(12)), this._model.cursorUpdate || this._model.vertexAdded, undefined, {horizontalAlignment: textPosition, yoffset: yOffset}));
+            
+            textGraphic.setAttribute("type", "fullLength");
             viewModel.layer.add(textGraphic);
         }
     }
