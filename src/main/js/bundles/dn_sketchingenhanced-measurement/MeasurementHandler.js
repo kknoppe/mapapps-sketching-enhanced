@@ -17,6 +17,7 @@ import PointAction from "./actions/PointMeasurementAction";
 import PolylineAction from "./actions/PolylineMeasurementAction";
 import PolygonAction from "./actions/PolygonMeasurementAction";
 import TopicEvent from 'apprt/event/Event';
+import { MeasurementLayer } from "./MeasurementLayer";
 
 export default class MeasurementHandler {
     activate() {
@@ -178,13 +179,29 @@ export default class MeasurementHandler {
         handler._getMeasurements(evt);
     }
 
-    _handleUpdate(evt){
-        // remove text graphics
-        if (!evt.graphics[0].ignoreOnReshape){
-            const type = evt.graphics[0].geometry.type
-            const handler = this.getMeasurementAction(type);
-            handler?._updateMeasurements?.(evt);
+    _handleUpdate(evt) {
+        const groupedGeometries = this._groupGraphicsByGeometryType(evt.graphics);
+        for ([geometryType, graphics] of Object.entries(groupedGeometries)) {
+            const handler = this.getMeasurementAction(geometryType);
+            handler?._updateMeasurements?.({...evt, graphics});
         }
+    }
+
+    _groupGraphicsByGeometryType(graphics) {
+        // group graphics by geometry type
+        const groups = graphics?.reduce?.((group, graphic) => {
+            group[graphic.geometry.type] = (group[graphic.geometry.type] || []).concat([graphic]);
+            return group;
+        }, {});
+
+        // filter all graphics, that should be ignored by measurement
+        return Object.entries(groups).reduce((group, [type, graphics]) => {
+            if (graphics.filter(g => !g.ignoreOnReshape).length === 0) {
+                // all graphics were filtered
+                delete group[type];
+            }
+            return group;
+        }, groups);
     }
 
     _handleRemove(evt){
@@ -216,7 +233,7 @@ export default class MeasurementHandler {
             coordinateTransformer: this._coordinateTransformer,
             i18n: this.i18n
         }
-        this._measurementActions.push(new PointAction(args))
+        this._measurementActions.push(new PointAction(args, this.layer))
         this._measurementActions.push(new PolylineAction(args))
         this._measurementActions.push(new PolygonAction(args))
     }
@@ -270,7 +287,18 @@ export default class MeasurementHandler {
     _setSketchViewModel(evt) {
         if (!this.viewModel) {
             this.viewModel = evt.getProperty("viewModel");
+
+            // Create Layer for measurements
+            const layer = this.layer = new MeasurementLayer();
+            layer.textSettings = this._model?.textSettings;
+            layer.setReferenceLayer(this.viewModel.layer);
+            this._model._mapWidgetModel.map.add(layer);
+
             this._startMeasurementHandlers();
+
+            false && this.viewModel.on("update", e=> { // TODO: remove
+               // console.log(e)
+            });
         }
     }
 }

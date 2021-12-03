@@ -25,15 +25,14 @@ export class MeasurementGraphicFactory {
         this.textSettings = textSettings;
     }
 
-    createGraphic(label: string, geometry: Geometry, id, symbolOptions?: TextSymbol): Graphic {
+    createGraphic(label: string, geometry: Geometry, id, symbolOptions?: __esri.TextSymbolProperties): Graphic {
         //TODO: Check which types id might have
         const textSymbol = new TextSymbol();
         // apply styling
         Object.keys(this.textSettings).filter(x => x !== 'type').forEach(x => Object.assign(textSymbol, { [x]: this.textSettings[x] }));
-
+        textSymbol.text = label;
         // apply data attributes
         Object.assign(textSymbol, {
-            text: label,
             // @ts-ignore //TODO: do not use unsupported attributes
             flag: "measurementText",
             id: `measurement-${id}`,
