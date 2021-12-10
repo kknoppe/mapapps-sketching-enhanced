@@ -119,5 +119,10 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 |pointCoordPlaces          |Number    |wie im Beispiel |Nachkommastellen der Koordinatenanzeige
 |pointCoordUnitSymbolX          |String    |wie im Beispiel |x-Label für Koordinatenanzeige
 |pointCoordUnitSymbolY          |String    |wie im Beispiel |y-Label für Koordinatenanzeige
-|srs          |Array    |wie im Beispiel |WKIDs planarer und geodätisch Koordinatensysteme
+|srsDefinition.geodesic   |Number[] | [4326, 102113, 102100, 3857]  | WKIDs der Koordinatensysteme, die geodätisch gemessen werden sollen
 |sketch          |Object    |wie im Beispiel |Einstellungen für die eingezeichneten Messobjekte in der Karte.
+
+## Changelog
+### 2.1.12
+`Added`
+- Konfiguration der Koordinatensysteme für die die Messwerte geodätisch berechnet werden sollen (siehe srsDefinition.geodesic)

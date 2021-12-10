@@ -18,8 +18,12 @@ import PolylineAction from "./actions/PolylineMeasurementAction";
 import PolygonAction from "./actions/PolygonMeasurementAction";
 import TopicEvent from 'apprt/event/Event';
 import { MeasurementLayer } from "./MeasurementLayer";
+import { MeasurementLabelProvider } from "./labels/MeasurementLabelProvider";
 
 export default class MeasurementHandler {
+    
+    currentAction = [];
+
     activate() {
         this.i18n = this._i18n.get();
         this.viewModel = null;
@@ -42,7 +46,7 @@ export default class MeasurementHandler {
         }
     }
 
-    handler(evt) {
+    async handler(evt) {
         this._model.spatialReference = this.viewModel.view.spatialReference;
         const showMeasurement = this._showMeasurementsAllowed(evt);
         this._model.cursorUpdate = evt.toolEventInfo && evt.toolEventInfo.type === "cursor-update";
@@ -58,7 +62,6 @@ export default class MeasurementHandler {
                 return;
             }
             this._recordMeasurements(evt);
-            evt.toolEventInfo && this.setCoordinates(evt);
         }
 
         // cases in which to exit
@@ -66,23 +69,29 @@ export default class MeasurementHandler {
             return;
         }
 
+        let action;
+
         switch(evt.type){
             case 'create':
                 if (evt.tool && showMeasurement){
-                    this._handleCreate(evt);
+                    action = this._handleCreate;
                 }
                 break;
             case 'redo':
             case 'undo':
             case 'update':
                 if (evt.graphics && showMeasurement){
-                    this._handleUpdate(evt);
+                    action = this._handleUpdate;
                 }
                 break;
+            case 'delete':
             case 'remove':
-                this._handleRemove(evt);
+                action = this._handleRemove;
                 break;
         }
+
+        // call events sequentially
+        this.currentAction = Promise.resolve(this.currentAction).then(() => action?.call(this, evt)).catch(console.error);
     }
 
     _showMeasurementsAllowed(evt){
@@ -97,16 +106,16 @@ export default class MeasurementHandler {
         if (evt.tool && this._model.measurementEnabled) {
             switch(evt.state){
                 case 'start':
-                    this.controller.resetMeasurementResults();
+                    this.resetMeasurementResults();
                     break;
                 case 'active':
                     if (this._model.cursorUpdate){
-                        this.controller.removeTemporaryMeasurements(evt);
+                        this.removeTemporaryMeasurements(evt);
                     }
                     break;
                 case 'cancel':
-                    this.controller.resetMeasurementResults();
-                    evt.graphic && this.controller.removeGraphicsById(evt.graphic.getAttribute("id"));
+                    this.resetMeasurementResults();
+                    evt.graphic && this.removeGraphicsById(evt.graphic.getAttribute("id"));
                     break
                 case 'complete':
                     this._recordMeasurements(evt);
@@ -114,6 +123,25 @@ export default class MeasurementHandler {
 
             }
         }
+    }
+
+    
+
+    removeTemporaryMeasurements(evt) {
+        const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
+        const graphic = update ? evt.graphics[0] : evt.graphic;
+        if (!graphic) return;
+        const id = graphic.getAttribute("id") || `measurement-${graphic.uid}`;
+        const viewModel = this.viewModel;
+        const gs = viewModel.layer.graphics.items.filter(g => {
+            const type = g.getAttribute("type");
+            const textGraphicId = g.getAttribute("id");
+            const temporary = g.symbol?.temporary;
+            if (textGraphicId) {
+                return g.getAttribute("id") === id && type && type === "text" && temporary;
+            }
+        });
+        viewModel.layer.removeMany(gs);
     }
 
     /*
@@ -176,15 +204,13 @@ export default class MeasurementHandler {
         }
         const toolType = evt.graphic.geometry.type || evt.tool;
         const handler = this.getMeasurementAction(toolType);
-        handler._getMeasurements(evt);
+
+        this.controller.setGraphicAttributes(evt);
+        return handler?._getMeasurements(evt);
     }
 
     _handleUpdate(evt) {
-        const groupedGeometries = this._groupGraphicsByGeometryType(evt.graphics);
-        for ([geometryType, graphics] of Object.entries(groupedGeometries)) {
-            const handler = this.getMeasurementAction(geometryType);
-            handler?._updateMeasurements?.({...evt, graphics});
-        }
+        return this.executeHandler(evt, (handler, e) => handler?._updateMeasurements?.(e));
     }
 
     _groupGraphicsByGeometryType(graphics) {
@@ -196,7 +222,10 @@ export default class MeasurementHandler {
 
         // filter all graphics, that should be ignored by measurement
         return Object.entries(groups).reduce((group, [type, graphics]) => {
-            if (graphics.filter(g => !g.ignoreOnReshape).length === 0) {
+            group[type] = graphics
+                .filter(g => !g.ignoreOnReshape)
+                .filter(x => x.getAttribute('measurementEnabled'));
+            if (group[type].length === 0) {
                 // all graphics were filtered
                 delete group[type];
             }
@@ -204,12 +233,35 @@ export default class MeasurementHandler {
         }, groups);
     }
 
-    _handleRemove(evt){
+    executeHandler(evt, callback) {
+        const callbacks = [];
+        const groupedGeometries = this._groupGraphicsByGeometryType(evt.graphics);
+        for ([geometryType, graphics] of Object.entries(groupedGeometries)) {
+            const handler = this.getMeasurementAction(geometryType);
+            callbacks.push(callback?.(handler, { ...evt, graphics }));
+        }
+
+        return Promise.all(callbacks);
+    }
+
+    _handleRemove(evt) {
         if (!evt.graphics) return;
         const id = evt.graphics[0].attributes?.id || evt.graphics[0].symbol.id;
-        this.controller.removeGraphicsById(id);
-        this.controller.resetMeasurementResults();
+        this.removeGraphicsById(id);
+        this.resetMeasurementResults();
         this.setActiveToolType(this._model.activeTool);
+
+        return this.executeHandler(evt, (handler, e) => handler?.deleteMeasurements?.(e));
+    }
+
+    removeGraphicsById(id) {
+        const gs = this.viewModel.layer.graphics.items.filter(graphic => {
+            const textGraphicId = graphic.getAttribute("id");
+            if (textGraphicId) {
+                return textGraphicId === id;
+            }
+        });
+        this.viewModel.layer.removeMany(gs);
     }
 
     getMeasurementAction(tool){
@@ -219,27 +271,32 @@ export default class MeasurementHandler {
     _startMeasurementHandlers(){
         this.controller.setProperties(this._properties);
         this.controller.viewModel = this.viewModel;
-        this.controller.resetMeasurementResults();
+        this.resetMeasurementResults();
         this._model.watch("measurementEnabled",(evt)=>{
             if (this._model.activeTool){
                 this.setActiveToolType(this._model.activeTool);
             }
         });
-        const args = {
-            _properties: this._properties,
-            viewModel: this.viewModel,
-            _model: this._model,
-            controller: this.controller,
-            coordinateTransformer: this._coordinateTransformer,
-            i18n: this.i18n
-        }
-        this._measurementActions.push(new PointAction(args, this.layer))
-        this._measurementActions.push(new PolylineAction(args))
-        this._measurementActions.push(new PolygonAction(args))
+        
+        const labelProvider = new MeasurementLabelProvider(this._properties?.measurementLabels, this.i18n);
+        this._measurementActions.push(new PointAction(this._model, this.layer, this.controller.calculator));
+        this._measurementActions.push(new PolylineAction(this.layer, this.controller.calculator, labelProvider, this.controller.angleCalculator));
+        this._measurementActions.push(new PolygonAction(this.layer, this.controller.calculator, labelProvider));
     }
 
-    setCoordinates(evt){
-        this._model.coordinates = evt.toolEventInfo.added || evt.toolEventInfo.coordinates;
+    /*
+     * resets all measurements on the data model
+     * @param none
+     * @public
+     */
+    resetMeasurementResults() {
+        this._model.coordinates = null;
+        this._model.currentLength = 0;
+        this._model.aggregateLength = 0
+        this._model.totalLength = 0;
+        this._model.area = 0;
+        this._model.currentArea = 0;
+        this._model.perimeter = 0;
     }
 
     setLengthUnits(unit){

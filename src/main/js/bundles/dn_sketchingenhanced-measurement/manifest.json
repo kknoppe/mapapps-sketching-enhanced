@@ -107,17 +107,15 @@
                         "type": "esriSLS",
                         "width": 2
                     }
+                },
+                "srsDefinition": {
+                    "geodesic": [4326, 102113, 102100, 3857]
                 }
             },
             "references": [
                 {
                     "name": "_model",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
-                },
-                {
-                    "name": "_coordinateTransformer",
-                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer",
-                    "cardinality": "0..1"
                 },
                 {
                     "name": "controller",

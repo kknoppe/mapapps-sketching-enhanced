@@ -57,7 +57,6 @@ properties(MeasurementModel, {
 
     cursorUpdate: false,
     vertexAdded: false,
-    _lastVertex: null,
     _vertices: [],
 
     activeTool: ""

@@ -296,7 +296,7 @@ function SketchingHandler() {
 
                 //events handler
                 this._sketchUpdateHandler && this._sketchUpdateHandler.remove();
-                this._sketchUpdateHandler = viewModel.on(["create", "update", "remove", "reset", "undo", "redo"], d_lang.hitch(this, this._onSketchUpdateHandler));
+                this._sketchUpdateHandler = viewModel.on(["create", "update", "remove", "reset", "undo", "redo", "delete"], d_lang.hitch(this, this._onSketchUpdateHandler));
 
                 this._eventService.sendEvent(this._topicBase + "createSketchViewModel", {viewModel: viewModel});
             }
