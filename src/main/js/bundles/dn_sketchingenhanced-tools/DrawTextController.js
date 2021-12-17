@@ -37,7 +37,7 @@ export default class DrawTextController extends Connect {
     }
 
     deactivate() {
-        this.deactivateDrawText();
+        this._destroyTextBox();
     }
 
     handler(evt) {
