@@ -320,7 +320,7 @@ export default {
                 }
                 case 'polyline': {
                     if (!settings.LineSetting){
-                        this.symbolSettings = settings.LineSetting = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '');
+                        this.symbolSettings = settings.LineSetting = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polylineSymbol : '');
                     } else {
                         this.symbolSettings = new LineSetting(settings.LineSetting);
                     }
@@ -328,7 +328,7 @@ export default {
                 }
                 case 'text': {
                     if (!settings.TextSetting){
-                        this.symbolSettings = settings.TextSetting = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.pointSymbol : '')
+                        this.symbolSettings = settings.TextSetting = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.textSymbol : '')
                     } else {
                         this.symbolSettings = new TextSetting(settings.TextSetting);
                     }
