@@ -179,12 +179,12 @@ export default {
                         return ['drawTab'];
                     case 'drawreshape1tool':
                         this.tab = null;
-                        return [''];
+                        return [];
                     default:
                         return ['drawTab'];
                 }
             } else {
-                return [''];
+                return [];
             }
         },
         settings: {
