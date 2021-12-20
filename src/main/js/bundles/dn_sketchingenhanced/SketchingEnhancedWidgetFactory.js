@@ -17,11 +17,14 @@ import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
 import SketchingWidget from './SketchingBase.vue';
 import {whenOnce, watch} from 'esri/core/watchUtils';
+import Binding from 'apprt-binding/Binding';
 
 export default class SketchingEnhancedWidgetFactory {
 
     createInstance() {
         const vm = new Vue(SketchingWidget);
+
+        Binding.for(vm, this.model).syncToLeft('graphicsLayerVisible', 'sketchingVisible').syncToLeftNow().enable();
 
         const props = this._properties;
         const tools = props.tools;
@@ -69,7 +72,8 @@ export default class SketchingEnhancedWidgetFactory {
                 }
                 const index = this._mapWidgetModel.view.map.layers.items.findIndex(item => item.id === this._sketchingHandler._properties.graphicLayerId);
                 watch(this._mapWidgetModel.view.map.layers.items[index], 'visible', val => {
-                    vm.$emit('sketchingLayerVisibilityChanged', val)
+                    vm.$emit('sketchingLayerVisibilityChanged', val);
+                    this.model.graphicsLayerVisible = val;
                 });
             });
         });

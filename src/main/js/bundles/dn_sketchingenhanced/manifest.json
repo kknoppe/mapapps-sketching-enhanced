@@ -159,6 +159,10 @@
                     "name": "extensions",
                     "providing": "dn_sketchingenhanced.SketchToolExtension",
                     "cardinality": "0..n"
+                },
+                {
+                    "name": "model",
+                    "providing": "dn_sketchingenhanced.SketchingEnhancedModel"
                 }
             ]
         },
@@ -358,6 +362,10 @@
                     "providing": "map-widget.MapWidgetModel"
                 }
             ]
+        },
+        {
+            "name": "SketchingEnhancedModel",
+            "provides": "dn_sketchingenhanced.SketchingEnhancedModel"
         }
     ]
 }
