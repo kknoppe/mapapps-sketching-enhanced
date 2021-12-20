@@ -26,7 +26,7 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
 ```json
  "dn_sketchingenhanced-measurement": {
         "Config": {
-            "lineMeasurementTimeout": 100,
+            "componentEnabled": true,
             "disabledMeasurementTools": [
                 "drawarrowtool",
                 "drawfreehandpolygontool",
@@ -97,6 +97,46 @@ Um das Bundle in der app.json zu konfigurieren, verwenden Sie die konfigurierbar
                    "type": "esriSLS",
                    "width": 2
                  }
+            },
+            "measurementUnits": {
+                "area": [
+                    "auto",
+                    "square-meters",
+                    "square-kilometers",
+                    "hectares"
+                ],
+                "length": [
+                    "auto",
+                    "meters",
+                    "kilometers"
+                ],
+                "point": [
+                    {
+                        "systemLabel": "WGS 84 (Dezimalgrad)",
+                        "systemWkid": 4326
+                    },
+                    {
+                        "systemLabel": "WGS 84 (lat/lon)",
+                        "systemWkid": 4326,
+                        "transform": "dms"
+                    },
+                    {
+                        "systemLabel": "WGS 84 (Pseudo-Mercator)",
+                        "systemWkid": 3857
+                    },
+                    {
+                        "systemLabel": "DHDN3 Gauß-Krüger",
+                        "systemWkid": 31467
+                    },
+                    {
+                        "systemLabel": "UTM 32N",
+                        "systemWkid": 25832
+                    },
+                    {
+                        "systemLabel": "UTM 33N",
+                        "systemWkid": 25833
+                    }
+                ]
             }
         }
  },
@@ -108,7 +148,7 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 
 |Property               |Type     |Default         | Description
 |-----------------------|---------|----------------|-----------
-|lineMeasurementTimeout      |Number    |wie im Beispiel |Zeit die die Maus ruhig gehalten werden muss, damit die aktuelle Messung temporär angezeigt wird
+|componentEnabled    |Boolean  |true | Gibt an, ob das Messen aktiviert ist
 |disabledMeasurementTools          |Array    |wie im Beispiel |ToolIds für die keine Messungen durchgeführt werden sollen
 |decimalPlacesMeter          |Number    |wie im Beispiel |Nachkommastellen für Meter-Angaben
 |decimalPlacesKiloMeter          |Number    |wie im Beispiel |Nachkommastellen für Kilometer-Angaben
@@ -121,8 +161,10 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 |pointCoordUnitSymbolY          |String    |wie im Beispiel |y-Label für Koordinatenanzeige
 |srsDefinition.geodesic   |Number[] | [4326, 102113, 102100, 3857]  | WKIDs der Koordinatensysteme, die geodätisch gemessen werden sollen
 |sketch          |Object    |wie im Beispiel |Einstellungen für die eingezeichneten Messobjekte in der Karte.
+| measurementUnits      | Object   |                               | wie im Beispiel          | Einheiten für Fläche, Länge und die auszuwählenden Koordinatensysteme   |
 
 ## Changelog
 ### 2.1.12
 `Added`
 - Konfiguration der Koordinatensysteme für die die Messwerte geodätisch berechnet werden sollen (siehe srsDefinition.geodesic)
+- Konfiguration der Einheiten wurde in dieses Bundle verschoben.

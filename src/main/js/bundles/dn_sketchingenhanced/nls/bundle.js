@@ -103,28 +103,8 @@ module.exports = {
                 },
             },
             measurement: {
-                showLineMeasurementsAtPolylines: 'Show length of line elements',
-                showLineMeasurementsAtPolygons: 'Show edge length of polygons',
-                showAngleMeasurementsAtPolylines: 'Show angle',
-                coordinates: 'Coordinates: ',
-                coordinateSystem: 'Coordinate System',
-                totalLength: 'Total Length: ',
-                currentLength: 'Current Segment Length: ',
-                aggregateLength: 'Current Total Length: ',
-                area: 'Total Area: ',
-                currentArea: 'Current Area: ',
-                perimeter: 'Perimeter: ',
-                copyToClipboard: 'Copy to Clipboard',
-                unitLengthSelect: 'Length Unit',
-                unitAreaSelect: 'Area Unit',
                 drawTab: 'Appearance',
-                measureTab: 'Measurement',
                 constructionTab: 'Construction',
-                angleUnit: {
-                    header: "Angle Measurement Unit",
-                    unit1: "Degree",
-                    unit2: "Gradian"
-                }
             },
             layerEditor: {
                 header: 'Sketching Layer',

@@ -166,7 +166,7 @@ export default class MeasurementHandler {
 
     setActiveToolType(toolId){
         this._disableAllTools();
-        const enabled = this._model.measurementEnabled;
+        const enabled = true;
         switch(toolId) {
             case "drawpointtool":
                 this._model.pointEnabled = enabled;
@@ -297,45 +297,6 @@ export default class MeasurementHandler {
         this._model.area = 0;
         this._model.currentArea = 0;
         this._model.perimeter = 0;
-    }
-
-    setLengthUnits(unit){
-        switch(unit){
-            case "meter":
-            case "meters":
-                this._model.lengthUnit = 'meters'
-                break;
-            case "kilometer":
-            case "kilometers":
-                this._model.lengthUnit = 'kilometers'
-                break;
-            default:
-                this._model.lengthUnit = 'auto'
-                break;
-        }
-    }
-
-    setAreaUnits(unit){
-        switch(unit){
-            case "square meters":
-            case "quadratmeter":
-                this._model.areaUnit = 'square-meters';
-                break;
-            case "square kilometers":
-            case "quadratkilometer":
-                this._model.areaUnit = 'square-kilometers';
-                break;
-            case "hectares":
-            case "hektar":
-                this._model.areaUnit = 'hectares';
-            default:
-                this._model.lengthUnit = 'auto';
-                break;
-        }
-    }
-
-    setCoordinatesystem(system) {
-        this._model.srs = system;
     }
 
     /*

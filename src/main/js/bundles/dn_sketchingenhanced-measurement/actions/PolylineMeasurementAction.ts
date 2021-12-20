@@ -72,10 +72,7 @@ export default class PolylineMeasurementHandler implements MeasurementAction {
      * @private
      */
     _checkIfPositionHasChanged(evt) {
-        //const lineMeasurementTimeout = this._model.lineMeasurementTimeout;
-        //setTimeout(() => {
         this._calculateTotalLineMeasurements(evt);
-        //}, lineMeasurementTimeout);
     }
 
     private _calculateTotalLineMeasurements(evt: __esri.SketchViewModelCreateEvent | MeasurementUpdateEvent): void {

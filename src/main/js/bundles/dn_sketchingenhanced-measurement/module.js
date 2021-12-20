@@ -19,3 +19,4 @@ import './MeasurementController';
 import './MeasurementModel';
 import './actions/PolylineMeasurementAction';
 import './actions/PolygonMeasurementAction';
+import './widgets/MeasurementWidgetFactory';

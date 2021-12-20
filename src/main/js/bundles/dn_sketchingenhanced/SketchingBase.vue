@@ -38,34 +38,21 @@
         <v-layout class="sketchingCenterContainer" row>
             <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
-                <v-tab v-for="item in tabs">
+                <v-tab v-for="(item, i) in tabs" :key="i">
                     {{i18n.measurement[item]}}
                 </v-tab>
+                
+                <template v-for="(extension, j) in extensionTabs">
+                    <v-tab v-if="extensionIsVisible(extension) && !settingsEnabled" :key="(j+tabs.length)">
+                        {{extension.header}}
+                    </v-tab>
+                </template>
+                
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
-                        <v-container class="pa-2" v-if="!item">{{i18n.noActiveTool}}</v-container>
-                        <v-tab-item v-if="item" :key="index">
+                        <v-container class="pa-2" v-if="!item" :key="'placeholder'-index">{{i18n.noActiveTool}}</v-container>
+                        <v-tab-item v-if="item" :key="index" :value="index">
                             <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool" v-on:update:settings="settingsChange" :options="initialSymbolSettings"></illustration>
-                            <v-flex class="measurementToolsTab justify-space-between align-stretch" pa-1 v-if="item === 'measureTab'" grow>
-                                <v-flex v-show="measurementEnabled">
-                                    <measurement :measurements.sync="measurements"
-                                                 :angle-unit.sync="angleUnit"
-                                                 :units="units"
-                                                 :i18n="i18n"
-                                                 @length-unit-input="setLengthUnits"
-                                                 @area-unit-input="setAreaUnits"
-                                                 @coordinate-system-input="$emit('coordinate-system-input', $event)"
-                                    ></measurement>
-                                </v-flex>
-                                <v-divider
-                                    class="mx-4"
-                                ></v-divider>
-                                <measurement-toggle v-on:toggleMeasurement="_toggleMeasurementEnabled"
-                                                    :measurementBoolean="measurementEnabled"
-                                                    :i18n="i18n"
-                                                    :bus="eventBus">
-                                </measurement-toggle>
-                            </v-flex>
                             <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :tool="currentTool" :i18n="i18n"></construction-panel>
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
@@ -76,8 +63,15 @@
                             </settings-panel>
                         </v-tab-item>
                     </template>
+                    <template v-for="(extension, k) in extensionTabs">
+                        <v-tab-item :key="(k+tabs.length)" v-if="!settingsEnabled" :value="k+tabs.length">
+                            <component v-if="extensionIsVisible(extension)" :is="extension.view"  v-bind="{ ...extension.props }" v-on="extension.events" />
+                        </v-tab-item>
+                    </template>
                 </v-tabs-items>
-            </v-tabs>
+
+               
+            </v-tabs> 
         </v-layout>
         <v-container class="pa-1 sketchingFooter">
             <v-btn @click="showSettings" outlined>
@@ -93,8 +87,6 @@ import Bindable from 'apprt-vue/mixins/Bindable';
 import i18n from 'dojo/i18n!./nls/bundle';
 import TopToolbar from './components/TopToolbar.vue';
 import Illustration from './components/Illustration.vue';
-import MeasurementWidget from './components/MeasurementWidget.vue'
-import MeasurementFooter from './components/MeasurementFooter.vue';
 import Navigation from './components/Navigation.vue';
 import ConstructionPanel from './components/construction/ConstructionPanel.vue';
 import PointSetting from 'dn_sketchingenhanced-symboleditor/model/PointSetting';
@@ -114,8 +106,6 @@ export default {
         ConstructionPanel,
         TopToolbar,
         SettingsPanel,
-        'measurement': MeasurementWidget,
-        'measurement-toggle': MeasurementFooter,
         'tool-button': ToolButton,
         'menu-button': MenuButton,
         'sketching-footer' : SketchingFooter
@@ -132,25 +122,6 @@ export default {
             eventBus: this,
             elements: [],
 
-            measurementEnabled: false,
-            showLineMeasurementsAtPolylines: false,
-            showLineMeasurementsAtPolygons: false,
-            showAngleMeasurementsAtPolylines: false,
-            enableAngleMeasurement: false,
-
-            coordinates: null,
-            currentLength: null,
-            aggregateLength: null,
-            totalLength: null,
-            area: null,
-            currentArea: null,
-            perimeter: null,
-
-            pointEnabled: false,
-            polylineEnabled: false,
-            polygonEnabled: false,
-            areaEnabled: false,
-            units: {},
 
             toolSettings: {
                 PointSetting: null,
@@ -180,15 +151,10 @@ export default {
         lastToolGroupIds: {
             type: Array,
         },
-        measurement: {
-            type: Boolean,
-        },
         sketchingVisible: {
             type: Boolean
         },
-        angleUnit: {
-        type: String
-    }
+        extensionTabs: Array,
     },
     computed: {
         tabs() {
@@ -200,7 +166,7 @@ export default {
                 switch(this.currentTool.id){
                     case 'drawpolygontool':
                     case 'drawpolylinetool':
-                        return ['drawTab', 'measureTab', 'constructionTab'];
+                        return ['drawTab', 'constructionTab'];
                     case 'drawcopytool':
                     case 'drawremovetool':
                     case 'drawcircletool':
@@ -215,7 +181,7 @@ export default {
                         this.tab = null;
                         return [''];
                     default:
-                        return ['drawTab', 'measureTab'];
+                        return ['drawTab'];
                 }
             } else {
                 return [''];
@@ -237,36 +203,6 @@ export default {
         lastTools() {
             return this._getOverviewTools(this.lastToolGroupIds);
         },
-        measurements: {
-            get() {
-                return {
-                    showLineMeasurementsAtPolylines: this.showLineMeasurementsAtPolylines,
-                    showLineMeasurementsAtPolygons: this.showLineMeasurementsAtPolygons,
-                    showAngleMeasurementsAtPolylines: this.showAngleMeasurementsAtPolylines,
-                    enableAngleMeasurement: this.enableAngleMeasurement,
-                    angleUnit: this.angleUnit,
-                    coordinates: this.coordinates,
-                    currentLength: this.currentLength,
-                    aggregateLength: this.aggregateLength,
-                    totalLength: this.totalLength,
-                    area: this.area,
-                    currentArea: this.currentArea,
-                    perimeter: this.perimeter,
-
-                    pointEnabled: this.pointEnabled,
-                    polylineEnabled: this.polylineEnabled,
-                    polygonEnabled: this.polygonEnabled,
-                    areaEnabled: this.areaEnabled
-                }
-            },
-            set(measurement) {
-                this.showLineMeasurementsAtPolylines = measurement.showLineMeasurementsAtPolylines;
-                this.showLineMeasurementsAtPolygons =  measurement.showLineMeasurementsAtPolygons;
-                this.showAngleMeasurementsAtPolylines = measurement.showAngleMeasurementsAtPolylines;
-                this.enableAngleMeasurement = measurement.enableAngleMeasurement;
-                this.angleUnit = measurement.angleUnit;
-            }
-        }
     },
     methods: {
         _getTool(toolId) {
@@ -353,12 +289,6 @@ export default {
                 }
             }
         },
-        setLengthUnits(unit){
-            this.$emit('length-unit-input', unit);
-        },
-        setAreaUnits(unit){
-            this.$emit('area-unit-input', unit);
-        },
         showSettings() {
             this.settingsEnabled = true;
             this.currentTool && this.$emit('onToolClick', {id: this.currentTool.id})
@@ -367,13 +297,12 @@ export default {
             Object.assign(this.toolSettings[settings.typeName],settings);
             Object.assign(this.symbolSettings,settings)
         },
-        _toggleMeasurementEnabled(value) {
-            this.$emit('measurementStatusChanged', value);
-            this.measurementEnabled = value;
-        },
         _toggleSketchingVisible(val){
             //this.sketchingVisible = val;
             this.$emit('toggleSketchingLayerVisibility', val)
+        },
+        extensionIsVisible(extension) {
+            return extension.for.includes(this.currentTool?.id);
         }
     }
 }
