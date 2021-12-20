@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Binding from 'apprt-binding/Binding';
 import Vue from 'apprt-vue/Vue';
 import VueDijit from 'apprt-vue/VueDijit';
 import SketchingWidget from './SketchingBase.vue';
@@ -24,50 +23,17 @@ export default class SketchingEnhancedWidgetFactory {
     createInstance() {
         const vm = new Vue(SketchingWidget);
 
-        const measurementBinding = Binding.for(vm, this._measurementModel);
-
-        measurementBinding
-            .syncAll('showLineMeasurementsAtPolylines')
-            .syncAll('showLineMeasurementsAtPolygons')
-            .syncAll('showAngleMeasurementsAtPolylines')
-            .syncAll('enableAngleMeasurement')
-            .syncAll('angleUnit')
-            .syncAll('currentLength')
-            .syncAll('aggregateLength')
-            .syncAll('totalLength')
-            .syncAll('area')
-            .syncAll('currentArea')
-            .syncAll('perimeter')
-            .syncAll('coordinates')
-            .syncAll('pointEnabled')
-            .syncAll('polylineEnabled')
-            .syncAll('polygonEnabled')
-            .syncAll('areaEnabled')
-            .syncAll('multiMeasurement')
-            .syncToLeftNow()
-            .enable();
-
         const props = this._properties;
         const tools = props.tools;
         vm.toolIds = tools;
-        vm.units = props.measurementUnits;
-        vm.showKeepMeasurements = props.showKeepMeasurements;
         vm.firstToolGroupIds = props.firstToolGroupIds;
         vm.lastToolGroupIds = props.lastToolGroupIds;
         //vm.footerToolIds = props.footerToolIds;
         vm.headerToolIds = props.headerToolIds;
-        vm.measurementEnabled = this._measurementModel.measurementEnabled;
-        this._measurementModel.lineMeasurementTimeout = props.lineMeasurementTimeout;
-
-        vm.measurement = props.measurement;
 
         Object.assign(vm, {
             constructionModel: this._constructionModel,
         });
-
-        if (props.multipleMeasurementsEnabled){
-            this._measurementHandler.multiMeasurement = props.multipleMeasurementsEnabled;
-        }
 
         // loading symbol settings from sketching Handler properties
         vm.initialSymbolSettings = this._sketchingHandler._properties.sketch;
@@ -75,22 +41,6 @@ export default class SketchingEnhancedWidgetFactory {
         const allTools = tools.operator.concat(tools.draw).concat(tools.edit);
 
         this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
-
-        vm.$on('length-unit-input', val => {
-            this._measurementHandler.setLengthUnits(val.toLowerCase());
-        });
-
-        vm.$on('area-unit-input', val => {
-            this._measurementHandler.setAreaUnits(val.toLowerCase());
-        });
-
-        vm.$on('coordinate-system-input', val => {
-            this._measurementHandler.setCoordinatesystem(val);
-        });
-
-        vm.$on('measurementStatusChanged', val => {
-            this._measurementModel.measurementEnabled = this.measurementEnabled = vm.measurementEnabled = val;
-        });
 
         vm.$on('settingsSelectionChanged', settings => {
             this._activateHelpLine(settings);
@@ -146,6 +96,7 @@ export default class SketchingEnhancedWidgetFactory {
 
         widget.onSketchingActivated = () => this._activateToolOnStartup(vm);
 
+        vm.extensionTabs = this.extensions;
         return widget;
     }
 

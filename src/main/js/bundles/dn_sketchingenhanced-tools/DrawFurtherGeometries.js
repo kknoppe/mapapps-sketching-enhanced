@@ -443,6 +443,7 @@ export default class DrawFurtherGeometries {
             target: viewModel,
             state: 'active',
             toolEventInfo: {
+                coordinates: event.coordinates || event?.mapPoint ? [event.mapPoint.x, event.mapPoint.y] : null,
                 type: 'cursor-update'
             },
             type: 'create',

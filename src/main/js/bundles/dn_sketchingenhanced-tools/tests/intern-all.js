@@ -13,7 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import "dn_sketchingenhanced/tests/intern-all";
-import "dn_sketchingenhanced-measurement/tests/intern-all";
-import "dn_sketchingenhanced-symboleditor/tests/intern-all";
-import "dn_sketchingenhanced-tools/tests/intern-all";
+import './DrawFurtherGeometries.spec';

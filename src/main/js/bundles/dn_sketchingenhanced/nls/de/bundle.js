@@ -103,28 +103,8 @@ module.exports = {
             },
         },
         measurement: {
-            showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
-            showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
-            showAngleMeasurementsAtPolylines: 'Zeige Winkel',
-            coordinates: 'Koordinaten: ',
-            coordinateSystem: 'Koordinatensystem',
-            totalLength: 'Gesamtlänge: ',
-            currentLength: 'Aktuelle Teilstrecke: ',
-            aggregateLength: 'Aktuelle Gesamtlänge: ',
-            area: 'Gesamtfläche: ',
-            currentArea: 'Aktuelle Fläche: ',
-            perimeter: 'Umfang: ',
-            copyToClipboard: 'Kopieren',
-            unitLengthSelect: 'Längeneinheit',
-            unitAreaSelect: 'Flächeneinheit',
             drawTab: 'Darstellung',
-            measureTab: 'Messung',
             constructionTab: 'Konstruktion',
-            angleUnit: {
-                header: "Winkleinheit",
-                unit1: "Grad",
-                unit2: "Gon"
-            }
         },
         layerEditor: {
             header: 'Sketching-Layer-Übersicht',

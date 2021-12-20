@@ -18,166 +18,42 @@ module.exports = {
     bundleDescription: "Sketching Enhanced Measurement",
     ui: {
         windowTitle: 'Messen',
-        activeConstructionLength: 'Länge',
-        activeConstructionAngle: 'Winkel',
-        turnOnVisibility: 'Messungen einblenden',
-        turnOffVisibility: 'Messungen ausblenden',
+        tabTitle: 'Messung',
         enableMeasurements: 'Messen aktivieren',
-        disableKeepMeasurements: 'Messungen beibehalten deaktivieren',
-        enableKeepMeasurements: 'Messungen beibehalten aktivieren',
-        angleUnit: {
-            unit1: "Grad",
-            unit2: "Gon"
-        },
-        textEditor: {
-            bold: 'Fett',
-            italic: 'Kursiv',
-            underlined: 'Unterstrichen',
-            blurSize: 'Größe',
-            textFontButton: 'Schriftart',
-            textColorButton: 'Schriftfarbe',
-            textStyleButton: 'Schriftstil',
-            textSizeButton: 'Schriftgröße',
-            textBlurButton: 'Schrifteffekt',
-            textAngleButton: 'Textrotation',
-            angle: 'Winkel',
-            rules: {
-                required: 'Wert wird ben\u00f6tigt',
-                number: 'Wert muss vom Typ number sein',
-                string: 'Wert muss vom Typ string sein',
-                invalidPattern: 'Wert muss vom Typ number-number sein',
-                tooBig: 'Maximum 360°',
-                tooSmall: 'Minimum 0°',
+
+        measurement: {
+            showLineMeasurementsAtPolylines: 'Zeige Länge von Linienelementen',
+            showLineMeasurementsAtPolygons: 'Zeige Kantenlänge von Polygonen',
+            showAngleMeasurementsAtPolylines: 'Zeige Winkel',
+            coordinateSystem: 'Koordinatensystem',
+            copyToClipboard: 'Kopieren',
+            unitLengthSelect: 'Längeneinheit',
+            unitAreaSelect: 'Flächeneinheit',
+            angleUnit: {
+                header: "Winkleinheit",
+                unit1: "Grad",
+                unit2: "Gon"
             },
-        },
-        symbolEditor: {
-            title: 'Symbol anpassen',
-            layerLabel: 'Layer wählen',
-            fieldLabel: 'Spalte auswählen',
-            methodLabel: 'Methode wählen',
-            unique: 'Eine einzige Farbe verwenden',
-            classBreaks: 'Unterschiedliche Farben nach Spalte verwenden',
-            openFillStyleMenuTooltip: 'Füllung',
-            openLineStyleEditorTooltip: 'Umrisslinie',
-            textFieldLabel: 'Werte: ',
-            textFieldLabelUniqueValue: 'Wert',
-            scaleVisibility: 'Maßstabsabhängigkeit Sichtbarkeit anpassen',
-            styleModifier: 'Angepasste Visualisierung',
-            sliderLabel: 'Transparenz',
-            singleSymbolLabel: 'Einzelsymbol',
-            categoriesLabel: 'Kategorie',
-            lineStyleSelectorTooltip: 'Linienstil',
-            pointSymbolSelectorTooltip: 'Punktsymbol',
-            lineWeightSliderLabel: 'Linienstärke',
-            colorPickerPointTooltip: 'Punktfarbe',
-            noFillTitle: 'Keine',
-            noLineTitle: 'Keine',
-            colorPickerFillTooltip: 'Füllungsfarbe',
-            fillStyleSelectorTooltip: 'Füllung',
-            colorPickerLineTooltip: 'Linienfarbe',
-            undo: 'Zurück',
-            lineSizeLabel: 'Größe',
-            pointRadiusSliderLabel: 'Punktgröße',
-            colorBtnLabel: 'FüllFarbe',
-            categorySelectorLabel: 'Kategorien',
-            textEditor: 'Text Editor aktivieren',
-            layerEditingWarning: 'Die Symbolisierung des Layers sollte nicht verändert werden',
-            colorGradientLineSelectorLabel: 'Farbverlauf selektieren',
-
-            loadingLayerMessage: 'Layer wird geladen...',
-            loadingValuesMessage: 'Werte werden geladen...',
-            applyChangesBtnTooltip: 'Änderungen vornehmen',
-            discardChangesBtnTooltip: 'Änderungen verwerfen',
-            colorPathLabel: '',
-            getChanges: 'Ändern',
-            noFieldsForSymbology: 'Es stehen keine Felder zur Verfügung',
-            colorPickerLabel: 'Farbe selektieren',
-            rules: {
-                required: 'Wert wird ben\u00f6tigt',
-                number: 'Wert muss vom Typ number sein',
-                string: 'Wert muss vom Typ string sein',
-                invalidPattern: 'Wert muss vom Typ number-number sein',
+            lengthUnit: {
+                auto: 'auto',
+                meters: 'Meter',
+                kilometers: 'Kilometer',
             },
+            areaUnit: {
+                auto: 'auto',
+                'square-meters': 'Quadratmeter',
+                'square-kilometers': 'Quadratkilometer',
+                hectares: 'Hektar',
+            },
+            coordinates: 'Koordinaten: ',
+            currentLength: 'Aktuelle Teilstrecke: ',
+            aggregateLength: 'Aktuelle Gesamtlänge: ',
+            totalLength: 'Gesamtlänge: ',
+            currentArea: 'Aktuelle Fläche: ',
+            perimeter: 'Umfang: ',
+            area: 'Gesamtfläche: ',
+
         },
-        layerEditor: {
-            header: 'myDSA-Profilübersicht',
-            noProfiles: 'Es wurden noch keine Sketching-Layer angelegt.',
-            noProfileTemplates: 'Es wurden noch keine Vorlagen angelegt.',
-            allProfilesFiltered: 'Zu dem Filter sind keine Layer vorhanden.',
-            tab_profiles: 'Persönlich',
-            tab_templates: 'Vorlagen',
-            noDescription: 'Keine Beschreibung',
-
-            // Tooltips
-            tooltip_import: 'Import',
-            tooltip_addProfile: 'Neuen Layer anlegen',
-            tooltip_edit: 'Beschreibung bearbeiten',
-            tooltip_edit_save: 'Speichern',
-            tooltip_edit_cancel: 'Abbrechen',
-            tooltip_delete: 'Layer löschen',
-            tooltip_copy: 'Layer kopieren',
-            tooltip_setAsDefault: 'Layer als Standard setzen',
-            tooltip_download: 'Layer exportieren',
-            tooltip_sort: 'Liste sortieren',
-            tooltip_selection_start: 'Mehrfachauswahl einschalten',
-            tooltip_selection_stop: 'Mehrfachauswahl ausschalten',
-
-            // Profile properties
-            createdAt: 'Erstellt am ${p1}, ${p2} Uhr', //NOSONAR
-            modifiedAt: 'Geändert am ${p1}, ${p2} Uhr', //NOSONAR
-            title: 'Name',
-            description: 'Beschreibung',
-
-            // Store
-            profileStore: 'Layerspeicher',
-
-            // Edit page
-            editProfile_header: 'Neues Profil anlegen',
-            editProfile_saveAs: 'Anlegen als',
-            editProfile_optPersonal: 'Persönliche Vorlage',
-            editProfile_optTemplate: 'Profilvorlage',
-            editProfile_optional: 'optional',
-            editProfile_setAsDefault: 'Als Standardprofil festlegen',
-            copy_appendix: ' (Kopie)',
-
-            // Rules
-            title_required: 'Name ist ein Pflichtfeld',
-            title_maxlength: 'Maximal ${p1} Zeichen erlaubt', //NOSONAR
-            title_unique: 'Es gibt bereits ein Profil mit diesem Namen!',
-            description_maxlength: 'Maximal ${p1} Zeichen erlaubt', //NOSONAR
-
-            // Delete dialog
-            deleteProfile_header: 'Layer löschen?',
-            deleteProfile_text: 'Möchten Sie wirklich den Layer "${p1}" löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.', //NOSONAR
-            deleteProfile_multiheader: 'Layer löschen?',
-            deleteProfile_multitext: 'Möchten Sie wirklich diese ${p1} Layer löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.', //NOSONAR
-            deleteProfile_confirm: 'Ja',
-            deleteProfile_cancel: 'Abbrechen',
-
-            // Set as default profile dialog
-            setAsDefaultProfile_header: 'Profil als Standard setzen?',
-            setAsDefaultProfile_text: 'Möchten Sie wirklich das Profil "${p1}" als Standard setzen?', //NOSONAR
-            setAsDefaultProfile_confirm: 'Ja',
-            setAsDefaultProfile_cancel: 'Abbrechen',
-
-            // Sort items
-            sort_title: 'Nach Name',
-            sort_creationdate: 'Nach Erstellungsdatum',
-
-            // Import page
-            importProfile_header: 'Profil importieren',
-            importProfile_cancel: 'Abbrechen',
-            importProfile_invalidFile: 'Ungültige Datei!',
-
-            // Download page
-            downloadProfile_header: 'Profil exportieren',
-            downloadProfile_cancel: 'Abbrechen',
-            downloadProfile_filename: 'Dateiname',
-            downloadProfile_emptyFilename: 'Der Dateiname darf nicht leer sein!',
-            downloadProfile_invalidFilename: 'Der Dateiname ist ungültig!',
-            downloadProfile_summary_single: 'Das folgende Profil wird exportiert:',
-            downloadProfile_summary: 'Die folgenden ${p1} Profile werden exportiert:', //NOSONAR
-        }
     },
     tool: {
         title: 'Messen',
