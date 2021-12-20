@@ -57,7 +57,7 @@
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
                                             @toggleSketchingLayerVisibility="_toggleSketchingVisible"
-                                            sketchingVisible="sketchingVisible"
+                                            :sketchingVisible="sketchingVisible"
                                             :bus="eventBus"
                                             :i18n="i18n">
                             </settings-panel>

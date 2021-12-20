@@ -35,13 +35,10 @@
             },
             bus: {
                 type: Object
-            }
+            },
+            sketchingVisible: Boolean,
         },
-        data() {
-            return {
-                sketchingVisible: true
-            }
-        },
+
         computed: {
             onSketchingVisible:{
                 get() {
