@@ -28,6 +28,7 @@ export class MeasurementLayer extends GraphicsLayer {
         this.observers.clean();
         // remove measurements when reference graphics were removed from the referenceLayer
         this.observers.add(referenceLayer?.graphics.on('after-remove', e => this.removeMeasurement(e.item)));
+        this.observers.add(referenceLayer?.watch('visible', e => (this.visible = e)));
     }
 
     public dispose() {
