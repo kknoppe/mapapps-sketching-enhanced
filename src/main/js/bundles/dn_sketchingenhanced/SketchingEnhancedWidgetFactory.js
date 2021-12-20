@@ -146,6 +146,9 @@ export default class SketchingEnhancedWidgetFactory {
 
         widget.onSketchingActivated = () => this._activateToolOnStartup(vm);
 
+        // when SketchingTool is already activated, we have to activate the startup-tool manually
+        this._activateToolOnStartup(vm);
+
         return widget;
     }
 
@@ -180,10 +183,10 @@ export default class SketchingEnhancedWidgetFactory {
 
     clickOnElement(id, parent) {
         const element = document.getElementById(id);
-        if(parent && (element.parentElement.parentElement.className.indexOf('active') !== -1)) {
+        if (parent && (element?.parentElement.parentElement.className.indexOf('active') !== -1)) {
             return;
         }
-        element && element.click();
+        element?.click();
     }
 
     _activateHelpLine(settings) {
