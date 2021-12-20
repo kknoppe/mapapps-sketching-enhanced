@@ -79,6 +79,12 @@ export default function () {
                     state: "complete",
                     type: "remove"
                 });
+                // "delete" is the correct event //TODO remove "remove"-Event
+                viewModel.emit('delete', {
+                    tool,
+                    graphics: gs,                    
+                    type: 'delete',
+                });
             }
         },
 

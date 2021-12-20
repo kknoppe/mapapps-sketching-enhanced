@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Mutable, properties} from 'apprt-core/Mutable';
+import { Mutable, properties } from 'apprt-core/Mutable';
 
 class MeasurementModel extends Mutable {
     constructor() {
@@ -27,7 +27,6 @@ properties(MeasurementModel, {
     showLineMeasurementsAtPolygons: false,
     showAngleMeasurementsAtPolylines: false,
     enableAngleMeasurement: false,
-    lineMeasurementTimeout: 100, //default
     mDecimal: 2, //default
     kmDecimal: 2, //default
     spatialReference: null,
@@ -45,7 +44,6 @@ properties(MeasurementModel, {
     areaUnit: 'auto',
 
     measurementEnabled: false,
-    multiMeasurement: true,
 
     pointEnabled: false,
     polylineEnabled: false,
@@ -57,7 +55,6 @@ properties(MeasurementModel, {
 
     cursorUpdate: false,
     vertexAdded: false,
-    _lastVertex: null,
     _vertices: [],
 
     activeTool: ""

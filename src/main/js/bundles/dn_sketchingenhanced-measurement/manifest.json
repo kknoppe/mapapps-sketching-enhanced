@@ -107,17 +107,67 @@
                         "type": "esriSLS",
                         "width": 2
                     }
-                }
+                },
+                "srsDefinition": {
+                    "geodesic": [
+                        4326,
+                        102113,
+                        102100,
+                        3857
+                    ]
+                },
+                "measurementUnits": {
+                    "area": [
+                        "auto",
+                        "square-meters",
+                        "square-kilometers",
+                        "hectares"
+                    ],
+                    "length": [
+                        "auto",
+                        "meters",
+                        "kilometers"
+                    ],
+                    "point": [
+                        {
+                            "systemLabel": "WGS 84 (Dezimalgrad)",
+                            "systemWkid": 4326
+                        },
+                        {
+                            "systemLabel": "WGS 84 (lat/lon)",
+                            "systemWkid": 4326,
+                            "transform": "dms"
+                        },
+                        {
+                            "systemLabel": "WGS 84 (Pseudo-Mercator)",
+                            "systemWkid": 3857
+                        },
+                        {
+                            "systemLabel": "DHDN3 Gauß-Krüger",
+                            "systemWkid": 31467
+                        },
+                        {
+                            "systemLabel": "UTM 32N",
+                            "systemWkid": 25832
+                        },
+                        {
+                            "systemLabel": "UTM 33N",
+                            "systemWkid": 25833
+                        }
+                    ]
+                },
+                "measurementTools": [
+                    "drawpointtool",
+                    "drawpolygontool",
+                    "drawpolylinetool",
+                    "drawrectangletool",
+                    "drawtriangletool"
+                ]
             },
             "references": [
                 {
                     "name": "_model",
                     "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
-                },
-                {
-                    "name": "_coordinateTransformer",
-                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer",
-                    "cardinality": "0..1"
                 },
                 {
                     "name": "controller",
@@ -163,6 +213,26 @@
                     "name": "_tools",
                     "providing": "ct.tools.Tool",
                     "cardinality": "0..n"
+                }
+            ]
+        },
+        {
+            "name": "MeasurementWidgetFactory",
+            "impl": "./widgets/MeasurementWidgetFactory",
+            "instanceFactory": true,
+            "provides": "dn_sketchingenhanced.SketchToolExtension",
+            "references": [
+                {
+                    "name": "config",
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementHandler"
+                },
+                {
+                    "name": "mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "model",
+                    "providing": "dn_sketchingenhanced-measurement.MeasurementModel"
                 }
             ]
         }

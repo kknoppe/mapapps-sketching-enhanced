@@ -67,10 +67,10 @@
                     },
                     "pointSymbol": {
                         "color": {
-                            "r": 102,
-                            "g": 205,
-                            "b": 0,
-                            "a": 0.4
+                            "r": 56,
+                            "g": 142,
+                            "b": 60,
+                            "a": 0.6
                         },
                         "radius": 12,
                         "type": "esriSMS",
@@ -91,9 +91,9 @@
                     "polygonSymbol": {
                         "type": "esriSFS",
                         "color": {
-                            "r": 102,
-                            "g": 205,
-                            "b": 0,
+                            "r": 211,
+                            "g": 47,
+                            "b": 47,
                             "a": 0.4
                         },
                         "outline": {
@@ -114,9 +114,9 @@
                     },
                     "polylineSymbol": {
                         "color": {
-                            "r": 64,
-                            "g": 64,
-                            "b": 64,
+                            "r": 25,
+                            "g": 118,
+                            "b": 210,
                             "a": 1
                         },
                         "style": "solid",

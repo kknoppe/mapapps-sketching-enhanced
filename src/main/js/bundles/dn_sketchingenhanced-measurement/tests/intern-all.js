@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 // import all tests
+import './MeasurementCalculator.spec';
 import './MeasurementController';
+import './PolylineMeasurementAction.spec';

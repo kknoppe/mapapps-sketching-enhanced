@@ -1,3 +1,19 @@
+///
+/// Copyright (C) 2020 con terra GmbH (info@conterra.de)
+///
+/// Licensed under the Apache License, Version 2.0 (the "License");
+/// you may not use this file except in compliance with the License.
+/// You may obtain a copy of the License at
+///
+///         http://www.apache.org/licenses/LICENSE-2.0
+///
+/// Unless required by applicable law or agreed to in writing, software
+/// distributed under the License is distributed on an "AS IS" BASIS,
+/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+/// See the License for the specific language governing permissions and
+/// limitations under the License.
+///
+
 import type SpatialReference from "esri/geometry/SpatialReference";
 import type Point from "esri/geometry/Point";
 import type MapView from "esri/views/MapView";
@@ -5,24 +21,56 @@ import Polyline from "esri/geometry/Polyline";
 import * as geoEngine from 'esri/geometry/geometryEngine';
 import ct_geometry from "ct/mapping/geometry";
 
+type AngleCalculatorI18n = {
+    ui: {
+        angleUnit: {
+            unit1: string
+        }
+    }
+}
+
+type AngleCalculatorSettings = {
+    angleUnit: string
+}
+
 export class AngleCalculator {
 
-    public p1: Point;
-    public p2: Point;
-    public p3: Point;
-    public anglePoint: Point;
-    public mapWidgetModel: { view: MapView };
+    private p1: Point;
+    private p2: Point;
+    private p3: Point;
+    private anglePoint: Point;
+    private mapWidgetModel: { view: MapView };
+    private i18n: AngleCalculatorI18n;
+    private settings: AngleCalculatorSettings;
 
-    constructor(p1: Point, p2: Point, p3: Point, anglePoint: Point, mapWidgetModel: { view: MapView }) {
+    constructor(mapWidgetModel: { view: MapView }, i18n: AngleCalculatorI18n, settings: AngleCalculatorSettings) {
+        this.mapWidgetModel = mapWidgetModel;
+        this.i18n = i18n;
+        this.settings = settings;
+    }
+
+    public setData(p1: Point, p2: Point, p3: Point, anglePoint: Point): void {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
         this.anglePoint = anglePoint;
-        this.mapWidgetModel = mapWidgetModel;
     }
 
     public getAngle(): string {
         return this.calculateAngle(this.p1, this.p2, this.p3);
+    }
+
+    public getAngleWithUnit(): string {
+        const angleText = this.getAngle();
+
+        if (this.settings.angleUnit === this.i18n.ui.angleUnit.unit1) {
+            // degree
+            return angleText + " °"
+        }
+        // gon
+        let number = parseInt(angleText);
+        number = number / 360 * 400;
+        return number.toFixed(0) + " gon";
     }
 
     private calculateAngle(p1: Point, p2: Point, p3: Point): string {
