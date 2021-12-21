@@ -308,15 +308,13 @@ export default class MeasurementHandler {
 
             // Create Layer for measurements
             const layer = this.layer = new MeasurementLayer();
+            layer.listMode = 'hide';
+            layer.legendEnabled = false;
             layer.textSettings = this._model?.textSettings;
             layer.setReferenceLayer(this.viewModel.layer);
             this._model._mapWidgetModel.map.add(layer);
 
             this._startMeasurementHandlers();
-
-            false && this.viewModel.on("update", e=> { // TODO: remove
-               // console.log(e)
-            });
         }
     }
 }
