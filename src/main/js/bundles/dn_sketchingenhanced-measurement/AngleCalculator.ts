@@ -23,8 +23,10 @@ import ct_geometry from "ct/mapping/geometry";
 
 type AngleCalculatorI18n = {
     ui: {
-        angleUnit: {
-            unit1: string
+        measurement: {
+            angleUnit: {
+                unit1: string
+            }
         }
     }
 }
@@ -63,7 +65,7 @@ export class AngleCalculator {
     public getAngleWithUnit(): string {
         const angleText = this.getAngle();
 
-        if (this.settings.angleUnit === this.i18n.ui.angleUnit.unit1) {
+        if (this.settings.angleUnit === this.i18n.ui?.measurement?.angleUnit?.unit1) {
             // degree
             return angleText + " °"
         }
