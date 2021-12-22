@@ -366,6 +366,20 @@
         {
             "name": "SketchingEnhancedModel",
             "provides": "dn_sketchingenhanced.SketchingEnhancedModel"
+        },
+        {
+            "name": "LayerOrderer",
+            "references": [
+                {
+                    "name": "mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "layers",
+                    "providing": "dn_sketchingEnhanced.Layer",
+                    "cardinality": "0..n"
+                }
+            ]
         }
     ]
 }

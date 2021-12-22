@@ -34,7 +34,8 @@ function SketchingHandler() {
         _watchViewHandler: null,
         _actions: [],
 
-        activate() {
+        activate(context) {
+            this.bundleContext = context.getBundleContext();
             const props = this._properties || {};
             this._sketchProps = props.sketch || {};
             this._graphicLayerId = props.graphicLayerId || "sketchingGraphicLayer";
@@ -42,21 +43,6 @@ function SketchingHandler() {
             this._defaultUpdateOptions = d_lang.clone(this._sketchProps.defaultUpdateOptions || {});
             this._updateOnGraphicClick = this._sketchProps.updateOnGraphicClick;
             this.drag = null;
-
-            // sketching layer always on top
-            whenOnce(this._mapWidgetModel, 'ready', () => {
-                const map = this._mapWidgetModel.map;
-                map.allLayers.on('change', evt => {
-                    if(evt.added && evt.added.length) {
-                        const layer = map.findLayerById(this._graphicLayerId);
-                        if(layer) {
-                            const index = map.layers.length - 1;
-                            map.reorder(layer, index);
-                        }
-                    }
-                });
-            });
-
         },
 
         deactivate() {
@@ -318,6 +304,8 @@ function SketchingHandler() {
                     });
                     map.add(layer);
                     // this._eventService.sendEvent(this._topicBase + "setSketchGraphicsLayer", {layer: layer});
+            
+                    this.bundleContext.registerService('dn_sketchingEnhanced.Layer', {layer, order: 100}, this._graphicsLayerId);
                 }
             }
             return this._sketchGraphicLayer;

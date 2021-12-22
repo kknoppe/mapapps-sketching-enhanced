@@ -19,4 +19,4 @@ import './SketchingToolHandler';
 import './DrawTextHelpLine';
 import './BindingToolsToViewModel';
 import './HighlightHandler';
-
+import './LayerOrderer';

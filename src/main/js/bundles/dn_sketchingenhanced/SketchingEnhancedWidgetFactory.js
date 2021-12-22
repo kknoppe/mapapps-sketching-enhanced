@@ -101,7 +101,7 @@ export default class SketchingEnhancedWidgetFactory {
         widget.onSketchingActivated = () => this._activateToolOnStartup(vm);
 
         // when SketchingTool is already activated, we have to activate the startup-tool manually
-        this._activateToolOnStartup(vm);
+        this._sketchingEnhancedTool.get('active') && this._activateToolOnStartup(vm);
 
         vm.extensionTabs = this.extensions;
         return widget;
