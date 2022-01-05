@@ -94,13 +94,6 @@ export default function () {
             this._setSnappingSelectProps();
             const snappingManager = this._snappingManager;
             snappingManager.snapPolylineObjectSymbol = this.snapPolylineReshapeSymbol;
-            snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingReshapeUnselectedGraphics);
-        },
-
-        ACTIVATE_drawreshape2tool() {
-            this._setSnappingSelectProps();
-            const snappingManager = this._snappingManager;
-            snappingManager.snapPolylineObjectSymbol = this.snapPolylineReshapeSymbol;
             snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingReshapeGraphics);
         },
 

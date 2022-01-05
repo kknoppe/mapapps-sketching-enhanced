@@ -33,9 +33,7 @@ oder einige der folgenden Werkzeuge:
 |drawtriangletool                |SketchingDrawtriangletool                   |Dreieck: Zeichnet ein Dreieck.
 |drawtransformtool               |SketchingDrawtransformtool                  |Umformen.
 |drawtransform1tool              |SketchingDrawtransform1tool                 |Umformen.
-|drawreshapetool                 |SketchingDrawreshapetool                    |Stützpunkte bearbeiten.
 |drawreshape1tool                |SketchingDrawreshape1tool                   |Stützpunkte bearbeiten.
-|drawreshape2tool                |SketchingDrawreshape2tool                   |Stützpunkte bearbeiten.
 |drawundotool                    |SketchingDrawundotool                       |Rückgängig.
 |drawredotool                    |SketchingDrawredotool                       |Wiederherstellen.
 |drawcompletetool                |SketchingDrawcompletetool                   |Fertig

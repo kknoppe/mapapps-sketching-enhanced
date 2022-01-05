@@ -108,9 +108,7 @@
                     "edit": [
                         "drawtransformtool",
                         "drawtransform1tool",
-                        "drawreshapetool",
                         "drawreshape1tool",
-                        "drawreshape2tool",
                         "drawremovealltool",
                         "drawremovetool",
                         "stylePropertiesTool",

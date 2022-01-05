@@ -954,45 +954,6 @@
             ]
         },
         {
-            "name": "SketchingDrawreshapetool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawreshapetool",
-                "title": "${tools.drawreshapetool}",
-                "iconClass": "icon-shape-select",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "reshape",
-                "updateOptions": {
-                    "enableMoveAllGraphics": true,
-                    "enableRotation": true,
-                    "enableScaling": true,
-                    "preserveAspectRatio": false,
-                    "toggleToolOnClick": true,
-                    "multipleSelectionEnabled": true
-                },
-                "groups": [
-                    "sketching"
-                ],
-                "rules": {
-                    "ruleSuccessProperty": "enabled",
-                    "drawHasGraphic": true
-                }
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
             "name": "SketchingDrawreshape1tool",
             "impl": "ct/tools/Tool",
             "provides": [
@@ -1017,38 +978,6 @@
                     "toggleToolOnClick": true,
                     "multipleSelectionEnabled": true
                 },
-                "groups": [
-                    "sketching"
-                ],
-                "rules": {
-                    "ruleSuccessProperty": "enabled",
-                    "drawHasGraphic": true
-                }
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
-            "name": "SketchingDrawreshape2tool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawreshape2tool",
-                "title": "${tools.drawreshape2tool}",
-                "iconClass": "icon-shape-select",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectReshape",
-                "mode": "",
                 "groups": [
                     "sketching"
                 ],
