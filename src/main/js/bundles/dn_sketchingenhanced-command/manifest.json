@@ -65,6 +65,46 @@
                     },
                     {
                         "topic": [
+                            "ct/tool/DEACTIVATE/drawpointtool",
+                            "ct/tool/DEACTIVATE/drawpolylinetool",
+                            "ct/tool/DEACTIVATE/drawfreehandpolylinetool",
+                            "ct/tool/DEACTIVATE/drawpolygontool",
+                            "ct/tool/DEACTIVATE/drawfreehandpolygontool",
+                            "ct/tool/DEACTIVATE/constructionpolylinetool",
+                            "ct/tool/DEACTIVATE/constructionpolygontool",
+                            "ct/tool/DEACTIVATE/drawcircletool",
+                            "ct/tool/DEACTIVATE/drawtriangletool",
+                            "ct/tool/DEACTIVATE/drawellipsetool",
+                            "ct/tool/DEACTIVATE/drawrectangletool",
+                            "ct/tool/DEACTIVATE/drawarrowtool",
+                            "ct/tool/DEACTIVATE/drawtexttool",
+                            "ct/tool/DEACTIVATE/sketchingpolygongroup",
+                            "ct/tool/DEACTIVATE/sketchinglinegroup"
+                        ],
+                        "method": "DEACTIVATE_drawtool"
+                    },
+                    {
+                        "topic": [
+                            "ct/tool/ACTIVATE/drawpointtool",
+                            "ct/tool/ACTIVATE/drawpolylinetool",
+                            "ct/tool/ACTIVATE/drawfreehandpolylinetool",
+                            "ct/tool/ACTIVATE/drawpolygontool",
+                            "ct/tool/ACTIVATE/drawfreehandpolygontool",
+                            "ct/tool/ACTIVATE/constructionpolylinetool",
+                            "ct/tool/ACTIVATE/constructionpolygontool",
+                            "ct/tool/ACTIVATE/drawcircletool",
+                            "ct/tool/ACTIVATE/drawtriangletool",
+                            "ct/tool/ACTIVATE/drawellipsetool",
+                            "ct/tool/ACTIVATE/drawrectangletool",
+                            "ct/tool/ACTIVATE/drawarrowtool",
+                            "ct/tool/ACTIVATE/drawtexttool",
+                            "ct/tool/ACTIVATE/sketchingpolygongroup",
+                            "ct/tool/ACTIVATE/sketchinglinegroup"
+                        ],
+                        "method": "ACTIVATE_drawtool"
+                    },
+                    {
+                        "topic": [
                             "ct/tool/ACTIVATE/drawselectionbuffertool",
                             "ct/tool/ACTIVATE/drawselectioncopytool"
                         ],

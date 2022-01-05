@@ -182,7 +182,6 @@
                 "togglable": true,
                 "activateHandler": "activateSketching",
                 "deactivateHandler": "deactivateSketching",
-                "toggleSnappingSource": true,
                 "groups": [
                     "drawTools"
                 ]

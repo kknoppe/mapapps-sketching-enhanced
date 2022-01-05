@@ -12,6 +12,7 @@
     "dependencies": {
         "map-widget": "^4.4.0",
         "selection-services": "^4.4.0",
+        "highlights": "^4.4.0",
         "dn_sketchingenhanced-tools": "^2.0.0"
     },
     "components": [
@@ -111,13 +112,17 @@
             },
             "references": [
                 {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
                     "name": "_snappingSourceModel",
                     "providing": "dn_sketchingenhanced-snappingmanager.SnappingModel",
                     "cardinality": "0..n"
                 },
                 {
-                    "name": "_highlightHandler",
-                    "providing": "dn_sketchingenhanced.HighlightHandler"
+                    "name": "_highlighter",
+                    "providing": "highlights.HighlightService"
                 },
                 {
                     "name": "_sketchingHandler",
@@ -126,14 +131,14 @@
             ]
         },
         {
-            "name": "SnappingGraphicLayerSourceModel",
+            "name": "SnappingLayerSourceModel",
             "provides": [
                 "dn_sketchingenhanced.Action",
                 "dn_sketchingenhanced-snappingmanager.SnappingModel",
                 "dn_sketchingenhanced-snappingmanager.SnappingGraphicLayerSourceModel"
             ],
             "properties": {
-                "maxLength": 0
+                "allowBasemapSnapping": true
             },
             "references": [
                 {
@@ -141,41 +146,13 @@
                     "providing": "map-widget.MapWidgetModel"
                 },
                 {
-                    "name": "_toggleTool",
-                    "providing": "ct.tools.Tool",
-                    "filter": "(toggleSnappingSource=true)",
-                    "cardinality": "0..n"
-                }
-            ]
-        },
-        {
-            "name": "SnappingSourceModel",
-            "provides": [
-                "dn_sketchingenhanced-snappingmanager.SnappingModel",
-                "dn_sketchingenhanced-snappingmanager.SnappingSourceModel"
-            ],
-            "properties": {
-                "maxLength": 0,
-                "stores": []
-            },
-            "references": [
-                {
-                    "name": "_bindingSearchSources",
-                    "providing": "searchsource-binding.BindingSearchSources"
-                },
-                {
-                    "name": "_mapWidgetModel",
-                    "providing": "map-widget.MapWidgetModel"
-                },
-                {
-                    "name": "_toggleTool",
-                    "providing": "ct.tools.Tool",
-                    "filter": "(toggleSnappingSource=true)",
-                    "cardinality": "0..n"
-                },
-                {
-                    "name": "_logService",
+                    "name": "_logger",
                     "providing": "ct.framework.api.LogService"
+                },
+                {
+                    "name": "_toggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=sketchingEnhancedWidgetToggleTool)"
                 }
             ]
         }
