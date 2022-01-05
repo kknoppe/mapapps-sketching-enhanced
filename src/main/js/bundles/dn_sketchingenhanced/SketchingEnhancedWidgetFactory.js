@@ -146,7 +146,7 @@ export default class SketchingEnhancedWidgetFactory {
 
     _activateHelpLine(settings) {
         const viewModel = this._sketchingHandler.sketchViewModel;
-        if (settings.typeName !== 'TextSetting' || !(viewModel.tool && viewModel.tool.toolId === 'drawreshape1tool')) {
+        if (settings.typeName !== 'TextSetting' || !(viewModel.tool && viewModel.tool.toolId === 'drawreshapetool')) {
             return;
         }
 

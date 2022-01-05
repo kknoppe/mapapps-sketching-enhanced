@@ -81,11 +81,11 @@ describe(module.id, function () {
         const angle = handler._getAngle(viewModel, rotation);
         expect(angle).to.equal(45);
     });
-    it("Get correct degree angle with no given rotation, activated drawreshape1tool and no _orgSymbols", function () {
+    it("Get correct degree angle with no given rotation, activated drawreshapetool and no _orgSymbols", function () {
         const handler = createHandler();
         const viewModel = {
             tool: {
-                toolId: 'drawreshape1tool',
+                toolId: 'drawreshapetool',
             },
             textSymbol: {
                 angle: 60,
@@ -94,11 +94,11 @@ describe(module.id, function () {
         const angle = handler._getAngle(viewModel);
         expect(angle).to.equal(60);
     });
-    it("Get correct degree angle with no given rotation, activated drawreshape1tool and _orgSymbols", function () {
+    it("Get correct degree angle with no given rotation, activated drawreshapetool and _orgSymbols", function () {
         const handler = createHandler();
         const viewModel = {
             tool: {
-                toolId: 'drawreshape1tool',
+                toolId: 'drawreshapetool',
             },
             textSymbol: {
                 angle: 60,

@@ -16,30 +16,30 @@ Um die Funktionen dieses Bundles zu benutzen, können Sie das Werkzeug "sketchin
 
 oder einige der folgenden Werkzeuge:
 
-|Tool ID                         |Component                          |Description
-|--------------------------------|-----------------------------------|-----------------------
-|drawpointtool                   |SketchingDrawpointtool                      |Punkt: Zeichnet einen Punkt.
-|drawmultipointtool              |SketchingDrawmultipointtool                 |Punkte: Zeichnet mehrere Punkte.
-|drawlinetool                    |SketchingDrawlinetool                       |Linie: Zeichnet eine gerade Linie.
-|drawpolylinetool                |SketchingDrawpolylinetool                   |Linienzug: Zeichnet einen Linienzug.
-|drawfreehandpolylinetool        |SketchingDrawfreehandpolylinetool           |Freihand Linienzug: Zeichnet einen freidefinierten Linienzug.
-|drawpolygontool                 |SketchingDrawpolygontool                    |Polygon: Zeichnet ein Polygon.
-|drawfreehandpolygontool         |SketchingDrawfreehandpolygontool            |Freihand Polygon: Zeichnet ein freidefinierbares Polygon.
-|drawextenttool                  |SketchingDrawextenttool                     |Freihand Rechteck: Zeichnet ein freidefinierbares Rechteck.
-|drawcircletool                  |SketchingDrawcircletool                     |Kreis: Zeichnet einen Kreis.
-|drawellipsetool                 |SketchingDrawellipsetool                    |Ellipse: Zeichnet eine Ellipse.
-|drawrectangletool               |SketchingDrawrectangletool                  |Rechteck: Zeichnet ein Rechteck.
-|drawarrowtool                   |SketchingDrawarrowtool                      |Pfeil: Zeichnet einen Pfeil in beliebiger Richtung.
-|drawtriangletool                |SketchingDrawtriangletool                   |Dreieck: Zeichnet ein Dreieck.
-|drawtransformtool               |SketchingDrawtransformtool                  |Umformen.
-|drawtransform1tool              |SketchingDrawtransform1tool                 |Umformen.
-|drawreshape1tool                |SketchingDrawreshape1tool                   |Stützpunkte bearbeiten.
-|drawundotool                    |SketchingDrawundotool                       |Rückgängig.
-|drawredotool                    |SketchingDrawredotool                       |Wiederherstellen.
-|drawcompletetool                |SketchingDrawcompletetool                   |Fertig
-|drawcanceltool                  |SketchingDrawcanceltool                     |Abbrechen.
-|drawremovetool                  |SketchingDrawremovetool                     |Ausgewählte Zeichnung löschen.
-|drawremovealltool               |SketchingDrawremovealltool                  |Alle Zeichnungen löschen.
+|Tool ID                        |Component                          |Description
+|-------------------------------|-----------------------------------|-----------------------
+|drawpointtool                  |SketchingDrawpointtool                     |Punkt: Zeichnet einen Punkt.
+|drawmultipointtool             |SketchingDrawmultipointtool                |Punkte: Zeichnet mehrere Punkte.
+|drawlinetool                   |SketchingDrawlinetool                      |Linie: Zeichnet eine gerade Linie.
+|drawpolylinetool               |SketchingDrawpolylinetool                  |Linienzug: Zeichnet einen Linienzug.
+|drawfreehandpolylinetool       |SketchingDrawfreehandpolylinetool          |Freihand Linienzug: Zeichnet einen freidefinierten Linienzug.
+|drawpolygontool                |SketchingDrawpolygontool                   |Polygon: Zeichnet ein Polygon.
+|drawfreehandpolygontool        |SketchingDrawfreehandpolygontool           |Freihand Polygon: Zeichnet ein freidefinierbares Polygon.
+|drawextenttool                 |SketchingDrawextenttool                    |Freihand Rechteck: Zeichnet ein freidefinierbares Rechteck.
+|drawcircletool                 |SketchingDrawcircletool                    |Kreis: Zeichnet einen Kreis.
+|drawellipsetool                |SketchingDrawellipsetool                   |Ellipse: Zeichnet eine Ellipse.
+|drawrectangletool              |SketchingDrawrectangletool                 |Rechteck: Zeichnet ein Rechteck.
+|drawarrowtool                  |SketchingDrawarrowtool                     |Pfeil: Zeichnet einen Pfeil in beliebiger Richtung.
+|drawtriangletool               |SketchingDrawtriangletool                  |Dreieck: Zeichnet ein Dreieck.
+|drawtransformtool              |SketchingDrawtransformtool                 |Umformen.
+|drawtransform1tool             |SketchingDrawtransform1tool                |Umformen.
+|drawreshapetool                |SketchingDrawreshapetool                   |Stützpunkte bearbeiten.
+|drawundotool                   |SketchingDrawundotool                      |Rückgängig.
+|drawredotool                   |SketchingDrawredotool                      |Wiederherstellen.
+|drawcompletetool               |SketchingDrawcompletetool                  |Fertig
+|drawcanceltool                 |SketchingDrawcanceltool                    |Abbrechen.
+|drawremovetool                 |SketchingDrawremovetool                    |Ausgewählte Zeichnung löschen.
+|drawremovealltool              |SketchingDrawremovealltool                 |Alle Zeichnungen löschen.
 
 
 ## Configuration Reference

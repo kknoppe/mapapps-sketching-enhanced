@@ -90,7 +90,7 @@ export default function () {
             this._resetSnappingProps();
         },
 
-        ACTIVATE_drawreshape1tool() {
+        ACTIVATE_drawreshapetool() {
             this._setSnappingSelectProps();
             const snappingManager = this._snappingManager;
             snappingManager.snapPolylineObjectSymbol = this.snapPolylineReshapeSymbol;

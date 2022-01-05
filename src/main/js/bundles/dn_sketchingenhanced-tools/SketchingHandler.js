@@ -304,7 +304,7 @@ function SketchingHandler() {
                     });
                     map.add(layer);
                     // this._eventService.sendEvent(this._topicBase + "setSketchGraphicsLayer", {layer: layer});
-            
+
                     this.bundleContext.registerService('dn_sketchingEnhanced.Layer', {layer, order: 100}, this._graphicsLayerId);
                 }
             }
@@ -340,13 +340,13 @@ function SketchingHandler() {
             if (state === "complete" || (state === "cancel" && type !== "create")) {
                 if (tool && tool.togglable && tool.active) {
                     (tool.id === 'drawpolygontool') && await this._sleep(500);
-                    // if drawreshape1tool is selected throw event, so that text editor in sketching_widget is closed after deselecting text
-                    (viewModel.tool.toolId === 'drawreshape1tool') && viewModel.emit('openSketchingEditor', {openSketchingEditor: false});
+                    // if drawreshapetool is selected throw event, so that text editor in sketching_widget is closed after deselecting text
+                    (viewModel.tool.toolId === 'drawreshapetool') && viewModel.emit('openSketchingEditor', {openSketchingEditor: false});
                     viewModel.activeTool || this.activateTool(tool);
                 } else {
                     viewModel.updateOnGraphicClick = this._updateOnGraphicClick;
                 }
-            } else if (type === 'update' && state === 'start' && tool.toolId === 'drawreshape1tool') {
+            } else if (type === 'update' && state === 'start' && tool.toolId === 'drawreshapetool') {
                 const symbol = viewModel._orgSymbols[0];
                 // throw an event if reshape tool is used to edit sketching text so that the text editor can be opened
                 (symbol && symbol.type === 'text') && viewModel.emit('openSketchingEditor', {

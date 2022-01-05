@@ -58,7 +58,7 @@
                             "ct/tool/DEACTIVATE/drawselectioncreatedifferencetool",
                             "ct/tool/DEACTIVATE/drawselectioncreateintersecttool",
                             "ct/tool/DEACTIVATE/drawtransform1tool",
-                            "ct/tool/DEACTIVATE/drawreshape1tool"
+                            "ct/tool/DEACTIVATE/drawreshapetool"
                         ],
                         "method": "DEACTIVATE_drawselectiontool"
                     },
@@ -112,9 +112,9 @@
                     {
                         "topic": [
                             "ct/tool/ACTIVATE/drawtransform1tool",
-                            "ct/tool/ACTIVATE/drawreshape1tool"
+                            "ct/tool/ACTIVATE/drawreshapetool"
                         ],
-                        "method": "ACTIVATE_drawreshape1tool"
+                        "method": "ACTIVATE_drawreshapetool"
                     },
                     {
                         "topic": [

@@ -40,7 +40,7 @@ module.exports = {
             drawmovetool: 'Move',
             drawtransformtool: 'Transform',
             drawtransform1tool: 'Transform',
-            drawreshape1tool: 'Edit object',
+            drawreshapetool: 'Edit object',
             drawundotool: 'Undo',
             drawredotool: 'Redo',
             drawcompletetool: 'Complete',

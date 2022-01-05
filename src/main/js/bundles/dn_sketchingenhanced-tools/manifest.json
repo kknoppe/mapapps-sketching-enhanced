@@ -954,15 +954,15 @@
             ]
         },
         {
-            "name": "SketchingDrawreshape1tool",
+            "name": "SketchingDrawreshapetool",
             "impl": "ct/tools/Tool",
             "provides": [
                 "ct.tools.Tool"
             ],
             "propertiesConstructor": true,
             "properties": {
-                "id": "drawreshape1tool",
-                "title": "${tools.drawreshape1tool}",
+                "id": "drawreshapetool",
+                "title": "${tools.drawreshapetool}",
                 "iconClass": "icon-shape-select",
                 "toolRole": "toolset",
                 "togglable": true,
@@ -1012,7 +1012,7 @@
                 "menu": true,
                 "mode": "",
                 "items": [
-                    "drawreshape1tool",
+                    "drawreshapetool",
                     "drawcopytool",
                     "drawremovetool",
                     "drawremovealltool",

@@ -41,13 +41,13 @@
                 <v-tab v-for="(item, i) in tabs" :key="i">
                     {{i18n.measurement[item]}}
                 </v-tab>
-                
+
                 <template v-for="(extension, j) in extensionTabs">
                     <v-tab v-if="extensionIsVisible(extension) && !settingsEnabled" :key="(j+tabs.length)">
                         {{extension.header}}
                     </v-tab>
                 </template>
-                
+
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
                         <v-container class="pa-2" v-if="!item" :key="'placeholder'-index">{{i18n.noActiveTool}}</v-container>
@@ -70,8 +70,8 @@
                     </template>
                 </v-tabs-items>
 
-               
-            </v-tabs> 
+
+            </v-tabs>
         </v-layout>
         <v-container class="pa-1 sketchingFooter">
             <v-btn @click="showSettings" outlined>
@@ -177,7 +177,7 @@ export default {
                     case 'drawarrowtool':
                     case 'drawellipsetool':
                         return ['drawTab'];
-                    case 'drawreshape1tool':
+                    case 'drawreshapetool':
                         this.tab = null;
                         return [];
                     default:

@@ -39,7 +39,7 @@ module.exports = {
         drawmovetool: 'Verschieben',
         drawtransformtool: 'Umformen',
         drawtransform1tool: 'Umformen',
-        drawreshape1tool: 'Objekt bearbeiten',
+        drawreshapetool: 'Objekt bearbeiten',
         drawundotool: 'Rückgängig',
         drawredotool: 'Wiederherstellen',
         drawcompletetool: 'Fertig',
