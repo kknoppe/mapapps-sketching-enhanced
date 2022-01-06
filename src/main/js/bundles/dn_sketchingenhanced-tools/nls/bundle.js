@@ -45,8 +45,6 @@ module.exports = {
             drawredotool: 'Redo',
             drawcompletetool: 'Complete',
             drawcanceltool: 'Cancel',
-            drawselectionbuffertool: 'select and buffer object',
-            drawselectioncopytool: 'select and copy object',
             drawselectioncreatedifferencetool: 'select object and difference selected objects',
             drawselectioncreateintersecttool: 'select object and intersect selected objects',
             sketchinglinegroup: 'Line tools',

@@ -101,9 +101,7 @@
                     ],
                     "operator": [
                         "drawcopytool",
-                        "drawbuffertool",
-                        "drawselectioncopytool",
-                        "drawselectionbuffertool"
+                        "drawbuffertool"
                     ],
                     "edit": [
                         "drawtransformtool",

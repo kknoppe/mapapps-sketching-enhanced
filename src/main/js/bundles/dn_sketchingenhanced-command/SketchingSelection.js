@@ -111,12 +111,6 @@ export default function () {
             snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingMinus);
         },
 
-        ACTIVATE_drawselectiontool() {
-            this._setSnappingSelectProps();
-            const snappingManager = this._snappingManager;
-            snappingManager.snapPolylineObjectSymbol = this.snapPolylinePlusObjectSymbol;
-        },
-
         DEACTIVATE_drawselectiontool() {
             this._resetSnappingProps();
         },

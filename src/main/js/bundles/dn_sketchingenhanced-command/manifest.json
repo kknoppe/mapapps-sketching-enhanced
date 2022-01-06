@@ -52,8 +52,6 @@
                 "Event-Topics": [
                     {
                         "topic": [
-                            "ct/tool/DEACTIVATE/drawselectionbuffertool",
-                            "ct/tool/DEACTIVATE/drawselectioncopytool",
                             "ct/tool/DEACTIVATE/drawselectioncreatedifferencetool",
                             "ct/tool/DEACTIVATE/drawselectioncreateintersecttool",
                             "ct/tool/DEACTIVATE/drawtransform1tool",
@@ -100,13 +98,6 @@
                             "ct/tool/ACTIVATE/sketchinglinegroup"
                         ],
                         "method": "ACTIVATE_drawtool"
-                    },
-                    {
-                        "topic": [
-                            "ct/tool/ACTIVATE/drawselectionbuffertool",
-                            "ct/tool/ACTIVATE/drawselectioncopytool"
-                        ],
-                        "method": "ACTIVATE_drawselectiontool"
                     },
                     {
                         "topic": [
