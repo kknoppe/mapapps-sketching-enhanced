@@ -781,34 +781,6 @@
             ]
         },
         {
-            "name": "SketchingDrawselectioncreateuniontool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawselectioncreateuniontool",
-                "title": "${tools.drawselectioncreateuniontool}",
-                "iconClass": "icon-immo-union",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectPlus",
-                "mode": "",
-                "groups": [
-                    "sketching"
-                ]
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
             "name": "SketchingDrawselectioncreatedifferencetool",
             "impl": "ct/tools/Tool",
             "provides": [

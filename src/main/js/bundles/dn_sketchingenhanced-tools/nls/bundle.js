@@ -47,7 +47,6 @@ module.exports = {
             drawcanceltool: 'Cancel',
             drawselectionbuffertool: 'select and buffer object',
             drawselectioncopytool: 'select and copy object',
-            drawselectioncreateuniontool: 'select object and union selected objects',
             drawselectioncreatedifferencetool: 'select object and difference selected objects',
             drawselectioncreateintersecttool: 'select object and intersect selected objects',
             sketchinglinegroup: 'Line tools',

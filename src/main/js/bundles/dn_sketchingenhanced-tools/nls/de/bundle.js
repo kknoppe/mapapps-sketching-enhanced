@@ -46,7 +46,6 @@ module.exports = {
         drawcanceltool: 'Abbrechen',
         drawselectionbuffertool: 'Objekt auswählen und Buffer erstellen',
         drawselectioncopytool: 'Objekt auswählen und Geometrie kopieren',
-        drawselectioncreateuniontool: 'Objekt auswählen und Vereinigung erstellen',
         drawselectioncreatedifferencetool: 'Objekt auswählen und Differenzierung erstellen',
         drawselectioncreateintersecttool: 'Objekt auswählen und mit den ausgewählten Objekte Schnittmenge erstellen',
         sketchinglinegroup: 'Linienwerkzeuge',

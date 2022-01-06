@@ -97,13 +97,6 @@ export default function () {
             snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingReshapeGraphics);
         },
 
-        ACTIVATE_drawselectioncreateuniontool() {
-            this._setSnappingSelectProps();
-            const snappingManager = this._snappingManager;
-            snappingManager.snapPolylineObjectSymbol = this.snapPolylinePlusObjectSymbol;
-            snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingPlus);
-        },
-
         ACTIVATE_drawselectioncreatedifferencetool() {
             this._setSnappingSelectProps();
             const snappingManager = this._snappingManager;
