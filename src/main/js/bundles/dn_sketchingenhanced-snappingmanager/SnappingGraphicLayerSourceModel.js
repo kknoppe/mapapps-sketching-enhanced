@@ -113,7 +113,7 @@ export default declare({
 
     _getVisibleGraphicsLayers() {
         return this._mapWidgetModel.map.allLayers.filter(layer => {
-            return layer.visible && this._isGraphicsLayer(layer);
+            return layer.visible && this._isGraphicsLayer(layer) && !this._layersToIgnore?.find(x => layer.id === x.layer.id);
         });
     },
 

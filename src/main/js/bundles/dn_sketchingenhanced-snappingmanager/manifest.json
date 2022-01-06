@@ -145,6 +145,12 @@
                     "providing": "ct.tools.Tool",
                     "filter": "(toggleSnappingSource=true)",
                     "cardinality": "0..n"
+                },
+                {
+                    "name": "_layersToIgnore",
+                    "cardinality": "0..n",
+                    "providing": "dn_sketchingEnhanced.Layer",
+                    "filter": "(ignoreInSnapping=true)"
                 }
             ]
         },
