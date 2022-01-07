@@ -128,6 +128,8 @@ export default declare({
         const snappingLayers = flattenLayers.filter((layer) => {
             if (layer.advancedEditing && !layer.advancedEditing.allowSnapping) {
                 return false;
+            } else if (this._layersToIgnore?.find(x => layer.id === x.layer.id)) {
+                return false;
             } else if (layer.type === "graphics" || layer.type === "feature" || layer.type === "geojson"
                 || (layer.layer?.type === "map-image" && !layer.sublayers)) {
                 return true;
