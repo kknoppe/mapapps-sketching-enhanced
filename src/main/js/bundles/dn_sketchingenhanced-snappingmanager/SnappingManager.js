@@ -348,9 +348,10 @@ export default function () {
                             return this.__cursorScreenPoint;
                         }, set: function (e) {
                             this.__cursorScreenPoint = e;
-                            e && async(() => {
+                            clearTimeout(this.lastTimeout);
+                            this.lastTimeout = setTimeout(() => {
                                 that._onUpdateCursorHandler(activeAction.__cursorScreenPoint);
-                            });
+                            }, 5);
                         }
                     });
                 }
