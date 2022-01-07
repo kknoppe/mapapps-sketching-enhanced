@@ -18,6 +18,7 @@
  * Copyright (C) con terra GmbH
  */
 
+import async from "apprt-core/async";
 import d_lang from "dojo/_base/lang";
 import d_aspect from "dojo/aspect"
 import Handles from "esri/core/Handles";
@@ -332,6 +333,7 @@ export default function () {
             }));
         },
 
+        // TODO: remove __cursorScreenPoint
         _addChangeDrawActiveActionHandler(activeComponent) {
             this._ownHandler.remove("changeActiveAction");
             const activeAction = activeComponent && activeComponent.activeAction;
@@ -346,9 +348,9 @@ export default function () {
                             return this.__cursorScreenPoint;
                         }, set: function (e) {
                             this.__cursorScreenPoint = e;
-                            e && setTimeout(function () {
+                            e && async(() => {
                                 that._onUpdateCursorHandler(activeAction.__cursorScreenPoint);
-                            }, 0);
+                            });
                         }
                     });
                 }
