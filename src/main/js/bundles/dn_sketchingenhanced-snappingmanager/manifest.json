@@ -138,7 +138,36 @@
                 "dn_sketchingenhanced-snappingmanager.SnappingGraphicLayerSourceModel"
             ],
             "properties": {
-                "allowBasemapSnapping": true
+                "allowBasemapSnapping": true,
+            },
+            "references": [
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_toggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(toggleSnappingSource=true)",
+                    "cardinality": "0..n"
+                },
+                {
+                    "name": "_layersToIgnore",
+                    "cardinality": "0..n",
+                    "providing": "dn_sketchingEnhanced.Layer",
+                    "filter": "(ignoreInSnapping=true)"
+                }
+            ]
+        },
+        {
+            "name": "SnappingSourceModel",
+            "provides": [
+                "dn_sketchingenhanced-snappingmanager.SnappingModel",
+                "dn_sketchingenhanced-snappingmanager.SnappingSourceModel"
+            ],
+            "properties": {
+                "maxLength": 0,
+                "stores": []
             },
             "references": [
                 {

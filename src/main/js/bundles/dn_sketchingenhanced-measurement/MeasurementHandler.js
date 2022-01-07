@@ -313,7 +313,7 @@ export default class MeasurementHandler {
             layer.legendEnabled = false;
             layer.textSettings = this._model?.textSettings;
             layer.setReferenceLayer(this.viewModel.layer);
-            this.bundleContext.registerService('dn_sketchingEnhanced.Layer', {layer, order: 150});
+            this.bundleContext.registerService('dn_sketchingEnhanced.Layer', {layer, order: 150}, {ignoreInSnapping: true});
             this._model._mapWidgetModel.map.add(layer);
 
             this._startMeasurementHandlers();

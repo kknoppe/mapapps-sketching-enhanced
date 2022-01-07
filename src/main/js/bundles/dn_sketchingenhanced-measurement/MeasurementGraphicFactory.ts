@@ -33,8 +33,6 @@ export class MeasurementGraphicFactory {
         textSymbol.text = label;
         // apply data attributes
         Object.assign(textSymbol, {
-            // @ts-ignore //TODO: do not use unsupported attributes
-            flag: "measurementText",
             id: `measurement-${id}`,
             ...symbolOptions,
         });
