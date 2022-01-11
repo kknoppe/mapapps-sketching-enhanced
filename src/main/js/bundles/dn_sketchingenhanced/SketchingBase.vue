@@ -36,24 +36,31 @@
             class="mx-1"
         ></v-divider>
         <v-layout class="sketchingCenterContainer" row>
-            <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds" :bus="eventBus" :i18n="i18n"></navigation>
+            <navigation @onToolClick="onToolClickHandler" :tools="tools" :firstToolGroupIds="firstToolGroupIds"
+                        :bus="eventBus" :i18n="i18n"></navigation>
             <v-tabs class="flex grow tabsContainer" v-model="tab" slider-color="primary" grow>
                 <v-tab v-for="(item, i) in tabs" :key="i">
-                    {{i18n.measurement[item]}}
+                    {{ i18n.measurement[item] }}
                 </v-tab>
 
                 <template v-for="(extension, j) in extensionTabs">
                     <v-tab v-if="extensionIsVisible(extension) && !settingsEnabled" :key="(j+tabs.length)">
-                        {{extension.header}}
+                        {{ extension.header }}
                     </v-tab>
                 </template>
 
                 <v-tabs-items>
                     <template v-for="(item, index) in tabs">
-                        <v-container class="pa-2" v-if="!item" :key="'placeholder'-index">{{i18n.noActiveTool}}</v-container>
+                        <v-container class="pa-2" v-if="!item" :key="'placeholder'-index">{{ i18n.noActiveTool }}
+                        </v-container>
                         <v-tab-item v-if="item" :key="index" :value="index">
-                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n" :settings.sync="settings" :tool="currentTool" v-on:update:settings="settingsChange" :options="initialSymbolSettings"></illustration>
-                            <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'" :constructionModel="constructionModel" :tool="currentTool" :i18n="i18n"></construction-panel>
+                            <illustration class="flex grow pa-2" v-if="item === 'drawTab'" :i18n="i18n"
+                                          :settings.sync="settings" :tool="currentTool"
+                                          v-on:update:settings="settingsChange"
+                                          :options="initialSymbolSettings"></illustration>
+                            <construction-panel class="flex grow pa-2" v-if="item === 'constructionTab'"
+                                                :constructionModel="constructionModel" :tool="currentTool"
+                                                :i18n="i18n"></construction-panel>
                             <settings-panel class="flex grow pa-2"
                                             v-if="item === 'Einstellungen'"
                                             @toggleSketchingLayerVisibility="_toggleSketchingVisible"
@@ -65,7 +72,8 @@
                     </template>
                     <template v-for="(extension, k) in extensionTabs">
                         <v-tab-item :key="(k+tabs.length)" v-if="!settingsEnabled" :value="k+tabs.length">
-                            <component v-if="extensionIsVisible(extension)" :is="extension.view"  v-bind="{ ...extension.props }" v-on="extension.events" />
+                            <component v-if="extensionIsVisible(extension)" :is="extension.view"
+                                       v-bind="{ ...extension.props }" v-on="extension.events"/>
                         </v-tab-item>
                     </template>
                 </v-tabs-items>
@@ -76,7 +84,7 @@
         <v-container class="pa-1 sketchingFooter">
             <v-btn @click="showSettings" outlined>
                 <v-icon>icon-cog</v-icon>
-                <span class="pl-2">{{i18n.settings}}</span>
+                <span class="pl-2">{{ i18n.settings }}</span>
             </v-btn>
         </v-container>
     </v-container>
@@ -108,14 +116,13 @@ export default {
         SettingsPanel,
         'tool-button': ToolButton,
         'menu-button': MenuButton,
-        'sketching-footer' : SketchingFooter
+        'sketching-footer': SketchingFooter
     },
     data() {
         return {
             toggle: null,
             notoggle: null,
             symbolSettings: new PolygonSetting(),
-            currentTool: null,
             tab: 0,
             settingsEnabled: false,
             hasGraphicsOnLoad: false,
@@ -157,13 +164,18 @@ export default {
         extensionTabs: Array,
     },
     computed: {
+        currentTool() {
+            return this.tools?.find((tool) => {
+                return tool.active;
+            });
+        },
         tabs() {
             this.tab = 0;
-            if(this.settingsEnabled) {
+            if (this.settingsEnabled) {
                 return ['Einstellungen'];
             }
-            if(this.currentTool) {
-                switch(this.currentTool.id){
+            if (this.currentTool) {
+                switch (this.currentTool.id) {
                     case 'drawpolygontool':
                     case 'drawpolylinetool':
                         return ['drawTab', 'constructionTab'];
@@ -204,6 +216,13 @@ export default {
             return this._getOverviewTools(this.lastToolGroupIds);
         },
     },
+    watch: {
+        currentTool(tool) {
+            if (tool && tool?.mode !== 'secondary') {
+                this._setSettings(tool);
+            }
+        }
+    },
     methods: {
         _getTool(toolId) {
             return this.tools.find(x => x.id === toolId);
@@ -221,17 +240,6 @@ export default {
         },
         onToolClickHandler(id) {
             this.settingsEnabled = false;
-            // use Tool Id to find the associated tool
-            const tool = this._getTool(id);
-
-            if(tool.mode && tool.mode !== 'secondary') {
-                this.currentTool = tool;
-                this._setSettings(tool);
-            }
-
-            if(tool.active) {
-                this.currentTool = null;
-            }
             this.$emit('onToolClick', {id});
             // the style settings have to be reset after each tool change
             this.$emit('settingsSelectionChanged', this.settings);
@@ -255,7 +263,7 @@ export default {
                     break;
                 }
                 case 'polyline': {
-                    if (!settings.LineSetting){
+                    if (!settings.LineSetting) {
                         this.symbolSettings = settings.LineSetting = new LineSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polylineSymbol : '');
                     } else {
                         this.symbolSettings = new LineSetting(settings.LineSetting);
@@ -263,7 +271,7 @@ export default {
                     break;
                 }
                 case 'text': {
-                    if (!settings.TextSetting){
+                    if (!settings.TextSetting) {
                         this.symbolSettings = settings.TextSetting = new TextSetting(this.initialSymbolSettings ? this.initialSymbolSettings.textSymbol : '')
                     } else {
                         this.symbolSettings = new TextSetting(settings.TextSetting);
@@ -277,7 +285,7 @@ export default {
                 case 'ellipse':
                 case 'arrow': {
                     // TODO: new tools with fill pattern must be added here
-                    if (!settings.PolygonSetting){
+                    if (!settings.PolygonSetting) {
                         this.symbolSettings = settings.PolygonSetting = new PolygonSetting(this.initialSymbolSettings ? this.initialSymbolSettings.polygonSymbol : '');
                     } else {
                         this.symbolSettings = new PolygonSetting(settings.PolygonSetting);
@@ -294,10 +302,10 @@ export default {
             this.currentTool && this.$emit('onToolClick', {id: this.currentTool.id})
         },
         settingsChange(settings) {
-            Object.assign(this.toolSettings[settings.typeName],settings);
-            Object.assign(this.symbolSettings,settings)
+            this.toolSettings[settings.typeName] = settings;
+            this.symbolSettings = settings;
         },
-        _toggleSketchingVisible(val){
+        _toggleSketchingVisible(val) {
             //this.sketchingVisible = val;
             this.$emit('toggleSketchingLayerVisibility', val)
         },
