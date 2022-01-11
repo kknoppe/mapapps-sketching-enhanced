@@ -126,7 +126,7 @@ export default declare({
         const layers = allowBasemapSnapping ? this._mapWidgetModel.map.allLayers : this._mapWidgetModel.map.layers;
         const flattenLayers = layers.flatten((item) => item.layers || item.sublayers);
         const snappingLayers = flattenLayers.filter((layer) => {
-            if (layer.advancedEditing && !layer.advancedEditing.allowSnapping) {
+            if (layer.sketchingEnhanced && !layer.sketchingEnhanced.allowSnapping) {
                 return false;
             } else if (this._layersToIgnore?.find(x => layer.id === x.layer.id)) {
                 return false;
