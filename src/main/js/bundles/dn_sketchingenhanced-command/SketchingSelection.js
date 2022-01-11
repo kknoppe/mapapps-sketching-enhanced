@@ -143,7 +143,8 @@ export default function () {
         },
 
         _checkShouldSnappingReshapeGraphics(point, geometry) {
-            return this._sketchType === "update" && this._sketchState === "active" || geometry.object.declaredClass === "esri.Graphic";
+            const sketchingHandler = this._sketchingHandler;
+            return geometry?.object?.layer?.id === sketchingHandler._graphicLayerId;
         },
 
         _checkShouldSnappingReshapeUnselectedGraphics(point, geometry) {
