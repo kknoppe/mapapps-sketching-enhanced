@@ -285,7 +285,7 @@ export default function () {
                 return true;
             } else {
                 // return this._editModel.snappingEnabled;
-                return false;
+                return true;
             }
         },
 
