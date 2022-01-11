@@ -15,7 +15,6 @@
  */
 import '.';
 import './SketchingEnhancedWidgetFactory';
-import './SketchingToolHandler';
 import './DrawTextHelpLine';
 import './BindingToolsToViewModel';
 import './HighlightHandler';

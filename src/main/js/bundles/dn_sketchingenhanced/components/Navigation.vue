@@ -23,24 +23,23 @@
     >
         <v-list>
             <div v-for="tool in firstTools">
-                <v-list-tile v-if="!tool.menu" @click="_onNonGroupToolClick(tool)" :id="tool.id">
+                <v-list-tile v-if="!tool.menu" @click="_onNonGroupToolClick(tool)" :id="tool.id" :value="tool.active">
                     <v-list-tile-action>
                         <v-icon>{{tool.iconClass}}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-title>{{tool.title}}</v-list-tile-title>
                 </v-list-tile>
                 <v-list-group v-if="tool.menu"
-                              no-action
-                              @transitionend="transitionEnd($event,tool)">
+                              no-action>
                     <template v-slot:activator>
-                        <v-list-tile :id="tool.id">
+                        <v-list-tile :id="tool.id"  :value="listToolsActive(tool)">
                             <v-list-tile-action>
                                 <v-icon>{{tool.iconClass}}</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-title>{{tool.title}}</v-list-tile-title>
                         </v-list-tile>
                     </template>
-                    <v-list-tile v-for="subTool in listTools(tool)" @click="subToolClickHandler(subTool, tool.id)" :id="subTool.id">
+                    <v-list-tile v-for="subTool in listTools(tool)" @click="subToolClickHandler(subTool, tool.id)" :id="subTool.id" :value="subTool.active">
                         <v-list-tile-action>
                             <v-icon>{{subTool.iconClass}}</v-icon>
                         </v-list-tile-action>
@@ -92,23 +91,16 @@
                 }
                 return list;
             },
+            listToolsActive(tool) {
+                const items = tool.items;
+                const found = items.find((id)=>{
+                    const newTool = this._getTool(id);
+                    return newTool.active;
+                });
+                return !!found;
+            },
             subToolClickHandler(tool, parentId) {
                 this.$emit('onToolClick', tool.id);
-                this._deactivateOtherTools();
-                const toolIcon = document.getElementById(tool.id);
-                const childToolNode = toolIcon ? toolIcon.parentElement : null;
-                const toolGroupNode = tool.toolGroup ? document.getElementById(tool.toolGroup).parentElement.parentElement : null;
-                if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
-                    this.activeNodes.push(childToolNode);
-                    childToolNode.classList.add('highlightedTool');
-                    if (toolGroupNode) {
-                        this.activeNodes.push(toolGroupNode);
-                        toolGroupNode.classList.add('highlightedToolParent');
-                    }
-                } else {
-                    childToolNode.classList.remove('highlightedTool');
-                    toolGroupNode && toolGroupNode.classList.remove('highlightedToolParent');
-                }
                 const parentIcon = document.getElementById(parentId);
                 if(parentIcon && parentIcon.children.length && parentIcon.children[0].children.length) {
                     const classList = parentIcon.children[0].children[0].classList;
@@ -117,44 +109,9 @@
                 }
             },
 
-            transitionEnd(evt,tool){
-                const subTools = this.listTools(tool);
-                if (evt.propertyName === 'transform') {
-                    const node = evt.target.parentElement.parentElement;
-                    const hasActiveTool = subTools.some(tool => tool.active === true);
-                    if (hasActiveTool) {
-                        this.activeNodes.push(node);
-                        node.classList.add('highlightedToolParent');
-                    }
-                }
-            },
-
             _onNonGroupToolClick(tool){
                 this.$emit('onToolClick', tool.id);
-                this._deactivateOtherTools();
-                const toolIcon = document.getElementById(tool.id);
-                const childToolNode = toolIcon ? toolIcon.parentElement : null;
-                if (!tool.active && childToolNode && !childToolNode.classList.contains('highlightedTool')){
-                    childToolNode.classList.add('highlightedTool');
-                } else {
-                    childToolNode.classList.remove('highlightedTool');
-                }
             },
-
-            _deactivateOtherTools(){
-                if (this.activeNodes && this.activeNodes.length) {
-                    this.activeNodes.forEach(node => {
-                        node.classList.remove('highlightedTool');
-                        node.classList.remove('highlightedToolParent');
-                    });
-                    this.activeNodes = [];
-                }
-                this.tools.forEach(tool => {
-                    const toolIcon = document.getElementById(tool.id);
-                    const childToolNode = toolIcon ? toolIcon.parentElement : null;
-                    toolIcon && childToolNode.classList.remove('highlightedTool');
-                });
-            }
         },
     }
 </script>
