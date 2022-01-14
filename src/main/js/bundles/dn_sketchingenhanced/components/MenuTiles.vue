@@ -19,7 +19,8 @@
     <v-list-tile
         @click="onToolClickHandler"
         class="sketchingMenuTiles"
-        :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)">
+        :disabled="!tool.enabled || tool.processing || (profileLoaded && notActiveTool)"
+        :value="tool.active">
         <v-list-tile-action class="sketchingMenuToolActions">
             <v-icon> {{tool.iconClass}} </v-icon>
         </v-list-tile-action>

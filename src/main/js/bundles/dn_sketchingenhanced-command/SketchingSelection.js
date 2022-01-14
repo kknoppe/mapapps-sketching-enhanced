@@ -77,32 +77,24 @@ export default function () {
             this.snapPointObjectSymbol = snappingManager.snapPointObjectSymbol;
             this.snapPolygonObjectSymbol = snappingManager.snapPolygonObjectSymbol;
             this.snapPolylineObjectSymbol = snappingManager.snapPolylineObjectSymbol;
-            this.snap_fun_filterGeometries = snappingManager._filterGeometries;
-            this.snap_fun_checkShouldSnapping = snappingManager._checkShouldSnapping;
-            this.snap_fun_getSnappingObject = d_lang.hitch(snappingManager, snappingManager._getSnappingObject);
         },
 
-        ACTIVATE_drawreshape1tool() {
+        ACTIVATE_drawtool() {
             this._setSnappingSelectProps();
             const snappingManager = this._snappingManager;
             snappingManager.snapPolylineObjectSymbol = this.snapPolylineReshapeSymbol;
-            snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingReshapeUnselectedGraphics);
-            snappingManager._filterGeometries = this.snap_fun_filterGeometries;
+            snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingDraw);
         },
 
-        ACTIVATE_drawreshape2tool() {
+        DEACTIVATE_drawtool() {
+            this._resetSnappingProps();
+        },
+
+        ACTIVATE_drawreshapetool() {
             this._setSnappingSelectProps();
             const snappingManager = this._snappingManager;
             snappingManager.snapPolylineObjectSymbol = this.snapPolylineReshapeSymbol;
             snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingReshapeGraphics);
-            snappingManager._filterGeometries = this.snap_fun_filterGeometries;
-        },
-
-        ACTIVATE_drawselectioncreateuniontool() {
-            this._setSnappingSelectProps();
-            const snappingManager = this._snappingManager;
-            snappingManager.snapPolylineObjectSymbol = this.snapPolylinePlusObjectSymbol;
-            snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingPlus);
         },
 
         ACTIVATE_drawselectioncreatedifferencetool() {
@@ -119,13 +111,6 @@ export default function () {
             snappingManager._checkShouldSnapping = d_lang.hitch(this, this._checkShouldSnappingMinus);
         },
 
-        ACTIVATE_drawselectiontool() {
-            this._setSnappingSelectProps();
-            const snappingManager = this._snappingManager;
-            snappingManager.snapPolylineObjectSymbol = this.snapPolylinePlusObjectSymbol;
-            snappingManager._filterGeometries = this.snap_fun_filterGeometries;
-        },
-
         DEACTIVATE_drawselectiontool() {
             this._resetSnappingProps();
         },
@@ -140,7 +125,6 @@ export default function () {
             snappingManager.snapPolygonObjectSymbol = this.polygonSymbol;
             snappingManager.snapPolylineObjectSymbol = this.polylineSymbol;
             snappingManager._filterGeometries = d_lang.hitch(this, this._filterGeometries);
-            snappingManager._getSnappingObject = d_lang.hitch(this, this._getSnappingObject);
         },
 
         _resetSnappingProps() {
@@ -151,22 +135,16 @@ export default function () {
             snappingManager.snapPointObjectSymbol = this.snapPointObjectSymbol;
             snappingManager.snapPolygonObjectSymbol = this.snapPolygonObjectSymbol;
             snappingManager.snapPolylineObjectSymbol = this.snapPolylineObjectSymbol;
-            snappingManager._filterGeometries = this.snap_fun_filterGeometries;
-            snappingManager._checkShouldSnapping = this.snap_fun_checkShouldSnapping;
-            snappingManager._getSnappingObject = this.snap_fun_getSnappingObject;
+            snappingManager._checkShouldSnapping = null;
         },
 
-        _filterGeometries(geometries, type) {
-            return !this._checkShouldSelectByGeometryType(type) ? [] : this.snap_fun_filterGeometries(geometries, type);
-        },
-
-        _checkShouldSelectByGeometryType(type) {
-            const types = this.geometryTypes || [];
-            return !types.length || types.includes(type);
+        _checkShouldSnappingDraw(point, geometry) {
+            return true;
         },
 
         _checkShouldSnappingReshapeGraphics(point, geometry) {
-            return this._sketchType === "update" && this._sketchState === "active" || geometry.object.declaredClass === "esri.Graphic";
+            const sketchingHandler = this._sketchingHandler;
+            return geometry?.object?.layer?.id === sketchingHandler._graphicLayerId;
         },
 
         _checkShouldSnappingReshapeUnselectedGraphics(point, geometry) {
@@ -216,34 +194,6 @@ export default function () {
             return selectedGraphics.some(selectedGraphic => {
                 return geometryEngine[operator](selectedGraphic.geometry, geo);
             });
-        },
-
-        _getSnappingObject(point, geometries, type, searchRadius) {
-            const nearestPointResult = this.snap_fun_getSnappingObject(point, geometries, type, searchRadius);
-            if (!nearestPointResult.objectGeometry && type === "polygon") {
-                let geo = null;
-                let area = -1;
-                const checkShouldSnapping = this._snappingManager._checkShouldSnapping;
-                this._filterGeometries(geometries, type).forEach(geometry => {
-                    if (!checkShouldSnapping || checkShouldSnapping(point, geometry)) {
-                        const oGeo = geometry.object.geometry;
-                        if (oGeo.contains(point)) {
-                            const a = geometryEngine.planarArea(oGeo);
-                            if (area === -1 || area > a) {
-                                area = a;
-                                geo = geometry;
-                            }
-                        }
-                    }
-                });
-
-                if (geo) {
-                    const nearestResult = geometryEngine.nearestCoordinate(geo.object.geometry, point);
-                    d_lang.mixin(nearestPointResult, nearestResult, {objectGeometry: geo});
-                }
-            }
-
-            return nearestPointResult;
         },
 
         activateObject() {

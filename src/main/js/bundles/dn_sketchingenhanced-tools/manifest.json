@@ -725,90 +725,6 @@
             ]
         },
         {
-            "name": "SketchingDrawselectionbuffertool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawselectionbuffertool",
-                "title": "${tools.drawselectionbuffertool}",
-                "iconClass": "icon-immo-buffer",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectBuffer",
-                "mode": "",
-                "groups": [
-                    "sketching"
-                ]
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
-            "name": "SketchingDrawselectioncopytool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawselectioncopytool",
-                "title": "${tools.drawselectioncopytool}",
-                "iconClass": "icon-immo-copy",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectCopy",
-                "mode": "",
-                "groups": [
-                    "sketching"
-                ]
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
-            "name": "SketchingDrawselectioncreateuniontool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawselectioncreateuniontool",
-                "title": "${tools.drawselectioncreateuniontool}",
-                "iconClass": "icon-immo-union",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectPlus",
-                "mode": "",
-                "groups": [
-                    "sketching"
-                ]
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
             "name": "SketchingDrawselectioncreatedifferencetool",
             "impl": "ct/tools/Tool",
             "provides": [
@@ -968,45 +884,6 @@
                 "togglable": true,
                 "activateHandler": "activateTool",
                 "deactivateHandler": "deactivateTool",
-                "type": "reshape",
-                "updateOptions": {
-                    "enableMoveAllGraphics": true,
-                    "enableRotation": true,
-                    "enableScaling": true,
-                    "preserveAspectRatio": false,
-                    "toggleToolOnClick": true,
-                    "multipleSelectionEnabled": true
-                },
-                "groups": [
-                    "sketching"
-                ],
-                "rules": {
-                    "ruleSuccessProperty": "enabled",
-                    "drawHasGraphic": true
-                }
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
-            "name": "SketchingDrawreshape1tool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawreshape1tool",
-                "title": "${tools.drawreshape1tool}",
-                "iconClass": "icon-shape-select",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
                 "type": "selectReshape",
                 "mode": "",
                 "updateOptions": {
@@ -1017,38 +894,6 @@
                     "toggleToolOnClick": true,
                     "multipleSelectionEnabled": true
                 },
-                "groups": [
-                    "sketching"
-                ],
-                "rules": {
-                    "ruleSuccessProperty": "enabled",
-                    "drawHasGraphic": true
-                }
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                }
-            ]
-        },
-        {
-            "name": "SketchingDrawreshape2tool",
-            "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "drawreshape2tool",
-                "title": "${tools.drawreshape2tool}",
-                "iconClass": "icon-shape-select",
-                "toolRole": "toolset",
-                "togglable": true,
-                "activateHandler": "activateTool",
-                "deactivateHandler": "deactivateTool",
-                "type": "selectReshape",
-                "mode": "",
                 "groups": [
                     "sketching"
                 ],
@@ -1083,7 +928,7 @@
                 "menu": true,
                 "mode": "",
                 "items": [
-                    "drawreshape1tool",
+                    "drawreshapetool",
                     "drawcopytool",
                     "drawremovetool",
                     "drawremovealltool",

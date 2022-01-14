@@ -19,48 +19,40 @@ import ct_array from 'ct/array';
 import ct_lang from 'ct/_lang';
 
 function filterTools(tools, filterIds) {
-    const fTools = [];
+    const returnTools = [];
     filterIds.forEach(id => {
-        if ('object' === typeof id) {
-            id.tools && fTools.push(...filterTools(tools, id.tools));
-        } else if (id.indexOf('?') !== -1 || id.indexOf('*') !== -1) {
-            const patt = new RegExp(id.replace(/\?/g, '.?').replace(/\*/g, '.*'));
-            const pTools = tools.filter(tool => {
-                return patt.test(tool.id);
-            });
+        if (id.indexOf('?') !== -1 || id.indexOf('*') !== -1) {
+            const regExp = new RegExp(id.replace(/\?/g, '.?').replace(/\*/g, '.*'));
+            const foundTools = tools.filter(tool => regExp.test(tool.id));
 
-            pTools.forEach(tool => {
-                fTools.findIndex(e => e.id === tool.id) === -1 && fTools.push(tool);
+            foundTools.forEach(t => {
+                const toolAlreadyAdded = returnTools.find(e => e.id === t.id);
+                if (!toolAlreadyAdded) {
+                    returnTools.push(t);
+                }
             });
         } else {
             const tool = tools.find(e => e.id === id);
-            tool && fTools.push(tool);
+            tool && returnTools.push(tool);
         }
     });
-    return fTools;
+    return returnTools;
 }
 
 function copyToolProps(tools, filterIds, toolProps) {
-    const fTools = [];
+    const returnTools = [];
     filterIds.forEach(id => {
-        if ('object' === typeof id) {
-            if (id.tools) {
-                const toolSet = Object.assign({}, id);
-                toolSet.tools = copyToolProps(tools, id.tools, toolProps);
-                fTools.push(toolSet);
-            }
-        } else {
-            const patt = new RegExp(id.replace(/\?/g, '.?').replace(/\*/g, '.*'));
-            const pTools = tools.filter(tool => {
-                return patt.test(tool.id);
-            });
+        const regExp = new RegExp(id.replace(/\?/g, '.?').replace(/\*/g, '.*'));
+        const foundTools = tools.filter(tool => regExp.test(tool.id));
 
-            pTools.forEach(tool => {
-                fTools.findIndex(e => e.id === tool.id) === -1 && fTools.push(ct_lang.copyProps({}, tool, toolProps));
-            });
-        }
+        foundTools.forEach((t) => {
+            const toolAlreadyAdded = returnTools.find(e => e.id === t.id);
+            if (!toolAlreadyAdded) {
+                returnTools.push(ct_lang.copyProps({}, t, toolProps));
+            }
+        })
     });
-    return fTools;
+    return returnTools;
 }
 
 function watchToolState(tool, attr, bindings) {
@@ -70,7 +62,7 @@ function watchToolState(tool, attr, bindings) {
 }
 
 function bindToViewModel(vueModelConfig, vueModel, property, toolIds, toolsWatchHandles, toolBindings) {
-    let binding = Binding.create()
+    const binding = Binding.create()
         .syncToRight('allTools', property, allTools => {
             const tools = filterTools(allTools, toolIds);
             tools.forEach(tool => {
@@ -132,18 +124,15 @@ export default declare({
         }
     },
 
-    toolClick(toolId, active) {
-        const tool = toolId && this.getTool(toolId);
-        tool && this._toolClick(tool, active);
-    },
-
     _toolClick(tool, active) {
         tool.clickHandler ? tool.click() : this._toolActive(tool, active);
     },
 
     _toolActive(tool, active) {
-        (active === undefined || active === null) && (active = !tool.get('active'));
-        (tool.handlerScope || !tool.activateHandler) && tool.set('active', active);
+        if (active === undefined || active === null) {
+            active = !tool.get('active')
+        }
+        tool.set('active', active);
     },
 
     _getDefaultTool(toolId) {
@@ -191,28 +180,23 @@ export default declare({
         if (!toggleToolId) {
             toolStateHandler.enable();
         } else {
-            const toggleToolStateHandler = function (toggleTool) {
+            const toggleTool = this._getToggleTool(toggleToolId);
+            if (toggleTool) {
+                if (toggleTool.active) {
+                    //activate default tool
+                    const defaultTool = that._getDefaultTool(defaultToolId);
+                    defaultTool && that._toolClick(defaultTool, true);
+
+                    toolStateHandler.enable();
+                }
                 const toggleToolWatchHandle = toggleTool.watch('active', (name, oldValue, newValue) => {
-                    !!newValue ? toolStateHandler.enable() : toolStateHandler.disable();
+                    newValue ? toolStateHandler.enable() : toolStateHandler.disable();
 
                     //activate default tool
                     const defaultTool = that._getDefaultTool(defaultToolId);
                     defaultTool && that._toolClick(defaultTool, newValue);
                 });
                 !toolsWatchHandles[toggleToolId] && (toolsWatchHandles[toggleToolId] = toggleToolWatchHandle);
-            };
-
-            const toggleTool = this._getToggleTool(toggleToolId);
-            if (toggleTool) {
-                toggleToolStateHandler(toggleTool);
-            } else {
-                const toolsWatcher = this.watch('allTools', () => {
-                    const toggleTool = that._getToggleTool(toggleToolId);
-                    if (toggleTool) {
-                        toolsWatcher.remove();
-                        toggleToolStateHandler(toggleTool);
-                    }
-                });
             }
         }
 
@@ -226,7 +210,7 @@ export default declare({
                 Object.keys(toolsWatchHandles).forEach(prop => {
                     toolsWatchHandles[prop].remove();
                 });
-            },
+            }
         };
-    },
+    }
 });

@@ -82,7 +82,7 @@ export default function () {
                 // "delete" is the correct event //TODO remove "remove"-Event
                 viewModel.emit('delete', {
                     tool,
-                    graphics: gs,                    
+                    graphics: gs,
                     type: 'delete',
                 });
             }
@@ -184,6 +184,7 @@ export default function () {
                 return buffer(geometry, distance, unit);
             } else if (operator === "selectCopy")
                 return geometry.clone();
+            // TODO: Remove
             else if (operator === "selectPlus" || operator === "selectMinus" || operator === "selectIntersect") {
                 const geometries = selectedGeometries || this._getSelectedGeometries();
                 if (geometries) {

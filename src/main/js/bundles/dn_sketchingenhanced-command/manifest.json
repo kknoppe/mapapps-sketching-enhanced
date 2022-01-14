@@ -52,42 +52,59 @@
                 "Event-Topics": [
                     {
                         "topic": [
-                            "ct/tool/DEACTIVATE/drawselectionbuffertool",
-                            "ct/tool/DEACTIVATE/drawselectioncopytool",
-                            "ct/tool/DEACTIVATE/drawselectioncreateuniontool",
                             "ct/tool/DEACTIVATE/drawselectioncreatedifferencetool",
                             "ct/tool/DEACTIVATE/drawselectioncreateintersecttool",
                             "ct/tool/DEACTIVATE/drawtransform1tool",
-                            "ct/tool/DEACTIVATE/drawreshape1tool",
-                            "ct/tool/DEACTIVATE/drawreshape2tool"
+                            "ct/tool/DEACTIVATE/drawreshapetool"
                         ],
                         "method": "DEACTIVATE_drawselectiontool"
                     },
                     {
                         "topic": [
-                            "ct/tool/ACTIVATE/drawselectionbuffertool",
-                            "ct/tool/ACTIVATE/drawselectioncopytool"
+                            "ct/tool/DEACTIVATE/drawpointtool",
+                            "ct/tool/DEACTIVATE/drawpolylinetool",
+                            "ct/tool/DEACTIVATE/drawfreehandpolylinetool",
+                            "ct/tool/DEACTIVATE/drawpolygontool",
+                            "ct/tool/DEACTIVATE/drawfreehandpolygontool",
+                            "ct/tool/DEACTIVATE/constructionpolylinetool",
+                            "ct/tool/DEACTIVATE/constructionpolygontool",
+                            "ct/tool/DEACTIVATE/drawcircletool",
+                            "ct/tool/DEACTIVATE/drawtriangletool",
+                            "ct/tool/DEACTIVATE/drawellipsetool",
+                            "ct/tool/DEACTIVATE/drawrectangletool",
+                            "ct/tool/DEACTIVATE/drawarrowtool",
+                            "ct/tool/DEACTIVATE/drawtexttool",
+                            "ct/tool/DEACTIVATE/sketchingpolygongroup",
+                            "ct/tool/DEACTIVATE/sketchinglinegroup"
                         ],
-                        "method": "ACTIVATE_drawselectiontool"
+                        "method": "DEACTIVATE_drawtool"
                     },
                     {
                         "topic": [
-                            "ct/tool/ACTIVATE/drawreshape2tool"
+                            "ct/tool/ACTIVATE/drawpointtool",
+                            "ct/tool/ACTIVATE/drawpolylinetool",
+                            "ct/tool/ACTIVATE/drawfreehandpolylinetool",
+                            "ct/tool/ACTIVATE/drawpolygontool",
+                            "ct/tool/ACTIVATE/drawfreehandpolygontool",
+                            "ct/tool/ACTIVATE/constructionpolylinetool",
+                            "ct/tool/ACTIVATE/constructionpolygontool",
+                            "ct/tool/ACTIVATE/drawcircletool",
+                            "ct/tool/ACTIVATE/drawtriangletool",
+                            "ct/tool/ACTIVATE/drawellipsetool",
+                            "ct/tool/ACTIVATE/drawrectangletool",
+                            "ct/tool/ACTIVATE/drawarrowtool",
+                            "ct/tool/ACTIVATE/drawtexttool",
+                            "ct/tool/ACTIVATE/sketchingpolygongroup",
+                            "ct/tool/ACTIVATE/sketchinglinegroup"
                         ],
-                        "method": "ACTIVATE_drawreshape2tool"
+                        "method": "ACTIVATE_drawtool"
                     },
                     {
                         "topic": [
                             "ct/tool/ACTIVATE/drawtransform1tool",
-                            "ct/tool/ACTIVATE/drawreshape1tool"
+                            "ct/tool/ACTIVATE/drawreshapetool"
                         ],
-                        "method": "ACTIVATE_drawreshape1tool"
-                    },
-                    {
-                        "topic": [
-                            "ct/tool/ACTIVATE/drawselectioncreateuniontool"
-                        ],
-                        "method": "ACTIVATE_drawselectioncreateuniontool"
+                        "method": "ACTIVATE_drawreshapetool"
                     },
                     {
                         "topic": [

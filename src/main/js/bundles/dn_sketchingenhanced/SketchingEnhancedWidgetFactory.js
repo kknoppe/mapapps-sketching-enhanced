@@ -43,7 +43,7 @@ export default class SketchingEnhancedWidgetFactory {
 
         const allTools = tools.operator.concat(tools.draw).concat(tools.edit);
 
-        this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.defaultTool);
+        this._bindingToolsToViewModel.binding(vm, 'tools', allTools, props.toggleTool, props.activeToolOnStartup);
 
         vm.$on('settingsSelectionChanged', settings => {
             this._activateHelpLine(settings);
@@ -98,55 +98,13 @@ export default class SketchingEnhancedWidgetFactory {
 
         const widget = VueDijit(vm);
 
-        widget.onSketchingActivated = () => this._activateToolOnStartup(vm);
-
-        // when SketchingTool is already activated, we have to activate the startup-tool manually
-        this._sketchingEnhancedTool.get('active') && this._activateToolOnStartup(vm);
-
         vm.extensionTabs = this.extensions;
         return widget;
     }
 
-    async _activateToolOnStartup(vm) {
-        whenOnce(this._mapWidgetModel, 'ready', () => {
-            whenOnce(this._mapWidgetModel.view, 'ready', async () => {
-                const id = this._properties.activeToolOnStartup;
-                if (!id || !id.length || id === 'none') {
-                    return;
-                }
-                if(id !== 'drawpolylinetool') {
-                    vm.onToolClickHandler('drawpolylinetool');
-                } else {
-                    vm.onToolClickHandler('drawpolygontool')
-                }
-
-                await Promise.resolve(new Promise(r => setTimeout(() => r(), 500)));
-                if (vm.firstToolGroupIds.includes(id)) {
-                    this.clickOnElement(id);
-                } else {
-                    vm.firstToolGroupIds.forEach(toolId => {
-                        const tool = vm._getTool(toolId);
-                        if (tool.items && tool.items.includes(id)) {
-                            this.clickOnElement(toolId, true);
-                            this.clickOnElement(id);
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    clickOnElement(id, parent) {
-        const element = document.getElementById(id);
-        if (parent && (element?.parentElement.parentElement.className.indexOf('active') !== -1)) {
-            return;
-        }
-        element?.click();
-    }
-
     _activateHelpLine(settings) {
         const viewModel = this._sketchingHandler.sketchViewModel;
-        if (settings.typeName !== 'TextSetting' || !(viewModel.tool && viewModel.tool.toolId === 'drawreshape1tool')) {
+        if (settings.typeName !== 'TextSetting' || !(viewModel.tool && viewModel.tool.toolId === 'drawreshapetool')) {
             return;
         }
 

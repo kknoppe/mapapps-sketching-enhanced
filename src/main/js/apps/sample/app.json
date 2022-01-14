@@ -211,7 +211,39 @@
                     }
                 ],
                 "map": {
-                    "layers": []
+                    "layers": [
+                        {
+                            "id": "koeln",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "sublayers": [
+                                {
+                                    "id": 2,
+                                    "sketchingEnhanced": {
+                                        "allowSnapping": true
+                                    }
+                                },
+                                {
+                                    "id": 9,
+                                    "sketchingEnhanced": {
+                                        "allowSnapping": false
+                                    }
+                                },
+                                {
+                                    "id": 10,
+                                    "sketchingEnhanced": {
+                                        "allowSnapping": false
+                                    }
+                                },
+                                {
+                                    "id": 11,
+                                    "sketchingEnhanced": {
+                                        "allowSnapping": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "view": {
                     "viewmode": "2D",

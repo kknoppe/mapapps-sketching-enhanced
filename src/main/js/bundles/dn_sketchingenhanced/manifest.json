@@ -54,19 +54,13 @@
             "impl": "SketchingEnhancedWidgetFactory",
             "provides": [
                 "dijit.Widget",
-                "dn_sketchingenhanced.Widget",
-                "ct.framework.api.EventHandler"
+                "dn_sketchingenhanced.Widget"
             ],
             "instanceFactory": true,
             "properties": {
-                "Event-Topics": [
-                    {
-                        "topic": "sketchingEnhanced/sketchingActivated",
-                        "method": "onSketchingActivated"
-                    }
-                ],
                 "widgetRole": "sketchingEnhancedWidget",
-                "activeToolOnStartup": "none",
+                "toggleTool": "sketchingEnhancedWidgetToggleTool",
+                "activeToolOnStartup": "drawpointtool",
                 "firstToolGroupIds": [
                     "drawpointtool",
                     "sketchinglinegroup",
@@ -101,19 +95,14 @@
                     ],
                     "operator": [
                         "drawcopytool",
-                        "drawbuffertool",
-                        "drawselectioncopytool",
-                        "drawselectionbuffertool"
+                        "drawbuffertool"
                     ],
                     "edit": [
                         "drawtransformtool",
                         "drawtransform1tool",
                         "drawreshapetool",
-                        "drawreshape1tool",
-                        "drawreshape2tool",
                         "drawremovealltool",
                         "drawremovetool",
-                        "stylePropertiesTool",
                         "drawundotool",
                         "drawredotool",
                         "drawcanceltool",
@@ -180,38 +169,15 @@
                 "iconClass": "icon-pencil",
                 "toolRole": "toolset",
                 "togglable": true,
-                "activateHandler": "activateSketching",
-                "deactivateHandler": "deactivateSketching",
-                "toggleSnappingSource": true,
                 "groups": [
                     "drawTools"
                 ]
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "dn_sketchingenhanced.SketchingToolHandler"
-                }
-            ]
+            }
         },
         {
             "name": "DrawTextHelpLine",
             "provides": [
                 "dn_sketchingenhanced.DrawTextHelpLine"
-            ]
-        },
-        {
-            "name": "SketchingToolHandler",
-            "provides": "dn_sketchingenhanced.SketchingToolHandler",
-            "references": [
-                {
-                    "name": "_sketchingHandler",
-                    "providing": "dn_sketchingenhanced.SketchingHandler"
-                },
-                {
-                    "name": "_eventService",
-                    "providing": "ct.framework.api.EventService"
-                }
             ]
         },
         {

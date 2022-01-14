@@ -72,7 +72,7 @@ export default class DrawTextHelpLine {
         let angle;
         if (rotation || rotation === 0) {
             angle = rotation;
-        } else if (viewModel.tool && viewModel.tool.toolId === 'drawreshape1tool') {
+        } else if (viewModel.tool && viewModel.tool.toolId === 'drawreshapetool') {
             angle = (viewModel._orgSymbols && viewModel._orgSymbols.length > 0 && viewModel._orgSymbols[0].type === 'text') ?
                 viewModel._orgSymbols[0].angle : viewModel.textSymbol.angle;
         } else {
