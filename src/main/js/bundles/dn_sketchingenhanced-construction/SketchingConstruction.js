@@ -37,13 +37,14 @@ const calcLength = (p1, p2) => {
 };
 
 export default class SketchingConstruction {
+    history = new ConstructionHistory();
+
     activate() {
         //local
         this._viewModel = null;
         this._pointerEvt = null;
         this._pointerHandler = null;
         this._useOptionHandler = null;
-        this._selfSendingEvent = null;
     }
 
     deactivate() {
@@ -61,8 +62,16 @@ export default class SketchingConstruction {
         const radius = this._getOption("radius");
 
         this._setViewModel(viewModel);
-        if (tool && tool.id && tools.includes(tool.id)) {
+        if (tool?.id && tools.includes(tool.id)) {
+            // add step to history
+            this.history.add(evt?.toolEventInfo?.type);
+            
+
             if (state === "cancel" || state === "complete") {
+                if (this.history.wasDoubleClick()) {
+                    // remove last added vertex when sketching was completed by a double click
+                    evt.graphic.geometry.paths[0].pop();
+                }
                 if (snappingManager && snappingManager._mandatoryWithoutSnappingMode === true) {
                     snappingManager._mandatoryWithoutSnappingMode = false;
                     snappingManager.removeSnappingGraphics();
@@ -70,7 +79,7 @@ export default class SketchingConstruction {
                 if (tool.id === "drawcircletool" && radius) {
                     this._createCircle(radius, evt.graphic);
                 }
-            } else if (type === "create" && state === "active" && !this._selfSendingEvent) {
+            } else if (type === "create" && state === "active") {
                 const angle = this._getOption("angle");
                 const angleModulus = this._getOption("angleModulus");
                 const angleTypeRelative = this._getOption("angleTypeRelative", false);
@@ -78,7 +87,7 @@ export default class SketchingConstruction {
 
                 snappingManager && (snappingManager._mandatoryWithoutSnappingMode = !!(angle || angleModulus || planarLength));
                 if (angle || angleModulus || planarLength) {
-                    this._constructionHandler(angle, angleModulus, angleTypeRelative, planarLength);
+                    this._constructionHandler(angle, angleModulus, angleTypeRelative, planarLength, evt);
                 }
             }
         }
@@ -89,7 +98,6 @@ export default class SketchingConstruction {
             this._viewModel = viewModel;
             this._pointerHandler = viewModel.view.on("pointer-move", (evt) => {
                 this._pointerEvt = evt;
-                this._selfSendingEvent = false;
             });
         }
     }
@@ -108,7 +116,7 @@ export default class SketchingConstruction {
         return false;
     }
 
-    _constructionHandler(angle, angleModulus, angleTypeRelative, planarLength) {
+    _constructionHandler(angle, angleModulus, angleTypeRelative, planarLength, evt) {
         const viewModel = this._viewModel;
         const view = viewModel.view;
         const activeAction = viewModel._operationHandle && viewModel._operationHandle.activeComponent && viewModel._operationHandle.activeComponent.activeAction;
@@ -124,11 +132,10 @@ export default class SketchingConstruction {
 
             const pointerEvt = this._pointerEvt;
             const native = pointerEvt.native;
-            if (pointerEvt.x !== screenPoint.x || pointerEvt.y !== screenPoint.y) {
+            if (pointerEvt.x !== screenPoint.x || pointerEvt.y !== screenPoint.y || evt?.toolEventInfo?.type === 'vertex-add') {
                 activeAction._cursorScreenPoint.x = pointerEvt.x = native.clientX = screenPoint.x;
                 activeAction._cursorScreenPoint.y = pointerEvt.y = native.clientY = screenPoint.y;
 
-                this._selfSendingEvent = true;
                 activeAction._popCursorVertex();
                 activeAction._updateCursor(pointerEvt.native);
             }
@@ -313,5 +320,25 @@ export default class SketchingConstruction {
         }
 
         return p1 && {p0: p0, p1: p1, p2: p2};
+    }
+}
+
+class ConstructionHistory {
+    lastEvents = [];
+
+    /**
+     * Adds a history step
+     * @param {string} eventName 
+     */
+    add(eventName) {
+        this.lastEvents = this.lastEvents.slice(-8).concat([eventName]);
+    }
+
+    /**
+     * Returns true, if the last action was executed by a double click
+     * @returns boolean
+     */
+    wasDoubleClick() {
+        return this.lastEvents.slice(-4, -3)[0] === 'vertex-add' && this.lastEvents.slice(-9, -8)[0] === 'vertex-add';
     }
 }
