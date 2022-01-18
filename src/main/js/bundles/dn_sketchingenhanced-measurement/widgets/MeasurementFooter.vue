@@ -49,8 +49,12 @@ export default {
     },
     measurementBoolean: {
       type: Boolean,
+      default: false
     },
-    value: Boolean,
+    value: {
+        type: Boolean,
+        default: false
+    },
   },
   computed: {
     enabled: {

@@ -69,7 +69,10 @@
         props: {
             color: Object,
             label: String,
-            disableAlpha: {type: Boolean, default: false},
+            disableAlpha: {
+                type: Boolean,
+                default: false
+            },
         }
     }
 </script>

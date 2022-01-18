@@ -140,7 +140,10 @@ export default {
     },
     props: {
         i18n: {type: Object, default: () => i18n.ui},
-        tools: Array,
+        tools: {
+            type: Array,
+            default: () => []
+        },
         firstToolGroupIds: Array,
         headerToolIds: Array,
         currentSymbol: {
@@ -157,9 +160,11 @@ export default {
         },
         lastToolGroupIds: {
             type: Array,
+            default: () => []
         },
         sketchingVisible: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         extensionTabs: Array,
     },
@@ -208,9 +213,7 @@ export default {
             }
         },
         headerTools() {
-            const tools = [];
-            this.headerToolIds.forEach(id => tools.push(this._getTool(id)));
-            return tools;
+            return this._getOverviewTools(this.headerToolIds);
         },
         lastTools() {
             return this._getOverviewTools(this.lastToolGroupIds);
@@ -235,7 +238,14 @@ export default {
          */
         _getOverviewTools(toolIds) {
             const tools = [];
-            toolIds.forEach(id => tools.push(this._getTool(id)));
+            if (toolIds) {
+                toolIds.forEach(id => {
+                    const tool = this._getTool(id);
+                    if (tool) {
+                        tools.push(tool);
+                    }
+                });
+            }
             return tools;
         },
         onToolClickHandler(id) {

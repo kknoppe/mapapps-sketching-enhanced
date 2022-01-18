@@ -55,18 +55,18 @@ export default {
         },
         active: {
             type: Boolean,
-            required: false,
+            default: false
         },
         bus: {
             type: Object,
             required: false,
         },
         tooltipIfDisabled: {
-            type: String,
+            type: String
         },
         hasGraphicsOnLoad: {
             type: Boolean,
-            required: false,
+            default: false
         }
     },
     mounted() {

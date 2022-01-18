@@ -42,9 +42,9 @@
 
 <script>
 
-    import PointShape from '../../../dn_sketchingenhanced-symboleditor/components/symbol/point/PointShape.vue'
+    import PointShape from '../../../dn_sketchingenhanced-symboleditor/components/symbol/point/PointShape.vue';
     import PointShapePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/point/PointShapePicker.vue';
-    import LineStyle from '../../../dn_sketchingenhanced-symboleditor/components/symbol/line/LineStyle.vue'
+    import LineStyle from '../../../dn_sketchingenhanced-symboleditor/components/symbol/line/LineStyle.vue';
     import LineStylePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/line/LineStylePicker.vue';
     import FillStyle from '../../../dn_sketchingenhanced-symboleditor/components/symbol/polygon/FillStyle.vue';
     import FillStylePicker from '../../../dn_sketchingenhanced-symboleditor/components/symbol/polygon/FillStylePicker.vue';

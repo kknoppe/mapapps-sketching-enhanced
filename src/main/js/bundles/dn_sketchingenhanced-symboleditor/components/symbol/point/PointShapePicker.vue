@@ -34,16 +34,19 @@
 
     export default {
         components: {
-            PointShape,
+            PointShape
         },
 
         props: {
-            value: String,
+            value: {
+                type: String,
+                default: "circle"
+            }
         },
 
         data() {
             return {
-                shapes: ['x', 'square', 'cross', 'circle', 'triangle', 'diamond'],
+                shapes: ['x', 'square', 'cross', 'circle', 'triangle', 'diamond']
             };
         },
 

@@ -77,7 +77,14 @@
             },
             _getOverviewTools(toolIds) {
                 const tools = [];
-                toolIds.forEach(id => tools.push(this._getTool(id)));
+                if (toolIds) {
+                    toolIds.forEach(id => {
+                        const tool = this._getTool(id);
+                        if (tool) {
+                            tools.push(tool);
+                        }
+                    });
+                }
                 return tools;
             },
             listTools(tool) {

@@ -36,7 +36,10 @@
             bus: {
                 type: Object
             },
-            sketchingVisible: Boolean,
+            sketchingVisible: {
+                type: Boolean,
+                default: false
+            },
         },
 
         computed: {

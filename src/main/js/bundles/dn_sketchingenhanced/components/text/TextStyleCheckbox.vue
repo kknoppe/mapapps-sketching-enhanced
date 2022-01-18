@@ -27,7 +27,10 @@
     export default {
 
         props: {
-            active: Boolean,
+            active: {
+                type: Boolean,
+                default: false
+            },
             label: String,
         },
 

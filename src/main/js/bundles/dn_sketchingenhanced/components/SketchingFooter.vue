@@ -55,6 +55,7 @@
             },
             isToolActive: {
                 type: Boolean,
+                default: false
             },
             bus: {
                 type: Object,

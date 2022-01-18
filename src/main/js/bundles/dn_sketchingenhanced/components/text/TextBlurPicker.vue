@@ -32,7 +32,10 @@
             color: Object,
             radius: Number,
             i18n: Object,
-            disableAlpha: {type: Boolean, default: false},
+            disableAlpha: {
+                type: Boolean,
+                default: false
+            },
         },
 
         data() {
