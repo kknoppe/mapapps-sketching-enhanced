@@ -122,7 +122,7 @@ export default {
         return {
             toggle: null,
             notoggle: null,
-            symbolSettings: new PolygonSetting(),
+            symbolSettings: null,
             tab: 0,
             settingsEnabled: false,
             hasGraphicsOnLoad: false,
@@ -201,7 +201,7 @@ export default {
         },
         settings: {
             get() {
-                return this.symbolSettings;
+                return this.symbolSettings || new PolygonSetting(this.initialSymbolSettings?.polygonSymbol);
             },
             set(val) {
                 this.$emit('settingsSelectionChanged', val);
