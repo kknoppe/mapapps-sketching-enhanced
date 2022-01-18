@@ -15,8 +15,8 @@
  */
 import Handles from "esri/core/Handles";
 import Polyline from "esri/geometry/Polyline";
-import {executeQueryJSON} from "esri/rest/query";
-import Query from "esri/rest/support/Query";
+import QueryTask from "esri/tasks/QueryTask";
+import Query from "esri/tasks/support/Query";
 import {declare} from "apprt-core/Mutable";
 import ct_async from "ct/async";
 
@@ -79,7 +79,8 @@ export default declare({
                     query.returnGeometry = true;
                     const url = layer.url;
 
-                    executeQueryJSON(url, query).then((results) => {
+                    const queryTask = new QueryTask(url);
+                    queryTask.execute(query).then((results) => {
                         this._addQueryResults(results);
                     });
                 }
