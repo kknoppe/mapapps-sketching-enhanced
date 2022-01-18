@@ -204,15 +204,6 @@
                     <artifactId>ct-jsrt-test-maven-plugin</artifactId>
                     <version>${ct.jsrt-test.version}</version>
                 </plugin>
-                <plugin>
-                    <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.10.0</version>
-                    <configuration>
-                        <tag>${project.version}</tag>
-                        <username>${scm.username}</username>
-                        <password>${scm.password}</password>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
         <sourceDirectory>src/main/js</sourceDirectory>
@@ -599,11 +590,11 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.12.0</mapapps.version>
+        <mapapps.version>4.12.3</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.4.3</ct.jsregistry.version>
+        <ct.jsregistry.version>1.4.4</ct.jsregistry.version>
         <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
         <vuecolor.version>2.7.1</vuecolor.version>
@@ -629,11 +620,6 @@
         <skip.apps.upload>false</skip.apps.upload>
         <!-- enable this if "upload" profile should pre-optimize apps -->
         <triggerPreOptimization>false</triggerPreOptimization>
-
-        <!-- required for release build -->
-        <scm.push>false</scm.push>
-        <scm.username>${env.GITHUB_USER_NAME}</scm.username>
-        <scm.password>${env.GITHUB_USER_PW}</scm.password>
     </properties>
     <profiles>
         <profile>
