@@ -63,6 +63,12 @@
                             "style": "normal",
                             "weight": "normal",
                             "decoration": "none"
+                        },
+                        "haloColor": {
+                            "r": 0, 
+                            "g": 0,
+                            "b": 1, 
+                            "a": 0.8
                         }
                     },
                     "pointSymbol": {

@@ -106,7 +106,7 @@
                         "color": {
                             "r": 64,
                             "g": 64,
-                            "b": 64,
+                            "b": 65,
                             "a": 1
                         },
                         "backgroundColor": [
@@ -123,6 +123,12 @@
                             "style": "normal",
                             "weight": "normal",
                             "decoration": "none"
+                        },
+                        "haloColor": {
+                            "r": 0, 
+                            "g": 0,
+                            "b": 1, 
+                            "a": 0.8
                         }
                     },
                     "pointSymbol": {
@@ -139,7 +145,7 @@
                             "color": {
                                 "r": 64,
                                 "g": 64,
-                                "b": 64,
+                                "b": 65,
                                 "a": 1
                             },
                             "width": 1,
@@ -159,7 +165,7 @@
                             "color": {
                                 "r": 64,
                                 "g": 64,
-                                "b": 64,
+                                "b": 65,
                                 "a": 1
                             },
                             "style": "solid",
@@ -175,7 +181,7 @@
                         "color": {
                             "r": 64,
                             "g": 64,
-                            "b": 64,
+                            "b": 65,
                             "a": 1
                         },
                         "style": "solid",
