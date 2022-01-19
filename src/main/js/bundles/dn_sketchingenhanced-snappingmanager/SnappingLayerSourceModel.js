@@ -123,21 +123,24 @@ export default declare({
 
     _getVisibleQueryableLayers() {
         const promises = [];
-        const allowBasemapSnapping = this._properties.allowBasemapSnapping;
+        const properties = this._properties;
+        const allowBasemapSnapping = properties.allowBasemapSnapping;
         const layers = allowBasemapSnapping ? this._mapWidgetModel.map.allLayers : this._mapWidgetModel.map.layers;
         const flattenLayers = layers.flatten((item) => item.layers || item.sublayers);
         const snappingLayers = flattenLayers.filter((layer) => {
-            if (layer.sketchingEnhanced && !layer.sketchingEnhanced.allowSnapping) {
-                return false;
+            if (layer.sketchingEnhanced && layer.sketchingEnhanced.allowSnapping !== undefined) {
+                return layer.sketchingEnhanced.allowSnapping;
             } else if (this._layersToIgnore?.find(x => layer.id === x.layer.id)) {
                 return false;
             } else if (layer.type === "graphics" || layer.type === "feature" || layer.type === "geojson"
                 || (layer.layer?.type === "map-image" && !layer.sublayers)) {
                 return true;
+            } else if(!layer.sketchingEnhanced) {
+                return properties.defaultAllowSnapping;
             } else {
                 return false;
             }
-        })
+        });
         snappingLayers.forEach((layer) => {
             const promise = new Promise((resolve) => {
                 if (layer.loadStatus === "loaded") {

@@ -137,7 +137,8 @@
                 "dn_sketchingenhanced-snappingmanager.SnappingSourceModel"
             ],
             "properties": {
-                "allowBasemapSnapping": true
+                "allowBasemapSnapping": true,
+                "defaultAllowSnapping": false
             },
             "references": [
                 {
