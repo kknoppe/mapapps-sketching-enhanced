@@ -18,7 +18,7 @@ module.exports = {
     bundleDescription: "Sketching Enhanced Snapping Manager",
     root: {
         ui: {
-            reachedMaxCount: "Only %maxCount% objects were used for snapping.",
+            reachedMaxCount: "Only %{maxCount} objects were used for snapping."
         }
     },
     de: true

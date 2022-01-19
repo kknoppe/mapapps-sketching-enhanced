@@ -17,6 +17,6 @@ module.exports = {
     bundleName: "Sketching Enhanced Snapping Manager",
     bundleDescription: "Sketching Enhanced Snapping Manager",
     ui: {
-        reachedMaxCount: "Es wurden nur %maxCount% Objekte zum Snapping aufgenommen.",
+        reachedMaxCount: "Es wurden nur %{maxCount} Objekte zum Snapping aufgenommen."
     }
 };
