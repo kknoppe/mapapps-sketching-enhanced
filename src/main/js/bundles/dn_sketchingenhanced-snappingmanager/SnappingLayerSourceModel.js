@@ -132,10 +132,9 @@ export default declare({
                 return layer.sketchingEnhanced.allowSnapping;
             } else if (this._layersToIgnore?.find(x => layer.id === x.layer.id)) {
                 return false;
-            } else if (layer.type === "graphics" || layer.type === "feature" || layer.type === "geojson"
-                || (layer.layer?.type === "map-image" && !layer.sublayers)) {
+            } else if (layer.type === "graphics") {
                 return true;
-            } else if(!layer.sketchingEnhanced) {
+            } else if (!layer.sketchingEnhanced) {
                 return properties.defaultAllowSnapping;
             } else {
                 return false;
