@@ -224,6 +224,9 @@ export default {
             if (tool && tool?.mode !== 'secondary') {
                 this._setSettings(tool);
             }
+        },
+        symbolSettings(value) {
+            this.$emit('settingsSelectionChanged', value);
         }
     },
     methods: {
