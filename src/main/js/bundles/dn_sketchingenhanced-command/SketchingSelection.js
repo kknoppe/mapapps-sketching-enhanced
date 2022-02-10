@@ -293,16 +293,15 @@ export default function () {
             }
         },
 
-        _handler(operator) {
-            const snapPoint = this._snappingManager.getLatestSnappingObject();
-            const geo = this._getGeometryBySnappingObject(snapPoint);
+        async _handler(operator, evt) {
+            const {geo, graphic} = await this.getGeometryAtPoint(evt) || {};
             if (geo) {
                 const sketchingHandler = this._sketchingHandler;
                 const sketchingCommand = this._sketchingCommand;
                 if (operator === "selectReshape") {
-                    sketchingHandler._update([snapPoint.objectGeometry.object], false, "reshape");
+                    sketchingHandler._update([graphic], false, "reshape");
                 } else if (operator === "selectTransform") {
-                    sketchingHandler._update([snapPoint.objectGeometry.object], false, "transform");
+                    sketchingHandler._update([graphic], false, "transform");
                 } else if (operator === "selectCopy" || operator === "selectBuffer") {
                     sketchingCommand._resetAndAddAndUpdate(sketchingCommand._getGeometry(geo, operator));
                 } else {
@@ -311,6 +310,25 @@ export default function () {
                     this._removeSelectedGraphics();
                     geometry && this._setSelectedGraphics([sketchingHandler._addGraphic(geometry)]);
                 }
+            }
+        },
+
+        async getGeometryAtPoint(evt) {
+            const snapPoint = this._snappingManager.getLatestSnappingObject();
+            const geo = this._getGeometryBySnappingObject(snapPoint);
+            if (geo) {
+                return {geo, graphic: snapPoint.objectGeometry.object};
+            }
+
+            // do a hitTest to select polygons by a click within the graphic
+            const viewModel = this._sketchingHandler?.sketchViewModel;
+            const screenpoint = viewModel.view.toScreen(evt.graphic.geometry);
+
+            const response = await viewModel.view.hitTest(screenpoint, {include: viewModel.layer});
+            // check if a feature is returned from the hurricanesLayer
+            if (response.results.length) {
+                const graphic = response.results[0]?.graphic;
+                return {graphic, geo: graphic?.geometry };
             }
         },
 
@@ -340,7 +358,7 @@ export default function () {
                     if (point) {
                         setTimeout(() => {
                             snappingManager.getSnappingObject(point);
-                            this._handler(operator);
+                            this._handler(operator, evt);
                             this._mandatoryWithSnappingModeTool && (snappingManager._mandatoryWithSnappingMode = true);
                         }, 10);
                     }
@@ -358,7 +376,7 @@ export default function () {
                 viewModel.get("layer").removeMany(graphics);
                 setTimeout(() => {
                     this._mandatoryWithSnappingModeTool && (snappingManager._mandatoryWithSnappingMode = this._mandatoryWithSnappingMode);
-                    this._handler(operator);
+                    this._handler(operator, evt);
                 }, 10);
             }
         }

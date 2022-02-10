@@ -129,6 +129,9 @@ function SketchingHandler() {
                 }
             }
             viewModel.view.focus();
+
+            // emit event for layer editor
+            viewModel.emit('activateTool', tool?.id);            
         },
 
         deactivateTool(tool) {
@@ -143,7 +146,7 @@ function SketchingHandler() {
             }
             if (viewModel) {
                 // emit event for layer editor
-                viewModel.emit('deactivateTool', tool && tool.id);
+                viewModel.emit('deactivateTool', tool?.id);
                 viewModel.reset();
                 viewModel.updateOnGraphicClick = this._updateOnGraphicClick;
             }
