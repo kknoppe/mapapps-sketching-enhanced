@@ -64,6 +64,12 @@
                 ]
             }
         },
+        "dn_sketchingenhanced-snappingmanager": {
+            "SnappingLayerSourceModel": {
+                "allowBasemapSnapping": true,
+                "defaultAllowSnapping": false
+            }
+        },
         "dn_sketchingenhanced-measurement": {
             "Config": {
                 "disabledMeasurementTools": [
@@ -125,9 +131,9 @@
                             "decoration": "none"
                         },
                         "haloColor": {
-                            "r": 0, 
+                            "r": 0,
                             "g": 0,
-                            "b": 1, 
+                            "b": 1,
                             "a": 0.8
                         }
                     },
@@ -236,16 +242,10 @@
                                     }
                                 },
                                 {
-                                    "id": 10,
-                                    "sketchingEnhanced": {
-                                        "allowSnapping": false
-                                    }
+                                    "id": 10
                                 },
                                 {
-                                    "id": 11,
-                                    "sketchingEnhanced": {
-                                        "allowSnapping": true
-                                    }
+                                    "id": 11
                                 }
                             ]
                         }
