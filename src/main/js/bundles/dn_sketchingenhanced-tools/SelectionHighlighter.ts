@@ -17,6 +17,8 @@ import type Highlighter from "@conterra/ct-mapapps-typings/highlights/Highlighte
 import type SketchViewModel from "esri/widgets/Sketch/SketchViewModel";
 import Observers from 'apprt-core/Observers';
 import TopicEvent from 'apprt/event/Event';
+import Polyline from "esri/geometry/Polyline";
+import type Polygon from "esri/geometry/Polygon";
 
 
 export default class SelectionHighlighter {
@@ -62,7 +64,7 @@ export default class SelectionHighlighter {
     startHighlighting() {
         const viewModel = this.sketchingHandler.sketchViewModel;
         const pointerMoveHandler = viewModel.view.on('pointer-move', event => {
-            this.highlighted.forEach(h => h?.remove());
+            this.removeHighlights();
             // only include graphics from sketchinglayer in the hitTest
             const opts = {
                 include: viewModel.layer
@@ -71,10 +73,15 @@ export default class SelectionHighlighter {
                 // check if a feature is returned from the sketchinglayer
                 if (response.results.length) {
                     const graphic = response.results[0].graphic;
+                    const outline = new Polyline({
+                        paths: (graphic.geometry as Polygon).rings,
+                        spatialReference: graphic.geometry.spatialReference,
+                    });
+
                     // do something with the graphic
                     const highlight = this.highlighter?.highlight({
-                        geometry: graphic.geometry,
-                        symbol: this.snappingConfig._getSymbol(graphic.geometry)
+                        geometry: outline,
+                        symbol: this.snappingConfig._getSymbol(outline),
                     });
                     this.highlighted.push(highlight);
                 }
@@ -85,6 +92,11 @@ export default class SelectionHighlighter {
     }
 
     stopHighlighting() {
+        this.removeHighlights();
         this.observers.clean();
+    }
+
+    private removeHighlights(): void {
+        this.highlighted.forEach(h => h?.remove());
     }
 }

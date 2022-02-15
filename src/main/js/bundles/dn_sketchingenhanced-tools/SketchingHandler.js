@@ -131,7 +131,7 @@ function SketchingHandler() {
             viewModel.view.focus();
 
             // emit event for layer editor
-            viewModel.emit('activateTool', tool?.id);            
+            viewModel.emit('activateTool', tool?.id);
         },
 
         deactivateTool(tool) {
