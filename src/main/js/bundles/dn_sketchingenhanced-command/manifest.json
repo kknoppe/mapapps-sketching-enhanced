@@ -1,6 +1,6 @@
 {
     "name": "dn_sketchingenhanced-command",
-    "version": "2.2.5-SNAPSHOT",
+    "version": "2.2.5",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
