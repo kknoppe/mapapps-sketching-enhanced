@@ -46,10 +46,7 @@ export default class MeasurementWidgetFactory {
 
         const measurementValuesProperties = ['coordinates', 'currentLength', 'aggregateLength', 'currentArea', 'perimeter', 'totalLength', 'area', 'enableAngleMeasurement', 'areaEnabled'];
         const measurementOptions = ['showLineMeasurementsAtPolylines', 'showLineMeasurementsAtPolygons', 'showAngleMeasurementsAtPolylines', 'lengthUnit', 'areaUnit', 'angleUnit'];
-        this.handler = Binding.for(e, this.model).sync('area', e => {
-          console.log(e);
-          return e
-        })
+        this.handler = Binding.for(e, this.model).sync('area')
           .sync('enabled', 'measurementEnabled')
           .syncToLeft(['pointEnabled', 'polylineEnabled', 'polygonEnabled'], 'activeSketchingTool',
             ([point, line, polygon]) => {
