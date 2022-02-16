@@ -1008,6 +1008,31 @@
                     "sketching"
                 ]
             }
+        },
+        {
+            "name": "SelectionHighlighter",
+            "provides": "ct.framework.api.EventHandler",
+            "properties": {
+                "toolId": "drawreshapetool",
+                "Event-Topics": [{
+                    "topic": "ct/sketching/createSketchViewModel",
+                    "method": "setSketchViewModel"
+                }]
+            },
+            "references":[
+                {
+                    "name": "sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler"
+                },
+                {
+                    "name": "highlighter",
+                    "providing": "highlights.HighlightService"
+                },
+                {
+                    "name": "snappingConfig",
+                    "providing": "dn_sketchingenhanced-snappingmanager.Config"
+                }
+            ]
         }
     ]
 }

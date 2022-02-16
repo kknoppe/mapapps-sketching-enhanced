@@ -15,6 +15,7 @@
  */
 import '.';
 import './DrawTextController';
+import './SelectionHighlighter';
 import './SketchingHandler';
 import './SketchingToolRuleProcessor';
 import './SketchingParameterResolver';
