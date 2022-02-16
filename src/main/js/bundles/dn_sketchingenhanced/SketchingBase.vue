@@ -175,7 +175,6 @@ export default {
             });
         },
         tabs() {
-            this.tab = 0;
             if (this.settingsEnabled) {
                 return ['Einstellungen'];
             }
