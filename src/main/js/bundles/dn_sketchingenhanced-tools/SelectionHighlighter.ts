@@ -13,6 +13,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ///
+
 import type Highlighter from "@conterra/ct-mapapps-typings/highlights/Highlighter";
 import type SketchViewModel from "esri/widgets/Sketch/SketchViewModel";
 import Observers from 'apprt-core/Observers';
