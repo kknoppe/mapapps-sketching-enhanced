@@ -12,10 +12,9 @@ Es ist keine Konfiguration erforderlich! Default-Werte werden angewendet.
 Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, wie folgende Beispiel gezeigten Eigenschaften und ihre Default-Werte:
 
 ```json
-"feature-editor": {
+"dn_sketchingenhanced-snappingmanager": {
     "Config": {
         "snappingEnabled": true,
-        "snapKey": "alt",
         "tolerance": 15,
         "snapPointSymbol": {
             "color": [
@@ -100,41 +99,25 @@ Um das Bundle in app.json zu konfigurieren, verwenden Sie die konfigurierbaren, 
 }
 ```
 
-| Property                   | Type    | Description                                                                                                                                                                            | Default         |
-|----------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| `snappingEnabled`          | Boolean | Aktiviert oder Deaktiviert das Snapping. Diese Einstellung lässt sich über das Widget zur Laufzeit ändern.                                                                             | true            |
-| `snapKey`                  | String  | Definiert ein Kontroll Key, wenn es dauert gedruckt wird, wird Snapping-Funktion entgegen dem Definitionwert `alwaysSnap` aktiviert oder deaktiviert. Mögliche Werte: alt, ctrl, shift | alt             |
-| `tolerance`                | Number  | Definiert den Radius des Snapping-Kreises in Pixel                                                                                                                                     | 15              |
-| `snapPointSymbol`          | Object  | Ein Symbol, das zur Darstellung der Snapping-Punkt(Cursor) verwendet wird                                                                                                              | wie im Beispiel |
-| `snapPointObjectSymbol`    | Object  | Ein Symbol, das zur Darstellung der gefangenen Punktgeometrie verwendet wird                                                                                                           | wie im Beispiel |
-| `snapPlygonObjectSymbol`   | Object  | Ein Symbol, das zur Darstellung der gefangenen Polygongeometrie verwendet wird                                                                                                         | wie im Beispiel |
-| `snapPolylineObjectSymbol` | Object  | Ein Symbol, das zur Darstellung der gefangenen Polyliniengeometrie verwendet wird                                                                                                      | wie im Beispiel |
+| Property                   | Type    | Description                                                                                                                                                                             | Default         |
+|----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| `snappingEnabled`          | Boolean | Aktiviert oder Deaktiviert das Snapping. Diese Einstellung lässt sich über das Widget zur Laufzeit ändern.                                                                              | true            |
+| `tolerance`                | Number  | Definiert den Radius des Snapping-Kreises in Pixel                                                                                                                                      | 15              |
+| `snapPointSymbol`          | Object  | Ein Symbol, das zur Darstellung der Snapping-Punkt(Cursor) verwendet wird                                                                                                               | wie im Beispiel |
+| `snapPointObjectSymbol`    | Object  | Ein Symbol, das zur Darstellung der gefangenen Punktgeometrie verwendet wird                                                                                                            | wie im Beispiel |
+| `snapPlygonObjectSymbol`   | Object  | Ein Symbol, das zur Darstellung der gefangenen Polygongeometrie verwendet wird                                                                                                          | wie im Beispiel |
+| `snapPolylineObjectSymbol` | Object  | Ein Symbol, das zur Darstellung der gefangenen Polyliniengeometrie verwendet wird                                                                                                       | wie im Beispiel |
 
 ```json
-"feature-editor": {
-    "SnappingSourceModel": {
-        "maxLength": 1000,
-        "stores": [
-          "portfolioObjekt_store",
-          "bestands-objekte-omnisearch"
-        ]
+"dn_sketchingenhanced-snappingmanager": {
+    "SnappingLayerSourceModel": {
+        "allowBasemapSnapping": true,
+        "defaultAllowSnapping": false
     }
 }
 ```
 
-| Property    | Type   | Description                                          | Default                                |
-|-------------|--------|------------------------------------------------------|----------------------------------------|
-| `maxLength` | Number | Definiert eine max. Anzahl der Features.             | 0(keine Beschränkung).                 |
-| `stores`    | Array  | Definiert eine Store-Liste der Layeres für Snapping. | Alle in der Karten sichtbaren Layeres. |
-
-```json
-"feature-editor": {
-    "SnappingGraphicLayerSourceModel": {
-        "maxLength": 1000
-    }
-}
-```
-
-| Property    | Type   | Description                       | Default                |
-|-------------|--------|-----------------------------------|------------------------|
-| `maxLength` | Number | Definiert eine max. Grafikanzahl. | 0(keine Beschränkung). |
+| Property               | Type    | Description                                             | Default |
+|------------------------|---------|---------------------------------------------------------|---------|
+| `allowBasemapSnapping` | Boolean | If set to true, basemaps are used for snapping as well. | true    |
+| `defaultAllowSnapping` | Boolean | Default snapping property for each layer                | false   |
