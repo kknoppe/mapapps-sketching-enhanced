@@ -23,6 +23,7 @@ module.exports = {
         activeConstructionAngle: 'Winkel',
         activeConstructionRadius: 'Radius',
         turnOnVisibility: 'Zeichnungen einblenden',
+        turnOnSnapping: 'Snapping aktivieren',
         addNewSketchingLayer: 'Neuen Layer anlegen',
         notAddNewSketchingLayer: 'Kein Tool ausgewählt',
         layerLimitReached: 'Maximale Layerzahl erreicht',

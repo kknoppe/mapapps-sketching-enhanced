@@ -24,6 +24,7 @@ module.exports = {
             activeConstructionAngle: 'Angle',
             activeConstructionRadius: 'Radius',
             turnOnVisibility: 'Show drawings',
+            turnOnSnapping: 'Enable snapping',
             addNewSketchingLayer: 'Create new layer',
             notAddNewSketchingLayer: 'No Tool selected',
             layerLimitReached: 'Layer limit reached',

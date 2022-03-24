@@ -53,6 +53,7 @@ export default function () {
             const props = this._properties;
             this.tolerance = props.tolerance || 15;
 
+            this.snappingEnabled = props.snappingEnabled;
             this.snapPointSymbol = props.snapPointSymbol;
             this.snapPointObjectSymbol = props.snapPointObjectSymbol;
             this.snapPolygonObjectSymbol = props.snapPolygonObjectSymbol;
@@ -80,24 +81,28 @@ export default function () {
         },
 
         getLatestSnappingObject() {
-            return this._latestSnappingObject;
+                return this._latestSnappingObject;
         },
 
         getSnappingObject(point) {
-            const searchRadius = this._getSearchRadius();
-            const geometries = this._getSnappingGeometriesWithinDistance(point, searchRadius);
+            if (this.snappingEnabled) {
+                const searchRadius = this._getSearchRadius();
+                const geometries = this._getSnappingGeometriesWithinDistance(point, searchRadius);
 
-            let nearestPointResult = {};
-            if (geometries.length) {
-                nearestPointResult.objectGeometry || (nearestPointResult =
-                    this._getNearestPointResult(point, geometries, "point", searchRadius));
-                nearestPointResult.objectGeometry || (nearestPointResult =
-                    this._getNearestPointResult(point, geometries, "polyline", searchRadius));
-                nearestPointResult.objectGeometry || (nearestPointResult =
-                    this._getNearestPointResult(point, geometries, "polygon", searchRadius));
+                let nearestPointResult = {};
+                if (geometries.length) {
+                    nearestPointResult.objectGeometry || (nearestPointResult =
+                        this._getNearestPointResult(point, geometries, "point", searchRadius));
+                    nearestPointResult.objectGeometry || (nearestPointResult =
+                        this._getNearestPointResult(point, geometries, "polyline", searchRadius));
+                    nearestPointResult.objectGeometry || (nearestPointResult =
+                        this._getNearestPointResult(point, geometries, "polygon", searchRadius));
+                }
+                this._latestSnappingObject = nearestPointResult;
+                return nearestPointResult;
+            } else {
+                return {};
             }
-            this._latestSnappingObject = nearestPointResult;
-            return nearestPointResult;
         },
 
         addSnappingGraphics(point, geometry) {

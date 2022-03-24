@@ -152,6 +152,10 @@
                 {
                     "name": "model",
                     "providing": "dn_sketchingenhanced.SketchingEnhancedModel"
+                },
+                {
+                    "name": "_snappingConfig",
+                    "providing": "dn_sketchingenhanced-snappingmanager.Config"
                 }
             ]
         },

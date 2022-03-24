@@ -25,6 +25,11 @@
             :label="i18n.turnOnVisibility"
             color="primary"
         />
+        <v-switch
+            v-model="snappingEnabledValue"
+            :label="i18n.turnOnSnapping"
+            color="primary"
+        />
     </v-layout>
 </template>
 <script>
@@ -35,6 +40,10 @@
             },
             bus: {
                 type: Object
+            },
+            snappingEnabled: {
+                type: Boolean,
+                default: true
             },
             sketchingVisible: {
                 type: Boolean,
@@ -49,6 +58,14 @@
                 },
                 set(val) {
                     this.$emit('toggleSketchingLayerVisibility', val);
+                }
+            },
+            snappingEnabledValue:{
+                get() {
+                    return this.snappingEnabled;
+                },
+                set(val) {
+                    this.$emit('update:snapping-enabled', val);
                 }
             }
         }

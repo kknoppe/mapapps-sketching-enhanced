@@ -65,6 +65,7 @@
                                             v-if="item === 'settings'"
                                             @toggleSketchingLayerVisibility="_toggleSketchingVisible"
                                             :sketchingVisible="sketchingVisible"
+                                            :snapping-enabled.sync="snappingEnabled"
                                             :bus="eventBus"
                                             :i18n="i18n">
                             </settings-panel>
@@ -164,6 +165,10 @@ export default {
             type: Boolean,
             default: false
         },
+        snappingEnabled: {
+            type: Boolean,
+            default: true
+        },
         extensionTabs: Array,
     },
     computed: {
@@ -224,6 +229,9 @@ export default {
         },
         symbolSettings(value) {
             this.$emit('settingsSelectionChanged', value);
+        },
+        snappingEnabled(value) {
+            this.$emit('toggleSnappingEnabled', value);
         }
     },
     methods: {

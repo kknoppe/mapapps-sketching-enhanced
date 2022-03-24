@@ -26,6 +26,7 @@
             ],
             "properties": {
                 "alwaysSnap": true,
+                "snappingEnabled": true,
                 "snapKeys": [
                     "alt"
                 ],

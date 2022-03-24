@@ -65,6 +65,9 @@
             }
         },
         "dn_sketchingenhanced-snappingmanager": {
+            "Config": {
+                "snappingEnabled": false
+            },
             "SnappingLayerSourceModel": {
                 "allowBasemapSnapping": true,
                 "defaultAllowSnapping": false

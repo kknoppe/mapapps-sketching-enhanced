@@ -40,6 +40,7 @@ export default class SketchingEnhancedWidgetFactory {
 
         // loading symbol settings from sketching Handler properties
         vm.initialSymbolSettings = this._sketchingHandler._properties.sketch;
+        vm.snappingEnabled = this._snappingConfig.snappingEnabled;
 
         const allTools = tools.operator.concat(tools.draw).concat(tools.edit);
 
@@ -61,6 +62,11 @@ export default class SketchingEnhancedWidgetFactory {
                 });
             });
 
+        });
+
+        vm.$on("toggleSnappingEnabled", enabled => {
+            const config = this._snappingConfig;
+            config.snappingEnabled = enabled;
         });
 
         // watch on changes in sketching layer visibility from somewhere else (e.g. ToC)
