@@ -103,7 +103,6 @@ import PolygonSetting from 'dn_sketchingenhanced-symboleditor/model/PolygonSetti
 import TextSetting from './model/TextSetting';
 import MenuButton from './components/MenuButton.vue';
 import ToolButton from './components/ToolButton.vue';
-import SketchingFooter from './components/SketchingFooter.vue'
 import SettingsPanel from './components/SettingsPanel.vue';
 
 export default {
@@ -115,8 +114,7 @@ export default {
         TopToolbar,
         SettingsPanel,
         'tool-button': ToolButton,
-        'menu-button': MenuButton,
-        'sketching-footer': SketchingFooter
+        'menu-button': MenuButton
     },
     data() {
         return {
