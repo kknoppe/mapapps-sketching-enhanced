@@ -62,7 +62,7 @@
                                                 :constructionModel="constructionModel" :tool="currentTool"
                                                 :i18n="i18n"></construction-panel>
                             <settings-panel class="flex grow pa-2"
-                                            v-if="item === 'Einstellungen'"
+                                            v-if="item === 'settings'"
                                             @toggleSketchingLayerVisibility="_toggleSketchingVisible"
                                             :sketchingVisible="sketchingVisible"
                                             :bus="eventBus"
@@ -174,7 +174,7 @@ export default {
         },
         tabs() {
             if (this.settingsEnabled) {
-                return ['Einstellungen'];
+                return ['settings'];
             }
             if (this.currentTool) {
                 switch (this.currentTool.id) {
