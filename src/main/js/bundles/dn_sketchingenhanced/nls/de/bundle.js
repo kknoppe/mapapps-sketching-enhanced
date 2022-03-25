@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 module.exports = {
-    bundleName: 'Sketching Enhanced',
-    bundleDescription: 'Sketching Enhanced',
+    bundleName: 'Erweitertes Zeichnen und Messen',
+    bundleDescription: 'Erweitertes Zeichnen und Messen',
     ui: {
-        windowTitle: 'Zeichnen',
+        windowTitle: 'Erweitertes Zeichnen und Messen',
         noActiveTool: 'Bitte wählen Sie ein Werkzeug aus oder verschieben Sie die Karte.',
         activeConstructionLength: 'Länge',
         activeConstructionAngle: 'Winkel',
