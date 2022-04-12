@@ -17,7 +17,7 @@
 import Point from "esri/geometry/Point";
 import type { MeasurementLayer } from "dn_sketchingenhanced-measurement/MeasurementLayer";
 import type { MeasurementCalculator } from "dn_sketchingenhanced-measurement/MeasurementCalculator";
-import type { MeasurementLabelProvider } from "dn_sketchingenhanced-measurement/labels/MeasurementLabelProvider";
+import type { PolylineLabelProvider } from "dn_sketchingenhanced-measurement/labels/PolylineLabelProvider";
 import { getTemporaryState } from "./MeasurementActionUtils";
 import type Graphic from "esri/Graphic";
 import type { MeasurementAction, MeasurementUpdateEvent } from "./MeasurementAction";
@@ -28,10 +28,10 @@ export default class PolylineMeasurementHandler implements MeasurementAction {
     public actionType = 'polyline';
     private layer: MeasurementLayer;
     private calculator: MeasurementCalculator;
-    private labelProvider: MeasurementLabelProvider;
+    private labelProvider: PolylineLabelProvider;
     private angleCalculator: AngleCalculator;
 
-    constructor(layer: MeasurementLayer, calculator: MeasurementCalculator, labelProvider: MeasurementLabelProvider, angleCalculator: AngleCalculator) {
+    constructor(layer: MeasurementLayer, calculator: MeasurementCalculator, labelProvider: PolylineLabelProvider, angleCalculator: AngleCalculator) {
         this.layer = layer;
         this.calculator = calculator;
         this.labelProvider = labelProvider;
@@ -88,7 +88,7 @@ export default class PolylineMeasurementHandler implements MeasurementAction {
             return;
         }
         const length = this.calculator.getLength(polyline);
-        const lengthString = this.formatTotalLength(length, evt);
+        const lengthString = this.formatTotalLength(length);
 
         const [x, y] = path[path.length - 1];
         const pnt = new Point({ x, y, spatialReference: polyline.spatialReference });
@@ -99,12 +99,8 @@ export default class PolylineMeasurementHandler implements MeasurementAction {
         this.layer.addMeasurement(pnt, graphic, { text: lengthString, horizontalAlignment: textPosition, yoffset: yOffset, temporary: getTemporaryState(evt) }, "fullLength");
     }
 
-    private formatTotalLength(length: string, evt: __esri.SketchViewModelCreateEvent | MeasurementUpdateEvent): string {
-        const sketchCompleted = evt.type === 'create' || evt.type === 'update' ? evt.state === 'complete' : false;
-        const labelText = sketchCompleted ? this.labelProvider.getLabel('totalLength') : '';
-        const label = labelText?.length ? `${labelText}: ` : '';
-
-        return `${label}${length}`;
+    private formatTotalLength(length: string): string {
+        return this.labelProvider?.getLabel(length);
     }
 
     /*

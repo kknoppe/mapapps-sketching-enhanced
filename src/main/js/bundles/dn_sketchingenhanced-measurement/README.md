@@ -155,6 +155,8 @@ Dabei sind die Eigenschaften, welche im bereich Sketch gemacht werden Einstellun
 |showLineMeasurementsAtPolylines          |Boolean    |wie im Beispiel |Anzeige der Messwerte an Polylinien (an/aus)
 |showLineMeasurementsAtPolygons          |Boolean    |wie im Beispiel |Anzeige der Messwerte von Linien an Polygonen (an/aus)
 |showAngleMeasurementsAtPolylines               | Boolean | wie im Beispiel| Anzeige von Winkelmessungen zwischen Polylinien-Teilen (an/aus)
+|showTotalLineMeasurementsAtPolylines |Boolean  |true  |Anzeige der Gesamtlänge an Linien
+|showCircumferenceMeasurementAtPolygons |Boolean |true |Anzeige des Umfangs der Polygone
 |enableAngleMeasurement                 | Boolean | wie im Beispiel | (De-)Aktiviert die Winkelmessfunktion für Polylinien
 |pointCoordPlaces          |Number    |wie im Beispiel |Nachkommastellen der Koordinatenanzeige
 |pointCoordUnitSymbolX          |String    |wie im Beispiel |x-Label für Koordinatenanzeige

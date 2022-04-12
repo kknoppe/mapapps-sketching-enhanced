@@ -16,4 +16,5 @@
 // import all tests
 import './MeasurementCalculator.spec';
 import './MeasurementController';
+import './PolygonLabelProvider.spec';
 import './PolylineMeasurementAction.spec';

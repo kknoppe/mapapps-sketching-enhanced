@@ -19,6 +19,8 @@ import PolygonAction from "./actions/PolygonMeasurementAction";
 import TopicEvent from 'apprt/event/Event';
 import { MeasurementLayer } from "./MeasurementLayer";
 import { MeasurementLabelProvider } from "./labels/MeasurementLabelProvider";
+import { PolygonLabelProvider } from "./labels/PolygonLabelProvider";
+import { PolylineLabelProvider } from "./labels/PolylineLabelProvider";
 
 export default class MeasurementHandler {
     
@@ -279,10 +281,17 @@ export default class MeasurementHandler {
             }
         });
         
-        const labelProvider = new MeasurementLabelProvider(this._properties?.measurementLabels, this.i18n);
+        
         this._measurementActions.push(new PointAction(this._model, this.layer, this.controller.calculator));
-        this._measurementActions.push(new PolylineAction(this.layer, this.controller.calculator, labelProvider, this.controller.angleCalculator));
-        this._measurementActions.push(new PolygonAction(this.layer, this.controller.calculator, labelProvider));
+        const labelProvider = new MeasurementLabelProvider(this._properties?.measurementLabels, this.i18n);
+
+        // create PolylineAction
+        const polylineLabelProvider = new PolylineLabelProvider(labelProvider, this._properties.showTotalLineMeasurementsAtPolylines);
+        this._measurementActions.push(new PolylineAction(this.layer, this.controller.calculator, polylineLabelProvider, this.controller.angleCalculator));
+        
+        // create PolygonAction
+        const polygonLabelProvider = new PolygonLabelProvider(labelProvider, this._properties.showCircumferenceMeasurementAtPolygons);
+        this._measurementActions.push(new PolygonAction(this.layer, this.controller.calculator, polygonLabelProvider));
     }
 
     /*

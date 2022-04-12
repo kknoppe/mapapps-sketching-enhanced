@@ -29,7 +29,12 @@ export class MeasurementLabelProvider {
         this.i18n = i18n;
     }
 
-    public getLabel(type: MeasurementLabelType): string {
+    private getConfiguredLabel(type: MeasurementLabelType): string {
         return this.measurementLabels?.[this.i18n?.locale]?.[type] || this.i18n?.[type];
+    }
+
+    public getLabel(value: string, type: MeasurementLabelType) {
+        const label = this.getConfiguredLabel(type);
+        return `${label}: ${value}`;
     }
 }
