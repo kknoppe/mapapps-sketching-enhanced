@@ -88,6 +88,8 @@
                 "showLineMeasurementsAtPolylines": true,
                 "showLineMeasurementsAtPolygons": false,
                 "showAngleMeasurementsAtPolylines": false,
+                "showTotalLineMeasurementsAtPolylines": true,
+                "showCircumferenceMeasurementAtPolygons": true,
                 "enableAngleMeasurement": false,
                 "pointSRS": "4326",
                 "pointCoordPlaces": "3",

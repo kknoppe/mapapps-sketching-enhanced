@@ -18,7 +18,7 @@ import type { MeasurementLayer } from "dn_sketchingenhanced-measurement/Measurem
 import type Graphic from "esri/Graphic";
 import type { MeasurementAction, MeasurementUpdateEvent } from "./MeasurementAction";
 import type { MeasurementCalculator } from "dn_sketchingenhanced-measurement/MeasurementCalculator";
-import type { MeasurementLabelProvider } from "dn_sketchingenhanced-measurement/labels/MeasurementLabelProvider";
+import type { PolygonLabelProvider } from "dn_sketchingenhanced-measurement/labels/PolygonLabelProvider";
 import type { Polygon } from "esri/geometry";
 import { Point, Polyline } from "esri/geometry";
 import { getTemporaryState } from "./MeasurementActionUtils";
@@ -29,9 +29,9 @@ export default class PolygonMeasurementAction implements MeasurementAction {
     private layer: MeasurementLayer;
     private calculator: MeasurementCalculator;
     private _lastVertex: number[];
-    private labelProvider: MeasurementLabelProvider;
+    private labelProvider: PolygonLabelProvider;
 
-    constructor(layer: MeasurementLayer, calculator: MeasurementCalculator, labelProvider: MeasurementLabelProvider) {
+    constructor(layer: MeasurementLayer, calculator: MeasurementCalculator,labelProvider: PolygonLabelProvider) {
         this.labelProvider = labelProvider;
         this.layer = layer;
         this.calculator = calculator;
@@ -143,10 +143,7 @@ export default class PolygonMeasurementAction implements MeasurementAction {
     }
 
     private getCircumferenceAndAreaText(area: string, circumference: string): string {
-        const areaLabel = this.labelProvider?.getLabel('area');
-        const circumferenceLabel = this.labelProvider?.getLabel('circumference');
-
-        return `${areaLabel}: ${area} \n ${circumferenceLabel}: ${circumference}`;
+        return this.labelProvider?.getLabel(area,circumference);
     }
 
     /*
