@@ -23,7 +23,7 @@ import { PolygonLabelProvider } from "./labels/PolygonLabelProvider";
 import { PolylineLabelProvider } from "./labels/PolylineLabelProvider";
 
 export default class MeasurementHandler {
-    
+
     currentAction = [];
 
     activate(context) {
@@ -42,7 +42,7 @@ export default class MeasurementHandler {
         this._model.enableAngleMeasurement = props.enableAngleMeasurement;
 
         this._measurementDisabledTools = props.disabledMeasurementTools;
-        
+
         // set viewModel if SketchingHandler was started before this component
         if (this.sketchingHandler?.sketchViewModel) {
             this._setSketchViewModel(new TopicEvent('must_not_be_empty', { viewModel: this.sketchingHandler.sketchViewModel }));
@@ -118,7 +118,9 @@ export default class MeasurementHandler {
                     break;
                 case 'cancel':
                     this.resetMeasurementResults();
-                    evt.graphic && this.removeGraphicsById(evt.graphic.getAttribute("id"));
+                    this._setGraphics(evt)
+                    this._handleRemove(evt)
+                    // evt.graphic && this.removeGraphicsById(evt.graphic.getAttribute("id"));
                     break
                 case 'complete':
                     this._recordMeasurements(evt);
@@ -128,7 +130,7 @@ export default class MeasurementHandler {
         }
     }
 
-    
+
 
     removeTemporaryMeasurements(evt) {
         const update = evt.type === 'update' || evt.type === 'undo' || evt.type === 'redo';
@@ -247,6 +249,13 @@ export default class MeasurementHandler {
         return Promise.all(callbacks);
     }
 
+    _setGraphics(evt){
+        if(!evt.graphics && evt.graphic){
+            evt.graphics = []
+            evt.graphics[0] = evt.graphic
+        }
+    }
+
     _handleRemove(evt) {
         if (!evt.graphics) return;
         const id = evt.graphics[0].attributes?.id || evt.graphics[0].symbol.id;
@@ -280,8 +289,7 @@ export default class MeasurementHandler {
                 this.setActiveToolType(this._model.activeTool);
             }
         });
-        
-        
+
         this._measurementActions.push(new PointAction(this._model, this.layer, this.controller.calculator));
         const labelProvider = new MeasurementLabelProvider(this._properties?.measurementLabels, this.i18n);
 
