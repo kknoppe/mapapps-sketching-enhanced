@@ -1,3 +1,5 @@
+⚠️ Due to changes in the ArcGIS API for JavaScript, which is used extensively by this bundle, the bundle is currently not compatible with map.apps 4.13 and later.
+
 # Sketching Enhanced
 
 This bundle adds an extended sketching functionality the map.
