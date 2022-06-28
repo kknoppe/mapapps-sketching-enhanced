@@ -249,7 +249,7 @@ function SketchingHandler() {
                     this._sketchProps,
                     {
                         view: this._mapWidgetModel.view,
-                        layer: this._getSketchGraphicsLayer()
+                        layer: this.getSketchGraphicsLayer()
                     }
                 );
 
@@ -292,7 +292,7 @@ function SketchingHandler() {
             return this.sketchViewModel;
         },
 
-        _getSketchGraphicsLayer() {
+        getSketchGraphicsLayer() {
             if (!this._sketchGraphicLayer) {
                 const map = this._mapWidgetModel.map;
                 const layerId = this._graphicLayerId;

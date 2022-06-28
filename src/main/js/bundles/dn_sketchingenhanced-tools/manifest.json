@@ -65,9 +65,9 @@
                             "decoration": "none"
                         },
                         "haloColor": {
-                            "r": 0, 
+                            "r": 0,
                             "g": 0,
-                            "b": 1, 
+                            "b": 1,
                             "a": 0.8
                         }
                     },
@@ -179,6 +179,10 @@
                 {
                     "name": "_mapWidgetModel",
                     "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_sketchingHandler",
+                    "providing": "dn_sketchingenhanced.SketchingHandler"
                 }
             ]
         },
