@@ -22,6 +22,7 @@ import GraphicsLayer from "esri/layers/GraphicsLayer";
 import Graphic from "esri/Graphic";
 import * as jsonUtils from "esri/geometry/support/jsonUtils";
 import {fromJSON} from "esri/symbols/support/jsonUtils";
+import {whenOnce} from "esri/core/watchUtils";
 
 const SketchingParameterResolver = declare({
 
@@ -53,27 +54,37 @@ const SketchingParameterResolver = declare({
     },
 
     decodeURLParameter: function (params) {
-        if (params && params.graphics) {
-            let mapWidgetModel = this._mapWidgetModel;
-            params.graphics.forEach((graphic) => {
-                let graphics = [];
-                graphic.graphics.forEach((g) => {
-                    graphics.push(new Graphic({
-                        geometry: jsonUtils.fromJSON(g.geometry),
-                        symbol: fromJSON(g.symbol),
-                        attributes: g.attributes || {}
-                    }));
+        let mapWidgetModel = this._mapWidgetModel;
+        let handler = this._sketchingHandler;
+        whenOnce(this._mapWidgetModel, 'ready', () => {
+            whenOnce(this._mapWidgetModel.view, 'ready', () => {
+                const sketchingGraphicLayer = handler.getSketchGraphicsLayer();
+                if (params && params.graphics) {
+                    params.graphics.forEach((graphic) => {
+                        let graphics = [];
+                        graphic.graphics.forEach((g) => {
+                            graphics.push(new Graphic({
+                                geometry: jsonUtils.fromJSON(g.geometry),
+                                symbol: fromJSON(g.symbol),
+                                attributes: g.attributes || {}
+                            }));
+                        });
+                        let layer = new GraphicsLayer({
+                            id: graphic.id,
+                            title: graphic.title,
+                            graphics: graphics,
+                            listMode: graphic.listMode
+                        });
+                        if (!sketchingGraphicLayer) {
+                            mapWidgetModel.map.layers.add(layer);
+                        } else {
+                            sketchingGraphicLayer.graphics = graphics;
+                        }
 
-                });
-                let layer = new GraphicsLayer({
-                    id: graphic.id,
-                    title: graphic.title,
-                    graphics: graphics,
-                    listMode: graphic.listMode
-                });
-                mapWidgetModel.map.layers.add(layer);
+                    });
+                }
             });
-        }
+        })
     }
 
 });
