@@ -78,7 +78,7 @@ const SketchingParameterResolver = declare({
                         if (!sketchingGraphicLayer) {
                             mapWidgetModel.map.layers.add(layer);
                         } else {
-                            sketchingGraphicLayer.graphics = graphics;
+                            sketchingGraphicLayer.addMany(graphics);
                         }
 
                     });
